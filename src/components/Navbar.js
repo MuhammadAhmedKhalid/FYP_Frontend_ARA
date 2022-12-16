@@ -30,7 +30,7 @@ const NavBar = () => {
                 <h1 style={logo}>ALLOCATOR.</h1>
             </Link>
             <ul className={click ? 'nav-menu active' : 'nav-menu'}>
-                <Link to={'/sign-in'}>Sign In</Link>
+                <Link>Sign In</Link>
             </ul>
             <div className="hamburger" onClick={handleClick}>
                 {

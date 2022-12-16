@@ -6,9 +6,13 @@ const pStyle = {
     fontSize: 20
 }
 
-function Factory() {
+function Factory(props) {
+
+    const { fac_ref } = props
+
     return (
         <div
+            ref={fac_ref}
             className="flexbox-container-y"
             style={{
                 backgroundColor: 'white',

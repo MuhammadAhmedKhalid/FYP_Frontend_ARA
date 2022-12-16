@@ -4,7 +4,23 @@ import Img3 from '../assets/img3.png'
 import Img4 from '../assets/img4.png'
 import Img5 from '../assets/img5.png'
 
-function Domains() {
+function Domains(props) {
+
+    const { edu_ref, fac_ref, hosp_ref, off_ref } = props
+
+    const handleEduClick = () => {
+        edu_ref.current?.scrollIntoView({ behavior: 'smooth' });
+    };
+    const handleFacClick = () => {
+        fac_ref.current?.scrollIntoView({ behavior: 'smooth' });
+    };
+    const handleHospClick = () => {
+        hosp_ref.current?.scrollIntoView({ behavior: 'smooth' });
+    };
+    const handleOffClick = () => {
+        off_ref.current?.scrollIntoView({ behavior: 'smooth' });
+    };
+
     return (
         <div
             className="flexbox-container-y"
@@ -23,19 +39,19 @@ function Domains() {
             <div className="flexbox-container">
                 <div className="flexbox-container-y">
                     <img style={{ width: 450 }} src={Img2} alt='Domain-1' />
-                    <button className='btn-w'>Education</button>
+                    <button className='btn-w' onClick={handleEduClick}>Education</button>
                 </div>
                 <div className="flexbox-container-y">
                     <img style={{ width: 450 }} src={Img3} alt='Domain-2' />
-                    <button className='btn-w'>Factory</button>
+                    <button className='btn-w' onClick={handleFacClick}>Factory</button>
                 </div>
                 <div className="flexbox-container-y">
                     <img style={{ width: 450 }} src={Img4} alt='Domain-3' />
-                    <button className='btn-w'>Hospital</button>
+                    <button className='btn-w' onClick={handleHospClick}>Hospital</button>
                 </div>
                 <div className="flexbox-container-y">
                     <img style={{ width: 450 }} src={Img5} alt='Domain-4' />
-                    <button className='btn-w'>Offices</button>
+                    <button className='btn-w' onClick={handleOffClick}>Office</button>
                 </div>
             </div>
         </div>

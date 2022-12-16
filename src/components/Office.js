@@ -1,18 +1,18 @@
 import React from 'react'
-import Img6 from '../assets/img6.png'
+import Img9 from '../assets/img9.png'
 
 const pStyle = {
     color: 'black',
     fontSize: 20
 }
 
-function Education(props) {
+function Office(props) {
 
-    const { edu_ref } = props
+    const { off_ref } = props
 
     return (
         <div
-            ref={edu_ref}
+            ref={off_ref}
             className="flexbox-container-y"
             style={{
                 backgroundColor: 'white',
@@ -22,10 +22,9 @@ function Education(props) {
                 height: '100vh'
             }}
         >
-            <h1 style={{ color: 'black' }}>Services</h1>
             <div className="flexbox-container">
                 <div className="flexbox-container-y">
-                    <h2 style={{ color: '#0E5E6F', fontSize: 25 }}>1. Education</h2>
+                    <h2 style={{ color: '#0E5E6F', fontSize: 25 }}>4. Office</h2>
                     <br />
                     <p style={pStyle}>Lorem ipsum dolor sit amet.</p>
                     <p style={pStyle}>Ut doloribus enim et nostrud ui quia velit est repellat rerum sit.</p>
@@ -36,10 +35,10 @@ function Education(props) {
                     <p style={pStyle}>Lorem ipsum dolor sit amet.</p>
                     <p style={pStyle}>Ut doloribus enim et nostrud ui quia velit est repellat rerum</p>
                 </div>
-                <img src={Img6} alt='Education-img' />
+                <img src={Img9} alt='Office-img' />
             </div>
         </div>
     )
 }
 
-export default Education
+export default Office
