@@ -1,5 +1,6 @@
 import React from 'react'
-import Img8 from '../assets/img8.png'
+import Img8a from '../assets/img8a.png'
+import Img8b from '../assets/img8b.png'
 
 const pStyle = {
     color: 'black',
@@ -35,7 +36,8 @@ function Hospital(props) {
                     <p style={pStyle}>Lorem ipsum dolor sit amet.</p>
                     <p style={pStyle}>Ut doloribus enim et nostrud ui quia velit est repellat rerum</p>
                 </div>
-                <img src={Img8} alt='Hospital-img' />
+                <img src={Img8a} style={{ height: 500, width: 275, marginLeft: 25 }} alt='Hospital_a-img' />
+                <img src={Img8b} style={{ height: 500, width: 275, marginTop: 250 }} alt='Hospital_b-img' />
             </div>
         </div>
     )

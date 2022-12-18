@@ -36,22 +36,22 @@ function Domains(props) {
             <h1 style={{ color: '#0E5E6F' }}>Way Of Allocation</h1>
             <p style={{ color: 'black', fontSize: 20 }}>Lorem ipsum dolor sit amet. Ut doloribus enim et nostrud ui quihfhhsh</p>
             <br /><br /><br />
-            <div className="flexbox-container">
+            <div className="flexbox-container" >
                 <div className="flexbox-container-y">
-                    <img style={{ width: 450 }} src={Img2} alt='Domain-1' />
-                    <button className='btn-w' onClick={handleEduClick}>Education</button>
+                    <img style={{ width: 450 }} src={Img2} alt='Domain-1' /><br />
+                    <center><button className='btn-w' onClick={handleEduClick}>Education</button></center>
                 </div>
                 <div className="flexbox-container-y">
-                    <img style={{ width: 450 }} src={Img3} alt='Domain-2' />
-                    <button className='btn-w' onClick={handleFacClick}>Factory</button>
+                    <img style={{ width: 450 }} src={Img3} alt='Domain-2' /><br />
+                    <center><button className='btn-w' onClick={handleFacClick}>Factory</button></center>
                 </div>
                 <div className="flexbox-container-y">
-                    <img style={{ width: 450 }} src={Img4} alt='Domain-3' />
-                    <button className='btn-w' onClick={handleHospClick}>Hospital</button>
+                    <img style={{ width: 450 }} src={Img4} alt='Domain-3' /><br />
+                    <center><button className='btn-w' onClick={handleHospClick}>Hospital</button></center>
                 </div>
                 <div className="flexbox-container-y">
-                    <img style={{ width: 450 }} src={Img5} alt='Domain-4' />
-                    <button className='btn-w' onClick={handleOffClick}>Office</button>
+                    <img style={{ width: 450 }} src={Img5} alt='Domain-4' /><br />
+                    <center><button className='btn-w' onClick={handleOffClick}>Office</button></center>
                 </div>
             </div>
         </div>

@@ -42,12 +42,14 @@ const Footer = () => {
                     </div>
                 </div>
             </div>
-            <div style={{
-                marginBottom: -100,
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-            }}>
+            <div
+                className='footer'
+                style={{
+                    marginBottom: -100,
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                }}>
                 <p>© 2022 Copyright&nbsp;</p>
                 <p>&nbsp;|&nbsp;</p>
                 <p>&nbsp;All Rights Reserved&nbsp;</p>

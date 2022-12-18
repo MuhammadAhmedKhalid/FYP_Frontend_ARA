@@ -1,5 +1,6 @@
 import React from 'react'
-import Img9 from '../assets/img9.png'
+import Img9a from '../assets/img9a.png'
+import Img9b from '../assets/img9b.png'
 
 const pStyle = {
     color: 'black',
@@ -35,7 +36,8 @@ function Office(props) {
                     <p style={pStyle}>Lorem ipsum dolor sit amet.</p>
                     <p style={pStyle}>Ut doloribus enim et nostrud ui quia velit est repellat rerum</p>
                 </div>
-                <img src={Img9} alt='Office-img' />
+                <img src={Img9a} style={{ height: 500, width: 275, marginLeft: 25, marginTop: 250 }} alt='Office_a-img' />
+                <img src={Img9b} style={{ height: 500, width: 275 }} alt='Office_b-img' />
             </div>
         </div>
     )
