@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import Modal from 'react-modal'
 import './FormStyles.css'
 import { Link } from 'react-router-dom';
@@ -9,10 +9,61 @@ import EmailOutlinedIcon from '@mui/icons-material/EmailOutlined';
 import AccountCircleOutlinedIcon from '@mui/icons-material/AccountCircleOutlined';
 import HttpsOutlinedIcon from '@mui/icons-material/HttpsOutlined';
 import GoogleIcon from '@mui/icons-material/Google';
+import IconButton from "@material-ui/core/IconButton";
+import Visibility from "@material-ui/icons/Visibility";
+import VisibilityOff from "@material-ui/icons/VisibilityOff";
+
 
 function Signup(props) {
 
     const { openSignUpModal, setOpenSignUpModal, setOpenSignInModal } = props
+
+    const [showPasswordError, setShowPasswordError] = useState(false)
+    const [errorMsg, setErrorMsg] = useState("")
+
+    const [values, setValues] = useState({
+        password: "",
+        showPassword: false,
+    });
+
+    const handleClickShowPassword = () => {
+        setValues({ ...values, showPassword: !values.showPassword });
+    };
+
+    const handleMouseDownPassword = (event) => {
+        event.preventDefault();
+    };
+
+    const handlePasswordChange = (prop) => (event) => {
+        setValues({ ...values, [prop]: event.target.value });
+    };
+
+    const [values1, setValues1] = useState({
+        password: "",
+        showPassword: false,
+    });
+
+    const handleClickShowPassword1 = () => {
+        setValues1({ ...values1, showPassword: !values1.showPassword });
+    };
+
+    const handleMouseDownPassword1 = (event) => {
+        event.preventDefault();
+    };
+
+    useEffect(() => {
+        if (values.password === values1.password) {
+            setShowPasswordError(false)
+            setErrorMsg("")
+        } else {
+            setShowPasswordError(true)
+            setErrorMsg("Please make sure both passwords match.")
+        }
+    }, [values1.password, values.password])
+
+    const handlePasswordChange1 = (prop) => (event) => {
+        setValues1({ ...values1, [prop]: event.target.value })
+    };
 
     const customStyles = {
         content: {
@@ -73,22 +124,57 @@ function Signup(props) {
                                 </InputAdornment>
                             )
                         }} />
-                        <TextField variant="outlined" type='password' placeholder='Password' InputProps={{
-                            startAdornment: (
-                                <InputAdornment position='start'>
-                                    <HttpsOutlinedIcon color="action" />
-                                </InputAdornment>
-                            )
-                        }} />
-                        <TextField variant="outlined" type='password' placeholder='Re-enter Password' InputProps={{
-                            startAdornment: (
-                                <InputAdornment position='start'>
-                                    <HttpsOutlinedIcon color="action" />
-                                </InputAdornment>
-                            )
-                        }} />
+                        <div>
+                            <TextField
+                                variant="outlined"
+                                type={values.showPassword ? "text" : "password"}
+                                placeholder='Password'
+                                onChange={handlePasswordChange("password")}
+                                value={values.password}
+                                InputProps={{
+                                    startAdornment: (
+                                        <InputAdornment position='start'>
+                                            <HttpsOutlinedIcon color="action" />
+                                        </InputAdornment>
+                                    ),
+                                    endAdornment: (
+                                        <InputAdornment position='end'>
+                                            <IconButton
+                                                onClick={handleClickShowPassword}
+                                                onMouseDown={handleMouseDownPassword}>
+                                                {values.showPassword ? <Visibility /> : <VisibilityOff />}
+                                            </IconButton>
+                                        </InputAdornment>
+                                    )
+                                }}
+                            />
+                        </div>
+                        <TextField
+                            error={showPasswordError}
+                            helperText={errorMsg}
+                            variant="outlined"
+                            type={values1.showPassword ? "text" : "password"}
+                            placeholder='Re-enter Password'
+                            onChange={handlePasswordChange1("password")}
+                            value={values1.password}
+                            InputProps={{
+                                startAdornment: (
+                                    <InputAdornment position='start'>
+                                        <HttpsOutlinedIcon color="action" />
+                                    </InputAdornment>
+                                ),
+                                endAdornment: (
+                                    <InputAdornment position='end'>
+                                        <IconButton
+                                            onClick={handleClickShowPassword1}
+                                            onMouseDown={handleMouseDownPassword1}>
+                                            {values1.showPassword ? <Visibility /> : <VisibilityOff />}
+                                        </IconButton>
+                                    </InputAdornment>
+                                )
+                            }} />
                         <center>
-                            <button style={{ marginTop: 16 }}>Sign Up</button>
+                            <button className='modal-btn' style={{ marginTop: 16 }}>Sign Up</button>
                             <p style={{ color: '#9098B1', fontSize: 16, fontWeight: 700, marginTop: 16 }}>OR</p>
                             <Button variant="contained" startIcon={<GoogleIcon />} style={{ marginTop: 16, color: '#0E5E6F', border: '1px solid #0E5E6F', background: '#fff', boxDecorationBreak: 'unset' }}>Sign up with Google</Button>
                             <div className='flexbox-container'>

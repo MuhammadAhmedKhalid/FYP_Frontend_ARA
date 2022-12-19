@@ -1,20 +1,38 @@
 import React, { useState } from 'react'
 import Modal from 'react-modal'
 import './FormStyles.css'
-// import { AiOutlineMail, AiOutlineLock } from 'react-icons/ai'
-// import { FcGoogle } from 'react-icons/fc'
 import { Link } from 'react-router-dom';
 import Signup from './Signup';
 import TextField from '@material-ui/core/TextField'
 import InputAdornment from '@material-ui/core/InputAdornment'
 import EmailOutlinedIcon from '@mui/icons-material/EmailOutlined';
 import HttpsOutlinedIcon from '@mui/icons-material/HttpsOutlined';
+import IconButton from "@material-ui/core/IconButton";
+import Visibility from "@material-ui/icons/Visibility";
+import VisibilityOff from "@material-ui/icons/VisibilityOff";
 
 function Signin(props) {
 
     const { openSignInModal, setOpenSignInModal } = props
 
     const [openSignUpModal, setOpenSignUpModal] = useState(false)
+
+    const [values, setValues] = useState({
+        password: "",
+        showPassword: false,
+    });
+
+    const handleClickShowPassword = () => {
+        setValues({ ...values, showPassword: !values.showPassword });
+    };
+
+    const handleMouseDownPassword = (event) => {
+        event.preventDefault();
+    };
+
+    const handlePasswordChange = (prop) => (event) => {
+        setValues({ ...values, [prop]: event.target.value });
+    };
 
     const openModal = () => {
         setOpenSignInModal(false)
@@ -69,15 +87,30 @@ function Signin(props) {
                                     </InputAdornment>
                                 )
                             }} />
-                            <TextField variant="outlined" type='password' placeholder='Password' InputProps={{
-                                startAdornment: (
-                                    <InputAdornment position='start'>
-                                        <HttpsOutlinedIcon color="action" />
-                                    </InputAdornment>
-                                )
-                            }} />
+                            <TextField
+                                variant="outlined"
+                                type={values.showPassword ? "text" : "password"}
+                                placeholder='Password'
+                                onChange={handlePasswordChange("password")}
+                                value={values.password}
+                                InputProps={{
+                                    startAdornment: (
+                                        <InputAdornment position='start'>
+                                            <HttpsOutlinedIcon color="action" />
+                                        </InputAdornment>
+                                    ),
+                                    endAdornment: (
+                                        <InputAdornment position='end'>
+                                            <IconButton
+                                                onClick={handleClickShowPassword}
+                                                onMouseDown={handleMouseDownPassword}>
+                                                {values.showPassword ? <Visibility /> : <VisibilityOff />}
+                                            </IconButton>
+                                        </InputAdornment>
+                                    )
+                                }} />
                             <center>
-                                <button style={{ marginTop: 16 }}>Login</button>
+                                <button className='modal-btn' style={{ marginTop: 16 }}>Login</button>
                                 <p style={{ color: "#115868", fontSize: 16, fontWeight: 700, margin: 16 }}>Forgot Password?</p>
                                 <div className='flexbox-container'>
                                     <p style={{ color: '#9098B1', fontSize: 16, fontWeight: 700 }}>Don't have an account?&nbsp;</p>
