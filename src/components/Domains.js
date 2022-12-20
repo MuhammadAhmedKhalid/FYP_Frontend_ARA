@@ -3,14 +3,16 @@ import Img2 from '../assets/img2.png'
 import Img3 from '../assets/img3.png'
 import Img4 from '../assets/img4.png'
 import Img5 from '../assets/img5.png'
-import AdminQuestionnaire from './AdminQuestionnaire'
-import AdminSimpleNavbar from './AdminSimpleNavbar'
+import AdminQuestionnaire from './Admin/AdminQuestionnaire'
+import AdminSimpleNavbar from './Admin/AdminSimpleNavbar'
+import Footer from './Footer'
+
 
 function Domains(props) {
 
     const { edu_ref, fac_ref, hosp_ref, off_ref, landingPage } = props
 
-    const [domain, setDomain] = useState('University')
+    const [domain, setDomain] = useState('Choose...')
     const [openQuestionnaireModal, setOpenQuestionnaireModal] = useState(false)
 
     const handleEduClick = () => {
@@ -33,9 +35,7 @@ function Domains(props) {
 
     return (
         <div>
-            {
-                !landingPage ? <AdminSimpleNavbar /> : ''
-            }
+            <AdminSimpleNavbar />
             <div
                 className="flexbox-container-y"
                 style={{
@@ -43,7 +43,7 @@ function Domains(props) {
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center',
-                    height: '100vh'
+                    height: '110vh'
                 }}
             >
                 <h1 style={{ color: 'black' }}>A Platform Build For A New</h1>
@@ -52,7 +52,7 @@ function Domains(props) {
                 <br /><br /><br />
                 <div className="flexbox-container" >
                     <div className="flexbox-container-y">
-                        <img style={{ width: 450 }} src={Img2} alt='Domain-1' /><br />
+                        <img style={{ width: 350 }} src={Img2} alt='Domain-1' /><br />
                         {
                             landingPage ?
                                 <center><button className='btn-w' onClick={handleEduClick}>Education</button></center> :
@@ -63,16 +63,16 @@ function Domains(props) {
                                         alignItems: 'center',
                                         justifyContent: 'center'
                                     }}>
-                                    <button className='modal-btn' style={{ color: '#fff', marginBottom: '15px' }}>Education</button>
+                                    <button className='domains-textField' style={{ color: '#fff', marginBottom: '15px' }}>Education</button>
                                     <select
+                                        value={domain}
                                         className='dropdown'
-                                        defaultValue={domain}
                                         onChange={
                                             (e) => showQuestionnaireModal(e)}
 
                                     >
-                                        <option value={"University"}>University</option>
                                         <option value={"School"}>School</option>
+                                        <option value={"University"}>University</option>
                                         <option value={"College"}>College</option>
                                     </select>
                                 </div>
@@ -80,7 +80,7 @@ function Domains(props) {
 
                     </div>
                     <div className="flexbox-container-y">
-                        <img style={{ width: 450 }} src={Img3} alt='Domain-2' /><br />
+                        <img style={{ width: 350 }} src={Img3} alt='Domain-2' /><br />
                         {
                             landingPage ?
                                 <center><button className='btn-w' onClick={handleFacClick}>Factory</button></center> :
@@ -90,7 +90,7 @@ function Domains(props) {
                                         alignItems: 'center',
                                         justifyContent: 'center'
                                     }}>
-                                    <button className='modal-btn' style={{ color: '#fff', marginBottom: '15px' }}>Factory</button>
+                                    <button className='domains-textField' style={{ color: '#fff', marginBottom: '15px' }}>Factory</button>
                                     <select className='dropdown' defaultValue={"Clothing and textiles"}>
                                         <option value={"Clothing and textiles"}>Clothing and textiles</option>
                                         <option value={"Food"}>Food</option>
@@ -100,7 +100,7 @@ function Domains(props) {
                         }
                     </div>
                     <div className="flexbox-container-y">
-                        <img style={{ width: 450 }} src={Img4} alt='Domain-3' /><br />
+                        <img style={{ width: 350 }} src={Img4} alt='Domain-3' /><br />
                         {
                             landingPage ?
                                 <center><button className='btn-w' onClick={handleHospClick}>Hospital</button></center> :
@@ -110,7 +110,7 @@ function Domains(props) {
                                         alignItems: 'center',
                                         justifyContent: 'center'
                                     }}>
-                                    <button className='modal-btn' style={{ color: '#fff', marginBottom: '15px' }}>Hospital</button>
+                                    <button className='domains-textField' style={{ color: '#fff', marginBottom: '15px' }}>Hospital</button>
                                     <select className='dropdown' defaultValue={"Women's hospitals"}>
                                         <option value={"Women's hospitals"}>Women's hospitals</option>
                                         <option value={"Children's hospitals"}>Children's hospitals</option>
@@ -120,7 +120,7 @@ function Domains(props) {
                         }
                     </div>
                     <div className="flexbox-container-y">
-                        <img style={{ width: 450 }} src={Img5} alt='Domain-4' /><br />
+                        <img style={{ width: 350 }} src={Img5} alt='Domain-4' /><br />
                         {
                             landingPage ?
                                 <center><button className='btn-w' onClick={handleOffClick}>Office</button></center> :
@@ -130,7 +130,7 @@ function Domains(props) {
                                         alignItems: 'center',
                                         justifyContent: 'center'
                                     }}>
-                                    <button className='modal-btn' style={{ color: '#fff', marginBottom: '15px' }}>Office</button>
+                                    <button className='domains-textField' style={{ color: '#fff', marginBottom: '15px' }}>Office</button>
                                     <select className='dropdown' defaultValue={"Private Office"}>
                                         <option value={"Private Office"}>Private Office</option>
                                         <option value={"Virtual Office"}>Virtual Office</option>
@@ -143,6 +143,9 @@ function Domains(props) {
             </div>
             <AdminQuestionnaire openQuestionnaireModal={openQuestionnaireModal}
                 setOpenQuestionnaireModal={setOpenQuestionnaireModal} />
+            {
+                !landingPage ? <Footer /> : ''
+            }
         </div>
     )
 }

@@ -2,9 +2,9 @@ import { Route, Routes } from 'react-router-dom';
 import LandingPage from './components/LandingPage';
 import Modal from 'react-modal'
 import NoMatch from './components/NoMatch';
-import AdminHomeScreen from './components/AdminHomeScreen';
-import AdminResourcesScreen from './components/AdminResourcesScreen';
 import Domains from './components/Domains';
+import AdminHomeScreen from './components/Admin/AdminHomeScreen';
+import AdminResourcesScreen from './components/Admin/AdminResourcesScreen';
 
 Modal.setAppElement('#root')
 function App() {

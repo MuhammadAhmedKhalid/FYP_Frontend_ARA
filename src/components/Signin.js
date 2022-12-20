@@ -1,6 +1,5 @@
 import React, { useState } from 'react'
 import Modal from 'react-modal'
-import './FormStyles.css'
 import { Link } from 'react-router-dom';
 import Signup from './Signup';
 import TextField from '@material-ui/core/TextField'

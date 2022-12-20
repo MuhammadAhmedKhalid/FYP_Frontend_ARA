@@ -20,7 +20,7 @@ function Office(props) {
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
-                height: '100vh'
+                height: '110vh'
             }}
         >
             <div className="flexbox-container">
@@ -36,8 +36,8 @@ function Office(props) {
                     <p style={pStyle}>Lorem ipsum dolor sit amet.</p>
                     <p style={pStyle}>Ut doloribus enim et nostrud ui quia velit est repellat rerum</p>
                 </div>
-                <img src={Img9a} style={{ height: 500, width: 275, marginLeft: 25, marginTop: 250 }} alt='Office_a-img' />
-                <img src={Img9b} style={{ height: 500, width: 275 }} alt='Office_b-img' />
+                <img src={Img9a} style={{ height: 300, width: 200, marginLeft: 25, marginTop: 250 }} alt='Office_a-img' />
+                <img src={Img9b} style={{ height: 300, width: 200 }} alt='Office_b-img' />
             </div>
         </div>
     )

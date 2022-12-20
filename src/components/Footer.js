@@ -8,12 +8,12 @@ const Footer = () => {
         <div className='footer'>
             <div className='footer-container'>
                 <div className='left'>
-                    <h1 style={{ fontSize: '25px', fontFamily: 'Segoe UI' }}>ALLOCATOR.</h1>
+                    <h1 style={{ fontSize: '16px', fontFamily: 'Segoe UI' }}>ALLOCATOR.</h1>
                     <div className='socials'>
-                        <h4>Socials</h4><br />
-                        <FaFacebook size={30} style={{ color: '#fff', marginRight: '2rem' }} />
-                        <FaTwitter size={30} style={{ color: '#fff', marginRight: '2rem' }} />
-                        <FaLinkedin size={30} style={{ color: '#fff', marginRight: '2rem' }} />
+                        <h4>Socials</h4>
+                        <FaFacebook size={20} style={{ color: '#fff', marginRight: '2rem' }} />
+                        <FaTwitter size={20} style={{ color: '#fff', marginRight: '2rem' }} />
+                        <FaLinkedin size={20} style={{ color: '#fff', marginRight: '2rem' }} />
                     </div>
                 </div>
                 <div className='flexbox-container'>

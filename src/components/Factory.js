@@ -20,7 +20,7 @@ function Factory(props) {
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
-                height: '100vh'
+                height: '110vh'
             }}
         >
             <div className="flexbox-container">
@@ -36,8 +36,8 @@ function Factory(props) {
                     <p style={pStyle}>Lorem ipsum dolor sit amet.</p>
                     <p style={pStyle}>Ut doloribus enim et nostrud ui quia velit est repellat rerum</p>
                 </div>
-                <img src={Img7a} style={{ height: 500, width: 275, marginLeft: 25, marginTop: 250 }} alt='Factory_a-img' />
-                <img src={Img7b} style={{ height: 500, width: 275 }} alt='Factory_b-img' />
+                <img src={Img7a} style={{ height: 300, width: 200, marginLeft: 25, marginTop: 250 }} alt='Factory_a-img' />
+                <img src={Img7b} style={{ height: 300, width: 200 }} alt='Factory_b-img' />
             </div>
         </div>
     )

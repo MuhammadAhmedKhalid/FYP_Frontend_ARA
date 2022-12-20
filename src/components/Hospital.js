@@ -20,7 +20,7 @@ function Hospital(props) {
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
-                height: '100vh'
+                height: '110vh'
             }}
         >
             <div className="flexbox-container">
@@ -36,8 +36,8 @@ function Hospital(props) {
                     <p style={pStyle}>Lorem ipsum dolor sit amet.</p>
                     <p style={pStyle}>Ut doloribus enim et nostrud ui quia velit est repellat rerum</p>
                 </div>
-                <img src={Img8a} style={{ height: 500, width: 275, marginLeft: 25 }} alt='Hospital_a-img' />
-                <img src={Img8b} style={{ height: 500, width: 275, marginTop: 250 }} alt='Hospital_b-img' />
+                <img src={Img8a} style={{ height: 300, width: 200, marginLeft: 25 }} alt='Hospital_a-img' />
+                <img src={Img8b} style={{ height: 300, width: 200, marginTop: 250 }} alt='Hospital_b-img' />
             </div>
         </div>
     )

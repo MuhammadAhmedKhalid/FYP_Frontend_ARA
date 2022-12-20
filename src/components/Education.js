@@ -20,7 +20,7 @@ function Education(props) {
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
-                height: '100vh'
+                height: '110vh'
             }}
         >
             <h1 style={{ color: 'black' }}>Services</h1>
@@ -37,8 +37,8 @@ function Education(props) {
                     <p style={pStyle}>Lorem ipsum dolor sit amet.</p>
                     <p style={pStyle}>Ut doloribus enim et nostrud ui quia velit est repellat rerum</p>
                 </div>
-                <img src={Img6a} style={{ height: 500, width: 275, marginLeft: 25 }} alt='Education_a-img' />
-                <img src={Img6b} style={{ height: 500, width: 275, marginTop: 250 }} alt='Education_b-img' />
+                <img src={Img6a} style={{ height: 300, width: 200, marginLeft: 25 }} alt='Education_a-img' />
+                <img src={Img6b} style={{ height: 300, width: 200, marginTop: 250 }} alt='Education_b-img' />
             </div>
         </div>
     )
