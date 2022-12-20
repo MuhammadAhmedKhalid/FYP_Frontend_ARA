@@ -21,6 +21,7 @@ body {
   display: flex;
   flex-direction: column;
   justify-content: center;
+  height: fit-content;
 }
 
 h1,
@@ -56,6 +57,20 @@ a {
     cursor: pointer;
     border-radius: 5px;
 }
+
+.dropdown{
+  padding: 12px 32px;
+  width: 250px;
+  font-size: 12px;
+  text-transform: uppercase;
+  background: #ffffff;
+  color: #0E5E6F;
+  border: 1px solid #0E5E6F;
+  font-weight: 600;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
 
 .btn:hover {
   background: #fff;

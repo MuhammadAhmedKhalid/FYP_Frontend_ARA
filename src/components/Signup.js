@@ -3,16 +3,15 @@ import Modal from 'react-modal'
 import './FormStyles.css'
 import { Link } from 'react-router-dom';
 import TextField from '@material-ui/core/TextField'
-import Button from '@material-ui/core/Button'
+// import Button from '@material-ui/core/Button'
 import InputAdornment from '@material-ui/core/InputAdornment'
 import EmailOutlinedIcon from '@mui/icons-material/EmailOutlined';
 import AccountCircleOutlinedIcon from '@mui/icons-material/AccountCircleOutlined';
 import HttpsOutlinedIcon from '@mui/icons-material/HttpsOutlined';
-import GoogleIcon from '@mui/icons-material/Google';
+// import GoogleIcon from '@mui/icons-material/Google';
 import IconButton from "@material-ui/core/IconButton";
 import Visibility from "@material-ui/icons/Visibility";
 import VisibilityOff from "@material-ui/icons/VisibilityOff";
-
 
 function Signup(props) {
 
@@ -174,9 +173,19 @@ function Signup(props) {
                                 )
                             }} />
                         <center>
-                            <button className='modal-btn' style={{ marginTop: 16 }}>Sign Up</button>
-                            <p style={{ color: '#9098B1', fontSize: 16, fontWeight: 700, marginTop: 16 }}>OR</p>
-                            <Button variant="contained" startIcon={<GoogleIcon />} style={{ marginTop: 16, color: '#0E5E6F', border: '1px solid #0E5E6F', background: '#fff', boxDecorationBreak: 'unset' }}>Sign up with Google</Button>
+                            <Link to="/domains">
+                                <button className='modal-btn' style={{ marginTop: 16 }}>Sign Up</button>
+                            </Link>
+                            {/* <p style={{ color: '#9098B1', fontSize: 16, fontWeight: 700, marginTop: 16 }}>OR</p>
+                            <Button
+                                variant="contained"
+                                startIcon={<GoogleIcon />}
+                                style={{
+                                    marginTop: 16, color: '#0E5E6F', border: '1px solid #0E5E6F', background: '#fff',
+                                    boxDecorationBreak: 'unset'
+                                }}>
+                                Sign up with Google
+                            </Button> */}
                             <div className='flexbox-container'>
                                 <p style={{ color: '#9098B1', fontSize: 16, fontWeight: 700, marginTop: 16 }}>Already have an account?&nbsp;</p>
                                 <Link onClick={openModal}><p style={{ color: '#115868', fontSize: 16, fontWeight: 700, textDecorationLine: 'underline', marginTop: 16 }}>Login</p></Link>

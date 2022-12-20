@@ -1,7 +1,10 @@
 import { Route, Routes } from 'react-router-dom';
-import LandingPage from './routes/LandingPage';
+import LandingPage from './components/LandingPage';
 import Modal from 'react-modal'
 import NoMatch from './components/NoMatch';
+import AdminHomeScreen from './components/AdminHomeScreen';
+import AdminResourcesScreen from './components/AdminResourcesScreen';
+import Domains from './components/Domains';
 
 Modal.setAppElement('#root')
 function App() {
@@ -9,6 +12,9 @@ function App() {
     <div>
       <Routes>
         <Route path='/' element={<LandingPage />} />
+        <Route path='/admin-home' element={<AdminHomeScreen />} />
+        <Route path='/admin-resources' element={<AdminResourcesScreen />} />
+        <Route path='/domains' element={<Domains />} />
         <Route path='*' element={<NoMatch />} />
       </Routes>
     </div>
