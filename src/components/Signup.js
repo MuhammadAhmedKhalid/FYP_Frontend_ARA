@@ -106,22 +106,23 @@ function Signup(props) {
                     <h2 style={{ color: "#115868", fontSize: 20 }}>Welcome To Allocator</h2>
                     <p style={{ color: "#9098B1", fontSize: 14 }}>Sign up to continue</p>
                     <form>
-                        <TextField variant="outlined" type='text' placeholder='Your Name' InputProps={{
+                        <TextField size='small' variant="outlined" type='text' placeholder='Your Name' InputProps={{
                             startAdornment: (
                                 <InputAdornment position='start'>
-                                    <AccountCircleOutlinedIcon color="action" />
+                                    <AccountCircleOutlinedIcon style={{ height: '20px' }} color="action" />
                                 </InputAdornment>
                             )
                         }} />
-                        <TextField variant="outlined" type='email' placeholder='Your Email' InputProps={{
+                        <TextField size='small' variant="outlined" type='email' placeholder='Your Email' InputProps={{
                             startAdornment: (
                                 <InputAdornment position='start'>
-                                    <EmailOutlinedIcon color="action" />
+                                    <EmailOutlinedIcon style={{ height: '20px' }} color="action" />
                                 </InputAdornment>
                             )
                         }} />
                         <div>
                             <TextField
+                                size='small'
                                 variant="outlined"
                                 type={values.showPassword ? "text" : "password"}
                                 placeholder='Password'
@@ -130,7 +131,7 @@ function Signup(props) {
                                 InputProps={{
                                     startAdornment: (
                                         <InputAdornment position='start'>
-                                            <HttpsOutlinedIcon color="action" />
+                                            <HttpsOutlinedIcon style={{ height: '20px' }} color="action" />
                                         </InputAdornment>
                                     ),
                                     endAdornment: (
@@ -138,7 +139,7 @@ function Signup(props) {
                                             <IconButton
                                                 onClick={handleClickShowPassword}
                                                 onMouseDown={handleMouseDownPassword}>
-                                                {values.showPassword ? <Visibility /> : <VisibilityOff />}
+                                                {values.showPassword ? <Visibility style={{ height: '20px' }} /> : <VisibilityOff style={{ height: '20px' }} />}
                                             </IconButton>
                                         </InputAdornment>
                                     )
@@ -146,6 +147,7 @@ function Signup(props) {
                             />
                         </div>
                         <TextField
+                            size='small'
                             error={showPasswordError}
                             helperText={errorMsg}
                             variant="outlined"
@@ -156,7 +158,7 @@ function Signup(props) {
                             InputProps={{
                                 startAdornment: (
                                     <InputAdornment position='start'>
-                                        <HttpsOutlinedIcon color="action" />
+                                        <HttpsOutlinedIcon style={{ height: '20px' }} color="action" />
                                     </InputAdornment>
                                 ),
                                 endAdornment: (
@@ -164,7 +166,7 @@ function Signup(props) {
                                         <IconButton
                                             onClick={handleClickShowPassword1}
                                             onMouseDown={handleMouseDownPassword1}>
-                                            {values1.showPassword ? <Visibility /> : <VisibilityOff />}
+                                            {values1.showPassword ? <Visibility style={{ height: '20px' }} /> : <VisibilityOff style={{ height: '20px' }} />}
                                         </IconButton>
                                     </InputAdornment>
                                 )
@@ -174,8 +176,8 @@ function Signup(props) {
                                 <button className='modal-btn' style={{ marginTop: 16 }}>Sign Up</button>
                             </Link>
                             <div className='flexbox-container'>
-                                <p style={{ color: '#9098B1', fontSize: 16, fontWeight: 700, marginTop: 16 }}>Already have an account?&nbsp;</p>
-                                <Link onClick={openModal}><p style={{ color: '#115868', fontSize: 16, fontWeight: 700, textDecorationLine: 'underline', marginTop: 16 }}>Login</p></Link>
+                                <p style={{ color: '#9098B1', fontSize: 11, fontWeight: 700, marginTop: 16 }}>Already have an account?&nbsp;</p>
+                                <Link onClick={openModal}><p style={{ color: '#115868', fontSize: 11, fontWeight: 700, textDecorationLine: 'underline', marginTop: 16 }}>Login</p></Link>
                             </div>
                         </center>
                     </form>

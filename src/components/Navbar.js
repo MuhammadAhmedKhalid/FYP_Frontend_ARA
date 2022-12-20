@@ -1,11 +1,11 @@
 import React, { useState } from 'react'
 import { Link } from "react-router-dom"
-import "./NavbarStyles.css"
+import "./Styling/NavbarStyles.css"
 import { FaBars, FaTimes } from 'react-icons/fa';
 import Signin from './Signin';
 
 const logo = {
-    fontSize: '25px',
+    fontSize: '20px',
     fontFamily: 'Segoe UI'
 }
 

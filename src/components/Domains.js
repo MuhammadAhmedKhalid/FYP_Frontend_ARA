@@ -46,13 +46,13 @@ function Domains(props) {
                     height: '110vh'
                 }}
             >
-                <h1 style={{ color: 'black' }}>A Platform Build For A New</h1>
-                <h1 style={{ color: '#0E5E6F' }}>Way Of Allocation</h1>
-                <p style={{ color: 'black', fontSize: 20 }}>Lorem ipsum dolor sit amet. Ut doloribus enim et nostrud ui quihfhhsh</p>
+                <h1 style={{ color: 'black', fontSize: '22px' }}>A Platform Build For A New</h1>
+                <h1 style={{ color: '#0E5E6F', fontSize: '22px' }}>Way Of Allocation</h1>
+                <p style={{ color: 'black', fontSize: 18 }}>Lorem ipsum dolor sit amet. Ut doloribus enim et nostrud ui quihfhhsh</p>
                 <br /><br /><br />
                 <div className="flexbox-container" >
                     <div className="flexbox-container-y">
-                        <img style={{ width: 350 }} src={Img2} alt='Domain-1' /><br />
+                        <img style={{ width: 250 }} src={Img2} alt='Domain-1' /><br />
                         {
                             landingPage ?
                                 <center><button className='btn-w' onClick={handleEduClick}>Education</button></center> :
@@ -80,7 +80,7 @@ function Domains(props) {
 
                     </div>
                     <div className="flexbox-container-y">
-                        <img style={{ width: 350 }} src={Img3} alt='Domain-2' /><br />
+                        <img style={{ width: 250 }} src={Img3} alt='Domain-2' /><br />
                         {
                             landingPage ?
                                 <center><button className='btn-w' onClick={handleFacClick}>Factory</button></center> :
@@ -91,16 +91,16 @@ function Domains(props) {
                                         justifyContent: 'center'
                                     }}>
                                     <button className='domains-textField' style={{ color: '#fff', marginBottom: '15px' }}>Factory</button>
-                                    <select className='dropdown' defaultValue={"Clothing and textiles"}>
-                                        <option value={"Clothing and textiles"}>Clothing and textiles</option>
+                                    <select className='dropdown' defaultValue={"Food"}>
                                         <option value={"Food"}>Food</option>
+                                        <option value={"Clothing and textiles"}>Clothing and textiles</option>
                                         <option value={"Metal"}>Metal</option>
                                     </select>
                                 </div>
                         }
                     </div>
                     <div className="flexbox-container-y">
-                        <img style={{ width: 350 }} src={Img4} alt='Domain-3' /><br />
+                        <img style={{ width: 250 }} src={Img4} alt='Domain-3' /><br />
                         {
                             landingPage ?
                                 <center><button className='btn-w' onClick={handleHospClick}>Hospital</button></center> :
@@ -120,7 +120,7 @@ function Domains(props) {
                         }
                     </div>
                     <div className="flexbox-container-y">
-                        <img style={{ width: 350 }} src={Img5} alt='Domain-4' /><br />
+                        <img style={{ width: 250 }} src={Img5} alt='Domain-4' /><br />
                         {
                             landingPage ?
                                 <center><button className='btn-w' onClick={handleOffClick}>Office</button></center> :

@@ -1,10 +1,10 @@
 import React, { useState } from 'react'
 import { NavLink, Link } from "react-router-dom"
-import "../NavbarStyles.css"
 import { FaBars, FaTimes } from 'react-icons/fa';
+import "../Styling/NavbarStyles.css"
 
 const logo = {
-    fontSize: '25px',
+    fontSize: '20px',
     fontFamily: 'Segoe UI'
 }
 
@@ -22,13 +22,13 @@ const AdminNavBar = () => {
         }
     }
 
+    window.addEventListener("scroll", changeColor);
+
     const navLinkStyles = ({ isActive }) => {
         return {
             fontWeight: isActive ? 'bold' : 'lighter'
         }
     }
-
-    window.addEventListener("scroll", changeColor);
 
     return (
         <div>

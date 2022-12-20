@@ -79,14 +79,15 @@ function Signin(props) {
                         <h2 style={{ color: "#115868", fontSize: 20 }}>Welcome To Allocator</h2>
                         <p style={{ color: "#9098B1", fontSize: 14 }}>Sign in to continue</p>
                         <form >
-                            <TextField variant="outlined" type='email' placeholder='Your Email' InputProps={{
+                            <TextField size='small' variant="outlined" type='email' placeholder='Your Email' InputProps={{
                                 startAdornment: (
                                     <InputAdornment position='start'>
-                                        <EmailOutlinedIcon color="action" />
+                                        <EmailOutlinedIcon style={{ height: '20px' }} color="action" />
                                     </InputAdornment>
                                 )
                             }} />
                             <TextField
+                                size='small'
                                 variant="outlined"
                                 type={values.showPassword ? "text" : "password"}
                                 placeholder='Password'
@@ -95,7 +96,7 @@ function Signin(props) {
                                 InputProps={{
                                     startAdornment: (
                                         <InputAdornment position='start'>
-                                            <HttpsOutlinedIcon color="action" />
+                                            <HttpsOutlinedIcon style={{ height: '20px' }} color="action" />
                                         </InputAdornment>
                                     ),
                                     endAdornment: (
@@ -103,17 +104,17 @@ function Signin(props) {
                                             <IconButton
                                                 onClick={handleClickShowPassword}
                                                 onMouseDown={handleMouseDownPassword}>
-                                                {values.showPassword ? <Visibility /> : <VisibilityOff />}
+                                                {values.showPassword ? <Visibility style={{ height: '20px' }} /> : <VisibilityOff style={{ height: '20px' }} />}
                                             </IconButton>
                                         </InputAdornment>
                                     )
                                 }} />
                             <center>
                                 <button className='modal-btn' style={{ marginTop: 16 }}>Login</button>
-                                <p style={{ color: "#115868", fontSize: 16, fontWeight: 700, margin: 16 }}>Forgot Password?</p>
+                                <p style={{ color: "#115868", fontSize: 12, fontWeight: 700, margin: 16 }}>Forgot Password?</p>
                                 <div className='flexbox-container'>
-                                    <p style={{ color: '#9098B1', fontSize: 16, fontWeight: 700 }}>Don't have an account?&nbsp;</p>
-                                    <Link onClick={openModal}><p style={{ color: '#115868', fontSize: 16, fontWeight: 700, textDecorationLine: 'underline' }}>Sign Up</p></Link>
+                                    <p style={{ color: '#9098B1', fontSize: 12, fontWeight: 700 }}>Don't have an account?&nbsp;</p>
+                                    <Link onClick={openModal}><p style={{ color: '#115868', fontSize: 12, fontWeight: 700, textDecorationLine: 'underline' }}>Sign Up</p></Link>
                                 </div>
                             </center>
                         </form>

@@ -1,6 +1,6 @@
 import React from 'react'
-import Img9a from '../assets/img9a.png'
-import Img9b from '../assets/img9b.png'
+import Img9a from './../../assets/img9a.png'
+import Img9b from './../../assets/img9b.png'
 
 const pStyle = {
     color: 'black',
@@ -25,7 +25,7 @@ function Office(props) {
         >
             <div className="flexbox-container">
                 <div className="flexbox-container-y">
-                    <h2 style={{ color: '#0E5E6F', fontSize: 25 }}>4. Office</h2>
+                    <h2 style={{ color: '#0E5E6F', fontSize: 22 }}>4. Office</h2>
                     <br />
                     <p style={pStyle}>Lorem ipsum dolor sit amet.</p>
                     <p style={pStyle}>Ut doloribus enim et nostrud ui quia velit est repellat rerum sit.</p>
@@ -36,8 +36,8 @@ function Office(props) {
                     <p style={pStyle}>Lorem ipsum dolor sit amet.</p>
                     <p style={pStyle}>Ut doloribus enim et nostrud ui quia velit est repellat rerum</p>
                 </div>
-                <img src={Img9a} style={{ height: 300, width: 200, marginLeft: 25, marginTop: 250 }} alt='Office_a-img' />
-                <img src={Img9b} style={{ height: 300, width: 200 }} alt='Office_b-img' />
+                <img src={Img9a} style={{ height: 350, width: 200, marginLeft: 25, marginTop: 250 }} alt='Office_a-img' />
+                <img src={Img9b} style={{ height: 350, width: 200 }} alt='Office_b-img' />
             </div>
         </div>
     )

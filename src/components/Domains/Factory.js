@@ -1,6 +1,6 @@
 import React from 'react'
-import Img7a from '../assets/img7a.png'
-import Img7b from '../assets/img7b.png'
+import Img7a from './../../assets/img7a.png'
+import Img7b from './../../assets/img7b.png'
 
 const pStyle = {
     color: 'black',
@@ -25,7 +25,7 @@ function Factory(props) {
         >
             <div className="flexbox-container">
                 <div className="flexbox-container-y">
-                    <h2 style={{ color: '#0E5E6F', fontSize: 25 }}>2. Factory</h2>
+                    <h2 style={{ color: '#0E5E6F', fontSize: 22 }}>2. Factory</h2>
                     <br />
                     <p style={pStyle}>Lorem ipsum dolor sit amet.</p>
                     <p style={pStyle}>Ut doloribus enim et nostrud ui quia velit est repellat rerum sit.</p>
@@ -36,8 +36,8 @@ function Factory(props) {
                     <p style={pStyle}>Lorem ipsum dolor sit amet.</p>
                     <p style={pStyle}>Ut doloribus enim et nostrud ui quia velit est repellat rerum</p>
                 </div>
-                <img src={Img7a} style={{ height: 300, width: 200, marginLeft: 25, marginTop: 250 }} alt='Factory_a-img' />
-                <img src={Img7b} style={{ height: 300, width: 200 }} alt='Factory_b-img' />
+                <img src={Img7a} style={{ height: 350, width: 200, marginLeft: 25, marginTop: 250 }} alt='Factory_a-img' />
+                <img src={Img7b} style={{ height: 350, width: 200 }} alt='Factory_b-img' />
             </div>
         </div>
     )

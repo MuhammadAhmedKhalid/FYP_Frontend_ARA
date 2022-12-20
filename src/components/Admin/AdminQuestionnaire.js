@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import Modal from 'react-modal'
 import { Link } from 'react-router-dom';
-import '../FormStyles.css'
+import "../Styling/FormStyles.css"
 import axios from 'axios'
 
 function AdminQuestionnaire(props) {
@@ -24,7 +24,7 @@ function AdminQuestionnaire(props) {
             bottom: 'auto',
             transform: 'translate(-50%, -50%)',
             backgroundColor: '#fff',
-            // padding: '50px',
+            padding: '50px',
             zIndex: 1000
         },
         overlay: {

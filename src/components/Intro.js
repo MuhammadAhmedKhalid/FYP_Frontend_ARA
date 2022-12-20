@@ -2,7 +2,7 @@ import React from 'react'
 import Img1 from '../assets/img1.png'
 
 const heading = {
-    fontSize: '80px'
+    fontSize: '60px'
 }
 
 function Intro() {
@@ -26,7 +26,7 @@ function Intro() {
                 <br />
             </div>
             <div>
-                <img src={Img1} alt='Into-img' />
+                <img style={{ width: 500 }} src={Img1} alt='Into-img' />
             </div>
         </div>
     )
