@@ -13,6 +13,7 @@ function AdminHomeScreen() {
             }}>
             <div>
                 <AdminNavBar />
+
                 <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
                     <FullCalendar
                         messages={{ next: '>', previous: '<', today: 'Current' }}

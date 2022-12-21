@@ -1,0 +1,26 @@
+.custom-dropdown {
+    padding: 0px 16px;
+    max-width:100%;   
+    position: relative;
+}
+.custom-dropdown-selection {
+    border-radius: 6px;
+    /* padding: 10px 16px; */
+    cursor: pointer;
+    color: white;
+}
+.custom-dropdown .items-holder {
+    border-radius: 6px;
+    background-color: #115868;
+    position: absolute;
+    top: 100%;
+    width: 100%;
+    color: white;
+}
+.custom-dropdown .items-holder .dropdown-item {
+    padding: 10px 16px;
+    cursor: pointer;
+}
+.custom-dropdown .items-holder .dropdown-item:hover {
+    background-color: #0001;
+}
