@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { NavLink, Link } from "react-router-dom"
 import { FaBars, FaTimes } from 'react-icons/fa';
 import "../Styling/NavbarStyles.css"
-import CustomDropdown from './CustomDropdown';
+import CustomDropdown from '../CustomDropdown';
 
 const logo = {
     fontSize: '20px',
@@ -12,7 +12,7 @@ const logo = {
 const AdminNavBar = () => {
 
     const [click, setClick] = useState(false)
-    const [showDropdown, setShowDropdown] = useState(false)
+    // const [showDropdown, setShowDropdown] = useState(false)
     const [color, setColor] = useState(false)
 
     const handleClick = () => setClick(!click)
@@ -23,21 +23,40 @@ const AdminNavBar = () => {
             setColor(false);
         }
     }
-    const handleHoverEnter = () => { setShowDropdown(true) }
-    const handMouseLeave = () => { setShowDropdown(false) }
-    const handleOption = (e) => {
-        console.log(e)
-    }
+    // const handleHoverEnter = () => { setShowDropdown(true) }
+    // const handMouseLeave = () => { setShowDropdown(false) }
+    // const handleOption = (e) => {
+    //     console.log(e)
+    // }
     window.addEventListener("scroll", changeColor);
     return (
         <div>
             <div className={color ? 'header header-bg' : 'header'}>
-                <Link to='/admin-home'>
+                <Link to='/admin'>
                     <h1 style={logo}>ALLOCATOR.</h1>
                 </Link>
                 <ul style={{ listStyle: 'none' }} className={click ? 'nav-menu active' : 'nav-menu'}>
-                    <li><NavLink to='/admin-home'>Home</NavLink></li>
-                    <CustomDropdown />
+                    <li><NavLink to='/admin'>Home</NavLink></li>
+                    <CustomDropdown items={[{
+                        name: 'Departments',
+                        value: 'departments',
+                        path: '/departments'
+                    },
+                    {
+                        name: 'Batches',
+                        value: 'batches',
+                        path: '/batches'
+                    },
+                    {
+                        name: 'Rooms',
+                        value: 'rooms',
+                        path: '/rooms'
+                    },
+                    {
+                        name: 'Objects',
+                        value: 'objects',
+                        path: '/objects'
+                    }]} />
                     <li> <NavLink to='/'>Logout</NavLink></li>
                 </ul >
                 <div className="hamburger" onClick={handleClick}>

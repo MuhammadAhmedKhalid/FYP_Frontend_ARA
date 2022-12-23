@@ -4,7 +4,10 @@ import Modal from 'react-modal'
 import NoMatch from './components/NoMatch';
 import Domains from './components/Domains';
 import AdminHomeScreen from './components/Admin/AdminHomeScreen';
-import AdminResourcesScreen from './components/Admin/AdminResourcesScreen';
+import Departments from './components/Admin/resources/Departments';
+import Batches from './components/Admin/resources/Batches';
+import Objects from './components/Admin/resources/Objects';
+import Rooms from './components/Admin/resources/Rooms';
 
 Modal.setAppElement('#root')
 function App() {
@@ -12,8 +15,11 @@ function App() {
     <div>
       <Routes>
         <Route path='/' element={<LandingPage />} />
-        <Route path='/admin-home' element={<AdminHomeScreen />} />
-        <Route path='/admin-resources' element={<AdminResourcesScreen />} />
+        <Route path='/admin' element={<AdminHomeScreen />} />
+        <Route path='/departments' element={<Departments />} />
+        <Route path='/batches' element={<Batches />} />
+        <Route path='/objects' element={<Objects />} />
+        <Route path='/rooms' element={<Rooms />} />
         <Route path='/domains' element={<Domains />} />
         <Route path='*' element={<NoMatch />} />
       </Routes>

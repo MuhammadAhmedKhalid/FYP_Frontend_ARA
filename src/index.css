@@ -11,6 +11,18 @@ body {
   background: #0E5E6F;
 }
 
+.modal-content{
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  right: auto;
+  bottom: auto;
+  transform: translate(-50%, -50%);
+  background-color: #fff;
+  padding: 50px;
+  z-index: 1000
+}
+
 .flexbox-container {
   display: flex;
   flex-direction: row;
@@ -22,6 +34,19 @@ body {
   flex-direction: column;
   justify-content: center;
   height: fit-content;
+}
+
+.white-bg-y {
+  display: flex;
+  justify-content: flex-start;
+  height: 100vh;
+  background: #fff
+}
+
+.center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 h1,
@@ -58,6 +83,19 @@ a {
     border-radius: 5px;
 }
 
+.modal-btn-w{
+  padding: 6px 16px;
+  width: 200px;
+  font-size: 14px;
+  text-transform: uppercase;
+  background: #fff;
+  color: #0E5E6F;
+  border: 1px solid #0E5E6F;
+  font-weight: 600;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
 .domains-textField{
   padding: 12px 32px;
   width: 210px;
@@ -71,14 +109,14 @@ a {
 }
 
 .dropdown{
-  padding: 12px 32px;
+  padding: 10px 10px;
   width: 210px;
   font-size: 12px;
   text-transform: uppercase;
   background: #ffffff;
-  color: #0E5E6F;
-  border: 1px solid #0E5E6F;
-  font-weight: 600;
+  color: #000;
+  border: 1px solid rgb(201, 200, 200);
+  font-weight: initial;
   cursor: pointer;
   border-radius: 5px;
 }

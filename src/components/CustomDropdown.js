@@ -1,30 +1,17 @@
 import React, { useState } from 'react'
-import '../Styling/CustomDropdownStyles.css'
+import { Link } from 'react-router-dom'
+import './Styling/CustomDropdownStyles.css'
 
-function CustomDropdown() {
+function CustomDropdown(props) {
+    const { items } = props
     const [isVisible, setIsVisible] = useState(false)
-    const [itemsList, setItemsList] = useState([
-        {
-            name: 'Rooms',
-            value: 'rooms'
-        },
-        {
-            name: 'Faculty',
-            value: 'faculty'
-        },
-        {
-            name: 'Objects',
-            value: 'objects'
-        }
-    ])
+    const [itemsList, setItemsList] = useState(items)
     const [selectedItem, setSelectedItem] = useState(null)
+
     const handleItems = () => {
         setIsVisible(true)
     }
-    const handleItem = (val) => {
-        console.log(val)
-        setIsVisible(false)
-    }
+
     return (
         <div>
             <div className='custom-dropdown'>
@@ -38,9 +25,11 @@ function CustomDropdown() {
                     <div className='items-holder' onMouseLeave={() => setIsVisible(false)}>
                         {
                             itemsList.map((item, index) => (
-                                <div key={item.value} className='dropdown-item' onClick={(val) => handleItem(item.value)}>
-                                    {item.name}
-                                </div>
+                                <Link key={item.value} to={item.path}>
+                                    <div className='dropdown-item'>
+                                        {item.name}
+                                    </div>
+                                </Link>
                             ))
                         }
                     </div>

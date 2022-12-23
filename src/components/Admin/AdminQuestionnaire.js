@@ -2,31 +2,17 @@ import React, { useEffect, useState } from 'react'
 import Modal from 'react-modal'
 import { Link } from 'react-router-dom';
 import "../Styling/FormStyles.css"
-import axios from 'axios'
+import TextField from '@material-ui/core/TextField'
+import InputAdornment from '@material-ui/core/InputAdornment'
+import AccountBalanceIcon from '@mui/icons-material/AccountBalance';
+import LanIcon from '@mui/icons-material/Lan';
+import LocationOnIcon from '@mui/icons-material/LocationOn';
+import CallIcon from '@mui/icons-material/Call';
 
 function AdminQuestionnaire(props) {
-    const { openQuestionnaireModal, setOpenQuestionnaireModal } = props
-    const [countries, setCountries] = useState([])
-    useEffect(() => {
-        axios.get('http://localhost:3000/countries')
-            .then(response => {
-                setCountries(response.data)
-            })
-            .catch(error => { console.log(error) })
-    }, [])
 
+    const { openQuestionnaireModal, setOpenQuestionnaireModal } = props
     const customStyles = {
-        content: {
-            position: 'fixed',
-            top: '50%',
-            left: '50%',
-            right: 'auto',
-            bottom: 'auto',
-            transform: 'translate(-50%, -50%)',
-            backgroundColor: '#fff',
-            padding: '50px',
-            zIndex: 1000
-        },
         overlay: {
             backgroundColor: 'rgba(0, 0, 0, .7)',
             position: 'fixed',
@@ -40,6 +26,7 @@ function AdminQuestionnaire(props) {
     return (
         <div>
             <Modal
+                className='modal-content'
                 style={customStyles}
                 isOpen={openQuestionnaireModal}
                 onRequestClose={() => setOpenQuestionnaireModal(false)}>
@@ -52,41 +39,42 @@ function AdminQuestionnaire(props) {
                     }}>
                     <h2 style={{ color: "#115868", fontSize: 20 }}>Questionnaire</h2>
                     <form>
-                        <div>
-                            <h3>1. Your Institute Name?</h3>
-                            <input type='text'></input>
-                        </div>
-                        <div>
-                            <h3>2. Your Branch?</h3>
-                            <input type='text'></input>
-                        </div>
-                        <div>
-                            <h3>3. Your Country?</h3>
-                            <select style={{ marginBottom: '1rem' }} className='dropdown'>
-                                {
-                                    countries.map((country) => (
-                                        <option key={country.country_id}>{country.country_name}</option>
-                                    ))
-                                }
-                            </select>
-                        </div>
-                        <div>
-                            <h3>4. Your Address?</h3>
-                            <input type='text'></input>
-                        </div>
-                        <div>
-                            <h3>5. Your Contact Number?</h3>
-                            <input type='text'></input>
-                        </div>
-                        <div>
-                            <h3>6. Upload Institute logo.</h3>
-                            <input type='file'></input>
+                        <div className='flexbox-container-y'>
+                            <TextField style={{ margin: '3px' }} size='small' variant="outlined" type='text' placeholder='Your Institute' InputProps={{
+                                startAdornment: (
+                                    <InputAdornment position='start'>
+                                        <AccountBalanceIcon style={{ height: '20px' }} color="action" />
+                                    </InputAdornment>
+                                )
+                            }} />
+                            <TextField style={{ margin: '3px' }} size='small' variant="outlined" type='text' placeholder='Your Branch' InputProps={{
+                                startAdornment: (
+                                    <InputAdornment position='start'>
+                                        <LanIcon style={{ height: '20px' }} color="action" />
+                                    </InputAdornment>
+                                )
+                            }} />
+                            <TextField style={{ margin: '3px' }} size='small' variant="outlined" type='text' placeholder='Your Address' InputProps={{
+                                startAdornment: (
+                                    <InputAdornment position='start'>
+                                        <LocationOnIcon style={{ height: '20px' }} color="action" />
+                                    </InputAdornment>
+                                )
+                            }} />
+                            <TextField style={{ margin: '3px' }} size='small' variant="outlined" type='text' placeholder='Your Contact' InputProps={{
+                                startAdornment: (
+                                    <InputAdornment position='start'>
+                                        <CallIcon style={{ height: '20px' }} color="action" />
+                                    </InputAdornment>
+                                )
+                            }} />
+                            < TextField style={{ margin: '3px' }} size='small' variant="outlined" type='file' label="Your logo" InputLabelProps={{ shrink: true }} />
                         </div>
                     </form>
-                    <Link to='/admin-home'><button className='modal-btn'>Save</button></Link>
+                    <Link to='/admin'><button className='modal-btn'>Save</button></Link>
                 </div>
-            </Modal>
-        </div>
+            </Modal >
+        </div >
     )
 }
 

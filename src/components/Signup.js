@@ -62,17 +62,6 @@ function Signup(props) {
     };
 
     const customStyles = {
-        content: {
-            position: 'fixed',
-            top: '50%',
-            left: '50%',
-            right: 'auto',
-            bottom: 'auto',
-            transform: 'translate(-50%, -50%)',
-            backgroundColor: '#fff',
-            padding: '50px',
-            zIndex: 1000
-        },
         overlay: {
             backgroundColor: 'rgba(0, 0, 0, .7)',
             position: 'fixed',
@@ -92,6 +81,7 @@ function Signup(props) {
     return (
         <div>
             <Modal
+                className='modal-content'
                 style={customStyles}
                 isOpen={openSignUpModal}
                 onRequestClose={() => setOpenSignUpModal(false)}>

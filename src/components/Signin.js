@@ -39,17 +39,6 @@ function Signin(props) {
     }
 
     const customStyles = {
-        content: {
-            position: 'fixed',
-            top: '50%',
-            left: '50%',
-            right: 'auto',
-            bottom: 'auto',
-            transform: 'translate(-50%, -50%)',
-            backgroundColor: '#fff',
-            padding: '50px',
-            zIndex: 1000
-        },
         overlay: {
             backgroundColor: 'rgba(0, 0, 0, .7)',
             position: 'fixed',
@@ -65,6 +54,7 @@ function Signin(props) {
         <div>
             <div>
                 <Modal
+                    className='modal-content'
                     style={customStyles}
                     isOpen={openSignInModal}
                     onRequestClose={() => setOpenSignInModal(false)}>
@@ -78,7 +68,7 @@ function Signin(props) {
                     >
                         <h2 style={{ color: "#115868", fontSize: 20 }}>Welcome To Allocator</h2>
                         <p style={{ color: "#9098B1", fontSize: 14 }}>Sign in to continue</p>
-                        <form >
+                        <form className='flexbox-container-y'>
                             <TextField size='small' variant="outlined" type='email' placeholder='Your Email' InputProps={{
                                 startAdornment: (
                                     <InputAdornment position='start'>
