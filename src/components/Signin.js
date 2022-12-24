@@ -9,11 +9,17 @@ import HttpsOutlinedIcon from '@mui/icons-material/HttpsOutlined';
 import IconButton from "@material-ui/core/IconButton";
 import Visibility from "@material-ui/icons/Visibility";
 import VisibilityOff from "@material-ui/icons/VisibilityOff";
+import axios from 'axios'
+import { useNavigate } from "react-router-dom";
 
 function Signin(props) {
 
     const { openSignInModal, setOpenSignInModal } = props
-
+    const [user, setUser] = useState({
+        email: "",
+        password: ""
+    })
+    const navigate = useNavigate();
     const [openSignUpModal, setOpenSignUpModal] = useState(false)
 
     const [values, setValues] = useState({
@@ -30,12 +36,20 @@ function Signin(props) {
     };
 
     const handlePasswordChange = (prop) => (event) => {
+        setUser({ ...user, password: event.target.value })
         setValues({ ...values, [prop]: event.target.value });
     };
 
     const openModal = () => {
         setOpenSignInModal(false)
         setOpenSignUpModal(true)
+    }
+
+    const handleLogin = () => {
+        axios.post('http://localhost:8080/login-admin', user)
+            .then(() => navigate('/domains'))
+            .catch((error) => { console.log(error) })
+
     }
 
     const customStyles = {
@@ -69,7 +83,7 @@ function Signin(props) {
                         <h2 style={{ color: "#115868", fontSize: 20 }}>Welcome To Allocator</h2>
                         <p style={{ color: "#9098B1", fontSize: 14 }}>Sign in to continue</p>
                         <form className='flexbox-container-y'>
-                            <TextField size='small' variant="outlined" type='email' placeholder='Your Email' InputProps={{
+                            <TextField value={user.email} onChange={(e) => setUser({ ...user, email: e.target.value })} size='small' variant="outlined" type='email' placeholder='Your Email' InputProps={{
                                 startAdornment: (
                                     <InputAdornment position='start'>
                                         <EmailOutlinedIcon style={{ height: '20px' }} color="action" />
@@ -100,7 +114,9 @@ function Signin(props) {
                                     )
                                 }} />
                             <center>
-                                <button className='modal-btn' style={{ marginTop: 16 }}>Login</button>
+                                <Link onClick={handleLogin}>
+                                    <button className='modal-btn' style={{ marginTop: 16 }}>Login</button>
+                                </Link>
                                 <p style={{ color: "#115868", fontSize: 12, fontWeight: 700, margin: 16 }}>Forgot Password?</p>
                                 <div className='flexbox-container'>
                                     <p style={{ color: '#9098B1', fontSize: 12, fontWeight: 700 }}>Don't have an account?&nbsp;</p>

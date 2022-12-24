@@ -9,10 +9,16 @@ import HttpsOutlinedIcon from '@mui/icons-material/HttpsOutlined';
 import IconButton from "@material-ui/core/IconButton";
 import Visibility from "@material-ui/icons/Visibility";
 import VisibilityOff from "@material-ui/icons/VisibilityOff";
+import axios from 'axios'
 
 function Signup(props) {
 
     const { openSignUpModal, setOpenSignUpModal, setOpenSignInModal } = props
+    const [user, setUser] = useState({
+        name: "",
+        email: "",
+        password: ""
+    })
 
     const [showPasswordError, setShowPasswordError] = useState(false)
     const [errorMsg, setErrorMsg] = useState("")
@@ -31,6 +37,7 @@ function Signup(props) {
     };
 
     const handlePasswordChange = (prop) => (event) => {
+        setUser({ ...user, password: event.target.value })
         setValues({ ...values, [prop]: event.target.value });
     };
 
@@ -77,7 +84,12 @@ function Signup(props) {
         setOpenSignUpModal(false)
         setOpenSignInModal(true)
     }
-
+    const handleSignup = () => {
+        axios.post('http://localhost:8080/create-user', user)
+            .then((response) => { console.log(response) })
+            .catch((error) => { console.log(error) })
+        openModal()
+    }
     return (
         <div>
             <Modal
@@ -96,14 +108,14 @@ function Signup(props) {
                     <h2 style={{ color: "#115868", fontSize: 20 }}>Welcome To Allocator</h2>
                     <p style={{ color: "#9098B1", fontSize: 14 }}>Sign up to continue</p>
                     <form>
-                        <TextField size='small' variant="outlined" type='text' placeholder='Your Name' InputProps={{
+                        <TextField value={user.name} onChange={(e) => setUser({ ...user, name: e.target.value })} size='small' variant="outlined" type='text' placeholder='Your Name' InputProps={{
                             startAdornment: (
                                 <InputAdornment position='start'>
                                     <AccountCircleOutlinedIcon style={{ height: '20px' }} color="action" />
                                 </InputAdornment>
                             )
                         }} />
-                        <TextField size='small' variant="outlined" type='email' placeholder='Your Email' InputProps={{
+                        <TextField value={user.email} onChange={(e) => setUser({ ...user, email: e.target.value })} size='small' variant="outlined" type='email' placeholder='Your Email' InputProps={{
                             startAdornment: (
                                 <InputAdornment position='start'>
                                     <EmailOutlinedIcon style={{ height: '20px' }} color="action" />
@@ -162,7 +174,7 @@ function Signup(props) {
                                 )
                             }} />
                         <center>
-                            <Link to="/domains">
+                            <Link onClick={handleSignup}>
                                 <button className='modal-btn' style={{ marginTop: 16 }}>Sign Up</button>
                             </Link>
                             <div className='flexbox-container'>

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import Modal from 'react-modal'
 import { Link } from 'react-router-dom';
 import "../Styling/FormStyles.css"
@@ -68,7 +68,6 @@ function AdminQuestionnaire(props) {
                                     </InputAdornment>
                                 )
                             }} />
-                            < TextField style={{ margin: '3px' }} size='small' variant="outlined" type='file' label="Your logo" InputLabelProps={{ shrink: true }} />
                         </div>
                     </form>
                     <Link to='/admin'><button className='modal-btn'>Save</button></Link>
