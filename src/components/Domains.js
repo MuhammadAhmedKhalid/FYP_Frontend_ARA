@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import Img2 from '../assets/img2.png'
 import Img3 from '../assets/img3.png'
 import Img4 from '../assets/img4.png'
@@ -6,13 +6,22 @@ import Img5 from '../assets/img5.png'
 import AdminQuestionnaire from './Admin/AdminQuestionnaire'
 import AdminSimpleNavbar from './Admin/AdminSimpleNavbar'
 import Footer from './Footer'
+import axios from 'axios'
 
 
 function Domains(props) {
 
+    useEffect(() => {
+        axios.get('http://localhost:8080/get_institute_types')
+            .then((response) => { setInstituteTypes(response.data) })
+            .catch((error) => { console.log(error) })
+    }, [])
+
+    const [instituteTypes, setInstituteTypes] = useState([])
+    const [instituteTypeId, setInstituteTypeId] = useState("")
+
     const { edu_ref, fac_ref, hosp_ref, off_ref, landingPage } = props
 
-    const [domain, setDomain] = useState('Choose...')
     const [openQuestionnaireModal, setOpenQuestionnaireModal] = useState(false)
 
     const handleEduClick = () => {
@@ -28,11 +37,14 @@ function Domains(props) {
         off_ref.current?.scrollIntoView({ behavior: 'smooth' });
     };
 
-    const showQuestionnaireModal = (e) => {
-        setDomain(e.target.value)
+    const handleSelect = (e) => {
         setOpenQuestionnaireModal(true)
+        for (let i = 0; i < instituteTypes.length; i++) {
+            if (instituteTypes[i].name === e.target.value) {
+                setInstituteTypeId(instituteTypes[i].institute_type_id)
+            }
+        }
     }
-
     return (
         <div>
             <AdminSimpleNavbar />
@@ -65,15 +77,14 @@ function Domains(props) {
                                     }}>
                                     <button className='domains-textField' style={{ color: '#fff', marginBottom: '15px' }}>Education</button>
                                     <select
-                                        value={domain}
+                                        value={instituteTypes.name}
                                         className='dropdown'
-                                        onChange={
-                                            (e) => showQuestionnaireModal(e)}
-
-                                    >
-                                        <option value={"School"}>School</option>
-                                        <option value={"University"}>University</option>
-                                        <option value={"College"}>College</option>
+                                        onChange={(e) => handleSelect(e)}>
+                                        {
+                                            instituteTypes.map(instituteType =>
+                                                instituteType.domain === "Education" ?
+                                                    <option key={instituteType.institute_type_id}>{instituteType.name}</option> : null)
+                                        }
                                     </select>
                                 </div>
                         }
@@ -92,9 +103,11 @@ function Domains(props) {
                                     }}>
                                     <button className='domains-textField' style={{ color: '#fff', marginBottom: '15px' }}>Factory</button>
                                     <select className='dropdown' defaultValue={"Food"}>
-                                        <option value={"Food"}>Food</option>
-                                        <option value={"Clothing and textiles"}>Clothing and textiles</option>
-                                        <option value={"Metal"}>Metal</option>
+                                        {
+                                            instituteTypes.map(instituteType =>
+                                                instituteType.domain === "Factory" ?
+                                                    <option key={instituteType.institute_type_id}>{instituteType.name}</option> : null)
+                                        }
                                     </select>
                                 </div>
                         }
@@ -112,9 +125,11 @@ function Domains(props) {
                                     }}>
                                     <button className='domains-textField' style={{ color: '#fff', marginBottom: '15px' }}>Hospital</button>
                                     <select className='dropdown' defaultValue={"Women's hospitals"}>
-                                        <option value={"Women's hospitals"}>Women's hospitals</option>
-                                        <option value={"Children's hospitals"}>Children's hospitals</option>
-                                        <option value={"Trauma Center Hospitals"}>Trauma Center Hospitals</option>
+                                        {
+                                            instituteTypes.map(instituteType =>
+                                                instituteType.domain === "Hospital" ?
+                                                    <option key={instituteType.institute_type_id}>{instituteType.name}</option> : null)
+                                        }
                                     </select>
                                 </div>
                         }
@@ -132,9 +147,11 @@ function Domains(props) {
                                     }}>
                                     <button className='domains-textField' style={{ color: '#fff', marginBottom: '15px' }}>Office</button>
                                     <select className='dropdown' defaultValue={"Private Office"}>
-                                        <option value={"Private Office"}>Private Office</option>
-                                        <option value={"Virtual Office"}>Virtual Office</option>
-                                        <option value={"Coworking Desk"}>Coworking Desk</option>
+                                        {
+                                            instituteTypes.map(instituteType =>
+                                                instituteType.domain === "Office" ?
+                                                    <option key={instituteType.institute_type_id}>{instituteType.name}</option> : null)
+                                        }
                                     </select>
                                 </div>
                         }
