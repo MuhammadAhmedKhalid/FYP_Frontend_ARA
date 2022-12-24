@@ -9,9 +9,13 @@ import HttpsOutlinedIcon from '@mui/icons-material/HttpsOutlined';
 import IconButton from "@material-ui/core/IconButton";
 import Visibility from "@material-ui/icons/Visibility";
 import VisibilityOff from "@material-ui/icons/VisibilityOff";
-import axios from 'axios'
+// import axios from 'axios'
+import { useDispatch } from 'react-redux'
+import { signupRequest } from '../redux/Signup/signupActions'
 
 function Signup(props) {
+
+    const dispatch = useDispatch()
 
     const { openSignUpModal, setOpenSignUpModal, setOpenSignInModal } = props
     const [user, setUser] = useState({
@@ -85,9 +89,10 @@ function Signup(props) {
         setOpenSignInModal(true)
     }
     const handleSignup = () => {
-        axios.post('http://localhost:8080/create-user', user)
-            .then((response) => { console.log(response) })
-            .catch((error) => { console.log(error) })
+        // axios.post('http://localhost:8080/create-user', user)
+        //     .then((response) => { console.log(response) })
+        //     .catch((error) => { console.log(error) })
+        dispatch(signupRequest(user))
         openModal()
     }
     return (
