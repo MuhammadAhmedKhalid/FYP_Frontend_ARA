@@ -5,6 +5,7 @@ import AddBatches from './modals/AddBatches'
 
 function Batches() {
     const [openBatchModal, setOpenBatchModal] = useState(false)
+
     const openModal = () => {
         setOpenBatchModal(true)
     }

@@ -1,13 +1,21 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import Modal from 'react-modal'
 import TextField from '@material-ui/core/TextField'
 import InputAdornment from '@material-ui/core/InputAdornment'
 import GroupsIcon from '@mui/icons-material/Groups';
 import FormatListBulletedIcon from '@mui/icons-material/FormatListBulleted';
+import axios from 'axios';
 
 function AddBatches(props) {
 
     const { openBatchModal, setOpenBatchModal } = props
+
+    const [departments, setDepartments] = useState([])
+    useEffect(() => {
+        axios.get('http://localhost:8080/departments')
+            .then((response) => { setDepartments(response.data) })
+            .catch((error) => { console.log(error) })
+    }, [])
 
     const customStyles = {
         overlay: {
@@ -46,8 +54,9 @@ function AddBatches(props) {
                                 fontWeight: 'normal', color: 'gray', marginRight: '3px'
                             }}>Your Department</h3>
                             <select className='dropdown'>
-                                <option>Electrical</option>
-                                <option>Software</option>
+                                {
+                                    departments.map(department => <option key={department.department_id}>{department.department_name}</option>)
+                                }
                             </select>
                         </div>
                         <TextField style={{ margin: '3px' }} size='small' variant="outlined" type='text' placeholder='Batch Type' InputProps={{
