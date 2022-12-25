@@ -4,7 +4,8 @@ export const loginInitialState = {
     loading: false,
     success: '',
     error: '',
-    isLoggedIn: false
+    isLoggedIn: false,
+    user: null
 }
 
 export const loginReducer = (state = loginInitialState, action) => {
@@ -19,20 +20,23 @@ export const loginReducer = (state = loginInitialState, action) => {
             success: action.message,
             error: '',
             isLoggedIn: true,
+            user: action.user
         }
         case LOGIN_FAILURE: return {
             ...state,
             loading: false,
             success: '',
             error: action.message,
-            isLoggedIn: false
+            isLoggedIn: false,
+            user: null
         }
         case LOGOUT_REQUEST: return {
             ...state,
             loading: false,
             success: action.message,
             error: '',
-            isLoggedIn: false
+            isLoggedIn: false,
+            user: null
         }
         default: return state
     }

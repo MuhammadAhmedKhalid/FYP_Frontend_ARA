@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import Modal from 'react-modal'
 import { Link } from 'react-router-dom';
 import "../Styling/FormStyles.css"
@@ -8,14 +8,27 @@ import AccountBalanceIcon from '@mui/icons-material/AccountBalance';
 import LanIcon from '@mui/icons-material/Lan';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
 import CallIcon from '@mui/icons-material/Call';
-import axios from 'axios';
+import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from 'react-redux'
+import { addInstituteRequest } from '../../redux/Institute/instituteActions'
 
 function AdminQuestionnaire(props) {
 
     const { openQuestionnaireModal, setOpenQuestionnaireModal, instituteTypeId } = props
 
+    const navigate = useNavigate()
+    const dispatch = useDispatch()
+
+    const instituteAdded = useSelector((state) => state.institute.added)
+
+    useEffect(() => {
+        if (instituteAdded) {
+            navigate('/admin')
+        }
+    }, [instituteAdded])
+
     const [institute, setInstitute] = useState({
-        institute_type_id: instituteTypeId,
+        institute_type_id: 0,
         institute_name: "",
         branch: "",
         address: "",
@@ -35,9 +48,7 @@ function AdminQuestionnaire(props) {
     };
 
     const handleSave = () => {
-        axios.post('http://localhost:8080/add_institute', institute)
-            .then((response) => { console.log(response) })
-            .catch((error) => { console.log(error) })
+        dispatch(addInstituteRequest(institute))
     }
 
     return (
@@ -57,7 +68,7 @@ function AdminQuestionnaire(props) {
                     <h2 style={{ color: "#115868", fontSize: 20 }}>Questionnaire</h2>
                     <form>
                         <div className='flexbox-container-y'>
-                            <TextField value={institute.institute_name} onChange={(e) => setInstitute({ ...institute, institute_name: e.target.value })} style={{ margin: '3px' }} size='small' variant="outlined" type='text' placeholder='Your Institute' InputProps={{
+                            <TextField value={institute.institute_name} onChange={(e) => setInstitute({ ...institute, institute_type_id: instituteTypeId, institute_name: e.target.value })} style={{ margin: '3px' }} size='small' variant="outlined" type='text' placeholder='Your Institute' InputProps={{
                                 startAdornment: (
                                     <InputAdornment position='start'>
                                         <AccountBalanceIcon style={{ height: '20px' }} color="action" />
