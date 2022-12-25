@@ -7,6 +7,7 @@ function* signup(user) {
         axios.post('http://localhost:8080/create-user', user.user)
         yield put({ type: SIGNUP_SUCCESS, message: "Success" })
     } catch (e) {
+        console.log('error')
         yield put({ type: SIGNUP_FAILURE, message: e.message })
     }
 }

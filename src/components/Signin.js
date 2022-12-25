@@ -9,17 +9,20 @@ import HttpsOutlinedIcon from '@mui/icons-material/HttpsOutlined';
 import IconButton from "@material-ui/core/IconButton";
 import Visibility from "@material-ui/icons/Visibility";
 import VisibilityOff from "@material-ui/icons/VisibilityOff";
-import axios from 'axios'
-import { useNavigate } from "react-router-dom";
+// import { useNavigate } from "react-router-dom";
+import { useDispatch } from 'react-redux'
+import { loginRequest } from '../redux/Login/loginActions'
 
 function Signin(props) {
+
+    const dispatch = useDispatch()
 
     const { openSignInModal, setOpenSignInModal } = props
     const [user, setUser] = useState({
         email: "",
         password: ""
     })
-    const navigate = useNavigate();
+
     const [openSignUpModal, setOpenSignUpModal] = useState(false)
 
     const [values, setValues] = useState({
@@ -46,12 +49,8 @@ function Signin(props) {
     }
 
     const handleLogin = () => {
-        axios.post('http://localhost:8080/login-admin', user)
-            .then(() => navigate('/domains'))
-            .catch((error) => { console.log(error) })
-
+        dispatch(loginRequest(user))
     }
-
     const customStyles = {
         overlay: {
             backgroundColor: 'rgba(0, 0, 0, .7)',
