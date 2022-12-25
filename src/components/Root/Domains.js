@@ -7,14 +7,19 @@ import AdminQuestionnaire from '../Admin/AdminQuestionnaire'
 import AdminSimpleNavbar from '../Admin/AdminSimpleNavbar'
 import Footer from './Footer'
 import axios from 'axios'
+import { useDispatch, useSelector } from 'react-redux'
+import { getInstituteTypeRequest } from '../../redux/InstituteTypes/instituteTypesActions'
 
 
 function Domains(props) {
 
+    const dispatch = useDispatch()
+    const types = useSelector((state) => state.instituteType.instituteTypes)
+
     useEffect(() => {
-        axios.get('http://localhost:8080/get_institute_types')
-            .then((response) => { setInstituteTypes(response.data) })
-            .catch((error) => { console.log(error) })
+        dispatch(getInstituteTypeRequest())
+        setInstituteTypes(types)
+        console.log(types)
     }, [])
 
     const [instituteTypes, setInstituteTypes] = useState([])
