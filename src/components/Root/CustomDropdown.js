@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
-import './Styling/CustomDropdownStyles.css'
+import '../Styling/CustomDropdownStyles.css'
 
 function CustomDropdown(props) {
     const { items } = props

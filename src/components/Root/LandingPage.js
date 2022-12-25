@@ -1,12 +1,12 @@
 import React, { useRef, useState } from 'react'
-import Navbar from '../components/Navbar'
-import Domains from '../components/Domains'
-import Intro from '../components/Intro'
-import Education from './Domains/Education'
-import Factory from './Domains/Factory'
-import Hospital from './Domains/Hospital'
-import Office from './Domains/Office'
-import Footer from '../components/Footer'
+import Navbar from '../Root/Navbar'
+import Domains from './Domains'
+import Intro from './Intro'
+import Education from '../Domains/Education'
+import Factory from '../Domains/Factory'
+import Hospital from '../Domains/Hospital'
+import Office from '../Domains/Office'
+import Footer from './Footer'
 
 const LandingPage = () => {
 

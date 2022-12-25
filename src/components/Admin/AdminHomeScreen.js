@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import FullCalendar from '../FullCalendar'
+import FullCalendar from '../Root/FullCalendar'
 import AdminNavBar from './AdminNavbar'
 import Img10 from '../../assets/img10.png'
 

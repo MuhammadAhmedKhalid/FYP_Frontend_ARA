@@ -1,8 +1,8 @@
 import { Route, Routes } from 'react-router-dom';
-import LandingPage from './components/LandingPage';
+import LandingPage from './components/Root/LandingPage';
 import Modal from 'react-modal'
-import NoMatch from './components/NoMatch';
-import Domains from './components/Domains';
+import NoMatch from './components/Root/NoMatch';
+import Domains from './components/Root/Domains';
 import AdminHomeScreen from './components/Admin/AdminHomeScreen';
 import Departments from './components/Admin/resources/Departments';
 import Batches from './components/Admin/resources/Batches';

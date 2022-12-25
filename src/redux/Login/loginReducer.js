@@ -1,9 +1,10 @@
-import { LOGIN_REQUEST, LOGIN_SUCCESS, LOGIN_FAILURE } from "./loginTypes"
+import { LOGIN_REQUEST, LOGIN_SUCCESS, LOGIN_FAILURE, LOGOUT_REQUEST } from "./loginTypes"
 
 export const loginInitialState = {
     loading: false,
     success: '',
-    error: ''
+    error: '',
+    isLoggedIn: false
 }
 
 export const loginReducer = (state = loginInitialState, action) => {
@@ -16,13 +17,22 @@ export const loginReducer = (state = loginInitialState, action) => {
             ...state,
             loading: false,
             success: action.message,
-            error: ''
+            error: '',
+            isLoggedIn: true,
         }
         case LOGIN_FAILURE: return {
             ...state,
             loading: false,
             success: '',
-            error: action.message
+            error: action.message,
+            isLoggedIn: false
+        }
+        case LOGOUT_REQUEST: return {
+            ...state,
+            loading: false,
+            success: action.message,
+            error: '',
+            isLoggedIn: false
         }
         default: return state
     }

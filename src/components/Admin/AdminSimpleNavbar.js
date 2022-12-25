@@ -1,7 +1,10 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { NavLink, Link } from "react-router-dom"
 import { FaBars, FaTimes } from 'react-icons/fa';
 import "../Styling/NavbarStyles.css"
+import { useDispatch, useSelector } from 'react-redux'
+import { useNavigate } from "react-router-dom";
+import { logoutRequest } from '../.././redux/Login/loginActions'
 
 const logo = {
     fontSize: '20px',
@@ -9,6 +12,18 @@ const logo = {
 }
 
 const AdminSimpleNavbar = () => {
+
+    const navigate = useNavigate()
+    const dispatch = useDispatch()
+
+    const isLoggedIn = useSelector((state) => state.login.isLoggedIn)
+
+    useEffect(() => {
+        if (!isLoggedIn) {
+            navigate('/')
+        }
+    }, [isLoggedIn])
+
     const [click, setClick] = useState(false)
     const handleClick = () => setClick(!click)
 
@@ -28,7 +43,9 @@ const AdminSimpleNavbar = () => {
     }
 
     window.addEventListener("scroll", changeColor);
-
+    const handleLogout = () => {
+        dispatch(logoutRequest)
+    }
     return (
         <div>
             <div className={color ? 'header header-bg' : 'header'}>
@@ -36,7 +53,7 @@ const AdminSimpleNavbar = () => {
                     <h1 style={logo}>ALLOCATOR.</h1>
                 </Link>
                 <ul style={{ listStyle: 'none' }} className={click ? 'nav-menu active' : 'nav-menu'}>
-                    <li><NavLink style={navLinkStyles} to='/'>Logout</NavLink></li>
+                    <li><NavLink style={navLinkStyles} onClick={handleLogout}>Logout</NavLink></li>
                 </ul>
                 <div className="hamburger" onClick={handleClick}>
                     {

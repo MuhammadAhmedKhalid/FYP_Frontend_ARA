@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { Link } from "react-router-dom"
-import "./Styling/NavbarStyles.css"
+import "../Styling/NavbarStyles.css"
 import { FaBars, FaTimes } from 'react-icons/fa';
 import Signin from './Signin';
 

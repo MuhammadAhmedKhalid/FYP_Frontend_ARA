@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import Modal from 'react-modal'
 import { Link } from 'react-router-dom';
 import Signup from './Signup';
@@ -9,13 +9,21 @@ import HttpsOutlinedIcon from '@mui/icons-material/HttpsOutlined';
 import IconButton from "@material-ui/core/IconButton";
 import Visibility from "@material-ui/icons/Visibility";
 import VisibilityOff from "@material-ui/icons/VisibilityOff";
-// import { useNavigate } from "react-router-dom";
-import { useDispatch } from 'react-redux'
-import { loginRequest } from '../redux/Login/loginActions'
+import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from 'react-redux'
+import { loginRequest } from '../../redux/Login/loginActions'
 
 function Signin(props) {
 
+    const navigate = useNavigate()
     const dispatch = useDispatch()
+    const isLoggedIn = useSelector((state) => state.login.isLoggedIn)
+
+    useEffect(() => {
+        if (isLoggedIn) {
+            navigate('/domains')
+        }
+    }, [isLoggedIn])
 
     const { openSignInModal, setOpenSignInModal } = props
     const [user, setUser] = useState({

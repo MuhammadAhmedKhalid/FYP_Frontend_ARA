@@ -5,6 +5,8 @@ import axios from 'axios'
 function* signup(user) {
     try {
         axios.post('http://localhost:8080/create-user', user.user)
+        // .then((response) => { console.log(response) })
+        // .catch((error) => { console.log(error) })
         yield put({ type: SIGNUP_SUCCESS, message: "Success" })
     } catch (e) {
         console.log('error')

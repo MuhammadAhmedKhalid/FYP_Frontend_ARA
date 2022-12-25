@@ -10,7 +10,7 @@ import IconButton from "@material-ui/core/IconButton";
 import Visibility from "@material-ui/icons/Visibility";
 import VisibilityOff from "@material-ui/icons/VisibilityOff";
 import { useDispatch } from 'react-redux'
-import { signupRequest } from '../redux/Signup/signupActions'
+import { signupRequest } from '../../redux/Signup/signupActions'
 
 function Signup(props) {
 

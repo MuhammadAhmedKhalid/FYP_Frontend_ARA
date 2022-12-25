@@ -1,8 +1,11 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { NavLink, Link } from "react-router-dom"
 import { FaBars, FaTimes } from 'react-icons/fa';
 import "../Styling/NavbarStyles.css"
-import CustomDropdown from '../CustomDropdown';
+import CustomDropdown from '../Root/CustomDropdown';
+import { useDispatch, useSelector } from 'react-redux'
+import { useNavigate } from "react-router-dom";
+import { logoutRequest } from '../.././redux/Login/loginActions'
 
 const logo = {
     fontSize: '20px',
@@ -10,6 +13,21 @@ const logo = {
 }
 
 const AdminNavBar = () => {
+
+    const navigate = useNavigate()
+    const dispatch = useDispatch()
+
+    const isLoggedIn = useSelector((state) => state.login.isLoggedIn)
+
+    useEffect(() => {
+        if (!isLoggedIn) {
+            navigate('/')
+        }
+    }, [isLoggedIn])
+
+    const handleLogout = () => {
+        dispatch(logoutRequest)
+    }
 
     const [click, setClick] = useState(false)
     // const [showDropdown, setShowDropdown] = useState(false)
@@ -57,7 +75,7 @@ const AdminNavBar = () => {
                         value: 'objects',
                         path: '/objects'
                     }]} />
-                    <li> <NavLink to='/'>Logout</NavLink></li>
+                    <li> <NavLink onClick={handleLogout}>Logout</NavLink></li>
                 </ul >
                 <div className="hamburger" onClick={handleClick}>
                     {
