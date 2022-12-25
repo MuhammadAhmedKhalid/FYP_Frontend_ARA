@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import Modal from 'react-modal'
 import { Link } from 'react-router-dom';
 import "../Styling/FormStyles.css"
@@ -8,10 +8,20 @@ import AccountBalanceIcon from '@mui/icons-material/AccountBalance';
 import LanIcon from '@mui/icons-material/Lan';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
 import CallIcon from '@mui/icons-material/Call';
+import axios from 'axios';
 
 function AdminQuestionnaire(props) {
 
-    const { openQuestionnaireModal, setOpenQuestionnaireModal } = props
+    const { openQuestionnaireModal, setOpenQuestionnaireModal, instituteTypeId } = props
+
+    const [institute, setInstitute] = useState({
+        institute_type_id: instituteTypeId,
+        institute_name: "",
+        branch: "",
+        address: "",
+        contact: ""
+    })
+
     const customStyles = {
         overlay: {
             backgroundColor: 'rgba(0, 0, 0, .7)',
@@ -23,6 +33,13 @@ function AdminQuestionnaire(props) {
             zIndex: 1000,
         },
     };
+
+    const handleSave = () => {
+        axios.post('http://localhost:8080/add_institute', institute)
+            .then((response) => { console.log(response) })
+            .catch((error) => { console.log(error) })
+    }
+
     return (
         <div>
             <Modal
@@ -40,28 +57,28 @@ function AdminQuestionnaire(props) {
                     <h2 style={{ color: "#115868", fontSize: 20 }}>Questionnaire</h2>
                     <form>
                         <div className='flexbox-container-y'>
-                            <TextField style={{ margin: '3px' }} size='small' variant="outlined" type='text' placeholder='Your Institute' InputProps={{
+                            <TextField value={institute.institute_name} onChange={(e) => setInstitute({ ...institute, institute_name: e.target.value })} style={{ margin: '3px' }} size='small' variant="outlined" type='text' placeholder='Your Institute' InputProps={{
                                 startAdornment: (
                                     <InputAdornment position='start'>
                                         <AccountBalanceIcon style={{ height: '20px' }} color="action" />
                                     </InputAdornment>
                                 )
                             }} />
-                            <TextField style={{ margin: '3px' }} size='small' variant="outlined" type='text' placeholder='Your Branch' InputProps={{
+                            <TextField value={institute.branch} onChange={(e) => setInstitute({ ...institute, branch: e.target.value })} style={{ margin: '3px' }} size='small' variant="outlined" type='text' placeholder='Your Branch' InputProps={{
                                 startAdornment: (
                                     <InputAdornment position='start'>
                                         <LanIcon style={{ height: '20px' }} color="action" />
                                     </InputAdornment>
                                 )
                             }} />
-                            <TextField style={{ margin: '3px' }} size='small' variant="outlined" type='text' placeholder='Your Address' InputProps={{
+                            <TextField value={institute.address} onChange={(e) => setInstitute({ ...institute, address: e.target.value })} style={{ margin: '3px' }} size='small' variant="outlined" type='text' placeholder='Your Address' InputProps={{
                                 startAdornment: (
                                     <InputAdornment position='start'>
                                         <LocationOnIcon style={{ height: '20px' }} color="action" />
                                     </InputAdornment>
                                 )
                             }} />
-                            <TextField style={{ margin: '3px' }} size='small' variant="outlined" type='text' placeholder='Your Contact' InputProps={{
+                            <TextField value={institute.contact} onChange={(e) => setInstitute({ ...institute, contact: e.target.value })} style={{ margin: '3px' }} size='small' variant="outlined" type='text' placeholder='Your Contact' InputProps={{
                                 startAdornment: (
                                     <InputAdornment position='start'>
                                         <CallIcon style={{ height: '20px' }} color="action" />
@@ -70,7 +87,7 @@ function AdminQuestionnaire(props) {
                             }} />
                         </div>
                     </form>
-                    <Link to='/admin'><button className='modal-btn'>Save</button></Link>
+                    <Link onClick={handleSave}><button className='modal-btn'>Save</button></Link>
                 </div>
             </Modal >
         </div >

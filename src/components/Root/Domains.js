@@ -6,7 +6,6 @@ import Img5 from '../../assets/img5.png'
 import AdminQuestionnaire from '../Admin/AdminQuestionnaire'
 import AdminSimpleNavbar from '../Admin/AdminSimpleNavbar'
 import Footer from './Footer'
-import axios from 'axios'
 import { useDispatch, useSelector } from 'react-redux'
 import { getInstituteTypeRequest } from '../../redux/InstituteTypes/instituteTypesActions'
 
@@ -19,7 +18,6 @@ function Domains(props) {
     useEffect(() => {
         dispatch(getInstituteTypeRequest())
         setInstituteTypes(types)
-        console.log(types)
     }, [])
 
     const [instituteTypes, setInstituteTypes] = useState([])
@@ -163,7 +161,7 @@ function Domains(props) {
                     </div>
                 </div>
             </div>
-            <AdminQuestionnaire openQuestionnaireModal={openQuestionnaireModal}
+            <AdminQuestionnaire instituteTypeId={instituteTypeId} openQuestionnaireModal={openQuestionnaireModal}
                 setOpenQuestionnaireModal={setOpenQuestionnaireModal} />
             {
                 !landingPage ? <Footer /> : ''

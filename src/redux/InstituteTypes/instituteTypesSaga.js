@@ -6,7 +6,6 @@ function* getInstituteTypes() {
         let data = yield fetch('http://localhost:8080/get_institute_types')
         data = yield data.json();
         yield put({ type: GET_INSTITUTE_TYPE_SUCCESS, data })
-        console.log(data)
     } catch (e) {
         yield put({ type: GET_INSTITUTE_TYPE_FAILURE, message: e.message })
     }
