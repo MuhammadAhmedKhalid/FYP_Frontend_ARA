@@ -4,10 +4,10 @@ import axios from 'axios'
 
 function* addInstitute(institute) {
     try {
-        axios.post('http://localhost:8080/add_institute', institute.institute)
-        yield put({ type: ADD_INSTITUTE_SUCCESS, message: "Success" })
+        const response = yield axios.post('http://localhost:8080/add_institute', institute.institute)
+        yield put({ type: ADD_INSTITUTE_SUCCESS, response })
     } catch (e) {
-        yield put({ type: ADD_INSTITUTE_FAILURE, message: e.message })
+        yield put({ type: ADD_INSTITUTE_FAILURE, e })
     }
 }
 

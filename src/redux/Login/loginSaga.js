@@ -4,10 +4,10 @@ import axios from 'axios'
 
 function* login(user) {
     try {
-        axios.post('http://localhost:8080/login-admin', user.user)
-        yield put({ type: LOGIN_SUCCESS, message: "Success", user: user.user })
+        const response = yield axios.post('http://localhost:8080/login-admin', user.user);
+        yield put({ type: LOGIN_SUCCESS, response });
     } catch (e) {
-        yield put({ type: LOGIN_FAILURE, message: e.message })
+        yield put({ type: LOGIN_FAILURE, e });
     }
 }
 

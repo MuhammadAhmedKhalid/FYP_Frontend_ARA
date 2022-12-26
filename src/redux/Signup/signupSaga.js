@@ -4,13 +4,10 @@ import axios from 'axios'
 
 function* signup(user) {
     try {
-        axios.post('http://localhost:8080/create-user', user.user)
-        // .then((response) => { console.log(response) })
-        // .catch((error) => { console.log(error) })
-        yield put({ type: SIGNUP_SUCCESS, message: "Success" })
+        const response = yield axios.post('http://localhost:8080/create-user', user.user)
+        yield put({ type: SIGNUP_SUCCESS, response })
     } catch (e) {
-        console.log('error')
-        yield put({ type: SIGNUP_FAILURE, message: e.message })
+        yield put({ type: SIGNUP_FAILURE, e })
     }
 }
 
