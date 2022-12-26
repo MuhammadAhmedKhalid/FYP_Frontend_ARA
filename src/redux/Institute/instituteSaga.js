@@ -1,13 +1,18 @@
 import { ADD_INSTITUTE_FAILURE, ADD_INSTITUTE_REQUEST, ADD_INSTITUTE_SUCCESS } from './instituteTypes'
-import { put, takeEvery } from 'redux-saga/effects'
+import { call, put, takeEvery } from 'redux-saga/effects'
 import axios from 'axios'
+import { select } from 'redux-saga/effects';
 
 function* addInstitute(institute) {
     try {
-        const response = yield axios.post('http://localhost:8080/add_institute', institute.institute)
-        yield put({ type: ADD_INSTITUTE_SUCCESS, response })
-    } catch (e) {
-        yield put({ type: ADD_INSTITUTE_FAILURE, e })
+        const token = yield select(state => state.login.user.jwt);
+        const headers = {
+            'Authorization': `Bearer ${token}`
+        };
+        yield call(axios.post, 'http://localhost:8080/add_institute', institute.institute, { headers });
+        yield put({ type: ADD_INSTITUTE_SUCCESS, message: "Institute added successfully." })
+    } catch (error) {
+        yield put({ type: ADD_INSTITUTE_FAILURE, message: "Add institute operation failed." })
     }
 }
 
