@@ -12,18 +12,34 @@ import VisibilityOff from "@material-ui/icons/VisibilityOff";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from 'react-redux'
 import { loginRequest } from '../../redux/Login/loginActions'
+import { getInstitutesRequest } from '../../redux/GetInstitutes/getInstitutesActions'
 
 function Signin(props) {
 
     const navigate = useNavigate()
     const dispatch = useDispatch()
     const isLoggedIn = useSelector((state) => state.login.isLoggedIn)
+    const admin_id = useSelector((state) => state.login.user.user_id)
+    const institutes = useSelector((state) => state.getInstitutes.institutes.data)
+    const isInstitutesAdded = useSelector((state) => state.getInstitutes.added)
 
     useEffect(() => {
         if (isLoggedIn) {
-            navigate('/domains')
+            dispatch(getInstitutesRequest())
         }
     }, [isLoggedIn])
+
+    useEffect(() => {
+        if (isInstitutesAdded) {
+            for (let i = 0; i < institutes.length; i++) {
+                if (institutes[i].user_id === admin_id) {
+                    navigate('/admin')
+                } else {
+                    navigate('/domains')
+                }
+            }
+        }
+    }, [isInstitutesAdded])
 
     const { openSignInModal, setOpenSignInModal } = props
     const [user, setUser] = useState({

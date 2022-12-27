@@ -9,7 +9,6 @@ import Office from '../Domains/Office'
 import Footer from './Footer'
 
 const LandingPage = () => {
-
     const [landingPage, setLandingPage] = useState(true)
     const edu_ref = useRef(null);
     const fac_ref = useRef(null);

@@ -5,7 +5,7 @@ export const loginInitialState = {
     success: '',
     error: '',
     isLoggedIn: false,
-    user: null
+    user: {}
 }
 
 export const loginReducer = (state = loginInitialState, action) => {

@@ -10,7 +10,7 @@ import LocationOnIcon from '@mui/icons-material/LocationOn';
 import CallIcon from '@mui/icons-material/Call';
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from 'react-redux'
-import { addInstituteRequest } from '../../redux/Institute/instituteActions'
+import { addInstituteRequest } from '../../redux/AddInstitute/instituteActions'
 
 function AdminQuestionnaire(props) {
 
@@ -20,6 +20,7 @@ function AdminQuestionnaire(props) {
     const dispatch = useDispatch()
 
     const instituteAdded = useSelector((state) => state.institute.added)
+    const admin_id = useSelector((state) => state.login.user.user_id)
 
     useEffect(() => {
         if (instituteAdded) {
@@ -32,9 +33,10 @@ function AdminQuestionnaire(props) {
         institute_name: "",
         branch: "",
         address: "",
-        contact: ""
+        contact: "",
+        user_id: admin_id
     })
-
+    // console.log(institute)
     const customStyles = {
         overlay: {
             backgroundColor: 'rgba(0, 0, 0, .7)',
