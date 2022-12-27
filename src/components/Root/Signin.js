@@ -33,7 +33,8 @@ function Signin(props) {
         if (isInstitutesAdded) {
             for (let i = 0; i < institutes.length; i++) {
                 if (institutes[i].user_id === admin_id) {
-                    navigate('/admin')
+                    navigate('/admin', { state: { id: admin_id, institute: institutes[i] } })
+                    break;
                 } else {
                     navigate('/domains')
                 }

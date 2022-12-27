@@ -2,10 +2,21 @@ import React, { useEffect, useState } from 'react'
 import FullCalendar from '../Root/FullCalendar'
 import AdminNavBar from './AdminNavbar'
 import Img10 from '../../assets/img10.png'
+import { useLocation } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux'
+import { getAdminRequest } from '../../redux/GetAdmin/getAdminActions'
 
 function AdminHomeScreen() {
 
     const [greetings, setGreetings] = useState("")
+    const location = useLocation();
+    const dispatch = useDispatch();
+    const adminDetails = useSelector((state) => state.getAdmin.user)
+    const isFetched = useSelector((state) => state.getAdmin.fetched)
+
+    useEffect(() => {
+        dispatch(getAdminRequest(location.state.id))
+    }, [isFetched])
 
     useEffect(() => {
         let date = new Date();
@@ -62,10 +73,12 @@ function AdminHomeScreen() {
                                 }}>
                                 <img src={Img10} alt='Admin' />
                             </div>
-                            <h2 style={{ color: '#0E5E6F' }}>ADMIN</h2>
+                            {
+                                isFetched ? <h2 style={{ color: '#0E5E6F' }}>{adminDetails.data.name}</h2> : <h2 style={{ color: '#0E5E6F' }}>ADMIN</h2>
+                            }
                         </div>
                     </div>
-                    <h1 style={{ color: '#0E5E6F' }}>Usman Institute of Technology!</h1>
+                    <h1 style={{ color: '#0E5E6F' }}>{location.state.institute.institute_name}!</h1>
                 </div>
                 <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
                     <FullCalendar
