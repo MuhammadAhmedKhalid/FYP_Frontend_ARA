@@ -4,7 +4,8 @@ export const addInstituteInitialState = {
     loading: false,
     success: '',
     error: '',
-    added: false
+    added: false,
+    institute_name: ""
 }
 
 export const addInstituteReducer = (state = addInstituteInitialState, action) => {
@@ -18,14 +19,16 @@ export const addInstituteReducer = (state = addInstituteInitialState, action) =>
             loading: false,
             success: action.message,
             error: '',
-            added: true
+            added: true,
+            institute_name: action.institute_name
         }
         case ADD_INSTITUTE_FAILURE: return {
             ...state,
             loading: false,
             success: '',
             error: action.message,
-            added: false
+            added: false,
+            institute_name: ""
         }
         default: return state
     }

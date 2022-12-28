@@ -9,8 +9,8 @@ function* addInstitute(institute) {
         const headers = {
             'Authorization': `Bearer ${token}`
         };
-        yield call(axios.post, 'http://localhost:8080/add_institute', institute.institute, { headers });
-        yield put({ type: ADD_INSTITUTE_SUCCESS, message: "Institute added successfully." })
+        const response = yield call(axios.post, 'http://localhost:8080/add_institute', institute.institute, { headers });
+        yield put({ type: ADD_INSTITUTE_SUCCESS, message: "Institute added successfully.", institute_name: response.data })
     } catch (error) {
         yield put({ type: ADD_INSTITUTE_FAILURE, message: "Add institute operation failed." })
     }

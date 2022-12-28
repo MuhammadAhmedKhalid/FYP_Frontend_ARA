@@ -21,11 +21,11 @@ function AdminQuestionnaire(props) {
 
     const instituteAdded = useSelector((state) => state.institute.added)
     const admin_id = useSelector((state) => state.login.user.user_id)
+    const institute_name = useSelector((state) => state.institute.institute_name)
 
     useEffect(() => {
         if (instituteAdded) {
-            /////////////////////////////////////
-            navigate('/admin')
+            navigate('/admin', { state: { institute_name } })
         }
     }, [instituteAdded])
 
