@@ -24,6 +24,7 @@ function AdminQuestionnaire(props) {
 
     useEffect(() => {
         if (instituteAdded) {
+            /////////////////////////////////////
             navigate('/admin')
         }
     }, [instituteAdded])
@@ -36,7 +37,7 @@ function AdminQuestionnaire(props) {
         contact: "",
         user_id: admin_id
     })
-    // console.log(institute)
+
     const customStyles = {
         overlay: {
             backgroundColor: 'rgba(0, 0, 0, .7)',

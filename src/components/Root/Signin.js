@@ -31,12 +31,16 @@ function Signin(props) {
 
     useEffect(() => {
         if (isInstitutesAdded) {
-            for (let i = 0; i < institutes.length; i++) {
-                if (institutes[i].user_id === admin_id) {
-                    navigate('/admin', { state: { id: admin_id, institute: institutes[i] } })
-                    break;
-                } else {
-                    navigate('/domains')
+            if (institutes.length === 0) {
+                navigate('/domains')
+            } else {
+                for (let i = 0; i < institutes.length; i++) {
+                    if (institutes[i].user_id === admin_id) {
+                        navigate('/admin', { state: { institute_name: institutes[i].institute_name } })
+                        break;
+                    } else {
+                        navigate('/domains')
+                    }
                 }
             }
         }
