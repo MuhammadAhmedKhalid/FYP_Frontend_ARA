@@ -10,6 +10,7 @@ import Objects from './components/Admin/resources/Objects';
 import Rooms from './components/Admin/resources/Rooms';
 import { store } from './redux/store'
 import { Provider } from 'react-redux'
+import Faculty from './components/Admin/resources/Faculty';
 
 Modal.setAppElement('#root')
 function App() {
@@ -24,6 +25,7 @@ function App() {
           <Route path='/objects' element={<Objects />} />
           <Route path='/rooms' element={<Rooms />} />
           <Route path='/domains' element={<Domains />} />
+          <Route path='/faculty' element={<Faculty />} />
           <Route path='*' element={<NoMatch />} />
         </Routes>
       </Provider>

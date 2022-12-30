@@ -74,6 +74,11 @@ const AdminNavBar = () => {
                         name: 'Objects',
                         value: 'objects',
                         path: '/objects'
+                    },
+                    {
+                        name: 'Faculty',
+                        value: 'faculty',
+                        path: '/faculty'
                     }]} />
                     <li> <NavLink onClick={handleLogout}>Logout</NavLink></li>
                 </ul >
