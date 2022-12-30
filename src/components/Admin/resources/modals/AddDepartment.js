@@ -61,7 +61,7 @@ function AddDepartment(props) {
                         <label>Enter institute id</label>
                         <input type='text' value={department.institue_id} onChange={(e) => setDepartment({ ...department, institue_id: e.target.value })} />
                         <div className='center flexbox-container-y'>
-                            <button style={{ margin: '1rem' }} type='submit' className='modal-btn'>Add</button>
+                            <button style={{ marginTop: '1rem' }} type='submit' className='modal-btn'>Add</button>
                         </div>
                     </form>
 
