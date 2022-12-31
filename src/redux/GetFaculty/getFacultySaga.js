@@ -9,7 +9,10 @@ function* getFacultyRequest(data) {
         const headers = {
             'Authorization': `Bearer ${token}`
         };
-        let result = yield call(axios.get, `http://localhost:8080/get-faculty/${data.query}`, { headers });
+        let result;
+        if (data.query !== 0) {
+            result = yield call(axios.get, `http://localhost:8080/get-faculty/${data.query}`, { headers });
+        }
         yield put({ type: GET_FACULTY_SUCCESS, data: result.data })
     } catch (e) {
         yield put({ type: GET_FACULTY_FAILURE, message: e.message })
