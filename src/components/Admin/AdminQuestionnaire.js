@@ -22,12 +22,11 @@ function AdminQuestionnaire(props) {
 
     const instituteAdded = useSelector((state) => state.institute.added)
     const admin_id = useSelector((state) => state.login.user.user_id)
-    const institute_name = useSelector((state) => state.institute.institute_name)
 
     useEffect(() => {
         if (instituteAdded) {
             dispatch(getInstitutesRequest())
-            navigate('/admin', { state: { institute_name } })
+            navigate('/admin')
         }
     }, [instituteAdded])
 
@@ -73,13 +72,17 @@ function AdminQuestionnaire(props) {
                     <h2 style={{ color: "#115868", fontSize: 20 }}>Questionnaire</h2>
                     <form>
                         <div className='flexbox-container-y'>
-                            <TextField value={institute.institute_name} onChange={(e) => setInstitute({ ...institute, institute_type_id: instituteTypeId, institute_name: e.target.value })} style={{ margin: '3px' }} size='small' variant="outlined" type='text' placeholder='Your Institute' InputProps={{
-                                startAdornment: (
-                                    <InputAdornment position='start'>
-                                        <AccountBalanceIcon style={{ height: '20px' }} color="action" />
-                                    </InputAdornment>
-                                )
-                            }} />
+                            <TextField
+                                value={institute.institute_name}
+                                onChange={(e) => setInstitute({ ...institute, institute_type_id: instituteTypeId, institute_name: e.target.value })}
+                                style={{ margin: '3px' }} size='small' variant="outlined" type='text' placeholder='Your Institute'
+                                InputProps={{
+                                    startAdornment: (
+                                        <InputAdornment position='start'>
+                                            <AccountBalanceIcon style={{ height: '20px' }} color="action" />
+                                        </InputAdornment>
+                                    )
+                                }} />
                             <TextField value={institute.branch} onChange={(e) => setInstitute({ ...institute, branch: e.target.value })} style={{ margin: '3px' }} size='small' variant="outlined" type='text' placeholder='Your Branch' InputProps={{
                                 startAdornment: (
                                     <InputAdornment position='start'>

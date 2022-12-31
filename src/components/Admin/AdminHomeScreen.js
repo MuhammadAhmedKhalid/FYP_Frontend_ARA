@@ -3,19 +3,14 @@ import FullCalendar from '../Root/FullCalendar'
 import AdminNavBar from './AdminNavbar'
 import Img10 from '../../assets/img10.png'
 import { useSelector } from 'react-redux'
-import { useLocation } from 'react-router-dom';
 
 function AdminHomeScreen() {
 
     const [greetings, setGreetings] = useState("")
-    const location = useLocation();
     const adminName = useSelector((state) => state.login.user.admin_name)
-    const state = location.state
-    const [instituteName, setInstituteName] = useState("")
+    const instituteName = useSelector((state) => state.login.user.institute_name)
+    const institute_name = useSelector((state) => state.institute.institute_name)
 
-    useEffect(() => {
-        setInstituteName(state.institute_name)
-    }, [state])
 
     useEffect(() => {
         let date = new Date();
@@ -76,7 +71,7 @@ function AdminHomeScreen() {
                                 <h2 style={{ color: '#0E5E6F' }}>{adminName}</h2>
                             }
                         </div>
-                    </div><h1 style={{ color: '#0E5E6F' }}>{instituteName}!</h1>
+                    </div><h1 style={{ color: '#0E5E6F' }}>{instituteName || institute_name}!</h1>
                 </div>
                 <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
                     <FullCalendar
