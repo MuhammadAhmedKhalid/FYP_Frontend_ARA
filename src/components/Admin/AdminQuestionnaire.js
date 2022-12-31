@@ -11,6 +11,7 @@ import CallIcon from '@mui/icons-material/Call';
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from 'react-redux'
 import { addInstituteRequest } from '../../redux/AddInstitute/instituteActions'
+import { getInstitutesRequest } from '../../redux/GetInstitutes/getInstitutesActions'
 
 function AdminQuestionnaire(props) {
 
@@ -25,6 +26,7 @@ function AdminQuestionnaire(props) {
 
     useEffect(() => {
         if (instituteAdded) {
+            dispatch(getInstitutesRequest())
             navigate('/admin', { state: { institute_name } })
         }
     }, [instituteAdded])

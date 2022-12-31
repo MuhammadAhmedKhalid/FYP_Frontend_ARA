@@ -5,11 +5,13 @@ import InputAdornment from '@material-ui/core/InputAdornment'
 import PersonIcon from '@mui/icons-material/Person';
 import CallIcon from '@mui/icons-material/Call';
 import EmailIcon from '@mui/icons-material/Email';
-import { useSelector } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
+import { addFacultyRequest } from '../../../../redux/AddFaculty/addFacultyActions';
 
 function AddFaculty(props) {
 
     const { openFacultyModal, setOpenFacultyModal, setRefresh } = props
+    const dispatch = useDispatch()
 
     const admin_id = useSelector((state) => state.login.user.user_id)
     const institutes = useSelector((state) => state.getInstitutes.institutes.data)
@@ -19,18 +21,27 @@ function AddFaculty(props) {
         first_name: "",
         last_name: "",
         phone_number: "",
-        official_email_address: "",
+        officialEmailAddress: "",
         department: "software engineering",
         specialization: "cloud computing",
         designation: "lecturer",
-        institue_id: ""
+        institute_id: "",
+        user: {
+            "name": "",
+            "password": "12345678",
+            "email": ""
+        }
     })
+
+    useEffect(() => {
+        setFaculty({ ...faculty, user: { ...faculty.user, name: faculty.first_name + " " + faculty.last_name } })
+    }, [faculty.first_name, faculty.last_name])
 
     useEffect(() => {
         if (isInstitutesAdded && institutes.length !== 0) {
             for (let i = 0; i < institutes.length; i++) {
                 if (institutes[i].user_id === admin_id) {
-                    setFaculty({ ...faculty, institue_id: institutes[i].institue_id })
+                    setFaculty({ ...faculty, institute_id: institutes[i].institute_id })
                 }
             }
         }
@@ -39,8 +50,6 @@ function AddFaculty(props) {
     useEffect(() => {
         setRefresh(false)
     })
-
-    console.log(faculty)
 
     const customStyles = {
         overlay: {
@@ -57,6 +66,7 @@ function AddFaculty(props) {
     const submitHandler = (event) => {
         event.preventDefault()
         setOpenFacultyModal(false)
+        dispatch(addFacultyRequest(faculty))
     }
 
     return (
@@ -93,7 +103,9 @@ function AddFaculty(props) {
                                     </InputAdornment>
                                 )
                             }} />
-                        <TextField value={faculty.official_email_address} onChange={(e) => setFaculty({ ...faculty, official_email_address: e.target.value })}
+                        <TextField
+                            value={faculty.officialEmailAddress}
+                            onChange={(e) => setFaculty({ ...faculty, officialEmailAddress: e.target.value, user: { ...faculty.user, email: e.target.value } })}
                             style={{ margin: '3px' }} size='small' variant="outlined" type='text' placeholder='Email Address' InputProps={{
                                 startAdornment: (
                                     <InputAdornment position='start'>
