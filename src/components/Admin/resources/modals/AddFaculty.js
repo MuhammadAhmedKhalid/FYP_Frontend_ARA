@@ -67,6 +67,7 @@ function AddFaculty(props) {
         event.preventDefault()
         setOpenFacultyModal(false)
         dispatch(addFacultyRequest(faculty))
+        setRefresh(true)
     }
 
     return (

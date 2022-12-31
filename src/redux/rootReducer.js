@@ -6,6 +6,7 @@ import { addInstituteReducer } from './AddInstitute/instituteReducer'
 import { institutesReducer } from './GetInstitutes/getInstitutesReducer'
 import { getAdminReducer } from './GetAdmin/getAdminReducer'
 import { addFacultyReducer } from './AddFaculty/addFacultyReducer'
+import { getFacultyReducer } from './GetFaculty/getFacultyReduer'
 
 export const rootReducer = combineReducers({
     signup: signupReducer,
@@ -14,5 +15,6 @@ export const rootReducer = combineReducers({
     institute: addInstituteReducer,
     getInstitutes: institutesReducer,
     getAdmin: getAdminReducer,
-    addFaculty: addFacultyReducer
+    addFaculty: addFacultyReducer,
+    getFaculty: getFacultyReducer
 })
