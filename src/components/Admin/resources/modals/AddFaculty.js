@@ -18,8 +18,7 @@ function AddFaculty(props) {
     const isInstitutesAdded = useSelector((state) => state.getInstitutes.added)
 
     const [faculty, setFaculty] = useState({
-        first_name: "",
-        last_name: "",
+        name: "",
         phone_number: "",
         officialEmailAddress: "",
         department: "software engineering",
@@ -32,10 +31,6 @@ function AddFaculty(props) {
             "email": ""
         }
     })
-
-    useEffect(() => {
-        setFaculty({ ...faculty, user: { ...faculty.user, name: faculty.first_name + " " + faculty.last_name } })
-    }, [faculty.first_name, faculty.last_name])
 
     useEffect(() => {
         if (isInstitutesAdded && institutes.length !== 0) {
@@ -80,16 +75,8 @@ function AddFaculty(props) {
                 <div className='center flexbox-container-y'>
                     <h2 style={{ color: "#115868", fontSize: 20 }}>Add Faculty</h2>
                     <form onSubmit={submitHandler}>
-                        <TextField value={faculty.first_name} onChange={(e) => setFaculty({ ...faculty, first_name: e.target.value })}
+                        <TextField value={faculty.first_name} onChange={(e) => setFaculty({ ...faculty, name: e.target.value, user: { ...faculty.user, name: e.target.value } })}
                             style={{ margin: '3px' }} size='small' variant="outlined" type='text' placeholder='First Name' InputProps={{
-                                startAdornment: (
-                                    <InputAdornment position='start'>
-                                        <PersonIcon style={{ height: '20px' }} color="action" />
-                                    </InputAdornment>
-                                )
-                            }} />
-                        <TextField value={faculty.last_name} onChange={(e) => setFaculty({ ...faculty, last_name: e.target.value })}
-                            style={{ margin: '3px' }} size='small' variant="outlined" type='text' placeholder='Last Name' InputProps={{
                                 startAdornment: (
                                     <InputAdornment position='start'>
                                         <PersonIcon style={{ height: '20px' }} color="action" />

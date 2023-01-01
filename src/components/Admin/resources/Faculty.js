@@ -50,7 +50,7 @@ function Faculty() {
                 <center>
                     <div>
                         {
-                            faculty.map(faculty => (<h5 key={faculty.faculty_id}>{faculty.first_name} {faculty.last_name} {faculty.phone_number} {faculty.department} {faculty.specialization}</h5>))
+                            faculty.map(faculty => (<h5 key={faculty.faculty_id}>{faculty.name} {faculty.phone_number} {faculty.department} {faculty.specialization}</h5>))
                         }
                     </div>
                 </center>
