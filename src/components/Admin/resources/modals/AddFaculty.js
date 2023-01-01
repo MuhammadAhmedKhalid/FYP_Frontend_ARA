@@ -125,7 +125,7 @@ function AddFaculty(props) {
                             <option value="mechanical engineering">Mechanical Engineering</option>
                             <option value="textile engineering">Textile Engineering</option>
                             <option value="electrical engineering">Electrical Engineering</option>
-                            <option value="telecommunications engineering">Telecommunications Engineering</option>
+                            <option value="telecommunications engineering">Telecommunication Engineering</option>
 
                             <option>Chemical Engineering</option>
                         </select>

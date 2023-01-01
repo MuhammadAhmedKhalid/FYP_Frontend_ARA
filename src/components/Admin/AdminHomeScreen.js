@@ -36,9 +36,9 @@ function AdminHomeScreen() {
 
     useEffect(() => {
         let date = new Date();
-        let timeDetails = date.toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true }).split(" ")
+        let timeDetails = date.toLocaleString('en-US', { hour: 'numeric', minute: 'numeric' }).split(" ")
         const setMessage = () => {
-            let hour = parseInt(timeDetails[0][0])
+            let hour = parseInt(timeDetails[0].substring(0, 2))
             switch (timeDetails[1]) {
                 case "AM":
                     if (hour >= 0 && hour <= 4) {
@@ -112,7 +112,7 @@ function AdminHomeScreen() {
                             <h3 style={{ fontWeight: 'normal', color: 'black' }}>Mechanical Engineering: <b>0</b></h3>
                             <h3 style={{ fontWeight: 'normal', color: 'black' }}>Textile Engineering <b>0</b></h3>
                             <h3 style={{ fontWeight: 'normal', color: 'black' }}>Electrical Engineering: <b>0</b></h3>
-                            <h3 style={{ fontWeight: 'normal', color: 'black' }}>Telecommunications Engineering: <b>0</b></h3>
+                            <h3 style={{ fontWeight: 'normal', color: 'black' }}>Telecommunication Engineering: <b>0</b></h3>
                         </div>
                     </div>
                     <div style={{ justifyContent: 'flex-end' }}>
