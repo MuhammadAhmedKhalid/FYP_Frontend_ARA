@@ -4,7 +4,6 @@ import { loginSaga } from './Login/loginSaga'
 import { instituteTypeSaga } from './InstituteTypes/instituteTypesSaga'
 import { instituteSaga } from './AddInstitute/instituteSaga'
 import { getInstitutesSaga } from './GetInstitutes/getInstitutesSaga'
-import { getAdminSaga } from './GetAdmin/getAdminSaga'
 import { addFacultySaga } from './AddFaculty/addFacultySaga'
 import { getFacultySaga } from './GetFaculty/getFacultySaga'
 
@@ -14,7 +13,6 @@ export function* rootSaga() {
     yield fork(instituteTypeSaga)
     yield fork(instituteSaga)
     yield fork(getInstitutesSaga)
-    yield fork(getAdminSaga)
     yield fork(addFacultySaga)
     yield fork(getFacultySaga)
 }
