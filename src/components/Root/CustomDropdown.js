@@ -17,7 +17,7 @@ function CustomDropdown(props) {
             <div className='custom-dropdown'>
                 <div className='custom-dropdown-selection' onClick={handleItems}>
                     {
-                        selectedItem !== null ? itemsList[selectedItem].name : 'Resource'
+                        selectedItem !== null ? itemsList[selectedItem].name : 'Resources'
                     }
                 </div>
                 {

@@ -36,7 +36,8 @@ function Signin(props) {
             } else {
                 for (let i = 0; i < institutes.length; i++) {
                     if (institutes[i].user_id === admin_id) {
-                        navigate('/admin')
+                        // navigate('/admin')
+                        navigate('/faculty') // just for checking
                         break;
                     } else {
                         navigate('/domains')

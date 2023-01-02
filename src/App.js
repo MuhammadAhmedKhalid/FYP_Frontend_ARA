@@ -11,6 +11,7 @@ import Rooms from './components/Admin/resources/Rooms';
 import { store } from './redux/store'
 import { Provider } from 'react-redux'
 import Faculty from './components/Admin/resources/Faculty';
+import FacultyHomeScreen from './components/Faculty/FacultyHomeScreen';
 
 Modal.setAppElement('#root')
 function App() {
@@ -20,6 +21,7 @@ function App() {
         <Routes>
           <Route path='/' element={<LandingPage />} />
           <Route path='/admin' element={<AdminHomeScreen />} />
+          <Route path='/faculty' element={<FacultyHomeScreen />} />
           <Route path='/departments' element={<Departments />} />
           <Route path='/batches' element={<Batches />} />
           <Route path='/objects' element={<Objects />} />
