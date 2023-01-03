@@ -113,8 +113,7 @@ function AddFaculty(props) {
                             <option value="textile engineering">Textile Engineering</option>
                             <option value="electrical engineering">Electrical Engineering</option>
                             <option value="telecommunications engineering">Telecommunication Engineering</option>
-
-                            <option>Chemical Engineering</option>
+                            <option value="chemical engineering">Chemical Engineering</option>
                         </select>
                         <h3 style={{
                             fontWeight: 'normal', color: 'gray', marginRight: '3px'

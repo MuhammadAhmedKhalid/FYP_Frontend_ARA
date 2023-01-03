@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import FullCalendar from '../Root/FullCalendar'
 import AdminNavBar from './AdminNavbar'
 import Img10 from '../../assets/img10.png'
-import '../Styling/AdminHomeScreen.css'
+import '../Styling/HomeScreen.css'
 import { useSelector, useDispatch } from 'react-redux'
 import { getFacultyRequest } from '../../redux/GetFaculty/getFacultyActions'
 
@@ -113,6 +113,7 @@ function AdminHomeScreen() {
                             <h3 style={{ fontWeight: 'normal', color: 'black' }}>Textile Engineering <b>0</b></h3>
                             <h3 style={{ fontWeight: 'normal', color: 'black' }}>Electrical Engineering: <b>0</b></h3>
                             <h3 style={{ fontWeight: 'normal', color: 'black' }}>Telecommunication Engineering: <b>0</b></h3>
+                            <h3 style={{ fontWeight: 'normal', color: 'black' }}>Chemical Engineering: <b>0</b></h3>
                         </div>
                     </div>
                     <div style={{ justifyContent: 'flex-end' }}>
