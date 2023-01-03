@@ -8,6 +8,12 @@ function CustomDropdown(props) {
     const [itemsList, setItemsList] = useState(items)
     const [selectedItem, setSelectedItem] = useState(null)
 
+    const object = itemsList[0]
+    const keys = [];
+    for (const key in object) {
+        keys.push(key);
+    }
+
     const handleItems = () => {
         setIsVisible(true)
     }
@@ -23,14 +29,26 @@ function CustomDropdown(props) {
                 {
                     isVisible &&
                     <div className='items-holder' onMouseLeave={() => setIsVisible(false)}>
+
                         {
-                            itemsList.map((item, index) => (
-                                <Link key={item.value} to={item.path}>
-                                    <div className='dropdown-item'>
-                                        {item.name}
-                                    </div>
-                                </Link>
-                            ))
+                            keys[2] === 'path' ?
+                                <div>
+                                    {
+                                        itemsList.map((item, index) => (
+                                            <Link key={item.value} to={item.path}>
+                                                <div className='dropdown-item'>
+                                                    {item.name}
+                                                </div>
+                                            </Link>))
+                                    }
+                                </div> : <div>
+                                    {
+                                        itemsList.map((item, index) => (
+                                            <div className='dropdown-item'>
+                                                {item.name}
+                                            </div>))
+                                    }
+                                </div>
                         }
                     </div>
                 }
