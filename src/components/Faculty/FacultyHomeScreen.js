@@ -89,8 +89,9 @@ function FacultyHomeScreen() {
                     <div style={{ justifyContent: 'flex-end' }}>
                         <FullCalendar
                             messages={{ next: '>', previous: '<', today: 'Current' }}
-                            views={['month']}
-                            style={{ height: 350, width: 450, padding: '15px' }}
+                            views={['week', 'day']}
+                            style={{ height: 350, width: 700, padding: '15px' }}
+                            defaultView="week"
                         />
                     </div>
                 </div>

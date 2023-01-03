@@ -21,7 +21,7 @@ function App() {
         <Routes>
           <Route path='/' element={<LandingPage />} />
           <Route path='/admin' element={<AdminHomeScreen />} />
-          <Route path='/faculty' element={<FacultyHomeScreen />} />
+          <Route path='/faculty-home' element={<FacultyHomeScreen />} />
           <Route path='/departments' element={<Departments />} />
           <Route path='/batches' element={<Batches />} />
           <Route path='/objects' element={<Objects />} />

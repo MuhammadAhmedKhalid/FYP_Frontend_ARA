@@ -6,7 +6,7 @@ import { Calendar, momentLocalizer } from 'react-big-calendar'
 const localizer = momentLocalizer(moment)
 
 function FullCalendar(props) {
-    const { style, messages, views } = props
+    const { style, messages, views, defaultView } = props
     return (
         <div>
             <Calendar
@@ -15,6 +15,7 @@ function FullCalendar(props) {
                 views={views}
                 localizer={localizer}
                 selectable
+                defaultView={defaultView}
             />
         </div>
     )
