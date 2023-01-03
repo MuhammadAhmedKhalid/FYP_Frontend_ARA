@@ -1,7 +1,7 @@
 import React from 'react'
 import Modal from 'react-modal'
 
-function RequestRoom() {
+function RequestRoom(props) {
 
     const { openRoomModal, setRoomModal } = props
 
@@ -17,14 +17,13 @@ function RequestRoom() {
         },
     };
 
-
     return (
         <div>
             <Modal
                 className='modal-content'
                 style={customStyles}
                 isOpen={openRoomModal}
-                onRequestClose={() => setOpenRoomModal(false)}>
+                onRequestClose={() => setRoomModal(false)}>
                 <div className='center'>
                     <h2 style={{ color: "#115868", fontSize: 20 }}>Request Room</h2>
                 </div>

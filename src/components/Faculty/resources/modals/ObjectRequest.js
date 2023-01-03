@@ -1,7 +1,7 @@
 import React from 'react'
 import Modal from 'react-modal'
 
-function ObjectRequest() {
+function ObjectRequest(props) {
 
     const { openObjectModal, setObjectModal } = props
 
@@ -23,8 +23,8 @@ function ObjectRequest() {
             <Modal
                 className='modal-content'
                 style={customStyles}
-                isOpen={openRoomModal}
-                onRequestClose={() => setOpenRoomModal(false)}>
+                isOpen={openObjectModal}
+                onRequestClose={() => setObjectModal(false)}>
                 <div className='center'>
                     <h2 style={{ color: "#115868", fontSize: 20 }}>Object Request</h2>
                 </div>

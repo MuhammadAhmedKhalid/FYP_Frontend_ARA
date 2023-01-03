@@ -1,6 +1,9 @@
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 import '../Styling/CustomDropdownStyles.css'
+import AddLeave from '../Faculty/resources/modals/AddLeave'
+import ObjectRequest from '../Faculty/resources/modals/ObjectRequest'
+import RequestRoom from '../Faculty/resources/modals/RequestRoom'
 
 function CustomDropdown(props) {
     const { items } = props
@@ -16,6 +19,26 @@ function CustomDropdown(props) {
 
     const handleItems = () => {
         setIsVisible(true)
+    }
+
+    const [openLeaveModal, setLeaveModal] = useState(false)
+    const [openObjectModal, setObjectModal] = useState(false)
+    const [openRoomModal, setRoomModal] = useState(false)
+
+    const clicked = (item) => {
+        switch (item.value) {
+            case 'add leave':
+                setLeaveModal(true)
+                break
+            case 'object request':
+                setObjectModal(true)
+                break
+            case 'request room':
+                setRoomModal(true)
+                break
+            default:
+                break
+        }
     }
 
     return (
@@ -44,14 +67,25 @@ function CustomDropdown(props) {
                                 </div> : <div>
                                     {
                                         itemsList.map((item, index) => (
-                                            <div className='dropdown-item'>
-                                                {item.name}
-                                            </div>))
+                                            <Link key={item.value} onClick={() => clicked(item)}>
+                                                <div className='dropdown-item'>
+                                                    {item.name}
+                                                </div>
+                                            </Link>))
                                     }
                                 </div>
                         }
                     </div>
                 }
+            </div>
+            <div>
+                <AddLeave openLeaveModal={openLeaveModal} setLeaveModal={setLeaveModal} />
+            </div>
+            <div>
+                <ObjectRequest openObjectModal={openObjectModal} setObjectModal={setObjectModal} />
+            </div>
+            <div>
+                <RequestRoom openRoomModal={openRoomModal} setRoomModal={setRoomModal} />
             </div>
         </div>
     )

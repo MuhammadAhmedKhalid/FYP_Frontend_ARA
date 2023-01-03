@@ -1,7 +1,7 @@
 import React from 'react'
 import Modal from 'react-modal'
 
-function AddLeave() {
+function AddLeave(props) {
 
     const { openLeaveModal, setLeaveModal } = props
 
@@ -22,8 +22,8 @@ function AddLeave() {
             <Modal
                 className='modal-content'
                 style={customStyles}
-                isOpen={openRoomModal}
-                onRequestClose={() => setOpenRoomModal(false)}>
+                isOpen={openLeaveModal}
+                onRequestClose={() => setLeaveModal(false)}>
                 <div className='center'>
                     <h2 style={{ color: "#115868", fontSize: 20 }}>Add Leave</h2>
                 </div>

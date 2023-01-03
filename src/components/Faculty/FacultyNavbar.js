@@ -58,21 +58,17 @@ const AdminNavBar = () => {
                     <CustomDropdown items={[{
                         name: 'Add Leave',
                         value: 'add leave',
-                        onClick: false
-                        // onClick: { openModal1 }
-                        // path: '/departments'
+                        onClick: true
                     },
                     {
                         name: 'Object Request',
                         value: 'object request',
-                        onClick: false
-                        // path: '/batches'
+                        onClick: true
                     },
                     {
                         name: 'Request Room',
                         value: 'request room',
-                        onClick: false
-                        // path: '/rooms'
+                        onClick: true
                     }]} />
                     <li> <NavLink to='/update-profile'>Update Profile</NavLink></li>
                     <li> <NavLink onClick={handleLogout}>Logout</NavLink></li>
