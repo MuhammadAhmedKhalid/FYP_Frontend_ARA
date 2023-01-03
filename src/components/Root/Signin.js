@@ -19,7 +19,8 @@ function Signin(props) {
     const navigate = useNavigate()
     const dispatch = useDispatch()
     const isLoggedIn = useSelector((state) => state.login.isLoggedIn)
-    const admin_id = useSelector((state) => state.login.user.user_id)
+    const user_id = useSelector((state) => state.login.user.user_id)
+    const isAdmin = useSelector((state) => state.login.user._admin)
     const institutes = useSelector((state) => state.getInstitutes.institutes.data)
     const isInstitutesAdded = useSelector((state) => state.getInstitutes.added)
 
@@ -35,11 +36,13 @@ function Signin(props) {
                 navigate('/domains')
             } else {
                 for (let i = 0; i < institutes.length; i++) {
-                    if (institutes[i].user_id === admin_id) {
-                        // navigate('/admin')
-                        navigate('/faculty-home') // just for checking
+                    if (institutes[i].user_id === user_id && isAdmin) {
+                        navigate('/admin')
                         break;
-                    } else {
+                    } else if (!isAdmin) {
+                        navigate('/faculty-home')
+                    }
+                    else {
                         navigate('/domains')
                     }
                 }
