@@ -29,11 +29,13 @@ function Departments() {
                     <div style={{ marginTop: '25px' }} className='center'>
                         <h2 style={{ color: '#0E5E6F' }}>DEPARTMENTS LIST</h2>
                     </div>
-                    <div>
-                        {
-                            departments.length !== 0 ? departments.map(department => <div key={department.department_id}>{department.department_name}</div>) : null
-                        }
-                    </div>
+                    <center>
+                        <div>
+                            {
+                                departments.length !== 0 ? departments.map(department => <div key={department.department_id}>{department.department_id}. {department.department_name}</div>) : null
+                            }
+                        </div>
+                    </center>
                 </div>
             </div>
             <div>
