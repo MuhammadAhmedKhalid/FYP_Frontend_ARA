@@ -13,7 +13,7 @@ function AdminHomeScreen() {
     const faculty = useSelector((state) => state.getFaculty.faculty)
     const [instituteId, setInstituteId] = useState(0)
     const [greetings, setGreetings] = useState("")
-    const adminName = useSelector((state) => state.login.user.admin_name)
+    const adminName = useSelector((state) => state.login.user.name)
     const instituteName = useSelector((state) => state.login.user.institute_name)
     const institute_name = useSelector((state) => state.institute.institute_name)
     const institutes = useSelector((state) => state.getInstitutes.institutes.data)
@@ -48,9 +48,9 @@ function AdminHomeScreen() {
                     }
                     break
                 case "PM":
-                    if (hour >= 0 && hour <= 4) {
+                    if (hour >= 12 && hour <= 16) {
                         setGreetings("Afternoon")
-                    } else if (hour >= 5 && hour <= 8) {
+                    } else if (hour >= 17 && hour <= 20) {
                         setGreetings("Evening")
                     } else {
                         setGreetings("Night")

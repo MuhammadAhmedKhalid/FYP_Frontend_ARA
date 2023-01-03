@@ -16,7 +16,6 @@ const AdminNavBar = () => {
 
     const navigate = useNavigate()
     const dispatch = useDispatch()
-
     const isLoggedIn = useSelector((state) => state.login.isLoggedIn)
 
     useEffect(() => {
@@ -30,7 +29,6 @@ const AdminNavBar = () => {
     }
 
     const [click, setClick] = useState(false)
-    // const [showDropdown, setShowDropdown] = useState(false)
     const [color, setColor] = useState(false)
 
     const handleClick = () => setClick(!click)
@@ -41,11 +39,6 @@ const AdminNavBar = () => {
             setColor(false);
         }
     }
-    // const handleHoverEnter = () => { setShowDropdown(true) }
-    // const handMouseLeave = () => { setShowDropdown(false) }
-    // const handleOption = (e) => {
-    //     console.log(e)
-    // }
     window.addEventListener("scroll", changeColor);
     return (
         <div>

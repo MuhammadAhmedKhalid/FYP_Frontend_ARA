@@ -12,6 +12,7 @@ import { store } from './redux/store'
 import { Provider } from 'react-redux'
 import Faculty from './components/Admin/resources/Faculty';
 import FacultyHomeScreen from './components/Faculty/FacultyHomeScreen';
+import UpdateProfile from './components/Faculty/UpdateProfile';
 
 Modal.setAppElement('#root')
 function App() {
@@ -28,6 +29,7 @@ function App() {
           <Route path='/rooms' element={<Rooms />} />
           <Route path='/domains' element={<Domains />} />
           <Route path='/faculty' element={<Faculty />} />
+          <Route path='/update-profile' element={<UpdateProfile />} />
           <Route path='*' element={<NoMatch />} />
         </Routes>
       </Provider>

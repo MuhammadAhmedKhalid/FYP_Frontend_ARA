@@ -40,30 +40,43 @@ const AdminNavBar = () => {
         }
     }
     window.addEventListener("scroll", changeColor);
+
+    // const [openLeaveModal, setLeaveModal] = useState(false)
+    // const openModal1 = () => {
+    //     setLeaveModal(true)
+    //     console.log(openLeaveModal)
+    // }
+
     return (
         <div>
             <div className={color ? 'header header-bg' : 'header'}>
-                <Link to='/faculty'>
+                <Link to='/faculty-home'>
                     <h1 style={logo}>ALLOCATOR.</h1>
                 </Link>
                 <ul style={{ listStyle: 'none' }} className={click ? 'nav-menu active' : 'nav-menu'}>
-                    <li><NavLink to='/faculty'>Home</NavLink></li>
+                    <li><NavLink to='/faculty-home'>Home</NavLink></li>
                     <CustomDropdown items={[{
                         name: 'Add Leave',
                         value: 'add leave',
+                        onClick: false
+                        // onClick: { openModal1 }
                         // path: '/departments'
                     },
                     {
                         name: 'Object Request',
                         value: 'object request',
+                        onClick: false
                         // path: '/batches'
                     },
                     {
                         name: 'Request Room',
                         value: 'request room',
+                        onClick: false
                         // path: '/rooms'
                     }]} />
+                    <li> <NavLink to='/update-profile'>Update Profile</NavLink></li>
                     <li> <NavLink onClick={handleLogout}>Logout</NavLink></li>
+
                 </ul >
                 <div className="hamburger" onClick={handleClick}>
                     {

@@ -1,8 +1,9 @@
 import React from 'react'
 import Modal from 'react-modal'
 
-function AddRoom(props) {
-    const { openRoomModal, setOpenRoomModal } = props
+function RequestRoom() {
+
+    const { openRoomModal, setRoomModal } = props
 
     const customStyles = {
         overlay: {
@@ -16,6 +17,7 @@ function AddRoom(props) {
         },
     };
 
+
     return (
         <div>
             <Modal
@@ -24,11 +26,11 @@ function AddRoom(props) {
                 isOpen={openRoomModal}
                 onRequestClose={() => setOpenRoomModal(false)}>
                 <div className='center'>
-                    <h2 style={{ color: "#115868", fontSize: 20 }}>Add Room</h2>
+                    <h2 style={{ color: "#115868", fontSize: 20 }}>Request Room</h2>
                 </div>
             </Modal>
         </div>
     )
 }
 
-export default AddRoom
+export default RequestRoom

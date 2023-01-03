@@ -2,11 +2,12 @@ import React, { useState, useEffect } from 'react'
 import FacultyNavbar from './FacultyNavbar'
 import FullCalendar from '../Root/FullCalendar'
 import '../Styling/HomeScreen.css'
-import Img11 from '../../assets/img11.png'
+import { useSelector } from 'react-redux'
 
 function FacultyHomeScreen() {
 
     const [greetings, setGreetings] = useState("")
+    const facultyName = useSelector((state) => state.login.user.name)
 
     useEffect(() => {
         let date = new Date();
@@ -22,9 +23,9 @@ function FacultyHomeScreen() {
                     }
                     break
                 case "PM":
-                    if (hour >= 0 && hour <= 4) {
+                    if (hour >= 12 && hour <= 16) {
                         setGreetings("Afternoon")
-                    } else if (hour >= 5 && hour <= 8) {
+                    } else if (hour >= 17 && hour <= 20) {
                         setGreetings("Evening")
                     } else {
                         setGreetings("Night")
@@ -49,23 +50,8 @@ function FacultyHomeScreen() {
                 <FacultyNavbar />
                 <div style={{ marginTop: '60px', padding: '15px' }}>
                     <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                        <h2 style={{ fontWeight: 'normal' }}>Good </h2>
-                        <div className='flexbox-container'>
-                            <div
-                                style={{
-                                    display: 'flex',
-                                    width: '35px',
-                                    height: '35px',
-                                    borderRadius: '50%',
-                                    marginRight: '5px'
-                                }}>
-                                <img src={Img11} alt='Faculty' />
-                            </div>
-                            {
-                                <h2 style={{ color: '#0E5E6F' }}>Muhammad</h2>
-                            }
-                        </div>
-                    </div><h1 style={{ color: '#0E5E6F' }}>Muhammad Ahmed!</h1>
+                        <h2 style={{ fontWeight: 'normal' }}>Good {greetings}</h2>
+                    </div><h1 style={{ color: '#0E5E6F' }}>{facultyName}!</h1>
                 </div>
                 <div className='flexbox-container' style={{ justifyContent: 'space-between' }}>
                     <div className="gradient" style={{
