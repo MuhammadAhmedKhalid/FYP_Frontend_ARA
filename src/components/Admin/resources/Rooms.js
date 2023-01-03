@@ -7,14 +7,31 @@ import axios from 'axios'
 function Rooms() {
     const [openRoomModal, setOpenRoomModal] = useState(false)
     const [rooms, setRooms] = useState([])
+    const [departments, setDepartments] = useState([])
+    const [roomData, setRoomData] = useState([])
 
     const openModal = () => {
         setOpenRoomModal(true)
     }
 
     useEffect(() => {
+        if (rooms.length !== 0 && departments.length !== 0) {
+            for (let i = 0; i < rooms.length; i++) {
+                for (let j = 0; j < departments.length; j++) {
+                    if (rooms[i].department_id === departments[j].department_id) {
+                        setRoomData(roomData => [...roomData, rooms[i].name + " " + departments[j].department_name])
+                    }
+                }
+            }
+        }
+    }, [rooms, departments])
+
+    useEffect(() => {
         axios.get('http://localhost:8080/rooms')
             .then((response) => { setRooms(response.data) })
+            .catch((error) => { console.log(error) })
+        axios.get('http://localhost:8080/departments')
+            .then((response) => { setDepartments(response.data) })
             .catch((error) => { console.log(error) })
     }, [])
 
@@ -33,7 +50,7 @@ function Rooms() {
                     <center>
                         <div>
                             {
-                                rooms.length !== 0 ? rooms.map(room => <div key={room.room_id}>{room.room_id}. {room.name} (Department ID: {room.department_id})</div>) : null
+                                roomData.length !== 0 ? roomData.map(room => <div key={roomData.indexOf(room)}>{room}</div>) : null
                             }
                         </div>
                     </center>

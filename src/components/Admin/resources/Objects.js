@@ -8,6 +8,7 @@ function Objects() {
     const [openObjectModal, setOpenObjectModal] = useState(false)
     const [objects, setObjects] = useState([])
     const [objectTypes, setObjectTypes] = useState([])
+    const [rooms, setRooms] = useState([])
 
     const openModal = () => {
         setOpenObjectModal(true)
@@ -20,6 +21,9 @@ function Objects() {
 
         axios.get('http://localhost:8080/resourceTypes')
             .then((response) => { setObjectTypes(response.data) })
+            .catch((error) => { console.log(error) })
+        axios.get('http://localhost:8080/rooms')
+            .then((response) => { setRooms(response.data) })
             .catch((error) => { console.log(error) })
     }, [])
 
@@ -48,7 +52,7 @@ function Objects() {
                             {
                                 objects.length !== 0 ? objects.map(object =>
                                     <div key={object.resource_id}>{object.resource_id}. (Quantity: {object.quantity}) (Resource type ID: {object.resource_type_id})
-                                        (Room type ID: {object.room_id})</div>) : null
+                                        (Room ID: {object.room_id})</div>) : null
                             }
                         </div>
                     </center>
