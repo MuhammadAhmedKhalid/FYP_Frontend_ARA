@@ -9,10 +9,26 @@ function Objects() {
     const [objects, setObjects] = useState([])
     const [objectTypes, setObjectTypes] = useState([])
     const [rooms, setRooms] = useState([])
+    const [objectData, setObjectData] = useState([])
 
     const openModal = () => {
         setOpenObjectModal(true)
     }
+
+    useEffect(() => {
+        if (objects.length !== 0 && objectTypes.length !== 0) {
+            for (let i = 0; i < objects.length; i++) {
+                for (let j = 0; j < objectTypes.length; j++) {
+                    for (let k = 0; k < rooms.length; k++) {
+                        if (objects[i].resource_type_id === objectTypes[j].resource_type_id && objects[i].room_id === rooms[k].room_id) {
+                            setObjectData(objectData =>
+                                [...objectData, "Name: " + objectTypes[j].name + " Quantity: " + objects[i].quantity + " Room: " + rooms[k].name])
+                        }
+                    }
+                }
+            }
+        }
+    }, [objects, objectTypes])
 
     useEffect(() => {
         axios.get('http://localhost:8080/resources')
@@ -42,17 +58,8 @@ function Objects() {
                     <center>
                         <div>
                             {
-                                objectTypes.length !== 0 ? objectTypes.map(objectType =>
-                                    <div key={objectType.resource_type_id}>{objectType.resource_type_id}. (Resource type ID: {objectType.resource_type_id})
-                                        (Name: {objectType.name})</div>) : null
-                            }
-                        </div>
-                        <br />
-                        <div>
-                            {
-                                objects.length !== 0 ? objects.map(object =>
-                                    <div key={object.resource_id}>{object.resource_id}. (Quantity: {object.quantity}) (Resource type ID: {object.resource_type_id})
-                                        (Room ID: {object.room_id})</div>) : null
+                                objectData.length !== 0 ? objectData.map(object =>
+                                    <div key={objectData.indexOf(object)}>{object}</div>) : null
                             }
                         </div>
                     </center>
