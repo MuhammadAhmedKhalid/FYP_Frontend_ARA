@@ -11,28 +11,16 @@ function FacultyHomeScreen() {
 
     useEffect(() => {
         let date = new Date();
-        let timeDetails = date.toLocaleString('en-US', { hour: 'numeric', minute: 'numeric' }).split(" ")
+        let time = date.toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: false }).split(":")
         const setMessage = () => {
-            let hour = parseInt(timeDetails[0].substring(0, 2))
-            switch (timeDetails[1]) {
-                case "AM":
-                    if (hour >= 0 && hour <= 4) {
-                        setGreetings("Night")
-                    } else {
-                        setGreetings("Morning")
-                    }
-                    break
-                case "PM":
-                    if (hour >= 12 && hour <= 16) {
-                        setGreetings("Afternoon")
-                    } else if (hour >= 17 && hour <= 20) {
-                        setGreetings("Evening")
-                    } else {
-                        setGreetings("Night")
-                    }
-                    break
-                default:
-                    break
+            if (time[0] >= 5 && time[0] <= 11) {
+                setGreetings("Morning")
+            } else if (time[0] >= 12 && time[0] <= 16) {
+                setGreetings("Afternoon")
+            } else if (time[0] >= 17 && time[0] <= 20) {
+                setGreetings("Evening")
+            } else {
+                setGreetings("Night")
             }
         }
         setMessage()
