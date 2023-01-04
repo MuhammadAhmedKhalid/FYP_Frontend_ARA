@@ -1,5 +1,6 @@
-import React from 'react'
+import React, { useState } from 'react'
 import Modal from 'react-modal'
+import dayjs from 'dayjs';
 import TextField from '@material-ui/core/TextField'
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import Stack from '@mui/material/Stack';
@@ -10,6 +11,12 @@ import { TimePicker } from '@mui/x-date-pickers/TimePicker';
 function AddLeave(props) {
 
     const { openLeaveModal, setLeaveModal } = props
+
+    const [value, setValue] = useState(dayjs(new Date()));
+
+    const handleChange = (newValue) => {
+        setValue(newValue);
+    };
 
     const customStyles = {
         overlay: {
@@ -45,13 +52,19 @@ function AddLeave(props) {
                                 <DesktopDatePicker
                                     label="Date"
                                     inputFormat="DD/MM/YYYY"
+                                    value={value}
+                                    onChange={handleChange}
                                     renderInput={(params) => <TextField {...params}
                                         variant="outlined" />} />
                                 <TimePicker
+                                    value={value}
+                                    onChange={handleChange}
                                     label="Start Time"
                                     renderInput={(params) => <TextField {...params}
                                         variant="outlined" />} />
                                 <TimePicker
+                                    value={value}
+                                    onChange={handleChange}
                                     label="End Time"
                                     renderInput={(params) => <TextField {...params}
                                         variant="outlined" />} />
