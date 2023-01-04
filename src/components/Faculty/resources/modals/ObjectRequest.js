@@ -29,8 +29,6 @@ function ObjectRequest(props) {
         endTime: format(new Date(), 'HH:mm'),
     })
 
-    console.log(request)
-
     useEffect(() => {
         axios.get('http://localhost:8080/departments')
             .then((response) => { setDeaprtments(response.data) })

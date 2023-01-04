@@ -8,14 +8,23 @@ import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
 import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker';
 import { TimePicker } from '@mui/x-date-pickers/TimePicker';
 import axios from 'axios'
+import { format } from 'date-fns';
 
 function RequestRoom(props) {
 
     const { openRoomModal, setRoomModal } = props
 
     const [value, setValue] = useState(dayjs(new Date()));
+    const [value1, setValue1] = useState(dayjs(new Date()));
     const [departments, setDepartments] = useState([])
     const [rooms, setRooms] = useState([])
+    const [request, setRequest] = useState({
+        department: '',
+        room: '',
+        date: format(new Date(), 'MM/dd/yyyy'),
+        startTime: format(new Date(), 'HH:mm'),
+        endTime: format(new Date(), 'HH:mm')
+    })
 
     useEffect(() => {
         axios.get('http://localhost:8080/departments')
@@ -26,8 +35,34 @@ function RequestRoom(props) {
             .catch((error) => { console.log(error) })
     }, [])
 
-    const handleChange = (newValue) => {
+    const handleDateChange = (newValue) => {
+        const object = newValue
+        for (const key in object) {
+            if (key === '$d') {
+                setRequest({ ...request, date: format(new Date(object[key]), 'MM/dd/yyyy') })
+            }
+        }
         setValue(newValue);
+    };
+
+    const handleStartTimeChange = (newValue) => {
+        const object = newValue
+        for (const key in object) {
+            if (key === '$d') {
+                setRequest({ ...request, startTime: format(new Date(object[key]), 'HH:mm') })
+            }
+        }
+        setValue(newValue);
+    };
+
+    const handleEndTimeChange = (newValue) => {
+        const object = newValue
+        for (const key in object) {
+            if (key === '$d') {
+                setRequest({ ...request, endTime: format(new Date(object[key]), 'HH:mm') })
+            }
+        }
+        setValue1(newValue);
     };
 
     const customStyles = {
@@ -55,7 +90,8 @@ function RequestRoom(props) {
                         <h3 style={{
                             fontWeight: 'normal', color: 'gray', marginRight: '3px'
                         }}>Department</h3>
-                        <select className='dropdown'>
+                        <select className='dropdown' value={request.department} onChange={(e) => setRequest({ ...request, department: e.target.value })}>
+                            <option></option>
                             {
                                 departments.length !== 0 ? departments.map(department =>
                                     <option key={department.department_id}>{department.department_name}</option>) : null
@@ -64,7 +100,8 @@ function RequestRoom(props) {
                         <h3 style={{
                             fontWeight: 'normal', color: 'gray', marginRight: '3px'
                         }}>Room No.</h3>
-                        <select className='dropdown'>
+                        <select className='dropdown' value={request.room} onChange={(e) => setRequest({ ...request, room: e.target.value })}>
+                            <option></option>
                             {
                                 rooms.length !== 0 ? rooms.map(room =>
                                     <option key={room.room_id}>{room.name}</option>) : null
@@ -77,18 +114,18 @@ function RequestRoom(props) {
                                         label="Date"
                                         inputFormat="DD/MM/YYYY"
                                         value={value}
-                                        onChange={handleChange}
+                                        onChange={handleDateChange}
                                         renderInput={(params) => <TextField {...params}
                                             variant="outlined" />} />
                                     <TimePicker
                                         value={value}
-                                        onChange={handleChange}
+                                        onChange={handleStartTimeChange}
                                         label="Start Time"
                                         renderInput={(params) => <TextField {...params}
                                             variant="outlined" />} />
                                     <TimePicker
-                                        value={value}
-                                        onChange={handleChange}
+                                        value={value1}
+                                        onChange={handleEndTimeChange}
                                         label="End Time"
                                         renderInput={(params) => <TextField {...params}
                                             variant="outlined" />} />
