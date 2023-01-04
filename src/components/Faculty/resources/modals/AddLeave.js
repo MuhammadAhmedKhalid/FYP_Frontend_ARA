@@ -36,7 +36,7 @@ function AddLeave(props) {
                         <TextField
                             style={{ marginBottom: '1rem' }}
                             label="Reason"
-                            defaultValue="Add text here..."
+                            placeholder="Add text here..."
                             variant="outlined"
                             multiline={true}
                             rows={4} />
