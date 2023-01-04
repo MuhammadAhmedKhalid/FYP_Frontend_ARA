@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import Modal from 'react-modal'
 import dayjs from 'dayjs';
 import TextField from '@material-ui/core/TextField'
@@ -7,12 +7,24 @@ import Stack from '@mui/material/Stack';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
 import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker';
 import { TimePicker } from '@mui/x-date-pickers/TimePicker';
+import axios from 'axios'
 
 function RequestRoom(props) {
 
     const { openRoomModal, setRoomModal } = props
 
     const [value, setValue] = useState(dayjs(new Date()));
+    const [departments, setDepartments] = useState([])
+    const [rooms, setRooms] = useState([])
+
+    useEffect(() => {
+        axios.get('http://localhost:8080/departments')
+            .then((response) => { setDepartments(response.data) })
+            .catch((error) => { console.log(error) })
+        axios.get('http://localhost:8080/rooms')
+            .then((response) => { setRooms(response.data) })
+            .catch((error) => { console.log(error) })
+    }, [])
 
     const handleChange = (newValue) => {
         setValue(newValue);
@@ -44,21 +56,19 @@ function RequestRoom(props) {
                             fontWeight: 'normal', color: 'gray', marginRight: '3px'
                         }}>Department</h3>
                         <select className='dropdown'>
-                            <option value="software engineering">Software Engineering</option>
-                            <option value="chemical engineering">Chemical Engineering</option>
-                            <option value="mechanical engineering">Mechanical Engineering</option>
-                            <option value="petroleum engineering">Petroleum Engineering</option>
-                            <option value="electrical engineering">Electrical Engineering</option>
+                            {
+                                departments.length !== 0 ? departments.map(department =>
+                                    <option key={department.department_id}>{department.department_name}</option>) : null
+                            }
                         </select>
                         <h3 style={{
                             fontWeight: 'normal', color: 'gray', marginRight: '3px'
                         }}>Room No.</h3>
                         <select className='dropdown'>
-                            <option value="101">101</option>
-                            <option value="102">102</option>
-                            <option value="103">103</option>
-                            <option value="104">104</option>
-                            <option value="105">105</option>
+                            {
+                                rooms.length !== 0 ? rooms.map(room =>
+                                    <option key={room.room_id}>{room.name}</option>) : null
+                            }
                         </select>
                         <div style={{ marginTop: '12px' }}>
                             <LocalizationProvider dateAdapter={AdapterDayjs}>

@@ -83,6 +83,12 @@ function ObjectRequest(props) {
                                     <option key={object.resource_type_id}>{object.name}</option>) : null
                             }
                         </select>
+                        <TextField
+                            label='Quantity'
+                            style={{ marginTop: '12px' }}
+                            size='small'
+                            variant="outlined"
+                            type='number' />
                         <div style={{ marginTop: '12px' }}>
                             <LocalizationProvider dateAdapter={AdapterDayjs}>
                                 <Stack spacing={1.5}>
