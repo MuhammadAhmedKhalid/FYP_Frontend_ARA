@@ -16,8 +16,14 @@ function ObjectRequest(props) {
     const [value, setValue] = useState(dayjs(new Date()));
     const [value1, setValue1] = useState(dayjs(new Date()));
     const [departments, setDeaprtments] = useState([])
+
     const [rooms, setRooms] = useState([])
+    const [roomsData, setRoomsData] = useState([])
+
     const [objects, setObjects] = useState([])
+    const [objectsInfo, setObjectsInfo] = useState([])
+    const [objectsData, setObjectsData] = useState([])
+
     const [request, setRequest] = useState({
         department: '',
         room: '',
@@ -30,6 +36,35 @@ function ObjectRequest(props) {
     })
 
     useEffect(() => {
+        if (objects.length !== 0 && rooms.length !== 0) {
+            setObjectsData([])
+            for (let i = 0; i < objects.length; i++) {
+                for (let j = 0; j < objectsInfo.length; j++) {
+                    for (let k = 0; k < rooms.length; k++) {
+                        if (objects[i].resource_type_id === objectsInfo[j].resource_type_id && objectsInfo[j].room_id === rooms[k].room_id &&
+                            request.room == rooms[k].name) {
+                            setObjectsData(objectsData => [...objectsData, { id: objects[i].resource_type_id, name: objects[i].name }])
+                        }
+                    }
+                }
+            }
+        }
+    }, [request.room])
+
+    useEffect(() => {
+        if (rooms.length !== 0 && departments.length !== 0) {
+            setRoomsData([])
+            for (let i = 0; i < rooms.length; i++) {
+                for (let j = 0; j < departments.length; j++) {
+                    if (rooms[i].department_id === departments[j].department_id && departments[j].department_name === request.department) {
+                        setRoomsData(roomsData => [...roomsData, { id: rooms[i].room_id, name: rooms[i].name }])
+                    }
+                }
+            }
+        }
+    }, [request.department])
+
+    useEffect(() => {
         axios.get('http://localhost:8080/departments')
             .then((response) => { setDeaprtments(response.data) })
             .catch((error) => { console.log(error) })
@@ -38,6 +73,9 @@ function ObjectRequest(props) {
             .catch((error) => { console.log(error) })
         axios.get('http://localhost:8080/resourceTypes')
             .then((response) => { setObjects(response.data) })
+            .catch((error) => { console.log(error) })
+        axios.get('http://localhost:8080/resources')
+            .then((response) => { setObjectsInfo(response.data) })
             .catch((error) => { console.log(error) })
     }, [])
 
@@ -99,8 +137,8 @@ function ObjectRequest(props) {
                         <select className='dropdown' value={request.room} onChange={(e) => setRequest({ ...request, room: e.target.value })}>
                             <option></option>
                             {
-                                rooms.length !== 0 ? rooms.map(room =>
-                                    <option key={room.room_id}>{room.name}</option>) : null
+                                roomsData.length !== 0 ? roomsData.map(room =>
+                                    <option key={room.id}>{room.name}</option>) : null
                             }
                         </select>
                         <h3 style={{
@@ -109,8 +147,8 @@ function ObjectRequest(props) {
                         <select className='dropdown' value={request.object} onChange={(e) => setRequest({ ...request, object: e.target.value })}>
                             <option></option>
                             {
-                                objects.length !== 0 ? objects.map(object =>
-                                    <option key={object.resource_type_id}>{object.name}</option>) : null
+                                objectsData.length !== 0 ? objectsData.map(object =>
+                                    <option key={object.id}>{object.name}</option>) : null
                             }
                         </select>
                         <TextField

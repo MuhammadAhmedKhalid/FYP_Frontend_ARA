@@ -34,7 +34,6 @@ function Objects() {
         axios.get('http://localhost:8080/resources')
             .then((response) => { setObjects(response.data) })
             .catch((error) => { console.log(error) })
-
         axios.get('http://localhost:8080/resourceTypes')
             .then((response) => { setObjectTypes(response.data) })
             .catch((error) => { console.log(error) })
