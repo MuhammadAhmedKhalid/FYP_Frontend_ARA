@@ -25,9 +25,9 @@ function ObjectRequest(props) {
     const [objectsData, setObjectsData] = useState([])
 
     const [request, setRequest] = useState({
-        department: '',
-        room: '',
-        object: '',
+        department_id: '',
+        room_id: '',
+        resource_type_id: '',
         quantity: '',
         startDate: format(new Date(), 'MM/dd/yyyy'),
         endDate: format(new Date(), 'MM/dd/yyyy'),
@@ -42,28 +42,28 @@ function ObjectRequest(props) {
                 for (let j = 0; j < objectsInfo.length; j++) {
                     for (let k = 0; k < rooms.length; k++) {
                         if (objects[i].resource_type_id === objectsInfo[j].resource_type_id && objectsInfo[j].room_id === rooms[k].room_id &&
-                            request.room == rooms[k].name) {
+                            request.room_id == rooms[k].room_id) {
                             setObjectsData(objectsData => [...objectsData, { id: objects[i].resource_type_id, name: objects[i].name }])
                         }
                     }
                 }
             }
         }
-    }, [request.room])
+    }, [request.room_id])
 
     useEffect(() => {
         if (rooms.length !== 0 && departments.length !== 0) {
             setRoomsData([])
-            setObjectsData([])
+            setObjectModal([])
             for (let i = 0; i < rooms.length; i++) {
                 for (let j = 0; j < departments.length; j++) {
-                    if (rooms[i].department_id === departments[j].department_id && departments[j].department_name === request.department) {
+                    if (rooms[i].department_id === departments[j].department_id && departments[j].department_id === request.department_id) {
                         setRoomsData(roomsData => [...roomsData, { id: rooms[i].room_id, name: rooms[i].name }])
                     }
                 }
             }
         }
-    }, [request.department])
+    }, [request.department_id])
 
     useEffect(() => {
         axios.get('http://localhost:8080/departments')
@@ -100,6 +100,35 @@ function ObjectRequest(props) {
         setValue1(newValue);
     };
 
+    const handleDepartmentChange = (event) => {
+        const department_name = event.target.value
+        for (let i = 0; i < departments.length; i++) {
+            if (departments[i].department_name === department_name) {
+                setRequest({ ...request, department_id: departments[i].department_id })
+            }
+        }
+    }
+
+    const handleRoomChange = (event) => {
+        const room_name = event.target.value
+        for (let i = 0; i < rooms.length; i++) {
+            if (rooms[i].name === room_name) {
+                setRequest({ ...request, room_id: rooms[i].room_id })
+            }
+        }
+    }
+
+    const handleObjectChange = (event) => {
+        const object_name = event.target.value
+        for (let i = 0; i < objects.length; i++) {
+            if (objects[i].name === object_name) {
+                setRequest({ ...request, resource_type_id: objects[i].resource_type_id })
+            }
+        }
+    }
+
+    console.log(request)
+
     const customStyles = {
         overlay: {
             backgroundColor: 'rgba(0, 0, 0, .7)',
@@ -125,7 +154,7 @@ function ObjectRequest(props) {
                         <h3 style={{
                             fontWeight: 'normal', color: 'gray', marginRight: '3px'
                         }}>Department</h3>
-                        <select className='dropdown' value={request.department} onChange={(e) => setRequest({ ...request, department: e.target.value })}>
+                        <select className='dropdown' onChange={handleDepartmentChange}>
                             <option></option>
                             {
                                 departments.length !== 0 ? departments.map(department =>
@@ -135,7 +164,7 @@ function ObjectRequest(props) {
                         <h3 style={{
                             fontWeight: 'normal', color: 'gray', marginRight: '3px'
                         }}>Room No.</h3>
-                        <select className='dropdown' value={request.room} onChange={(e) => setRequest({ ...request, room: e.target.value })}>
+                        <select className='dropdown' onChange={handleRoomChange}>
                             <option></option>
                             {
                                 roomsData.length !== 0 ? roomsData.map(room =>
@@ -145,7 +174,7 @@ function ObjectRequest(props) {
                         <h3 style={{
                             fontWeight: 'normal', color: 'gray', marginRight: '3px'
                         }}>Name</h3>
-                        <select className='dropdown' value={request.object} onChange={(e) => setRequest({ ...request, object: e.target.value })}>
+                        <select className='dropdown' onChange={handleObjectChange}>
                             <option></option>
                             {
                                 objectsData.length !== 0 ? objectsData.map(object =>
