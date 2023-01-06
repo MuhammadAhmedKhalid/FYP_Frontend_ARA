@@ -127,8 +127,6 @@ function ObjectRequest(props) {
         }
     }
 
-    console.log(request)
-
     const customStyles = {
         overlay: {
             backgroundColor: 'rgba(0, 0, 0, .7)',
