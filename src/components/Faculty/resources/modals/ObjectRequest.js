@@ -54,6 +54,7 @@ function ObjectRequest(props) {
     useEffect(() => {
         if (rooms.length !== 0 && departments.length !== 0) {
             setRoomsData([])
+            setObjectsData([])
             for (let i = 0; i < rooms.length; i++) {
                 for (let j = 0; j < departments.length; j++) {
                     if (rooms[i].department_id === departments[j].department_id && departments[j].department_name === request.department) {

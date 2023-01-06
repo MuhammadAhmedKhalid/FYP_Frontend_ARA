@@ -17,7 +17,10 @@ function RequestRoom(props) {
     const [value, setValue] = useState(dayjs(new Date()));
     const [value1, setValue1] = useState(dayjs(new Date()));
     const [departments, setDepartments] = useState([])
+
     const [rooms, setRooms] = useState([])
+    const [roomsData, setRoomsData] = useState([])
+
     const [request, setRequest] = useState({
         department: '',
         room: '',
@@ -25,6 +28,19 @@ function RequestRoom(props) {
         startTime: format(new Date(), 'HH:mm'),
         endTime: format(new Date(), 'HH:mm')
     })
+
+    useEffect(() => {
+        if (rooms.length !== 0 && departments.length !== 0) {
+            setRoomsData([])
+            for (let i = 0; i < rooms.length; i++) {
+                for (let j = 0; j < departments.length; j++) {
+                    if (rooms[i].department_id === departments[j].department_id && departments[j].department_name === request.department) {
+                        setRoomsData(roomsData => [...roomsData, { id: rooms[i].room_id, name: rooms[i].name }])
+                    }
+                }
+            }
+        }
+    }, [request.department])
 
     useEffect(() => {
         axios.get('http://localhost:8080/departments')
@@ -103,8 +119,8 @@ function RequestRoom(props) {
                         <select className='dropdown' value={request.room} onChange={(e) => setRequest({ ...request, room: e.target.value })}>
                             <option></option>
                             {
-                                rooms.length !== 0 ? rooms.map(room =>
-                                    <option key={room.room_id}>{room.name}</option>) : null
+                                roomsData.length !== 0 ? roomsData.map(room =>
+                                    <option key={room.id}>{room.name}</option>) : null
                             }
                         </select>
                         <div style={{ marginTop: '12px' }}>
