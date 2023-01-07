@@ -9,6 +9,7 @@ import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker';
 import { TimePicker } from '@mui/x-date-pickers/TimePicker';
 import axios from 'axios'
 import { format } from 'date-fns';
+import { Alert } from '@mui/material';
 
 function RequestRoom(props) {
 
@@ -16,10 +17,16 @@ function RequestRoom(props) {
 
     const [value, setValue] = useState(dayjs(new Date()));
     const [value1, setValue1] = useState(dayjs(new Date()));
+
+    const [showError, setShowError] = useState(false);
+    const [requestAdded, setRequestAdded] = useState(true);
+
     const [departments, setDepartments] = useState([])
 
     const [rooms, setRooms] = useState([])
     const [roomsData, setRoomsData] = useState([])
+
+    const [roomsRequest, setRoomsRequest] = useState([])
 
     const [request, setRequest] = useState({
         department_id: '',
@@ -43,12 +50,23 @@ function RequestRoom(props) {
     }, [request.department_id])
 
     useEffect(() => {
+        if (requestAdded) {
+            axios.get('http://localhost:8080/getRoomRequests')
+                .then((response) => { setRoomsRequest(response.data) })
+                .catch((error) => { console.log(error) })
+        }
+
+
+    }, [requestAdded])
+
+    useEffect(() => {
         axios.get('http://localhost:8080/departments')
             .then((response) => { setDepartments(response.data) })
             .catch((error) => { console.log(error) })
         axios.get('http://localhost:8080/rooms')
             .then((response) => { setRooms(response.data) })
             .catch((error) => { console.log(error) })
+
     }, [])
 
     const handleDateChange = (newValue) => {
@@ -99,6 +117,50 @@ function RequestRoom(props) {
         }
     }
 
+    const addRoomRequest = () => {
+        setShowError(false)
+        axios.post('http://localhost:8080/addRoomRequest', request)
+            .then((response) => { console.log(response) })
+            .catch((error) => { console.log(error) })
+        setRoomModal(false)
+        setRequestAdded(true)
+    }
+
+    const handleForm = (e) => {
+        e.preventDefault();
+        if (roomsRequest.length === 0) {
+            addRoomRequest()
+        } else {
+            for (let i = 0; i < roomsRequest.length; i++) {
+                if (roomsRequest[i].room_id === request.room_id && request.date === roomsRequest[i].date) {
+                    var roomStartTime = new Date();
+                    var roomEndTime = new Date();
+                    roomStartTime.setHours(roomsRequest[i].startTime.substring(0, 2), roomsRequest[i].startTime.substring(3), 0, 0);
+                    roomEndTime.setHours(roomsRequest[i].endTime.substring(0, 2), roomsRequest[i].endTime.substring(3), 0, 0);
+
+                    var requestStartTime = new Date();
+                    var requestEndTime = new Date();
+                    requestStartTime.setHours(request.startTime.substring(0, 2), request.startTime.substring(3), 0, 0);
+                    requestEndTime.setHours(request.endTime.substring(0, 2), request.endTime.substring(3), 0, 0);
+
+                    if (
+                        ((requestStartTime.getTime() === roomStartTime.getTime() && requestStartTime.getTime() === roomEndTime.getTime()) && (requestEndTime.getTime() === roomStartTime.getTime() && requestEndTime.getTime() === roomEndTime.getTime())) ||
+                        ((requestStartTime.getTime() > roomStartTime.getTime() && requestStartTime.getTime() < roomEndTime.getTime()) && (requestEndTime.getTime() > roomStartTime.getTime() && requestEndTime.getTime() < roomEndTime.getTime())) ||
+                        ((requestStartTime.getTime() < roomStartTime.getTime() && requestStartTime.getTime() < roomEndTime.getTime()) && (requestEndTime.getTime() > roomStartTime.getTime() && requestEndTime.getTime() > roomEndTime.getTime()))
+                    ) {
+                        setShowError(true)
+                    } else {
+                        addRoomRequest()
+                        break
+                    }
+                } else {
+                    addRoomRequest()
+                    break
+                }
+            }
+        }
+    }
+
     const customStyles = {
         overlay: {
             backgroundColor: 'rgba(0, 0, 0, .7)',
@@ -111,16 +173,21 @@ function RequestRoom(props) {
         },
     };
 
+    const closeModal = () => {
+        setRoomModal(false)
+        setShowError(false)
+    }
+
     return (
         <div>
             <Modal
                 className='modal-content'
                 style={customStyles}
                 isOpen={openRoomModal}
-                onRequestClose={() => setRoomModal(false)}>
+                onRequestClose={() => closeModal()}>
                 <div className='center flexbox-container-y'>
                     <h2 style={{ color: "#115868", fontSize: 20 }}>Request Room</h2>
-                    <form>
+                    <form onSubmit={handleForm}>
                         <h3 style={{
                             fontWeight: 'normal', color: 'gray', marginRight: '3px'
                         }}>Department</h3>
@@ -165,6 +232,11 @@ function RequestRoom(props) {
                                             variant="outlined" />} />
                                 </Stack>
                             </LocalizationProvider>
+                        </div>
+                        <div>
+                            {
+                                showError && <Alert style={{ marginTop: '12px' }} severity="error">Requested room is busy!</Alert>
+                            }
                         </div>
                         <div className='center flexbox-container-y'>
                             <button style={{ marginTop: '1rem' }} type='submit' className='modal-btn'>Save</button>

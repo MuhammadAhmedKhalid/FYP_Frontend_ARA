@@ -127,6 +127,14 @@ function ObjectRequest(props) {
         }
     }
 
+    const handleForm = (e) => {
+        e.preventDefault();
+        setObjectModal(false)
+        axios.post('http://localhost:8080/addObjectRequest', request)
+            .then((response) => { console.log(response) })
+            .catch((error) => { console.log(error) })
+    }
+
     const customStyles = {
         overlay: {
             backgroundColor: 'rgba(0, 0, 0, .7)',
@@ -148,7 +156,7 @@ function ObjectRequest(props) {
                 onRequestClose={() => setObjectModal(false)}>
                 <div className='center flexbox-container-y'>
                     <h2 style={{ color: "#115868", fontSize: 20 }}>Object Request</h2>
-                    <form>
+                    <form onSubmit={handleForm}>
                         <h3 style={{
                             fontWeight: 'normal', color: 'gray', marginRight: '3px'
                         }}>Department</h3>
