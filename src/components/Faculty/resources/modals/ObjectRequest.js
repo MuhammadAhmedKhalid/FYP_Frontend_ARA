@@ -203,7 +203,7 @@ function ObjectRequest(props) {
                                         value={value}
                                         onChange={handleStartDatetTimeChange}
                                         minDate={new Date()}
-                                        inputFormat='MM/DD/YYYY HH:MM'
+                                        inputFormat='MM/DD/YYYY HH:mm'
                                         renderInput={(params) => <TextField {...params} />}
                                     />
                                     <DateTimePicker
@@ -211,7 +211,7 @@ function ObjectRequest(props) {
                                         value={value1}
                                         onChange={handleEndDatetTimeChange}
                                         minDate={new Date()}
-                                        inputFormat='MM/DD/YYYY HH:MM'
+                                        inputFormat='MM/DD/YYYY HH:mm'
                                         renderInput={(params) => <TextField {...params} />}
                                     />
                                 </Stack>

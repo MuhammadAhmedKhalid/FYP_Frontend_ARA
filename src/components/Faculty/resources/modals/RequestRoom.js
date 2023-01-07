@@ -20,7 +20,6 @@ function RequestRoom(props) {
 
     const [showError, setShowError] = useState(false);
     const [requestAdded, setRequestAdded] = useState(true);
-    // const [conflict, setConflict] = useState(false);
 
     const [departments, setDepartments] = useState([])
 
@@ -56,14 +55,11 @@ function RequestRoom(props) {
             axios.get('http://localhost:8080/getRoomRequests')
                 .then((response) => {
                     setRoomsRequest(response.data)
-                    console.log(response.data)
                 })
                 .catch((error) => { console.log(error) })
             setRequestAdded(false)
         }
     }, [requestAdded])
-    console.log(roomsRequest)
-    console.log(requestAdded)
 
     useEffect(() => {
         axios.get('http://localhost:8080/departments')
@@ -135,10 +131,11 @@ function RequestRoom(props) {
     }
 
     const handleForm = (e) => {
+
         let conflict = false;
         e.preventDefault();
+
         if (roomsRequest.length === 0) {
-            console.log('if')
             addRoomRequest()
         } else {
             for (let i = 0; i < roomsRequest.length; i++) {
@@ -152,26 +149,24 @@ function RequestRoom(props) {
                 requestStartTime.setHours(request.startTime.substring(0, 2), request.startTime.substring(3), 0, 0);
                 requestEndTime.setHours(request.endTime.substring(0, 2), request.endTime.substring(3), 0, 0);
 
-                if ((roomsRequest[i].room_id === request.room_id && request.date === roomsRequest[i].date) &&
-                    (((requestStartTime.getTime() === roomStartTime.getTime() && requestStartTime.getTime() === roomEndTime.getTime()) && (requestEndTime.getTime() === roomStartTime.getTime() && requestEndTime.getTime() === roomEndTime.getTime())) ||
-                        ((requestStartTime.getTime() > roomStartTime.getTime() && requestStartTime.getTime() < roomEndTime.getTime()) && (requestEndTime.getTime() > roomStartTime.getTime() && requestEndTime.getTime() < roomEndTime.getTime())) ||
-                        ((requestStartTime.getTime() < roomStartTime.getTime() && requestStartTime.getTime() < roomEndTime.getTime()) && (requestEndTime.getTime() > roomStartTime.getTime() && requestEndTime.getTime() > roomEndTime.getTime())))
-                ) {
-                    console.log('for if')
-                    setShowError(true)
-                    conflict = true
-                    break
+
+
+                if ((roomsRequest[i].room_id === request.room_id && request.date === roomsRequest[i].date)) {
+                    if ((requestStartTime.getTime() === roomEndTime.getTime() || requestEndTime.getTime() === roomStartTime.getTime())) {
+                        continue;
+                    }
+                    if ((Math.min(requestStartTime, requestEndTime) <= Math.max(roomStartTime, roomEndTime) &&
+                        Math.max(requestStartTime, requestEndTime) >= Math.min(roomStartTime, roomEndTime))) {
+                        setShowError(true)
+                        conflict = true
+                        break
+                    }
                 }
             }
             if (!conflict) {
                 addRoomRequest()
                 conflict = false
             }
-            // else {
-            //     console.log('for if else')
-            //     addRoomRequest()
-            //     break
-            // }
         }
     }
 
