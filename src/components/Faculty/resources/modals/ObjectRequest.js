@@ -36,7 +36,7 @@ function ObjectRequest(props) {
         room_id: '',
         resource_type_id: '',
         quantity: '',
-        availableQuantity: '',
+        isOccupied: false,
         date: format(new Date(), 'MM/dd/yyyy'),
         startTime: format(new Date(), 'HH:mm'),
         endTime: format(new Date(), 'HH:mm'),
@@ -49,6 +49,7 @@ function ObjectRequest(props) {
                     setObjectsRequest(response.data)
                 })
                 .catch((error) => { console.log(error) })
+
             setRequestAdded(false)
         }
     }, [requestAdded])
@@ -172,9 +173,8 @@ function ObjectRequest(props) {
         if (objectsRequest.length === 0) {
             addObjectRequest()
         } else {
-
-            for (let i = objectsRequest.length - 1; i >= 0; i--) {
-                console.log('here')
+            let alreadyRequestedQuantity = 0
+            for (let i = 0; i < objectsRequest.length; i++) {
                 var objectStartTime = new Date();
                 var objectEndTime = new Date();
                 objectStartTime.setHours(objectsRequest[i].startTime.substring(0, 2), objectsRequest[i].startTime.substring(3), 0, 0);
@@ -192,26 +192,23 @@ function ObjectRequest(props) {
                     if ((Math.min(requestStartTime, requestEndTime) <= Math.max(objectStartTime, objectEndTime) &&
                         Math.max(requestStartTime, requestEndTime) >= Math.min(objectStartTime, objectEndTime))) {
 
-
-                        console.log(objectsRequest[i].availableQuantity)
-                        console.log(request.quantity)
-                        if (objectsRequest[i].availableQuantity < request.quantity) {
-                            setShowError(true)
-                            conflict = true
-                            break
-                        }
-
-                        // for (let j = objectsInfo.length - 1; j > 0; j--) {
-                        //     if (request.resource_type_id === objectsInfo[j].resource_type_id) {
-                        //         if (request.quantity > objectsInfo[j].availableQuantity && objectsRequest[i].availableQuantity < request.quantity) {
-                        //             setShowError(true)
-                        //             conflict = true
-                        //             break
-                        //         }
-                        //     }
-                        // }
+                        alreadyRequestedQuantity += objectsRequest[i].quantity
                     }
                 }
+            }
+            let availableQuantity = 0
+            for (let j = 0; j < objectsInfo.length; j++) {
+                if (objectsInfo[j].resource_type_id === request.resource_type_id) {
+                    availableQuantity = objectsInfo[j].quantity - alreadyRequestedQuantity
+                    break
+                }
+            }
+            console.log(alreadyRequestedQuantity)
+            console.log(availableQuantity)
+            console.log(request.quantity)
+            if (availableQuantity < request.quantity) {
+                setShowError(true)
+                conflict = true
             }
             if (!conflict) {
                 addObjectRequest()
