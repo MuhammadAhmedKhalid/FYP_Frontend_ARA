@@ -5,9 +5,11 @@ import TextField from '@material-ui/core/TextField'
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import Stack from '@mui/material/Stack';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
-import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
+import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker';
+import { TimePicker } from '@mui/x-date-pickers/TimePicker';
 import axios from 'axios';
 import { format } from 'date-fns';
+import { Alert } from '@mui/material';
 
 function ObjectRequest(props) {
 
@@ -15,9 +17,6 @@ function ObjectRequest(props) {
 
     const [value, setValue] = useState(dayjs(new Date()));
     const [value1, setValue1] = useState(dayjs(new Date()));
-
-    const [maxQuantity, setMaxQuantity] = useState(0)
-
     const [departments, setDeaprtments] = useState([])
 
     const [rooms, setRooms] = useState([])
@@ -27,16 +26,32 @@ function ObjectRequest(props) {
     const [objectsInfo, setObjectsInfo] = useState([])
     const [objectsData, setObjectsData] = useState([])
 
+    const [objectsRequest, setObjectsRequest] = useState([])
+
+    const [showError, setShowError] = useState(false);
+    const [requestAdded, setRequestAdded] = useState(true);
+
     const [request, setRequest] = useState({
         department_id: '',
         room_id: '',
         resource_type_id: '',
         quantity: '',
-        startDate: format(new Date(), 'MM/dd/yyyy'),
-        endDate: format(new Date(), 'MM/dd/yyyy'),
+        availableQuantity: '',
+        date: format(new Date(), 'MM/dd/yyyy'),
         startTime: format(new Date(), 'HH:mm'),
         endTime: format(new Date(), 'HH:mm'),
     })
+
+    useEffect(() => {
+        if (requestAdded) {
+            axios.get('http://localhost:8080/getObjectRequests')
+                .then((response) => {
+                    setObjectsRequest(response.data)
+                })
+                .catch((error) => { console.log(error) })
+            setRequestAdded(false)
+        }
+    }, [requestAdded])
 
     useEffect(() => {
         if (objects.length !== 0 && rooms.length !== 0) {
@@ -45,7 +60,7 @@ function ObjectRequest(props) {
                 for (let j = 0; j < objectsInfo.length; j++) {
                     for (let k = 0; k < rooms.length; k++) {
                         if (objects[i].resource_type_id === objectsInfo[j].resource_type_id && objectsInfo[j].room_id === rooms[k].room_id &&
-                            request.room_id == rooms[k].room_id) {
+                            request.room_id === rooms[k].room_id) {
                             setObjectsData(objectsData => [...objectsData, { id: objects[i].resource_type_id, name: objects[i].name }])
                         }
                     }
@@ -83,21 +98,31 @@ function ObjectRequest(props) {
             .catch((error) => { console.log(error) })
     }, [])
 
-    const handleStartDatetTimeChange = (newValue) => {
+    const handleDateChange = (newValue) => {
         const object = newValue
         for (const key in object) {
             if (key === '$d') {
-                setRequest({ ...request, startDate: format(new Date(object[key]), 'MM/dd/yyyy'), startTime: format(new Date(object[key]), 'HH:mm') })
+                setRequest({ ...request, date: format(new Date(object[key]), 'MM/dd/yyyy') })
             }
         }
         setValue(newValue);
     };
 
-    const handleEndDatetTimeChange = (newValue) => {
+    const handleStartTimeChange = (newValue) => {
         const object = newValue
         for (const key in object) {
             if (key === '$d') {
-                setRequest({ ...request, endDate: format(new Date(object[key]), 'MM/dd/yyyy'), endTime: format(new Date(object[key]), 'HH:mm') })
+                setRequest({ ...request, startTime: format(new Date(object[key]), 'HH:mm') })
+            }
+        }
+        setValue(newValue);
+    };
+
+    const handleEndTimeChange = (newValue) => {
+        const object = newValue
+        for (const key in object) {
+            if (key === '$d') {
+                setRequest({ ...request, endTime: format(new Date(object[key]), 'HH:mm') })
             }
         }
         setValue1(newValue);
@@ -124,21 +149,76 @@ function ObjectRequest(props) {
     const handleObjectChange = (event) => {
         const object_name = event.target.value
         for (let i = 0; i < objects.length; i++) {
-            for (let j = 0; j < objectsInfo.length; i++) {
-                if (objects[i].name === object_name && objects[i].resource_type_id === objectsInfo[j].resource_type_id) {
-                    setRequest({ ...request, resource_type_id: objects[i].resource_type_id })
-                    setMaxQuantity(objectsInfo[j].quantity)
-                }
+            if (objects[i].name === object_name) {
+                setRequest({ ...request, resource_type_id: objects[i].resource_type_id })
             }
         }
     }
 
-    const handleForm = (e) => {
-        e.preventDefault();
-        setObjectModal(false)
+    const addObjectRequest = () => {
+        setShowError(false)
         axios.post('http://localhost:8080/addObjectRequest', request)
-            .then((response) => { console.log(response) })
+            .then((response) => {
+                console.log(response)
+                setObjectModal(false)
+                setRequestAdded(true)
+            })
             .catch((error) => { console.log(error) })
+    }
+
+    const handleForm = (e) => {
+        let conflict = false;
+        e.preventDefault();
+        if (objectsRequest.length === 0) {
+            addObjectRequest()
+        } else {
+
+            for (let i = objectsRequest.length - 1; i >= 0; i--) {
+                console.log('here')
+                var objectStartTime = new Date();
+                var objectEndTime = new Date();
+                objectStartTime.setHours(objectsRequest[i].startTime.substring(0, 2), objectsRequest[i].startTime.substring(3), 0, 0);
+                objectEndTime.setHours(objectsRequest[i].endTime.substring(0, 2), objectsRequest[i].endTime.substring(3), 0, 0);
+
+                var requestStartTime = new Date();
+                var requestEndTime = new Date();
+                requestStartTime.setHours(request.startTime.substring(0, 2), request.startTime.substring(3), 0, 0);
+                requestEndTime.setHours(request.endTime.substring(0, 2), request.endTime.substring(3), 0, 0);
+
+                if ((objectsRequest[i].resource_type_id === request.resource_type_id && request.date === objectsRequest[i].date)) {
+                    if ((requestStartTime.getTime() === objectEndTime.getTime() || requestEndTime.getTime() === objectStartTime.getTime())) {
+                        continue;
+                    }
+                    if ((Math.min(requestStartTime, requestEndTime) <= Math.max(objectStartTime, objectEndTime) &&
+                        Math.max(requestStartTime, requestEndTime) >= Math.min(objectStartTime, objectEndTime))) {
+
+
+                        console.log(objectsRequest[i].availableQuantity)
+                        console.log(request.quantity)
+                        if (objectsRequest[i].availableQuantity < request.quantity) {
+                            setShowError(true)
+                            conflict = true
+                            break
+                        }
+
+                        // for (let j = objectsInfo.length - 1; j > 0; j--) {
+                        //     if (request.resource_type_id === objectsInfo[j].resource_type_id) {
+                        //         if (request.quantity > objectsInfo[j].availableQuantity && objectsRequest[i].availableQuantity < request.quantity) {
+                        //             setShowError(true)
+                        //             conflict = true
+                        //             break
+                        //         }
+                        //     }
+                        // }
+                    }
+                }
+            }
+            if (!conflict) {
+                addObjectRequest()
+                conflict = false
+            }
+
+        }
     }
 
     const customStyles = {
@@ -200,29 +280,36 @@ function ObjectRequest(props) {
                             style={{ marginTop: '12px' }}
                             size='small'
                             variant="outlined"
-                            type='number'
-                            inputProps={{ min: 0, max: maxQuantity }} />
+                            type='number' />
                         <div style={{ marginTop: '12px' }}>
                             <LocalizationProvider dateAdapter={AdapterDayjs}>
                                 <Stack spacing={1.5}>
-                                    <DateTimePicker
-                                        label="Start Date and Time"
+                                    <DesktopDatePicker
+                                        label="Date"
+                                        inputFormat="DD/MM/YYYY"
                                         value={value}
-                                        onChange={handleStartDatetTimeChange}
-                                        minDate={new Date()}
-                                        inputFormat='MM/DD/YYYY HH:mm'
-                                        renderInput={(params) => <TextField {...params} />}
-                                    />
-                                    <DateTimePicker
-                                        label="End Date and Time"
+                                        onChange={handleDateChange}
+                                        renderInput={(params) => <TextField {...params}
+                                            variant="outlined" />} />
+                                    <TimePicker
+                                        value={value}
+                                        onChange={handleStartTimeChange}
+                                        label="Start Time"
+                                        renderInput={(params) => <TextField {...params}
+                                            variant="outlined" />} />
+                                    <TimePicker
                                         value={value1}
-                                        onChange={handleEndDatetTimeChange}
-                                        minDate={new Date()}
-                                        inputFormat='MM/DD/YYYY HH:mm'
-                                        renderInput={(params) => <TextField {...params} />}
-                                    />
+                                        onChange={handleEndTimeChange}
+                                        label="End Time"
+                                        renderInput={(params) => <TextField {...params}
+                                            variant="outlined" />} />
                                 </Stack>
                             </LocalizationProvider>
+                        </div>
+                        <div>
+                            {
+                                showError && <Alert style={{ marginTop: '12px' }} severity="error">Object is already occupied between this interval.</Alert>
+                            }
                         </div>
                         <div className='center flexbox-container-y'>
                             <button style={{ marginTop: '1rem' }} type='submit' className='modal-btn'>Save</button>
