@@ -15,6 +15,9 @@ function ObjectRequest(props) {
 
     const [value, setValue] = useState(dayjs(new Date()));
     const [value1, setValue1] = useState(dayjs(new Date()));
+
+    const [maxQuantity, setMaxQuantity] = useState(0)
+
     const [departments, setDeaprtments] = useState([])
 
     const [rooms, setRooms] = useState([])
@@ -121,8 +124,11 @@ function ObjectRequest(props) {
     const handleObjectChange = (event) => {
         const object_name = event.target.value
         for (let i = 0; i < objects.length; i++) {
-            if (objects[i].name === object_name) {
-                setRequest({ ...request, resource_type_id: objects[i].resource_type_id })
+            for (let j = 0; j < objectsInfo.length; i++) {
+                if (objects[i].name === object_name && objects[i].resource_type_id === objectsInfo[j].resource_type_id) {
+                    setRequest({ ...request, resource_type_id: objects[i].resource_type_id })
+                    setMaxQuantity(objectsInfo[j].quantity)
+                }
             }
         }
     }
@@ -194,7 +200,8 @@ function ObjectRequest(props) {
                             style={{ marginTop: '12px' }}
                             size='small'
                             variant="outlined"
-                            type='number' />
+                            type='number'
+                            inputProps={{ min: 0, max: maxQuantity }} />
                         <div style={{ marginTop: '12px' }}>
                             <LocalizationProvider dateAdapter={AdapterDayjs}>
                                 <Stack spacing={1.5}>

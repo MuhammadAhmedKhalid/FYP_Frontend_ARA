@@ -51,7 +51,6 @@ function RequestRoom(props) {
 
     useEffect(() => {
         if (requestAdded) {
-            console.log('db call')
             axios.get('http://localhost:8080/getRoomRequests')
                 .then((response) => {
                     setRoomsRequest(response.data)
@@ -244,7 +243,7 @@ function RequestRoom(props) {
                         </div>
                         <div>
                             {
-                                showError && <Alert style={{ marginTop: '12px' }} severity="error">Requested room is busy!</Alert>
+                                showError && <Alert style={{ marginTop: '12px' }} severity="error">Room is already occupied between this interval.</Alert>
                             }
                         </div>
                         <div className='center flexbox-container-y'>
