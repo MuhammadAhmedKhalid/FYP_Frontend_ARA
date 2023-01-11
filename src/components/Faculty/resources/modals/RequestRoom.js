@@ -12,6 +12,7 @@ import { format } from 'date-fns';
 import { Alert } from '@mui/material';
 import { useSelector, useDispatch } from 'react-redux'
 import { getRoomRequest } from '../../../../redux/GetRoomRequests/getRoomReqActions'
+import { getDepartmentsRequest } from '../../../../redux/GetDepartments/getDepartmentsActions'
 
 function RequestRoom(props) {
 
@@ -24,7 +25,8 @@ function RequestRoom(props) {
     const [showError, setShowError] = useState(false);
     const [requestAdded, setRequestAdded] = useState(true);
 
-    const [departments, setDepartments] = useState([])
+    const departments = useSelector((state) => state.getDepartments.departments.data)
+    const departmentsAdded = useSelector((state) => state.getDepartments.added)
 
     const [rooms, setRooms] = useState([])
     const [roomsData, setRoomsData] = useState([])
@@ -60,9 +62,7 @@ function RequestRoom(props) {
     }, [requestAdded])
 
     useEffect(() => {
-        axios.get('http://localhost:8080/departments')
-            .then((response) => { setDepartments(response.data) })
-            .catch((error) => { console.log(error) })
+        dispatch(getDepartmentsRequest())
         axios.get('http://localhost:8080/rooms')
             .then((response) => { setRooms(response.data) })
             .catch((error) => { console.log(error) })
@@ -201,7 +201,7 @@ function RequestRoom(props) {
                         <select className='dropdown' onChange={handleDepartmentChange}>
                             <option></option>
                             {
-                                departments.length !== 0 ? departments.map(department =>
+                                departmentsAdded && departments.length !== 0 ? departments.map(department =>
                                     <option key={department.department_id}>{department.department_name}</option>) : null
                             }
                         </select>

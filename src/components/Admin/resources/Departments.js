@@ -3,18 +3,24 @@ import AdminNavBar from '../AdminNavbar'
 import AdminIcon from '../AdminIcon'
 import AddDepartment from './modals/AddDepartment'
 import axios from 'axios'
+import { useSelector, useDispatch } from 'react-redux'
+import { getDepartmentsRequest } from '../../../redux/GetDepartments/getDepartmentsActions'
 
 function Departments() {
+
+    const dispatch = useDispatch()
+
     const [openDepartmentModal, setOpenDepartmentModal] = useState(false)
     const [refresh, setRefresh] = useState(false)
-    const [departments, setDepartments] = useState([])
+
+    const departments = useSelector((state) => state.getDepartments.departments.data)
+    const departmentsAdded = useSelector((state) => state.getDepartments.added)
+
     const openModal = () => {
         setOpenDepartmentModal(true)
     }
     useEffect(() => {
-        axios.get('http://localhost:8080/departments')
-            .then((response) => { setDepartments(response.data) })
-            .catch((error) => { console.log(error) })
+        dispatch(getDepartmentsRequest())
     }, [refresh])
 
     return (
@@ -32,7 +38,9 @@ function Departments() {
                     <center>
                         <div>
                             {
-                                departments.length !== 0 ? departments.map(department => <div key={department.department_id}>{department.department_id}. {department.department_name}</div>) : null
+                                departmentsAdded && departments.length !== 0 ?
+                                    departments.map(department => <div key={department.department_id}>{department.department_id}. {department.department_name}</div>)
+                                    : null
                             }
                         </div>
                     </center>
