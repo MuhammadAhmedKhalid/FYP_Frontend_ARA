@@ -3,12 +3,20 @@ import AdminIcon from '../AdminIcon'
 import AdminNavBar from '../AdminNavbar'
 import AddObject from './modals/AddObject'
 import axios from 'axios'
+import { useSelector, useDispatch } from 'react-redux'
+import { getRoomsRequest } from '../../../redux/GetRooms/getRoomsActions'
 
 function Objects() {
+
+    const dispatch = useDispatch()
+
     const [openObjectModal, setOpenObjectModal] = useState(false)
     const [objects, setObjects] = useState([])
     const [objectTypes, setObjectTypes] = useState([])
-    const [rooms, setRooms] = useState([])
+
+    const rooms = useSelector((state) => state.getRooms.rooms.data)
+    // const roomsAdded = useSelector((state) => state.getRooms.added)
+
     const [objectData, setObjectData] = useState([])
 
     const openModal = () => {
@@ -37,9 +45,7 @@ function Objects() {
         axios.get('http://localhost:8080/resourceTypes')
             .then((response) => { setObjectTypes(response.data) })
             .catch((error) => { console.log(error) })
-        axios.get('http://localhost:8080/rooms')
-            .then((response) => { setRooms(response.data) })
-            .catch((error) => { console.log(error) })
+        dispatch(getRoomsRequest())
     }, [])
 
     return (

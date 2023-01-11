@@ -3,11 +3,20 @@ import AdminIcon from '../AdminIcon'
 import AdminNavBar from '../AdminNavbar'
 import AddRoom from './modals/AddRoom'
 import axios from 'axios'
+import { useSelector, useDispatch } from 'react-redux'
+import { getDepartmentsRequest } from '../../../redux/GetDepartments/getDepartmentsActions'
+import { getRoomsRequest } from '../../../redux/GetRooms/getRoomsActions'
 
 function Rooms() {
+
+    const dispatch = useDispatch()
+
     const [openRoomModal, setOpenRoomModal] = useState(false)
-    const [rooms, setRooms] = useState([])
-    const [departments, setDepartments] = useState([])
+    const rooms = useSelector((state) => state.getRooms.rooms.data)
+
+    const departments = useSelector((state) => state.getDepartments.departments.data)
+    const departmentsAdded = useSelector((state) => state.getDepartments.added)
+
     const [roomData, setRoomData] = useState([])
 
     const openModal = () => {
@@ -15,11 +24,13 @@ function Rooms() {
     }
 
     useEffect(() => {
-        if (rooms.length !== 0 && departments.length !== 0) {
-            for (let i = 0; i < rooms.length; i++) {
-                for (let j = 0; j < departments.length; j++) {
-                    if (rooms[i].department_id === departments[j].department_id) {
-                        setRoomData(roomData => [...roomData, rooms[i].name + " " + departments[j].department_name])
+        if (departmentsAdded) {
+            if (rooms.length !== 0 && departments.length !== 0) {
+                for (let i = 0; i < rooms.length; i++) {
+                    for (let j = 0; j < departments.length; j++) {
+                        if (rooms[i].department_id === departments[j].department_id) {
+                            setRoomData(roomData => [...roomData, rooms[i].name + " " + departments[j].department_name])
+                        }
                     }
                 }
             }
@@ -27,12 +38,8 @@ function Rooms() {
     }, [rooms, departments])
 
     useEffect(() => {
-        axios.get('http://localhost:8080/rooms')
-            .then((response) => { setRooms(response.data) })
-            .catch((error) => { console.log(error) })
-        axios.get('http://localhost:8080/departments')
-            .then((response) => { setDepartments(response.data) })
-            .catch((error) => { console.log(error) })
+        dispatch(getRoomsRequest())
+        dispatch(getDepartmentsRequest())
     }, [])
 
     return (

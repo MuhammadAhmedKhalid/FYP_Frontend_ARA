@@ -1,6 +1,5 @@
 import { GET_INSTITUTES_FAILURE, GET_INSTITUTES_REQUEST, GET_INSTITUTES_SUCCESS } from './getInstitutesTypes'
-import { put, takeEvery, call } from 'redux-saga/effects'
-import { select } from 'redux-saga/effects';
+import { put, takeEvery, call, select } from 'redux-saga/effects'
 import axios from 'axios';
 
 function* getInstituteRequest() {

@@ -13,6 +13,7 @@ import { Alert } from '@mui/material';
 import { useSelector, useDispatch } from 'react-redux'
 import { getRoomRequest } from '../../../../redux/GetRoomRequests/getRoomReqActions'
 import { getDepartmentsRequest } from '../../../../redux/GetDepartments/getDepartmentsActions'
+import { getRoomsRequest } from '../../../../redux/GetRooms/getRoomsActions'
 
 function RequestRoom(props) {
 
@@ -28,7 +29,9 @@ function RequestRoom(props) {
     const departments = useSelector((state) => state.getDepartments.departments.data)
     const departmentsAdded = useSelector((state) => state.getDepartments.added)
 
-    const [rooms, setRooms] = useState([])
+    const rooms = useSelector((state) => state.getRooms.rooms.data)
+    const roomsAdded = useSelector((state) => state.getRooms.added)
+
     const [roomsData, setRoomsData] = useState([])
 
     const roomsRequest = useSelector((state) => state.getRoomRequest.room_req.data)
@@ -42,12 +45,14 @@ function RequestRoom(props) {
     })
 
     useEffect(() => {
-        if (rooms.length !== 0 && departments.length !== 0) {
-            setRoomsData([])
-            for (let i = 0; i < rooms.length; i++) {
-                for (let j = 0; j < departments.length; j++) {
-                    if (rooms[i].department_id === departments[j].department_id && departments[j].department_id === request.department_id) {
-                        setRoomsData(roomsData => [...roomsData, { id: rooms[i].room_id, name: rooms[i].name }])
+        if (roomsAdded) {
+            if (rooms.length !== 0 && departments.length !== 0) {
+                setRoomsData([])
+                for (let i = 0; i < rooms.length; i++) {
+                    for (let j = 0; j < departments.length; j++) {
+                        if (rooms[i].department_id === departments[j].department_id && departments[j].department_id === request.department_id) {
+                            setRoomsData(roomsData => [...roomsData, { id: rooms[i].room_id, name: rooms[i].name }])
+                        }
                     }
                 }
             }
@@ -63,10 +68,7 @@ function RequestRoom(props) {
 
     useEffect(() => {
         dispatch(getDepartmentsRequest())
-        axios.get('http://localhost:8080/rooms')
-            .then((response) => { setRooms(response.data) })
-            .catch((error) => { console.log(error) })
-
+        dispatch(getRoomsRequest())
     }, [])
 
     const handleDateChange = (newValue) => {
