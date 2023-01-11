@@ -7,13 +7,13 @@ import Stack from '@mui/material/Stack';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
 import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker';
 import { TimePicker } from '@mui/x-date-pickers/TimePicker';
-import axios from 'axios'
 import { format } from 'date-fns';
 import { Alert } from '@mui/material';
 import { useSelector, useDispatch } from 'react-redux'
 import { getRoomRequest } from '../../../../redux/GetRoomRequests/getRoomReqActions'
 import { getDepartmentsRequest } from '../../../../redux/GetDepartments/getDepartmentsActions'
 import { getRoomsRequest } from '../../../../redux/GetRooms/getRoomsActions'
+import { addRequestedRoom } from '../../../../redux/AddRoomRequest/roomRequestActions'
 
 function RequestRoom(props) {
 
@@ -22,18 +22,15 @@ function RequestRoom(props) {
 
     const [value, setValue] = useState(dayjs(new Date()));
     const [value1, setValue1] = useState(dayjs(new Date()));
-
     const [showError, setShowError] = useState(false);
     const [requestAdded, setRequestAdded] = useState(true);
-
-    const departments = useSelector((state) => state.getDepartments.departments.data)
-    const departmentsAdded = useSelector((state) => state.getDepartments.added)
-
-    const rooms = useSelector((state) => state.getRooms.rooms.data)
-    const roomsAdded = useSelector((state) => state.getRooms.added)
-
     const [roomsData, setRoomsData] = useState([])
 
+    const requestSuccessfull = useSelector((state) => state.addRoomRequest.added)
+    const departments = useSelector((state) => state.getDepartments.departments.data)
+    const departmentsAdded = useSelector((state) => state.getDepartments.added)
+    const rooms = useSelector((state) => state.getRooms.rooms.data)
+    const roomsAdded = useSelector((state) => state.getRooms.added)
     const roomsRequest = useSelector((state) => state.getRoomRequest.room_req.data)
 
     const [request, setRequest] = useState({
@@ -120,14 +117,12 @@ function RequestRoom(props) {
     }
 
     const addRoomRequest = () => {
-        setShowError(false)
-        axios.post('http://localhost:8080/addRoomRequest', request)
-            .then((response) => {
-                console.log(response)
-                setRoomModal(false)
-                setRequestAdded(true)
-            })
-            .catch((error) => { console.log(error) })
+        setRoomModal(false)
+        dispatch(addRequestedRoom(request))
+        if (requestSuccessfull) {
+            setRequestAdded(true)
+            setShowError(false)
+        }
     }
 
     const handleForm = (e) => {
