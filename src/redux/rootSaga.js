@@ -11,6 +11,7 @@ import { getDepartmentsSaga } from './GetDepartments/getDepartmentsSaga'
 import { getRoomsSaga } from './GetRooms/getRoomsSaga'
 import { addRoomRequestSaga } from './AddRoomRequest/roomRequestSaga'
 import { getResourceTypesSaga } from './GetResourceTypes/getResourceSaga'
+import { getResourcesSaga } from './GetResources/getResourcesSaga'
 
 export function* rootSaga() {
     yield fork(signupSaga)
@@ -25,4 +26,5 @@ export function* rootSaga() {
     yield fork(getRoomsSaga)
     yield fork(addRoomRequestSaga)
     yield fork(getResourceTypesSaga)
+    yield fork(getResourcesSaga)
 }

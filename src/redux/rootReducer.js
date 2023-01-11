@@ -11,6 +11,7 @@ import { departmentsReducer } from './GetDepartments/getDepartmentsReducer'
 import { roomsReducer } from './GetRooms/getRoomsReducer'
 import { addRoomReqeReducer } from './AddRoomRequest/roomRequestReducer'
 import { resourceTypeReducer } from './GetResourceTypes/getResourceReducer'
+import { resourcesReducer } from './GetResources/getResourcesReducer'
 
 export const rootReducer = combineReducers({
     signup: signupReducer,
@@ -24,5 +25,6 @@ export const rootReducer = combineReducers({
     getDepartments: departmentsReducer,
     getRooms: roomsReducer,
     addRoomRequest: addRoomReqeReducer,
-    getResourceTypes: resourceTypeReducer
+    getResourceTypes: resourceTypeReducer,
+    getResources: resourcesReducer
 })

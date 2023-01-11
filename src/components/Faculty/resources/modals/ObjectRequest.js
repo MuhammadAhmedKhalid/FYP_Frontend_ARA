@@ -14,6 +14,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import { getDepartmentsRequest } from '../../../../redux/GetDepartments/getDepartmentsActions'
 import { getRoomsRequest } from '../../../../redux/GetRooms/getRoomsActions'
 import { getResourceTypesRequest } from '../../../../redux/GetResourceTypes/getResourceActions'
+import { getResources } from '../../../../redux/GetResources/getResourcesActions'
 
 function ObjectRequest(props) {
 
@@ -34,7 +35,8 @@ function ObjectRequest(props) {
 
     const objects = useSelector((state) => state.getResourceTypes.resource_types.data)
 
-    const [objectsInfo, setObjectsInfo] = useState([])
+    const objectsInfo = useSelector((state) => state.getResources.resources.data)
+
     const [objectsData, setObjectsData] = useState([])
 
     const [objectsRequest, setObjectsRequest] = useState([])
@@ -103,9 +105,7 @@ function ObjectRequest(props) {
         dispatch(getDepartmentsRequest())
         dispatch(getRoomsRequest())
         dispatch(getResourceTypesRequest())
-        axios.get('http://localhost:8080/resources')
-            .then((response) => { setObjectsInfo(response.data) })
-            .catch((error) => { console.log(error) })
+        dispatch(getResources())
     }, [])
 
     const handleDateChange = (newValue) => {
