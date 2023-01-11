@@ -10,10 +10,13 @@ import { TimePicker } from '@mui/x-date-pickers/TimePicker';
 import axios from 'axios'
 import { format } from 'date-fns';
 import { Alert } from '@mui/material';
+import { useSelector, useDispatch } from 'react-redux'
+import { getRoomRequest } from '../../../../redux/GetRoomRequests/getRoomReqActions'
 
 function RequestRoom(props) {
 
     const { openRoomModal, setRoomModal } = props
+    const dispatch = useDispatch()
 
     const [value, setValue] = useState(dayjs(new Date()));
     const [value1, setValue1] = useState(dayjs(new Date()));
@@ -26,7 +29,7 @@ function RequestRoom(props) {
     const [rooms, setRooms] = useState([])
     const [roomsData, setRoomsData] = useState([])
 
-    const [roomsRequest, setRoomsRequest] = useState([])
+    const roomsRequest = useSelector((state) => state.getRoomRequest.room_req.data)
 
     const [request, setRequest] = useState({
         department_id: '',
@@ -51,11 +54,7 @@ function RequestRoom(props) {
 
     useEffect(() => {
         if (requestAdded) {
-            axios.get('http://localhost:8080/getRoomRequests')
-                .then((response) => {
-                    setRoomsRequest(response.data)
-                })
-                .catch((error) => { console.log(error) })
+            dispatch(getRoomRequest())
             setRequestAdded(false)
         }
     }, [requestAdded])

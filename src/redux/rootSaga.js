@@ -6,6 +6,7 @@ import { instituteSaga } from './AddInstitute/instituteSaga'
 import { getInstitutesSaga } from './GetInstitutes/getInstitutesSaga'
 import { addFacultySaga } from './AddFaculty/addFacultySaga'
 import { getFacultySaga } from './GetFaculty/getFacultySaga'
+import { getRoomReqSaga } from './GetRoomRequests/getRoomReqSaga'
 
 export function* rootSaga() {
     yield fork(signupSaga)
@@ -15,4 +16,5 @@ export function* rootSaga() {
     yield fork(getInstitutesSaga)
     yield fork(addFacultySaga)
     yield fork(getFacultySaga)
+    yield fork(getRoomReqSaga)
 }

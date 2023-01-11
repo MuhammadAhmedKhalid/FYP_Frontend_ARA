@@ -6,6 +6,7 @@ import { addInstituteReducer } from './AddInstitute/instituteReducer'
 import { institutesReducer } from './GetInstitutes/getInstitutesReducer'
 import { addFacultyReducer } from './AddFaculty/addFacultyReducer'
 import { getFacultyReducer } from './GetFaculty/getFacultyReduer'
+import { roomReqReducer } from './GetRoomRequests/getRoomReqReducer'
 
 export const rootReducer = combineReducers({
     signup: signupReducer,
@@ -14,5 +15,6 @@ export const rootReducer = combineReducers({
     institute: addInstituteReducer,
     getInstitutes: institutesReducer,
     addFaculty: addFacultyReducer,
-    getFaculty: getFacultyReducer
+    getFaculty: getFacultyReducer,
+    getRoomRequest: roomReqReducer,
 })
