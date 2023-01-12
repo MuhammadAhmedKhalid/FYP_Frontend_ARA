@@ -11,7 +11,7 @@ function* addObjRequest(obj) {
         yield call(axios.post, 'http://localhost:8080/addObjectRequest', obj.obj, { headers });
         yield put({ type: ADD_OBJ_REQ_SUCCESS, message: "Object request added successfully." })
     } catch (error) {
-        yield put({ type: ADD_OBJ_REQ_FAILURE, message: "Add object request operation failed." })
+        yield put({ type: ADD_OBJ_REQ_FAILURE, message: "Requested quantity is greater than the available quantity." })
     }
 }
 

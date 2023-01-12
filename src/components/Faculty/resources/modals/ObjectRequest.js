@@ -15,7 +15,7 @@ import { getResourceTypesRequest } from '../../../../redux/GetResourceTypes/getR
 import { getResources } from '../../../../redux/GetResources/getResourcesActions'
 import { getRoomsRequest } from '../../../../redux/GetRooms/getRoomsActions'
 import { getObjReqRequest } from '../../../../redux/GetObjectRequests/getObjReqActions'
-import { addRequestedObj } from '../../../../redux/AddObjRequest/addObjRequestActions'
+import { addRequestedObj, resetState } from '../../../../redux/AddObjRequest/addObjRequestActions'
 import { checkConflict } from '../../utils'
 
 function ObjectRequest(props) {
@@ -34,7 +34,7 @@ function ObjectRequest(props) {
     const objectsInfo = useSelector((state) => state.getResources.resources.data)
     const objectsRequest = useSelector((state) => state.getObjRequests.obj_requests.data)
     const requestSuccessfull = useSelector((state) => state.addObjRequest.added)
-    console.log(objectsRequest)
+    const requestUnsuccessfullMsg = useSelector((state) => state.addObjRequest.error)
 
     const [value, setValue] = useState(dayjs(new Date()));
     const [value1, setValue1] = useState(dayjs(new Date()));
@@ -42,6 +42,7 @@ function ObjectRequest(props) {
     const [objectsData, setObjectsData] = useState([])
     const [showError, setShowError] = useState(false);
     const [requestAdded, setRequestAdded] = useState(true);
+    const [errorMsg, setErrorMsg] = useState('')
 
     const [request, setRequest] = useState({
         department_id: '',
@@ -53,6 +54,14 @@ function ObjectRequest(props) {
         startTime: format(new Date(), 'HH:mm'),
         endTime: format(new Date(), 'HH:mm'),
     })
+
+    useEffect(() => {
+        if (requestUnsuccessfullMsg.length === 0) {
+            setErrorMsg('Object is already occupied between this interval.')
+        } else {
+            setErrorMsg(requestUnsuccessfullMsg)
+        }
+    }, [requestUnsuccessfullMsg])
 
     useEffect(() => {
         if (requestAdded || requestSuccessfull) {
@@ -83,7 +92,7 @@ function ObjectRequest(props) {
         if (departmentsAdded) {
             if (rooms.length !== 0 && departments.length !== 0) {
                 setRoomsData([])
-                setObjectModal([])
+                // setObjectModal([])
                 for (let i = 0; i < rooms.length; i++) {
                     for (let j = 0; j < departments.length; j++) {
                         if (rooms[i].department_id === departments[j].department_id && departments[j].department_id === request.department_id) {
@@ -164,13 +173,20 @@ function ObjectRequest(props) {
         }
     }
 
-    const addObjectRequest = () => {
-        setObjectModal(false)
-        dispatch(addRequestedObj(request))
+    useEffect(() => {
         if (requestSuccessfull) {
+            setObjectModal(false)
             setRequestAdded(true)
             setShowError(false)
+            dispatch(resetState())
+        } else {
+            setShowError(true)
         }
+    }, [requestSuccessfull])
+
+    const addObjectRequest = () => {
+        dispatch(addRequestedObj(request))
+
     }
 
     const handleForm = (e) => {
@@ -314,7 +330,7 @@ function ObjectRequest(props) {
                         </div>
                         <div>
                             {
-                                showError && <Alert style={{ marginTop: '12px' }} severity="error">Object is already occupied between this interval.</Alert>
+                                showError && <Alert style={{ marginTop: '12px' }} severity="error">{errorMsg}</Alert>
                             }
                         </div>
                         <div className='center flexbox-container-y'>

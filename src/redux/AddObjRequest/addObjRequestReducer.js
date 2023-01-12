@@ -1,4 +1,4 @@
-import { ADD_OBJ_REQ_FAILURE, ADD_OBJ_REQ_REQUEST, ADD_OBJ_REQ_SUCCESS } from './addObjRequestTypes'
+import { ADD_OBJ_REQ_FAILURE, ADD_OBJ_REQ_REQUEST, ADD_OBJ_REQ_SUCCESS, RESET_STATE } from './addObjRequestTypes'
 
 export const addObjReqInitialState = {
     loading: false,
@@ -25,6 +25,10 @@ export const addObjReqReducer = (state = addObjReqInitialState, action) => {
             loading: false,
             success: '',
             error: action.message,
+            added: false
+        }
+        case RESET_STATE: return {
+            ...state,
             added: false
         }
         default: return state
