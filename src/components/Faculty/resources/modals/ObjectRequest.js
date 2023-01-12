@@ -10,33 +10,20 @@ import { TimePicker } from '@mui/x-date-pickers/TimePicker';
 import axios from 'axios';
 import { format } from 'date-fns';
 import { Alert } from '@mui/material';
-import { useSelector, useDispatch } from 'react-redux'
-import { getDepartmentsRequest } from '../../../../redux/GetDepartments/getDepartmentsActions'
-import { getRoomsRequest } from '../../../../redux/GetRooms/getRoomsActions'
-import { getResourceTypesRequest } from '../../../../redux/GetResourceTypes/getResourceActions'
-import { getResources } from '../../../../redux/GetResources/getResourcesActions'
 
 function ObjectRequest(props) {
 
     const { openObjectModal, setObjectModal } = props
 
-    const dispatch = useDispatch()
-
     const [value, setValue] = useState(dayjs(new Date()));
     const [value1, setValue1] = useState(dayjs(new Date()));
+    const [departments, setDeaprtments] = useState([])
 
-    const departments = useSelector((state) => state.getDepartments.departments.data)
-    const departmentsAdded = useSelector((state) => state.getDepartments.added)
-
-    const rooms = useSelector((state) => state.getRooms.rooms.data)
-    const roomsAdded = useSelector((state) => state.getRooms.added)
-
+    const [rooms, setRooms] = useState([])
     const [roomsData, setRoomsData] = useState([])
 
-    const objects = useSelector((state) => state.getResourceTypes.resource_types.data)
-
-    const objectsInfo = useSelector((state) => state.getResources.resources.data)
-
+    const [objects, setObjects] = useState([])
+    const [objectsInfo, setObjectsInfo] = useState([])
     const [objectsData, setObjectsData] = useState([])
 
     const [objectsRequest, setObjectsRequest] = useState([])
@@ -68,16 +55,14 @@ function ObjectRequest(props) {
     }, [requestAdded])
 
     useEffect(() => {
-        if (roomsAdded) {
-            if (objects.length !== 0 && rooms.length !== 0) {
-                setObjectsData([])
-                for (let i = 0; i < objects.length; i++) {
-                    for (let j = 0; j < objectsInfo.length; j++) {
-                        for (let k = 0; k < rooms.length; k++) {
-                            if (objects[i].resource_type_id === objectsInfo[j].resource_type_id && objectsInfo[j].room_id === rooms[k].room_id &&
-                                request.room_id === rooms[k].room_id) {
-                                setObjectsData(objectsData => [...objectsData, { id: objects[i].resource_type_id, name: objects[i].name }])
-                            }
+        if (objects.length !== 0 && rooms.length !== 0) {
+            setObjectsData([])
+            for (let i = 0; i < objects.length; i++) {
+                for (let j = 0; j < objectsInfo.length; j++) {
+                    for (let k = 0; k < rooms.length; k++) {
+                        if (objects[i].resource_type_id === objectsInfo[j].resource_type_id && objectsInfo[j].room_id === rooms[k].room_id &&
+                            request.room_id === rooms[k].room_id) {
+                            setObjectsData(objectsData => [...objectsData, { id: objects[i].resource_type_id, name: objects[i].name }])
                         }
                     }
                 }
@@ -86,15 +71,13 @@ function ObjectRequest(props) {
     }, [request.room_id])
 
     useEffect(() => {
-        if (departmentsAdded) {
-            if (rooms.length !== 0 && departments.length !== 0) {
-                setRoomsData([])
-                setObjectModal([])
-                for (let i = 0; i < rooms.length; i++) {
-                    for (let j = 0; j < departments.length; j++) {
-                        if (rooms[i].department_id === departments[j].department_id && departments[j].department_id === request.department_id) {
-                            setRoomsData(roomsData => [...roomsData, { id: rooms[i].room_id, name: rooms[i].name }])
-                        }
+        if (rooms.length !== 0 && departments.length !== 0) {
+            setRoomsData([])
+            setObjectModal([])
+            for (let i = 0; i < rooms.length; i++) {
+                for (let j = 0; j < departments.length; j++) {
+                    if (rooms[i].department_id === departments[j].department_id && departments[j].department_id === request.department_id) {
+                        setRoomsData(roomsData => [...roomsData, { id: rooms[i].room_id, name: rooms[i].name }])
                     }
                 }
             }
@@ -102,10 +85,18 @@ function ObjectRequest(props) {
     }, [request.department_id])
 
     useEffect(() => {
-        dispatch(getDepartmentsRequest())
-        dispatch(getRoomsRequest())
-        dispatch(getResourceTypesRequest())
-        dispatch(getResources())
+        axios.get('http://localhost:8080/departments')
+            .then((response) => { setDeaprtments(response.data) })
+            .catch((error) => { console.log(error) })
+        axios.get('http://localhost:8080/rooms')
+            .then((response) => { setRooms(response.data) })
+            .catch((error) => { console.log(error) })
+        axios.get('http://localhost:8080/resourceTypes')
+            .then((response) => { setObjects(response.data) })
+            .catch((error) => { console.log(error) })
+        axios.get('http://localhost:8080/resources')
+            .then((response) => { setObjectsInfo(response.data) })
+            .catch((error) => { console.log(error) })
     }, [])
 
     const handleDateChange = (newValue) => {
@@ -255,7 +246,7 @@ function ObjectRequest(props) {
                         <select className='dropdown' onChange={handleDepartmentChange}>
                             <option></option>
                             {
-                                departmentsAdded && departments.length !== 0 ? departments.map(department =>
+                                departments.length !== 0 ? departments.map(department =>
                                     <option key={department.department_id}>{department.department_name}</option>) : null
                             }
                         </select>

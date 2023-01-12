@@ -5,32 +5,36 @@ import AddObject from './modals/AddObject'
 import axios from 'axios'
 import { useSelector, useDispatch } from 'react-redux'
 import { getRoomsRequest } from '../../../redux/GetRooms/getRoomsActions'
+import { getResourceTypesRequest } from '../../../redux/GetResourceTypes/getResourceActions'
+import { getResources } from '../../../redux/GetResources/getResourcesActions'
 
 function Objects() {
 
     const dispatch = useDispatch()
 
     const [openObjectModal, setOpenObjectModal] = useState(false)
-    const [objects, setObjects] = useState([])
-    const [objectTypes, setObjectTypes] = useState([])
-
-    const rooms = useSelector((state) => state.getRooms.rooms.data)
-    // const roomsAdded = useSelector((state) => state.getRooms.added)
-
     const [objectData, setObjectData] = useState([])
+
+    const objects = useSelector((state) => state.getResources.resources.data)
+    const objectsAdded = useSelector((state) => state.getResources.added)
+    const objectTypes = useSelector((state) => state.getResourceTypes.resource_types.data)
+    const objectTypesAdded = useSelector((state) => state.getResourceTypes.added)
+    const rooms = useSelector((state) => state.getRooms.rooms.data)
 
     const openModal = () => {
         setOpenObjectModal(true)
     }
 
     useEffect(() => {
-        if (objects.length !== 0 && objectTypes.length !== 0) {
-            for (let i = 0; i < objects.length; i++) {
-                for (let j = 0; j < objectTypes.length; j++) {
-                    for (let k = 0; k < rooms.length; k++) {
-                        if (objects[i].resource_type_id === objectTypes[j].resource_type_id && objects[i].room_id === rooms[k].room_id) {
-                            setObjectData(objectData =>
-                                [...objectData, "Name: " + objectTypes[j].name + " Quantity: " + objects[i].quantity + " Room: " + rooms[k].name])
+        if (objectsAdded && objectTypesAdded) {
+            if (objects.length !== 0 && objectTypes.length !== 0) {
+                for (let i = 0; i < objects.length; i++) {
+                    for (let j = 0; j < objectTypes.length; j++) {
+                        for (let k = 0; k < rooms.length; k++) {
+                            if (objects[i].resource_type_id === objectTypes[j].resource_type_id && objects[i].room_id === rooms[k].room_id) {
+                                setObjectData(objectData =>
+                                    [...objectData, "Name: " + objectTypes[j].name + " Quantity: " + objects[i].quantity + " Room: " + rooms[k].name])
+                            }
                         }
                     }
                 }
@@ -39,12 +43,8 @@ function Objects() {
     }, [objects, objectTypes])
 
     useEffect(() => {
-        axios.get('http://localhost:8080/resources')
-            .then((response) => { setObjects(response.data) })
-            .catch((error) => { console.log(error) })
-        axios.get('http://localhost:8080/resourceTypes')
-            .then((response) => { setObjectTypes(response.data) })
-            .catch((error) => { console.log(error) })
+        dispatch(getResources())
+        dispatch(getResourceTypesRequest())
         dispatch(getRoomsRequest())
     }, [])
 

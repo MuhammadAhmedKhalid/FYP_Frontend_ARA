@@ -12,12 +12,11 @@ function Rooms() {
     const dispatch = useDispatch()
 
     const [openRoomModal, setOpenRoomModal] = useState(false)
-    const rooms = useSelector((state) => state.getRooms.rooms.data)
+    const [roomData, setRoomData] = useState([])
 
+    const rooms = useSelector((state) => state.getRooms.rooms.data)
     const departments = useSelector((state) => state.getDepartments.departments.data)
     const departmentsAdded = useSelector((state) => state.getDepartments.added)
-
-    const [roomData, setRoomData] = useState([])
 
     const openModal = () => {
         setOpenRoomModal(true)
