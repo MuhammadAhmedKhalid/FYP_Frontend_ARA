@@ -14,6 +14,7 @@ import { getRoomRequest } from '../../../../redux/GetRoomRequests/getRoomReqActi
 import { getDepartmentsRequest } from '../../../../redux/GetDepartments/getDepartmentsActions'
 import { getRoomsRequest } from '../../../../redux/GetRooms/getRoomsActions'
 import { addRequestedRoom } from '../../../../redux/AddRoomRequest/roomRequestActions'
+import { checkConflict } from '../../utils'
 
 function RequestRoom(props) {
 
@@ -33,6 +34,7 @@ function RequestRoom(props) {
     const rooms = useSelector((state) => state.getRooms.rooms.data)
     const roomsAdded = useSelector((state) => state.getRooms.added)
     const roomsRequest = useSelector((state) => state.getRoomRequest.room_req.data)
+    console.log(roomsRequest)
 
     const [request, setRequest] = useState({
         department_id: '',
@@ -58,11 +60,11 @@ function RequestRoom(props) {
     }, [request.department_id])
 
     useEffect(() => {
-        if (requestAdded) {
+        if (requestAdded || requestSuccessfull) {
             dispatch(getRoomRequest())
             setRequestAdded(false)
         }
-    }, [requestAdded])
+    }, [requestAdded, requestSuccessfull])
 
     useEffect(() => {
         dispatch(getDepartmentsRequest())
@@ -135,29 +137,26 @@ function RequestRoom(props) {
             addRoomRequest()
         } else {
             for (let i = 0; i < roomsRequest.length; i++) {
+
                 var roomStartTime = new Date();
                 var roomEndTime = new Date();
-                roomStartTime.setHours(roomsRequest[i].startTime.substring(0, 2), roomsRequest[i].startTime.substring(3), 0, 0);
-                roomEndTime.setHours(roomsRequest[i].endTime.substring(0, 2), roomsRequest[i].endTime.substring(3), 0, 0);
-
                 var requestStartTime = new Date();
                 var requestEndTime = new Date();
+
+                roomStartTime.setHours(roomsRequest[i].startTime.substring(0, 2), roomsRequest[i].startTime.substring(3), 0, 0);
+                roomEndTime.setHours(roomsRequest[i].endTime.substring(0, 2), roomsRequest[i].endTime.substring(3), 0, 0);
                 requestStartTime.setHours(request.startTime.substring(0, 2), request.startTime.substring(3), 0, 0);
                 requestEndTime.setHours(request.endTime.substring(0, 2), request.endTime.substring(3), 0, 0);
 
+                conflict = checkConflict(roomsRequest[i].room_id, request.room_id, roomsRequest[i].date, request.date,
+                    requestStartTime, roomStartTime, requestEndTime, roomEndTime,
+                    requestStartTime.getTime(), roomStartTime.getTime(), requestEndTime.getTime(), roomEndTime.getTime())
 
-
-                if ((roomsRequest[i].room_id === request.room_id && request.date === roomsRequest[i].date)) {
-                    if ((requestStartTime.getTime() === roomEndTime.getTime() || requestEndTime.getTime() === roomStartTime.getTime())) {
-                        continue;
-                    }
-                    if ((Math.min(requestStartTime, requestEndTime) <= Math.max(roomStartTime, roomEndTime) &&
-                        Math.max(requestStartTime, requestEndTime) >= Math.min(roomStartTime, roomEndTime))) {
-                        setShowError(true)
-                        conflict = true
-                        break
-                    }
+                if (conflict) {
+                    setShowError(true)
+                    break
                 }
+
             }
             if (!conflict) {
                 addRoomRequest()

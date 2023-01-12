@@ -8,7 +8,7 @@ function* addObjRequest(obj) {
         const headers = {
             'Authorization': `Bearer ${token}`
         };
-        const response = yield call(axios.post, 'http://localhost:8080/addObjectRequest', obj.obj, { headers });
+        yield call(axios.post, 'http://localhost:8080/addObjectRequest', obj.obj, { headers });
         yield put({ type: ADD_OBJ_REQ_SUCCESS, message: "Object request added successfully." })
     } catch (error) {
         yield put({ type: ADD_OBJ_REQ_FAILURE, message: "Add object request operation failed." })
