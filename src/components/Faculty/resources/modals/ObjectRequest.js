@@ -12,6 +12,8 @@ import { format } from 'date-fns';
 import { Alert } from '@mui/material';
 import { useSelector, useDispatch } from 'react-redux'
 import { getDepartmentsRequest } from '../../../../redux/GetDepartments/getDepartmentsActions'
+import { getResourceTypesRequest } from '../../../../redux/GetResourceTypes/getResourceActions'
+import { getResources } from '../../../../redux/GetResources/getResourcesActions'
 
 function ObjectRequest(props) {
 
@@ -28,7 +30,9 @@ function ObjectRequest(props) {
     const [rooms, setRooms] = useState([])
     const [roomsData, setRoomsData] = useState([])
 
-    const [objects, setObjects] = useState([])
+    const objects = useSelector((state) => state.getResourceTypes.resource_types.data)
+    const objectTypesAdded = useSelector((state) => state.getResourceTypes.added)
+
     const [objectsInfo, setObjectsInfo] = useState([])
     const [objectsData, setObjectsData] = useState([])
 
@@ -61,14 +65,16 @@ function ObjectRequest(props) {
     }, [requestAdded])
 
     useEffect(() => {
-        if (objects.length !== 0 && rooms.length !== 0) {
-            setObjectsData([])
-            for (let i = 0; i < objects.length; i++) {
-                for (let j = 0; j < objectsInfo.length; j++) {
-                    for (let k = 0; k < rooms.length; k++) {
-                        if (objects[i].resource_type_id === objectsInfo[j].resource_type_id && objectsInfo[j].room_id === rooms[k].room_id &&
-                            request.room_id === rooms[k].room_id) {
-                            setObjectsData(objectsData => [...objectsData, { id: objects[i].resource_type_id, name: objects[i].name }])
+        if (objectTypesAdded) {
+            if (objects.length !== 0 && rooms.length !== 0) {
+                setObjectsData([])
+                for (let i = 0; i < objects.length; i++) {
+                    for (let j = 0; j < objectsInfo.length; j++) {
+                        for (let k = 0; k < rooms.length; k++) {
+                            if (objects[i].resource_type_id === objectsInfo[j].resource_type_id && objectsInfo[j].room_id === rooms[k].room_id &&
+                                request.room_id === rooms[k].room_id) {
+                                setObjectsData(objectsData => [...objectsData, { id: objects[i].resource_type_id, name: objects[i].name }])
+                            }
                         }
                     }
                 }
@@ -94,12 +100,13 @@ function ObjectRequest(props) {
 
     useEffect(() => {
         dispatch(getDepartmentsRequest())
+
         axios.get('http://localhost:8080/rooms')
             .then((response) => { setRooms(response.data) })
             .catch((error) => { console.log(error) })
-        axios.get('http://localhost:8080/resourceTypes')
-            .then((response) => { setObjects(response.data) })
-            .catch((error) => { console.log(error) })
+
+        dispatch(getResourceTypesRequest())
+
         axios.get('http://localhost:8080/resources')
             .then((response) => { setObjectsInfo(response.data) })
             .catch((error) => { console.log(error) })
