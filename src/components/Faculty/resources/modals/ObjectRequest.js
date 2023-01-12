@@ -14,6 +14,9 @@ import { useSelector, useDispatch } from 'react-redux'
 import { getDepartmentsRequest } from '../../../../redux/GetDepartments/getDepartmentsActions'
 import { getResourceTypesRequest } from '../../../../redux/GetResourceTypes/getResourceActions'
 import { getResources } from '../../../../redux/GetResources/getResourcesActions'
+import { getRoomsRequest } from '../../../../redux/GetRooms/getRoomsActions'
+import { getObjReqRequest } from '../../../../redux/GetObjectRequests/getObjReqActions'
+import { addRequestedObj } from '../../../../redux/AddObjRequest/addObjRequestActions'
 
 function ObjectRequest(props) {
 
@@ -21,23 +24,21 @@ function ObjectRequest(props) {
 
     const dispatch = useDispatch()
 
-    const [value, setValue] = useState(dayjs(new Date()));
-    const [value1, setValue1] = useState(dayjs(new Date()));
+    // const [rooms, setRooms] = useState([])
+    const rooms = useSelector((state) => state.getRooms.rooms.data)
 
     const departments = useSelector((state) => state.getDepartments.departments.data)
     const departmentsAdded = useSelector((state) => state.getDepartments.added)
-
-    const [rooms, setRooms] = useState([])
-    const [roomsData, setRoomsData] = useState([])
-
     const objects = useSelector((state) => state.getResourceTypes.resource_types.data)
     const objectTypesAdded = useSelector((state) => state.getResourceTypes.added)
+    const objectsInfo = useSelector((state) => state.getResources.resources.data)
+    const objectsRequest = useSelector((state) => state.getObjRequests.obj_requests.data)
+    const requestSuccessfull = useSelector((state) => state.addObjRequest.added)
 
-    const [objectsInfo, setObjectsInfo] = useState([])
+    const [value, setValue] = useState(dayjs(new Date()));
+    const [value1, setValue1] = useState(dayjs(new Date()));
+    const [roomsData, setRoomsData] = useState([])
     const [objectsData, setObjectsData] = useState([])
-
-    const [objectsRequest, setObjectsRequest] = useState([])
-
     const [showError, setShowError] = useState(false);
     const [requestAdded, setRequestAdded] = useState(true);
 
@@ -54,12 +55,7 @@ function ObjectRequest(props) {
 
     useEffect(() => {
         if (requestAdded) {
-            axios.get('http://localhost:8080/getObjectRequests')
-                .then((response) => {
-                    setObjectsRequest(response.data)
-                })
-                .catch((error) => { console.log(error) })
-
+            dispatch(getObjReqRequest())
             setRequestAdded(false)
         }
     }, [requestAdded])
@@ -101,15 +97,13 @@ function ObjectRequest(props) {
     useEffect(() => {
         dispatch(getDepartmentsRequest())
 
-        axios.get('http://localhost:8080/rooms')
-            .then((response) => { setRooms(response.data) })
-            .catch((error) => { console.log(error) })
+        // axios.get('http://localhost:8080/rooms')
+        //     .then((response) => { setRooms(response.data) })
+        //     .catch((error) => { console.log(error) })
+        dispatch(getRoomsRequest())
 
         dispatch(getResourceTypesRequest())
-
-        axios.get('http://localhost:8080/resources')
-            .then((response) => { setObjectsInfo(response.data) })
-            .catch((error) => { console.log(error) })
+        dispatch(getResources())
     }, [])
 
     const handleDateChange = (newValue) => {
@@ -170,14 +164,12 @@ function ObjectRequest(props) {
     }
 
     const addObjectRequest = () => {
-        setShowError(false)
-        axios.post('http://localhost:8080/addObjectRequest', request)
-            .then((response) => {
-                console.log(response)
-                setObjectModal(false)
-                setRequestAdded(true)
-            })
-            .catch((error) => { console.log(error) })
+        setObjectModal(false)
+        dispatch(addRequestedObj(request))
+        if (requestSuccessfull) {
+            setRequestAdded(true)
+            setShowError(false)
+        }
     }
 
     const handleForm = (e) => {
@@ -216,9 +208,6 @@ function ObjectRequest(props) {
                     break
                 }
             }
-            console.log(alreadyRequestedQuantity)
-            console.log(availableQuantity)
-            console.log(request.quantity)
             if (availableQuantity < request.quantity) {
                 setShowError(true)
                 conflict = true
