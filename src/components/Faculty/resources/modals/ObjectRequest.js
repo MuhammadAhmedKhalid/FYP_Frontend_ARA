@@ -10,14 +10,20 @@ import { TimePicker } from '@mui/x-date-pickers/TimePicker';
 import axios from 'axios';
 import { format } from 'date-fns';
 import { Alert } from '@mui/material';
+import { useSelector, useDispatch } from 'react-redux'
+import { getDepartmentsRequest } from '../../../../redux/GetDepartments/getDepartmentsActions'
 
 function ObjectRequest(props) {
 
     const { openObjectModal, setObjectModal } = props
 
+    const dispatch = useDispatch()
+
     const [value, setValue] = useState(dayjs(new Date()));
     const [value1, setValue1] = useState(dayjs(new Date()));
-    const [departments, setDeaprtments] = useState([])
+
+    const departments = useSelector((state) => state.getDepartments.departments.data)
+    const departmentsAdded = useSelector((state) => state.getDepartments.added)
 
     const [rooms, setRooms] = useState([])
     const [roomsData, setRoomsData] = useState([])
@@ -71,13 +77,15 @@ function ObjectRequest(props) {
     }, [request.room_id])
 
     useEffect(() => {
-        if (rooms.length !== 0 && departments.length !== 0) {
-            setRoomsData([])
-            setObjectModal([])
-            for (let i = 0; i < rooms.length; i++) {
-                for (let j = 0; j < departments.length; j++) {
-                    if (rooms[i].department_id === departments[j].department_id && departments[j].department_id === request.department_id) {
-                        setRoomsData(roomsData => [...roomsData, { id: rooms[i].room_id, name: rooms[i].name }])
+        if (departmentsAdded) {
+            if (rooms.length !== 0 && departments.length !== 0) {
+                setRoomsData([])
+                setObjectModal([])
+                for (let i = 0; i < rooms.length; i++) {
+                    for (let j = 0; j < departments.length; j++) {
+                        if (rooms[i].department_id === departments[j].department_id && departments[j].department_id === request.department_id) {
+                            setRoomsData(roomsData => [...roomsData, { id: rooms[i].room_id, name: rooms[i].name }])
+                        }
                     }
                 }
             }
@@ -85,9 +93,7 @@ function ObjectRequest(props) {
     }, [request.department_id])
 
     useEffect(() => {
-        axios.get('http://localhost:8080/departments')
-            .then((response) => { setDeaprtments(response.data) })
-            .catch((error) => { console.log(error) })
+        dispatch(getDepartmentsRequest())
         axios.get('http://localhost:8080/rooms')
             .then((response) => { setRooms(response.data) })
             .catch((error) => { console.log(error) })
@@ -246,7 +252,7 @@ function ObjectRequest(props) {
                         <select className='dropdown' onChange={handleDepartmentChange}>
                             <option></option>
                             {
-                                departments.length !== 0 ? departments.map(department =>
+                                departmentsAdded && departments.length !== 0 ? departments.map(department =>
                                     <option key={department.department_id}>{department.department_name}</option>) : null
                             }
                         </select>
