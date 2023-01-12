@@ -16,6 +16,7 @@ import { getResources } from '../../../../redux/GetResources/getResourcesActions
 import { getRoomsRequest } from '../../../../redux/GetRooms/getRoomsActions'
 import { getObjReqRequest } from '../../../../redux/GetObjectRequests/getObjReqActions'
 import { addRequestedObj } from '../../../../redux/AddObjRequest/addObjRequestActions'
+import { checkConflict } from '../../utils'
 
 function ObjectRequest(props) {
 
@@ -33,6 +34,7 @@ function ObjectRequest(props) {
     const objectsInfo = useSelector((state) => state.getResources.resources.data)
     const objectsRequest = useSelector((state) => state.getObjRequests.obj_requests.data)
     const requestSuccessfull = useSelector((state) => state.addObjRequest.added)
+    console.log(objectsRequest)
 
     const [value, setValue] = useState(dayjs(new Date()));
     const [value1, setValue1] = useState(dayjs(new Date()));
@@ -53,11 +55,11 @@ function ObjectRequest(props) {
     })
 
     useEffect(() => {
-        if (requestAdded) {
+        if (requestAdded || requestSuccessfull) {
             dispatch(getObjReqRequest())
             setRequestAdded(false)
         }
-    }, [requestAdded])
+    }, [requestAdded, requestSuccessfull])
 
     useEffect(() => {
         if (objectTypesAdded) {
@@ -179,27 +181,27 @@ function ObjectRequest(props) {
         } else {
             let alreadyRequestedQuantity = 0
             for (let i = 0; i < objectsRequest.length; i++) {
+
                 var objectStartTime = new Date();
                 var objectEndTime = new Date();
-                objectStartTime.setHours(objectsRequest[i].startTime.substring(0, 2), objectsRequest[i].startTime.substring(3), 0, 0);
-                objectEndTime.setHours(objectsRequest[i].endTime.substring(0, 2), objectsRequest[i].endTime.substring(3), 0, 0);
-
                 var requestStartTime = new Date();
                 var requestEndTime = new Date();
+
+                objectStartTime.setHours(objectsRequest[i].startTime.substring(0, 2), objectsRequest[i].startTime.substring(3), 0, 0);
+                objectEndTime.setHours(objectsRequest[i].endTime.substring(0, 2), objectsRequest[i].endTime.substring(3), 0, 0);
                 requestStartTime.setHours(request.startTime.substring(0, 2), request.startTime.substring(3), 0, 0);
                 requestEndTime.setHours(request.endTime.substring(0, 2), request.endTime.substring(3), 0, 0);
 
-                if ((objectsRequest[i].resource_type_id === request.resource_type_id && request.date === objectsRequest[i].date)) {
-                    if ((requestStartTime.getTime() === objectEndTime.getTime() || requestEndTime.getTime() === objectStartTime.getTime())) {
-                        continue;
-                    }
-                    if ((Math.min(requestStartTime, requestEndTime) <= Math.max(objectStartTime, objectEndTime) &&
-                        Math.max(requestStartTime, requestEndTime) >= Math.min(objectStartTime, objectEndTime))) {
+                conflict = checkConflict(objectsRequest[i].resource_type_id, request.resource_type_id, objectsRequest[i].date, request.date,
+                    requestStartTime, objectStartTime, requestEndTime, objectEndTime,
+                    requestStartTime.getTime(), objectStartTime.getTime(), requestEndTime.getTime(), objectEndTime.getTime())
 
-                        alreadyRequestedQuantity += objectsRequest[i].quantity
-                    }
+                if (conflict) {
+                    alreadyRequestedQuantity += objectsRequest[i].quantity
                 }
+                conflict = false
             }
+
             let availableQuantity = 0
             for (let j = 0; j < objectsInfo.length; j++) {
                 if (objectsInfo[j].resource_type_id === request.resource_type_id) {
@@ -207,6 +209,7 @@ function ObjectRequest(props) {
                     break
                 }
             }
+
             if (availableQuantity < request.quantity) {
                 setShowError(true)
                 conflict = true
@@ -231,13 +234,18 @@ function ObjectRequest(props) {
         },
     };
 
+    const closeModal = () => {
+        setObjectModal(false)
+        setShowError(false)
+    }
+
     return (
         <div>
             <Modal
                 className='modal-content'
                 style={customStyles}
                 isOpen={openObjectModal}
-                onRequestClose={() => setObjectModal(false)}>
+                onRequestClose={() => closeModal()}>
                 <div className='center flexbox-container-y'>
                     <h2 style={{ color: "#115868", fontSize: 20 }}>Object Request</h2>
                     <form onSubmit={handleForm}>
