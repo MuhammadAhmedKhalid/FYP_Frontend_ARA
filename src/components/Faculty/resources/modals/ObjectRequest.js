@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useLayoutEffect } from 'react'
 import Modal from 'react-modal'
 import dayjs from 'dayjs';
 import TextField from '@material-ui/core/TextField'
@@ -179,7 +179,7 @@ function ObjectRequest(props) {
             setRequestAdded(true)
             setShowError(false)
             dispatch(resetState())
-        } else {
+        } else if (requestSuccessfull === false) {
             setShowError(true)
         }
     }, [requestSuccessfull])

@@ -4,7 +4,7 @@ export const addObjReqInitialState = {
     loading: false,
     success: '',
     error: '',
-    added: false
+    added: null
 }
 
 export const addObjReqReducer = (state = addObjReqInitialState, action) => {
@@ -29,7 +29,7 @@ export const addObjReqReducer = (state = addObjReqInitialState, action) => {
         }
         case RESET_STATE: return {
             ...state,
-            added: false
+            added: null
         }
         default: return state
     }
