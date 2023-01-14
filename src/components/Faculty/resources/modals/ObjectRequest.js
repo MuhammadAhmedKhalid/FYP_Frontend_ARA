@@ -24,9 +24,7 @@ function ObjectRequest(props) {
 
     const dispatch = useDispatch()
 
-    // const [rooms, setRooms] = useState([])
     const rooms = useSelector((state) => state.getRooms.rooms.data)
-
     const departments = useSelector((state) => state.getDepartments.departments.data)
     const departmentsAdded = useSelector((state) => state.getDepartments.added)
     const objects = useSelector((state) => state.getResourceTypes.resource_types.data)
@@ -116,6 +114,17 @@ function ObjectRequest(props) {
         dispatch(getResources())
     }, [])
 
+    useEffect(() => {
+        if (requestSuccessfull) {
+            setObjectModal(false)
+            setRequestAdded(true)
+            setShowError(false)
+            dispatch(resetState())
+        } else if (requestSuccessfull === false) {
+            setShowError(true)
+        }
+    }, [requestSuccessfull])
+
     const handleDateChange = (newValue) => {
         const object = newValue
         for (const key in object) {
@@ -172,17 +181,6 @@ function ObjectRequest(props) {
             }
         }
     }
-
-    useEffect(() => {
-        if (requestSuccessfull) {
-            setObjectModal(false)
-            setRequestAdded(true)
-            setShowError(false)
-            dispatch(resetState())
-        } else if (requestSuccessfull === false) {
-            setShowError(true)
-        }
-    }, [requestSuccessfull])
 
     const addObjectRequest = () => {
         dispatch(addRequestedObj(request))
