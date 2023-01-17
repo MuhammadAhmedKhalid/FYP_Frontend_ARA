@@ -90,7 +90,6 @@ function ObjectRequest(props) {
         if (departmentsAdded) {
             if (rooms.length !== 0 && departments.length !== 0) {
                 setRoomsData([])
-                // setObjectModal([])
                 for (let i = 0; i < rooms.length; i++) {
                     for (let j = 0; j < departments.length; j++) {
                         if (rooms[i].department_id === departments[j].department_id && departments[j].department_id === request.department_id) {
@@ -104,12 +103,7 @@ function ObjectRequest(props) {
 
     useEffect(() => {
         dispatch(getDepartmentsRequest())
-
-        // axios.get('http://localhost:8080/rooms')
-        //     .then((response) => { setRooms(response.data) })
-        //     .catch((error) => { console.log(error) })
         dispatch(getRoomsRequest())
-
         dispatch(getResourceTypesRequest())
         dispatch(getResources())
     }, [])
