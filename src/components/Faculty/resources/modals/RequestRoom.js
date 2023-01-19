@@ -120,6 +120,7 @@ function RequestRoom(props) {
 
     const addRoomRequest = () => {
         setRoomModal(false)
+        alert("Operation performed successfully!")
         dispatch(addRequestedRoom(request))
         if (requestSuccessfull) {
             setRequestAdded(true)

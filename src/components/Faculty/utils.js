@@ -4,7 +4,7 @@ export function checkConflict(db_id, req_id, db_date, req_date,
 
     if ((db_id === req_id && db_date === req_date)) {
 
-        // req: 1-2 db: 2-3 
+        // req: 1-2 db: 2-3 milliseconds
         if ((req_sTime === db_eTime || req_eTime === db_sTime)) {
             return false;
         }

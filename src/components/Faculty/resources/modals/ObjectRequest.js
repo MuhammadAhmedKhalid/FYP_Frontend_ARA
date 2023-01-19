@@ -113,6 +113,7 @@ function ObjectRequest(props) {
             setObjectModal(false)
             setRequestAdded(true)
             setShowError(false)
+            alert("Operation performed successfully!")
             dispatch(resetState())
         } else if (requestSuccessfull === false) {
             setShowError(true)
