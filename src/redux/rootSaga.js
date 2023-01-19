@@ -14,6 +14,7 @@ import { getResourceTypesSaga } from './GetResourceTypes/getResourceSaga'
 import { getResourcesSaga } from './GetResources/getResourcesSaga'
 import { getObjReqSaga } from './GetObjectRequests/getObjReqSaga'
 import { addObjRequestSaga } from './AddObjRequest/addObjRequestSaga'
+import { getObjectsSaga } from './GetObjects/getObjectsSaga'
 
 export function* rootSaga() {
     yield fork(signupSaga)
@@ -31,4 +32,5 @@ export function* rootSaga() {
     yield fork(getResourcesSaga)
     yield fork(getObjReqSaga)
     yield fork(addObjRequestSaga)
+    yield fork(getObjectsSaga)
 }

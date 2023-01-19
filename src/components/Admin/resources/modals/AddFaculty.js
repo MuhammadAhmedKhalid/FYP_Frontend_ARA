@@ -76,7 +76,7 @@ function AddFaculty(props) {
                     <h2 style={{ color: "#115868", fontSize: 20 }}>Add Faculty</h2>
                     <form onSubmit={submitHandler}>
                         <TextField value={faculty.first_name} onChange={(e) => setFaculty({ ...faculty, name: e.target.value, user: { ...faculty.user, name: e.target.value } })}
-                            style={{ margin: '3px' }} size='small' variant="outlined" type='text' placeholder='First Name' InputProps={{
+                            style={{ margin: '3px' }} size='small' variant="outlined" type='text' placeholder='Name' InputProps={{
                                 startAdornment: (
                                     <InputAdornment position='start'>
                                         <PersonIcon style={{ height: '20px' }} color="action" />
