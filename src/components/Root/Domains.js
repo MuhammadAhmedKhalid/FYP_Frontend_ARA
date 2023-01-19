@@ -83,7 +83,7 @@ function Domains(props) {
                                         value={instituteTypes.name}
                                         className='dropdown'
                                         onChange={(e) => handleSelect(e)}>
-                                        <option></option>
+                                        <option>---Select---</option>
                                         {
                                             instituteTypes.map(instituteType =>
                                                 instituteType.domain === "Education" ?
@@ -107,7 +107,7 @@ function Domains(props) {
                                     }}>
                                     <button className='domains-textField' style={{ color: '#fff', marginBottom: '15px' }}>Factory</button>
                                     <select className='dropdown' defaultValue={"Food"}>
-                                        <option></option>
+                                        <option>---Select---</option>
                                         {
                                             instituteTypes.map(instituteType =>
                                                 instituteType.domain === "Factory" ?
@@ -130,7 +130,7 @@ function Domains(props) {
                                     }}>
                                     <button className='domains-textField' style={{ color: '#fff', marginBottom: '15px' }}>Hospital</button>
                                     <select className='dropdown' defaultValue={"Women's hospitals"}>
-                                        <option></option>
+                                        <option>---Select---</option>
                                         {
                                             instituteTypes.map(instituteType =>
                                                 instituteType.domain === "Hospital" ?
@@ -153,7 +153,7 @@ function Domains(props) {
                                     }}>
                                     <button className='domains-textField' style={{ color: '#fff', marginBottom: '15px' }}>Office</button>
                                     <select className='dropdown' defaultValue={"Private Office"}>
-                                        <option></option>
+                                        <option>---Select---</option>
                                         {
                                             instituteTypes.map(instituteType =>
                                                 instituteType.domain === "Office" ?
