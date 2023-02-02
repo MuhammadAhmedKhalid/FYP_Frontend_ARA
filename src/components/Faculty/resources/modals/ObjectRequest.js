@@ -16,7 +16,7 @@ import { getResources } from '../../../../redux/GetResources/getResourcesActions
 import { getRoomsRequest } from '../../../../redux/GetRooms/getRoomsActions'
 import { getObjReqRequest } from '../../../../redux/GetObjectRequests/getObjReqActions'
 import { addRequestedObj, resetState } from '../../../../redux/AddObjRequest/addObjRequestActions'
-import { checkConflict } from '../../utils'
+import { checkConflict, checkValidTime } from '../../utils'
 import { getObjectsRequest } from '../../../../redux/GetObjects/getObjectsActions'
 
 function ObjectRequest(props) {
@@ -166,7 +166,18 @@ function ObjectRequest(props) {
     }
 
     const addObjectRequest = () => {
-        dispatch(addRequestedObj(request))
+        let startTime = new Date();
+        let endTime = new Date();
+
+        startTime.setHours(request.startTime.substring(0, 2), request.startTime.substring(3), 0, 0);
+        endTime.setHours(request.endTime.substring(0, 2), request.endTime.substring(3), 0, 0);
+
+        const result = checkValidTime(startTime.getHours(), endTime.getHours(), startTime.getTime(), endTime.getTime())
+        if(result){
+            alert('Invalid time. Start time should always be less than End time.')
+        }else{
+            dispatch(addRequestedObj(request))
+        }
     }
 
     const handleForm = (e) => {

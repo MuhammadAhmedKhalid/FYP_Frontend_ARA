@@ -14,7 +14,7 @@ import { getRoomRequest } from '../../../../redux/GetRoomRequests/getRoomReqActi
 import { getDepartmentsRequest } from '../../../../redux/GetDepartments/getDepartmentsActions'
 import { getRoomsRequest } from '../../../../redux/GetRooms/getRoomsActions'
 import { addRequestedRoom } from '../../../../redux/AddRoomRequest/roomRequestActions'
-import { checkConflict } from '../../utils'
+import { checkConflict, checkValidTime } from '../../utils'
 
 function RequestRoom(props) {
 
@@ -123,12 +123,23 @@ function RequestRoom(props) {
     }
 
     const addRoomRequest = () => {
-        setRoomModal(false)
-        alert("Operation performed successfully!")
-        dispatch(addRequestedRoom(request))
-        if (requestSuccessfull) {
-            setRequestAdded(true)
-            setShowError(false)
+        let startTime = new Date();
+        let endTime = new Date();
+
+        startTime.setHours(request.startTime.substring(0, 2), request.startTime.substring(3), 0, 0);
+        endTime.setHours(request.endTime.substring(0, 2), request.endTime.substring(3), 0, 0);
+
+        const result = checkValidTime(startTime.getHours(), endTime.getHours(), startTime.getTime(), endTime.getTime())
+        if(result){
+            alert('Invalid time. Start time should always be less than End time.')
+        }else{
+            setRoomModal(false)
+            alert("Operation performed successfully!")
+            dispatch(addRequestedRoom(request))
+            if (requestSuccessfull) {
+                setRequestAdded(true)
+                setShowError(false)
+            }
         }
     }
 
