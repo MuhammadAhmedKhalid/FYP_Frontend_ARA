@@ -34,9 +34,13 @@ function RequestRoom(props) {
     const rooms = useSelector((state) => state.getRooms.rooms.data)
     const roomsAdded = useSelector((state) => state.getRooms.added)
     const roomsRequest = useSelector((state) => state.getRoomRequest.room_req.data)
+    const institute_id = useSelector((state) => state.login.user.institute_id)
+    const user_id = useSelector((state) => state.login.user.user_id)
 
     const [request, setRequest] = useState({
         department_id: '',
+        institute_id,
+        user_id,
         room_id: '',
         date: format(new Date(), 'MM/dd/yyyy'),
         startTime: format(new Date(), 'HH:mm'),

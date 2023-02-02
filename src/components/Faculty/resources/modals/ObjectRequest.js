@@ -35,6 +35,8 @@ function ObjectRequest(props) {
     const requestUnsuccessfullMsg = useSelector((state) => state.addObjRequest.error)
     const objects = useSelector((state) => state.getObjects.objects.data)
     const objectsAdded = useSelector((state) => state.getObjects.added)
+    const institute_id = useSelector((state) => state.login.user.institute_id)
+    const user_id = useSelector((state) => state.login.user.user_id)
 
     const [value, setValue] = useState(dayjs(new Date()));
     const [value1, setValue1] = useState(dayjs(new Date()));
@@ -45,6 +47,8 @@ function ObjectRequest(props) {
 
     const [request, setRequest] = useState({
         department_id: '',
+        institute_id,
+        user_id,
         room_id: '',
         resource_type_id: '',
         quantity: '',
@@ -163,7 +167,6 @@ function ObjectRequest(props) {
 
     const addObjectRequest = () => {
         dispatch(addRequestedObj(request))
-
     }
 
     const handleForm = (e) => {
