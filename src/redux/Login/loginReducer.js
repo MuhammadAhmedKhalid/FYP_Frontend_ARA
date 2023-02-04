@@ -4,8 +4,16 @@ export const loginInitialState = {
     loading: false,
     success: '',
     error: '',
-    isLoggedIn: false,
-    user: {}
+    isLoggedIn: undefined,
+    user: {
+        user_id:0,
+	    email:'',
+	    jwt:'',
+	    name:'',
+	    institute_name:'',
+	 institute_id:0,
+	 is_admin:false
+    }
 }
 
 export const loginReducer = (state = loginInitialState, action) => {
@@ -28,7 +36,6 @@ export const loginReducer = (state = loginInitialState, action) => {
             success: '',
             error: action.message,
             isLoggedIn: false,
-            user: null
         }
         case LOGOUT_REQUEST: return {
             ...state,

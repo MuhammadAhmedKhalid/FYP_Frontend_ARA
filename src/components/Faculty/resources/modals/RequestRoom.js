@@ -18,12 +18,37 @@ import { checkConflict, checkValidTime } from '../../utils'
 
 function RequestRoom(props) {
 
+    const [datePickerValue, setDatePickerValue] = useState(new Date());
+    const [timePickerValue, setTimePickerValue] = useState(format(new Date(), 'HH:mm (a|p)m'));
+    const [timePickerValue1, setTimePickerValue1] = useState(format(new Date(), 'HH:mm (a|p)m'));
+
+    useEffect(()=>{
+        // setRequest({ ...request, endTime: timePickerValue1 })
+        // console.log(request)
+        if(typeof timePickerValue1 === 'string'){
+            // setRequest({ ...request, endTime: timePickerValue1 })
+            // console.log(typeof timePickerValue1)
+            // console.log(timePickerValue1)
+        }else{
+            // const object = timePickerValue1
+            // console.log(timePickerValue1)
+            // console.log(typeof timePickerValue1)
+        // for (const key in object) {
+        //     if (key === '$d') {
+        //         console.log('for if')
+        //         setRequest({ ...request, endTime: format(new Date(object[key]), 'HH:mm') })
+        //     }
+        // }
+        }
+        // console.log(request)
+    },[timePickerValue1])
+
     const { openRoomModal, setRoomModal } = props
 
     const dispatch = useDispatch()
 
     const [value, setValue] = useState(dayjs(new Date()));
-    const [value1, setValue1] = useState(dayjs(new Date()));
+
     const [showError, setShowError] = useState(false);
     const [requestAdded, setRequestAdded] = useState(true);
     const [roomsData, setRoomsData] = useState([])
@@ -94,15 +119,20 @@ function RequestRoom(props) {
         setValue(newValue);
     };
 
-    const handleEndTimeChange = (newValue) => {
-        const object = newValue
-        for (const key in object) {
-            if (key === '$d') {
-                setRequest({ ...request, endTime: format(new Date(object[key]), 'HH:mm') })
-            }
-        }
-        setValue1(newValue);
-    };
+    // const handleEndTimeChange = (newValue) => {
+    //     console.log(new Date(newValue))
+
+    //     // if(new Date(newValue))
+
+    //     // const object = newValue
+    //     for (const key in newValue) {
+    //         if (key === '$d') {
+    //             console.log('here111')
+    //             // setRequest({ ...request, endTime: format(new Date(object), 'HH:mm') })
+    //         }
+    //     }
+    //     // setValue1(newValue);
+    // };
 
     const handleRoomChange = (event) => {
         const room_name = event.target.value
@@ -233,19 +263,19 @@ function RequestRoom(props) {
                                     <DesktopDatePicker
                                         label="Date"
                                         inputFormat="DD/MM/YYYY"
-                                        value={value}
-                                        onChange={handleDateChange}
+                                        value={datePickerValue}
+                                        onChange={(newValue) => setDatePickerValue(newValue)}
                                         renderInput={(params) => <TextField {...params}
                                             variant="outlined" />} />
                                     <TimePicker
-                                        value={value}
-                                        onChange={handleStartTimeChange}
+                                        value={timePickerValue}
+                                        onChange={(newValue) => setTimePickerValue(newValue)}
                                         label="Start Time"
                                         renderInput={(params) => <TextField {...params}
                                             variant="outlined" />} />
                                     <TimePicker
-                                        value={value1}
-                                        onChange={handleEndTimeChange}
+                                       value={timePickerValue1}
+                                       onChange={(newValue) => setTimePickerValue1(newValue)}
                                         label="End Time"
                                         renderInput={(params) => <TextField {...params}
                                             variant="outlined" />} />

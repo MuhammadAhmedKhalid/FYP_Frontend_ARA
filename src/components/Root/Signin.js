@@ -13,6 +13,7 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from 'react-redux'
 import { loginRequest } from '../../redux/Login/loginActions'
 import { getInstitutesRequest } from '../../redux/GetInstitutes/getInstitutesActions'
+import { color } from '@mui/system';
 
 function Signin(props) {
 
@@ -23,10 +24,15 @@ function Signin(props) {
     const isAdmin = useSelector((state) => state.login.user._admin)
     const institutes = useSelector((state) => state.getInstitutes.institutes.data)
     const isInstitutesAdded = useSelector((state) => state.getInstitutes.added)
+    const [loginErrText, setLoginErrText] = useState('')
 
     useEffect(() => {
         if (isLoggedIn) {
+            console.log('success')
             dispatch(getInstitutesRequest())
+        }else if(isLoggedIn === false){
+            console.log('failed')
+            setLoginErrText('Login failed.')
         }
     }, [isLoggedIn])
 
@@ -153,6 +159,9 @@ function Signin(props) {
                                 <div className='flexbox-container'>
                                     <p style={{ color: '#9098B1', fontSize: 12, fontWeight: 700 }}>Don't have an account?&nbsp;</p>
                                     <Link onClick={openModal}><p style={{ color: '#115868', fontSize: 12, fontWeight: 700, textDecorationLine: 'underline' }}>Sign Up</p></Link>
+                                </div>
+                                <div>
+                                    <p style={{color:"black"}}>{loginErrText}</p>
                                 </div>
                             </center>
                         </form>
