@@ -68,7 +68,7 @@ function ObjectRequest(props) {
 
     useEffect(() => {
         if (requestAdded || requestSuccessfull) {
-            dispatch(getObjReqRequest())
+            dispatch(getObjReqRequest(institute_id))
             setRequestAdded(false)
         }
     }, [requestAdded, requestSuccessfull])
@@ -246,6 +246,10 @@ function ObjectRequest(props) {
         setShowError(false)
     }
 
+    const onKeyDown = (e) => {
+        e.preventDefault();
+     };
+
     return (
         <div>
             <Modal
@@ -302,19 +306,19 @@ function ObjectRequest(props) {
                                         inputFormat="DD/MM/YYYY"
                                         value={value}
                                         onChange={handleDateChange}
-                                        renderInput={(params) => <TextField {...params}
+                                        renderInput={(params) => <TextField onKeyDown={onKeyDown} {...params}
                                             variant="outlined" />} />
                                     <TimePicker
                                         value={value}
                                         onChange={handleStartTimeChange}
                                         label="Start Time"
-                                        renderInput={(params) => <TextField {...params}
+                                        renderInput={(params) => <TextField onKeyDown={onKeyDown} {...params}
                                             variant="outlined" />} />
                                     <TimePicker
                                         value={value1}
                                         onChange={handleEndTimeChange}
                                         label="End Time"
-                                        renderInput={(params) => <TextField {...params}
+                                        renderInput={(params) => <TextField onKeyDown={onKeyDown} {...params}
                                             variant="outlined" />} />
                                 </Stack>
                             </LocalizationProvider>

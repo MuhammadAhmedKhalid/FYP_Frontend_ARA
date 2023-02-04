@@ -15,7 +15,7 @@ export const roomReqReducer = (state = roomRequestInitialState, action) => {
         case GET_ROOM_REQ_SUCCESS: return {
             ...state,
             loading: false,
-            room_req: action.data,
+            room_req: action.result,
             error: ''
         }
         case GET_ROOM_REQ_FAILURE: return {

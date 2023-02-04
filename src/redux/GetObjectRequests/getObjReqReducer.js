@@ -16,7 +16,7 @@ export const objReqReducer = (state = objReqInitialState, action) => {
         case GET_OBJ_REQ_SUCCESS: return {
             ...state,
             loading: false,
-            obj_requests: action.data,
+            obj_requests: action.result,
             error: '',
             added: true
         }
