@@ -75,7 +75,7 @@ function AddFaculty(props) {
                 <div className='center flexbox-container-y'>
                     <h2 style={{ color: "#115868", fontSize: 20 }}>Add Faculty</h2>
                     <form onSubmit={submitHandler}>
-                        <TextField required value={faculty.first_name} onChange={(e) => setFaculty({ ...faculty, name: e.target.value, user: { ...faculty.user, name: e.target.value } })}
+                        <TextField autoFocus required value={faculty.first_name} onChange={(e) => setFaculty({ ...faculty, name: e.target.value, user: { ...faculty.user, name: e.target.value } })}
                             style={{ margin: '3px' }} size='small' variant="outlined" type='text' placeholder='Name' InputProps={{
                                 startAdornment: (
                                     <InputAdornment position='start'>

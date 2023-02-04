@@ -41,6 +41,7 @@ function AddLeave(props) {
                     <h2 style={{ color: "#115868", fontSize: 20 }}>Add Leave</h2>
                     <form>
                         <TextField
+                        autoFocus
                             required
                             style={{ marginBottom: '1rem' }}
                             label="Reason"

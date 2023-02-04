@@ -73,6 +73,7 @@ function AdminQuestionnaire(props) {
                     <form onSubmit={handleSave}>
                         <div className='flexbox-container-y'>
                             <TextField
+                            autoFocus
                             required
                                 value={institute.institute_name}
                                 onChange={(e) => setInstitute({ ...institute, institute_type_id: instituteTypeId, institute_name: e.target.value })}

@@ -121,7 +121,8 @@ function Signin(props) {
                         <h2 style={{ color: "#115868", fontSize: 20 }}>Welcome To Allocator</h2>
                         <p style={{ color: "#9098B1", fontSize: 14 }}>Sign in to continue</p>
                         <form onSubmit={handleLogin} className='flexbox-container-y'>
-                            <TextField required value={user.email} onChange={(e) => setUser({ ...user, email: e.target.value })} size='small' variant="outlined" type='email' placeholder='Your Email' InputProps={{
+                            <TextField autoFocus required value={user.email} onChange={(e) => setUser({ ...user, email: e.target.value })} 
+                            size='small' variant="outlined" type='email' placeholder='Your Email' InputProps={{
                                 startAdornment: (
                                     <InputAdornment position='start'>
                                         <EmailOutlinedIcon style={{ height: '20px' }} color="action" />

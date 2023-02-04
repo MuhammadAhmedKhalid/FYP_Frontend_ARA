@@ -122,7 +122,8 @@ function Signup(props) {
                     <h2 style={{ color: "#115868", fontSize: 20 }}>Welcome To Allocator</h2>
                     <p style={{ color: "#9098B1", fontSize: 14 }}>Sign up to continue</p>
                     <form onSubmit={handleSignup}>
-                        <TextField required value={user.name} onChange={(e) => setUser({ ...user, name: e.target.value })} size='small' variant="outlined" type='text' placeholder='Your Name' InputProps={{
+                        <TextField autoFocus required value={user.name} onChange={(e) => setUser({ ...user, name: e.target.value })} size='small' variant="outlined" 
+                        type='text' placeholder='Your Name' InputProps={{
                             startAdornment: (
                                 <InputAdornment position='start'>
                                     <AccountCircleOutlinedIcon style={{ height: '20px' }} color="action" />
