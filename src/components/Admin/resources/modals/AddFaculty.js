@@ -75,7 +75,7 @@ function AddFaculty(props) {
                 <div className='center flexbox-container-y'>
                     <h2 style={{ color: "#115868", fontSize: 20 }}>Add Faculty</h2>
                     <form onSubmit={submitHandler}>
-                        <TextField value={faculty.first_name} onChange={(e) => setFaculty({ ...faculty, name: e.target.value, user: { ...faculty.user, name: e.target.value } })}
+                        <TextField required value={faculty.first_name} onChange={(e) => setFaculty({ ...faculty, name: e.target.value, user: { ...faculty.user, name: e.target.value } })}
                             style={{ margin: '3px' }} size='small' variant="outlined" type='text' placeholder='Name' InputProps={{
                                 startAdornment: (
                                     <InputAdornment position='start'>
@@ -83,7 +83,7 @@ function AddFaculty(props) {
                                     </InputAdornment>
                                 )
                             }} />
-                        <TextField value={faculty.phone_number} onChange={(e) => setFaculty({ ...faculty, phone_number: e.target.value })}
+                        <TextField required value={faculty.phone_number} onChange={(e) => setFaculty({ ...faculty, phone_number: e.target.value })}
                             style={{ margin: '3px' }} size='small' variant="outlined" type='text' placeholder='Phone Number' InputProps={{
                                 startAdornment: (
                                     <InputAdornment position='start'>
@@ -92,6 +92,7 @@ function AddFaculty(props) {
                                 )
                             }} />
                         <TextField
+                        required
                             value={faculty.officialEmailAddress}
                             onChange={(e) => setFaculty({ ...faculty, officialEmailAddress: e.target.value, user: { ...faculty.user, email: e.target.value } })}
                             style={{ margin: '3px' }} size='small' variant="outlined" type='text' placeholder='Email Address' InputProps={{

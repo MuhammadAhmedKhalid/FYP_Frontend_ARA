@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react'
 import Modal from 'react-modal'
-import { Link } from 'react-router-dom';
 import "../Styling/FormStyles.css"
 import TextField from '@material-ui/core/TextField'
 import InputAdornment from '@material-ui/core/InputAdornment'
@@ -51,7 +50,8 @@ function AdminQuestionnaire(props) {
         },
     };
 
-    const handleSave = () => {
+    const handleSave = (e) => {
+        e.preventDefault();
         dispatch(addInstituteRequest(institute))
     }
 
@@ -70,9 +70,10 @@ function AdminQuestionnaire(props) {
                         justifyContent: 'center',
                     }}>
                     <h2 style={{ color: "#115868", fontSize: 20 }}>Questionnaire</h2>
-                    <form>
+                    <form onSubmit={handleSave}>
                         <div className='flexbox-container-y'>
                             <TextField
+                            required
                                 value={institute.institute_name}
                                 onChange={(e) => setInstitute({ ...institute, institute_type_id: instituteTypeId, institute_name: e.target.value })}
                                 style={{ margin: '3px' }} size='small' variant="outlined" type='text' placeholder='Your Institute'
@@ -83,21 +84,24 @@ function AdminQuestionnaire(props) {
                                         </InputAdornment>
                                     )
                                 }} />
-                            <TextField value={institute.branch} onChange={(e) => setInstitute({ ...institute, branch: e.target.value })} style={{ margin: '3px' }} size='small' variant="outlined" type='text' placeholder='Your Branch' InputProps={{
+                            <TextField required value={institute.branch} onChange={(e) => setInstitute({ ...institute, branch: e.target.value })} 
+                            style={{ margin: '3px' }} size='small' variant="outlined" type='text' placeholder='Your Branch' InputProps={{
                                 startAdornment: (
                                     <InputAdornment position='start'>
                                         <LanIcon style={{ height: '20px' }} color="action" />
                                     </InputAdornment>
                                 )
                             }} />
-                            <TextField value={institute.address} onChange={(e) => setInstitute({ ...institute, address: e.target.value })} style={{ margin: '3px' }} size='small' variant="outlined" type='text' placeholder='Your Address' InputProps={{
+                            <TextField required value={institute.address} onChange={(e) => setInstitute({ ...institute, address: e.target.value })} 
+                            style={{ margin: '3px' }} size='small' variant="outlined" type='text' placeholder='Your Address' InputProps={{
                                 startAdornment: (
                                     <InputAdornment position='start'>
                                         <LocationOnIcon style={{ height: '20px' }} color="action" />
                                     </InputAdornment>
                                 )
                             }} />
-                            <TextField value={institute.contact} onChange={(e) => setInstitute({ ...institute, contact: e.target.value })} style={{ margin: '3px' }} size='small' variant="outlined" type='text' placeholder='Your Contact' InputProps={{
+                            <TextField required value={institute.contact} onChange={(e) => setInstitute({ ...institute, contact: e.target.value })} 
+                            style={{ margin: '3px' }} size='small' variant="outlined" type='text' placeholder='Your Contact' InputProps={{
                                 startAdornment: (
                                     <InputAdornment position='start'>
                                         <CallIcon style={{ height: '20px' }} color="action" />
@@ -105,8 +109,9 @@ function AdminQuestionnaire(props) {
                                 )
                             }} />
                         </div>
+                        <center><button style={{marginTop: '20px'}} type='submit' className='modal-btn'>Save</button></center>
                     </form>
-                    <Link onClick={handleSave}><button className='modal-btn'>Save</button></Link>
+                    
                 </div>
             </Modal >
         </div >

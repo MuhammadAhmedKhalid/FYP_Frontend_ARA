@@ -203,7 +203,7 @@ function RequestRoom(props) {
                         <h3 style={{
                             fontWeight: 'normal', color: 'gray', marginRight: '3px'
                         }}>Department</h3>
-                        <select className='dropdown' onChange={handleDepartmentChange}>
+                        <select required className='dropdown' onChange={handleDepartmentChange}>
                             <option></option>
                             {
                                 departmentsAdded && departments.length !== 0 ? departments.map(department =>
@@ -213,7 +213,7 @@ function RequestRoom(props) {
                         <h3 style={{
                             fontWeight: 'normal', color: 'gray', marginRight: '3px'
                         }}>Room No.</h3>
-                        <select className='dropdown' onChange={handleRoomChange}>
+                        <select required className='dropdown' onChange={handleRoomChange}>
                             <option></option>
                             {
                                 roomsData.length !== 0 ? roomsData.map(room =>
