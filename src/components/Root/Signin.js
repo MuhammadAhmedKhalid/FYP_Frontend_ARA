@@ -13,7 +13,6 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from 'react-redux'
 import { loginRequest } from '../../redux/Login/loginActions'
 import { getInstitutesRequest } from '../../redux/GetInstitutes/getInstitutesActions'
-import { color } from '@mui/system';
 
 function Signin(props) {
 
@@ -28,10 +27,8 @@ function Signin(props) {
 
     useEffect(() => {
         if (isLoggedIn) {
-            console.log('success')
             dispatch(getInstitutesRequest())
         }else if(isLoggedIn === false){
-            console.log('failed')
             setLoginErrText('Login failed.')
         }
     }, [isLoggedIn])

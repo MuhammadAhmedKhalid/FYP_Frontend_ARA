@@ -1,7 +1,8 @@
 import { GET_ROOM_REQ_REQUEST } from './getRoomReqTypes'
 
-export const getRoomRequest = () => {
+export const getRoomRequest = (query) => {
     return {
-        type: GET_ROOM_REQ_REQUEST
+        type: GET_ROOM_REQ_REQUEST,
+        query
     }
 }
