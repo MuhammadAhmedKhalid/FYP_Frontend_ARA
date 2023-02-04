@@ -13,6 +13,7 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from 'react-redux'
 import { loginRequest } from '../../redux/Login/loginActions'
 import { getInstitutesRequest } from '../../redux/GetInstitutes/getInstitutesActions'
+import { Alert } from '@mui/material';
 
 function Signin(props) {
 
@@ -24,12 +25,13 @@ function Signin(props) {
     const institutes = useSelector((state) => state.getInstitutes.institutes.data)
     const isInstitutesAdded = useSelector((state) => state.getInstitutes.added)
     const [loginErrText, setLoginErrText] = useState('')
+    const loginFailed = useSelector((state) => state.login.loginFailed)
 
     useEffect(() => {
         if (isLoggedIn) {
             dispatch(getInstitutesRequest())
         }else if(isLoggedIn === false){
-            setLoginErrText('Login failed.')
+            setLoginErrText('Login failed. Incorrect Email or Password.')
         }
     }, [isLoggedIn])
 
@@ -158,7 +160,9 @@ function Signin(props) {
                                     <Link onClick={openModal}><p style={{ color: '#115868', fontSize: 12, fontWeight: 700, textDecorationLine: 'underline' }}>Sign Up</p></Link>
                                 </div>
                                 <div>
-                                    <p style={{color:"black"}}>{loginErrText}</p>
+                                    {
+                                        loginFailed && <Alert style={{ marginTop: '12px' }} severity="error">{loginErrText}</Alert>
+                                    }
                                 </div>
                             </center>
                         </form>
