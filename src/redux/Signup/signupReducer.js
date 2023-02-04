@@ -3,7 +3,8 @@ import { SIGNUP_REQUEST, SIGNUP_SUCCESS, SIGNUP_FAILURE } from "./signupTypes"
 export const signupInitialState = {
     loading: false,
     success: '',
-    error: ''
+    error: '',
+    signupFailed: undefined
 }
 
 export const signupReducer = (state = signupInitialState, action) => {
@@ -16,13 +17,15 @@ export const signupReducer = (state = signupInitialState, action) => {
             ...state,
             loading: false,
             success: action.message,
-            error: ''
+            error: '',
+            signupFailed: false
         }
         case SIGNUP_FAILURE: return {
             ...state,
             loading: false,
             success: '',
-            error: action.message
+            error: action.message,
+            signupFailed: true
         }
         default: return state
     }

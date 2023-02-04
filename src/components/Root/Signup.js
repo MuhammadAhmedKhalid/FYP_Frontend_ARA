@@ -9,12 +9,16 @@ import HttpsOutlinedIcon from '@mui/icons-material/HttpsOutlined';
 import IconButton from "@material-ui/core/IconButton";
 import Visibility from "@material-ui/icons/Visibility";
 import VisibilityOff from "@material-ui/icons/VisibilityOff";
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { signupRequest } from '../../redux/Signup/signupActions'
+import { Alert } from '@mui/material';
 
 function Signup(props) {
 
     const dispatch = useDispatch()
+
+    const signupFailed = useSelector((state) => state.signup.signupFailed)
+    const [signupErrText, setSignupErrText] = useState('')
 
     const { openSignUpModal, setOpenSignUpModal, setOpenSignInModal } = props
     const [user, setUser] = useState({
@@ -87,9 +91,17 @@ function Signup(props) {
         setOpenSignUpModal(false)
         setOpenSignInModal(true)
     }
+    
+    useEffect(()=>{
+        if(signupFailed === true){
+            setSignupErrText('User already exists with this Email address.')
+        }else if(signupFailed === false){
+            openModal()
+        }
+    },[signupFailed])
+
     const handleSignup = () => {
         dispatch(signupRequest(user))
-        openModal()
     }
     return (
         <div>
@@ -181,6 +193,11 @@ function Signup(props) {
                             <div className='flexbox-container'>
                                 <p style={{ color: '#9098B1', fontSize: 11, fontWeight: 700, marginTop: 16 }}>Already have an account?&nbsp;</p>
                                 <Link onClick={openModal}><p style={{ color: '#115868', fontSize: 11, fontWeight: 700, textDecorationLine: 'underline', marginTop: 16 }}>Login</p></Link>
+                            </div>
+                            <div>
+                                {
+                                    signupFailed && <Alert style={{ marginTop: '12px' }} severity="error">{signupErrText}</Alert>
+                                }
                             </div>
                         </center>
                     </form>
