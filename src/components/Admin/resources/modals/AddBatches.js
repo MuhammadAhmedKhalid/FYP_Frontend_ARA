@@ -1,21 +1,22 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import Modal from 'react-modal'
 import TextField from '@material-ui/core/TextField'
 import InputAdornment from '@material-ui/core/InputAdornment'
 import GroupsIcon from '@mui/icons-material/Groups';
-import FormatListBulletedIcon from '@mui/icons-material/FormatListBulleted';
-import axios from 'axios';
+import { useSelector } from 'react-redux'
 
 function AddBatches(props) {
 
     const { openBatchModal, setOpenBatchModal } = props
 
-    const [departments, setDepartments] = useState([])
-    useEffect(() => {
-        axios.get('http://localhost:8080/departments')
-            .then((response) => { setDepartments(response.data) })
-            .catch((error) => { console.log(error) })
-    }, [])
+    const departments = useSelector((state) => state.getDepartments.departments.data)
+    const departmentsAdded = useSelector((state) => state.getDepartments.added)
+
+    const [batch, setBatch] = useState({
+        batch_year: "",
+        batch_type: "",
+        department_id: ""
+    })
 
     const customStyles = {
         overlay: {
@@ -28,9 +29,19 @@ function AddBatches(props) {
             zIndex: 1000,
         },
     };
-    const closeModal = () => {
+    const handleForm = () => {
         setOpenBatchModal(false)
+        console.log(batch)
     }
+
+const handleDepartmentChange = (e) => {
+    const department_name = e.target.value
+        for (let i = 0; i < departments.length; i++) {
+            if (departments[i].department_name === department_name) {
+                setBatch({ ...batch, department_id: departments[i].department_id })
+            }
+        }
+}
 
     return (
         <div>
@@ -41,8 +52,10 @@ function AddBatches(props) {
                 onRequestClose={() => setOpenBatchModal(false)}>
                 <div className='center flexbox-container-y'>
                     <h2 style={{ color: "#115868", fontSize: 20 }}>Add Batch</h2>
-                    <form>
-                        <TextField style={{ margin: '3px' }} size='small' variant="outlined" type='text' placeholder='Batch No.' InputProps={{
+                    <form onSubmit={handleForm}>
+                        <TextField required autoFocus style={{ margin: '3px' }} size='small' variant="outlined" type='text' placeholder='Batch Year.' 
+                        onChange={(e) => setBatch({ ...batch, batch_year: e.target.value })}
+                        InputProps={{
                             startAdornment: (
                                 <InputAdornment position='start'>
                                     <GroupsIcon style={{ height: '20px' }} color="action" />
@@ -52,24 +65,29 @@ function AddBatches(props) {
                         <div style={{ margin: '3px' }} className='flexbox-container-y'>
                             <h3 style={{
                                 fontWeight: 'normal', color: 'gray', marginRight: '3px'
+                            }}>Batch Type</h3>
+                            <select required className='dropdown' onChange={(e) => setBatch({ ...batch, batch_type: e.target.value })}>
+                                <option></option>
+                                <option>Spring</option>
+                                <option>Fall</option>
+                                <option>Summer</option>
+                            </select>
+                        </div>
+                        <div style={{ margin: '3px' }} className='flexbox-container-y'>
+                            <h3 style={{
+                                fontWeight: 'normal', color: 'gray', marginRight: '3px'
                             }}>Your Department</h3>
-                            <select className='dropdown'>
+                            <select required className='dropdown' onChange={handleDepartmentChange}>
+                            <option></option>
                                 {
-                                    departments.map(department => <option key={department.department_id}>{department.department_name}</option>)
+                                    departmentsAdded && departments.length !== 0 ? departments.map(department => 
+                                        <option key={department.department_id}>{department.department_name}</option>) : null
                                 }
                             </select>
                         </div>
-                        <TextField style={{ margin: '3px' }} size='small' variant="outlined" type='text' placeholder='Batch Type' InputProps={{
-                            startAdornment: (
-                                <InputAdornment position='start'>
-                                    <FormatListBulletedIcon style={{ height: '20px' }} color="action" />
-                                </InputAdornment>
-                            )
-                        }} />
+                        <center><button className='modal-btn' style={{marginTop: '20px'}} type='submit'>Add</button></center>
                     </form>
-                    <button className='modal-btn' onClick={closeModal}>Add</button>
                 </div>
-
             </Modal>
         </div>
     )
