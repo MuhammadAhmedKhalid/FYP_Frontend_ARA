@@ -81,6 +81,7 @@ function Domains(props) {
                                     <button className='domains-textField' style={{ color: '#fff', marginBottom: '15px' }}>Education</button>
                                     <select
                                         value={instituteTypes.name}
+                                        style={{width: '210px'}}
                                         className='dropdown'
                                         onChange={(e) => handleSelect(e)}>
                                         <option>---Select---</option>
@@ -106,7 +107,7 @@ function Domains(props) {
                                         justifyContent: 'center'
                                     }}>
                                     <button className='domains-textField' style={{ color: '#fff', marginBottom: '15px' }}>Factory</button>
-                                    <select className='dropdown' defaultValue={"Food"}>
+                                    <select style={{width: '210px'}} className='dropdown' defaultValue={"Food"}>
                                         <option>---Select---</option>
                                         {
                                             instituteTypes.map(instituteType =>
@@ -129,7 +130,7 @@ function Domains(props) {
                                         justifyContent: 'center'
                                     }}>
                                     <button className='domains-textField' style={{ color: '#fff', marginBottom: '15px' }}>Hospital</button>
-                                    <select className='dropdown' defaultValue={"Women's hospitals"}>
+                                    <select style={{width: '210px'}} className='dropdown' defaultValue={"Women's hospitals"}>
                                         <option>---Select---</option>
                                         {
                                             instituteTypes.map(instituteType =>
@@ -152,7 +153,7 @@ function Domains(props) {
                                         justifyContent: 'center'
                                     }}>
                                     <button className='domains-textField' style={{ color: '#fff', marginBottom: '15px' }}>Office</button>
-                                    <select className='dropdown' defaultValue={"Private Office"}>
+                                    <select style={{width: '210px'}} className='dropdown' defaultValue={"Private Office"}>
                                         <option>---Select---</option>
                                         {
                                             instituteTypes.map(instituteType =>
