@@ -86,7 +86,8 @@ function Signin(props) {
         setOpenSignUpModal(true)
     }
 
-    const handleLogin = () => {
+    const handleLogin = (e) => {
+        e.preventDefault();
         dispatch(loginRequest(user))
     }
     const customStyles = {
@@ -119,8 +120,8 @@ function Signin(props) {
                     >
                         <h2 style={{ color: "#115868", fontSize: 20 }}>Welcome To Allocator</h2>
                         <p style={{ color: "#9098B1", fontSize: 14 }}>Sign in to continue</p>
-                        <form className='flexbox-container-y'>
-                            <TextField value={user.email} onChange={(e) => setUser({ ...user, email: e.target.value })} size='small' variant="outlined" type='email' placeholder='Your Email' InputProps={{
+                        <form onSubmit={handleLogin} className='flexbox-container-y'>
+                            <TextField required value={user.email} onChange={(e) => setUser({ ...user, email: e.target.value })} size='small' variant="outlined" type='email' placeholder='Your Email' InputProps={{
                                 startAdornment: (
                                     <InputAdornment position='start'>
                                         <EmailOutlinedIcon style={{ height: '20px' }} color="action" />
@@ -128,6 +129,7 @@ function Signin(props) {
                                 )
                             }} />
                             <TextField
+                                required
                                 size='small'
                                 variant="outlined"
                                 type={values.showPassword ? "text" : "password"}
@@ -151,9 +153,7 @@ function Signin(props) {
                                     )
                                 }} />
                             <center>
-                                <Link onClick={handleLogin}>
-                                    <button className='modal-btn' style={{ marginTop: 16 }}>Login</button>
-                                </Link>
+                                <button type='submit' className='modal-btn' style={{ marginTop: 16 }}>Login</button>
                                 <p style={{ color: "#115868", fontSize: 12, fontWeight: 700, margin: 16 }}>Forgot Password?</p>
                                 <div className='flexbox-container'>
                                     <p style={{ color: '#9098B1', fontSize: 12, fontWeight: 700 }}>Don't have an account?&nbsp;</p>

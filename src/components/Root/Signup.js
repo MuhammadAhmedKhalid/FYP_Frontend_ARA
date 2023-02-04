@@ -100,7 +100,8 @@ function Signup(props) {
         }
     },[signupFailed])
 
-    const handleSignup = () => {
+    const handleSignup = (e) => {
+        e.preventDefault();
         dispatch(signupRequest(user))
     }
     return (
@@ -120,15 +121,15 @@ function Signup(props) {
                 >
                     <h2 style={{ color: "#115868", fontSize: 20 }}>Welcome To Allocator</h2>
                     <p style={{ color: "#9098B1", fontSize: 14 }}>Sign up to continue</p>
-                    <form>
-                        <TextField value={user.name} onChange={(e) => setUser({ ...user, name: e.target.value })} size='small' variant="outlined" type='text' placeholder='Your Name' InputProps={{
+                    <form onSubmit={handleSignup}>
+                        <TextField required value={user.name} onChange={(e) => setUser({ ...user, name: e.target.value })} size='small' variant="outlined" type='text' placeholder='Your Name' InputProps={{
                             startAdornment: (
                                 <InputAdornment position='start'>
                                     <AccountCircleOutlinedIcon style={{ height: '20px' }} color="action" />
                                 </InputAdornment>
                             )
                         }} />
-                        <TextField value={user.email} onChange={(e) => setUser({ ...user, email: e.target.value })} size='small' variant="outlined" type='email' placeholder='Your Email' InputProps={{
+                        <TextField required value={user.email} onChange={(e) => setUser({ ...user, email: e.target.value })} size='small' variant="outlined" type='email' placeholder='Your Email' InputProps={{
                             startAdornment: (
                                 <InputAdornment position='start'>
                                     <EmailOutlinedIcon style={{ height: '20px' }} color="action" />
@@ -137,6 +138,7 @@ function Signup(props) {
                         }} />
                         <div>
                             <TextField
+                            required
                                 size='small'
                                 variant="outlined"
                                 type={values.showPassword ? "text" : "password"}
@@ -162,6 +164,7 @@ function Signup(props) {
                             />
                         </div>
                         <TextField
+                        required
                             size='small'
                             error={showPasswordError}
                             helperText={errorMsg}
@@ -187,9 +190,7 @@ function Signup(props) {
                                 )
                             }} />
                         <center>
-                            <Link onClick={handleSignup}>
-                                <button className='modal-btn' style={{ marginTop: 16 }}>Sign Up</button>
-                            </Link>
+                            <button type='submit' className='modal-btn' style={{ marginTop: 16 }}>Sign Up</button>
                             <div className='flexbox-container'>
                                 <p style={{ color: '#9098B1', fontSize: 11, fontWeight: 700, marginTop: 16 }}>Already have an account?&nbsp;</p>
                                 <Link onClick={openModal}><p style={{ color: '#115868', fontSize: 11, fontWeight: 700, textDecorationLine: 'underline', marginTop: 16 }}>Login</p></Link>
