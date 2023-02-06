@@ -5,6 +5,7 @@ import AddRoom from './modals/AddRoom'
 import { useSelector, useDispatch } from 'react-redux'
 import { getDepartmentsRequest } from '../../../redux/GetDepartments/getDepartmentsActions'
 import { getRoomsRequest } from '../../../redux/GetRooms/getRoomsActions'
+import Table from '../../Root/Table'
 
 function Rooms() {
 
@@ -14,7 +15,7 @@ function Rooms() {
     const [roomData, setRoomData] = useState([])
 
     const rooms = useSelector((state) => state.getRooms.rooms.data)
-    const roomAdded = useSelector((state) => state.getRooms.added)
+    const roomsAdded = useSelector((state) => state.getRooms.added)
     const departments = useSelector((state) => state.getDepartments.departments.data)
     const departmentsAdded = useSelector((state) => state.getDepartments.added)
 
@@ -28,7 +29,7 @@ function Rooms() {
                 for (let i = 0; i < departments.length; i++) {
                     for (let j = 0; j < rooms.length; j++) {
                         if (rooms[j].department_id === departments[i].department_id) {
-                            setRoomData(roomData => [...roomData, rooms[j].name + " " + departments[i].department_name])
+                            setRoomData(roomData => [...roomData, {column1: rooms[j].name, column2: departments[i].department_name}])
                         }
                     }
                 }
@@ -54,11 +55,9 @@ function Rooms() {
                         <h2 style={{ color: '#0E5E6F' }}>ROOMS LIST</h2>
                     </div>
                     <center>
-                        <div>
-                            {
-                                roomAdded && roomData.length !== 0 ? roomData.map((room, index) => <div key={index}>{room}</div>) : null
-                            }
-                        </div>
+                        {
+                            roomsAdded && <Table columns={['No.', 'Room Name', 'Department']} rows={roomData}/>
+                        }
                     </center>
                 </div>
             </div>
