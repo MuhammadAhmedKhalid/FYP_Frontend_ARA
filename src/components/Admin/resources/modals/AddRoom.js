@@ -3,7 +3,7 @@ import Modal from 'react-modal'
 import { useSelector } from 'react-redux'
 import TextField from '@material-ui/core/TextField'
 import InputAdornment from '@material-ui/core/InputAdornment'
-import GroupsIcon from '@mui/icons-material/Groups';
+import MeetingRoomIcon from '@mui/icons-material/MeetingRoom';
 
 function AddRoom(props) {
 
@@ -59,7 +59,7 @@ function AddRoom(props) {
                                     InputProps={{
                                         startAdornment: (
                                             <InputAdornment position='start'>
-                                                <GroupsIcon style={{ height: '20px' }} color="action" />
+                                                <MeetingRoomIcon style={{ height: '20px' }} color="action" />
                                             </InputAdornment>
                                         )
                             }} />

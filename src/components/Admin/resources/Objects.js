@@ -63,8 +63,8 @@ function Objects() {
                     <center>
                         <div>
                             {
-                                objectData.length !== 0 ? objectData.map(object =>
-                                    <div key={objectData.indexOf(object)}>{object}</div>) : null
+                                objectData.length !== 0 ? objectData.map((object, index) =>
+                                    <div key={index}>{object}</div>) : null
                             }
                         </div>
                     </center>

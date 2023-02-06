@@ -1,8 +1,42 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import Modal from 'react-modal'
+import TextField from '@material-ui/core/TextField'
+import InputAdornment from '@material-ui/core/InputAdornment'
+import EmojiObjectsIcon from '@mui/icons-material/EmojiObjects';
+import { useSelector } from 'react-redux'
 
 function AddObject(props) {
+
     const { openObjectModal, setOpenObjectModal } = props
+
+    const rooms = useSelector((state) => state.getRooms.rooms.data)
+    const departments = useSelector((state) => state.getDepartments.departments.data)
+    const departmentsAdded = useSelector((state) => state.getDepartments.added)
+
+    const [roomsData, setRoomsData] = useState([])
+
+    const [object, setObject] = useState({
+        object_name: "",
+        quantity: "",
+        department_id: "",
+        room_id: "",
+        
+    })
+
+    useEffect(() => {
+        if (departmentsAdded) {
+            if (rooms.length !== 0 && departments.length !== 0) {
+                setRoomsData([])
+                for (let i = 0; i < rooms.length; i++) {
+                    for (let j = 0; j < departments.length; j++) {
+                        if (rooms[i].department_id === departments[j].department_id && departments[j].department_id === object.department_id) {
+                            setRoomsData(roomsData => [...roomsData, { id: rooms[i].room_id, name: rooms[i].name }])
+                        }
+                    }
+                }
+            }
+        }
+    }, [object.department_id])
 
     const customStyles = {
         overlay: {
@@ -16,6 +50,28 @@ function AddObject(props) {
         },
     };
 
+    const handleDepartmentChange = (event) => {
+        const department_name = event.target.value
+        for (let i = 0; i < departments.length; i++) {
+            if (departments[i].department_name === department_name) {
+                setObject({ ...object, department_id: departments[i].department_id })
+            }
+        }
+    }
+
+    const handleRoomChange = (event) => {
+        const room_name = event.target.value
+        for (let i = 0; i < rooms.length; i++) {
+            if (rooms[i].name === room_name) {
+                setObject({ ...object, room_id: rooms[i].room_id })
+            }
+        }
+    }
+
+    const handleSubmit = (e) => {
+        e.preventDefault()
+        console.log(object)
+    }
 
     return (
         <div>
@@ -24,13 +80,54 @@ function AddObject(props) {
                 style={customStyles}
                 isOpen={openObjectModal}
                 onRequestClose={() => setOpenObjectModal(false)}>
-                <div className='center'>
+                <div className='center flexbox-container-y'>
                     <h2 style={{ color: "#115868", fontSize: 20 }}>Add Object</h2>
+                    <form onSubmit={handleSubmit}>
+                        <TextField autoFocus required style={{ margin: '3px' }} size='small' variant="outlined" type='text' placeholder='Object Name.' 
+                                onChange={(e) => setObject({ ...object, object_name: e.target.value })}
+                                InputProps={{
+                                    startAdornment: (
+                                        <InputAdornment position='start'>
+                                            <EmojiObjectsIcon style={{ height: '20px' }} color="action" />
+                                        </InputAdornment>
+                                    )
+                        }} />
+                        <TextField
+                        required
+                            onChange={(e) => setObject({ ...object, quantity: e.target.value })}
+                            label='Quantity'
+                            style={{ marginTop: '12px' }}
+                            size='small'
+                            variant="outlined"
+                            type='number' />
+                            <div style={{ margin: '3px' }} className='flexbox-container-y'>
+                            <h3 style={{fontWeight: 'normal', color: 'gray', marginRight: '3px'}}>Department</h3>
+                        <select required className='dropdown' onChange={handleDepartmentChange}>
+                            <option></option>
+                            {
+                                departmentsAdded && departments.length !== 0 ? departments.map(department =>
+                                    <option key={department.department_id}>{department.department_name}</option>) : null
+                            }
+                        </select>
+                        </div>
+                        <div style={{ margin: '3px' }} className='flexbox-container-y'>
+                        <h3 style={{
+                            fontWeight: 'normal', color: 'gray', marginRight: '3px'
+                        }}>Room No.</h3>
+                        <select required className='dropdown' onChange={handleRoomChange}>
+                            <option></option>
+                            {
+                                roomsData.length !== 0 ? roomsData.map(room =>
+                                    <option key={room.id}>{room.name}</option>) : null
+                            }
+                        </select>
+                        </div>
+                        <center><button className='modal-btn' style={{marginTop: '20px'}} type='submit'>Add</button></center>
+                    </form>
                 </div>
-
             </Modal>
         </div>
-    )
+    ) 
 }
 
 export default AddObject
