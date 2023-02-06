@@ -56,7 +56,7 @@ function Rooms() {
                     <center>
                         <div>
                             {
-                                roomData.length !== 0 ? roomData.map(room => <div key={roomData.indexOf(room)}>{room}</div>) : null
+                                roomData.length !== 0 ? roomData.map((room, index) => <div key={index}>{room}</div>) : null
                             }
                         </div>
                     </center>
