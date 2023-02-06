@@ -4,7 +4,7 @@ import AdminIcon from '../AdminIcon'
 import AddDepartment from './modals/AddDepartment'
 import { useSelector, useDispatch } from 'react-redux'
 import { getDepartmentsRequest } from '../../../redux/GetDepartments/getDepartmentsActions'
-import './Table.css';
+import Table from '../../Root/Table'
 
 function Departments() {
 
@@ -16,6 +16,16 @@ function Departments() {
     const departments = useSelector((state) => state.getDepartments.departments.data)
     const departmentsAdded = useSelector((state) => state.getDepartments.added)
     const institute_name = useSelector((state) => state.login.user.institute_name)
+
+    const [rowData, setRowData] = useState([])
+   
+    useEffect(()=>{
+        if(departmentsAdded && rowData.length !== departments.length){
+            for(let i=0; i<departments.length; i++){
+                rowData.push({column1: departments[i].department_name, column2: institute_name})
+            }
+        }
+    },[departmentsAdded])
 
     const openModal = () => {
         setOpenDepartmentModal(true)
@@ -34,32 +44,12 @@ function Departments() {
                         <button className='modal-btn-w' onClick={openModal}>ADD DEPARTMENT</button>
                     </div>
                     <div style={{ marginTop: '30px' }} className='center'>
-                        <h2 style={{ color: '#0E5E6F' }}>DEPARTMENTS LIST</h2>
+                        <h2 style={{ color: '#0E5E6F' }}>DEPARTMENTS</h2>
                     </div>
                     <center>
-                        <div className="table-container" style={{ marginTop: '30px' }}>
-                            <table className="table">
-                                <thead className="fixed-header">
-                                    <tr>
-                                        <th>No.</th>
-                                        <th>Department</th>
-                                        <th>Institute</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                {
-                                    departmentsAdded && departments.length !== 0 ?
-                                    departments.map((department, index) => (
-                                        <tr key={index}>
-                                            <td>{index+1}</td>
-                                            <td>{department.department_name}</td>
-                                            <td>{institute_name}</td>
-                                        </tr>
-                                    )) : null
-                                }
-                                </tbody>
-                            </table>
-                        </div>
+                        {
+                            departmentsAdded && <Table columns={['No.', 'Department Name', 'Institute']} rows={rowData}/>
+                        }
                     </center>
                 </div>
             </div>
