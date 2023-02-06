@@ -2,7 +2,7 @@
     height: 480px;
     overflow-y: scroll;
   }
-  
+
   .table {
     width: 100%;
     border-collapse: collapse;
@@ -21,17 +21,17 @@
   }
   
   .table th {
+    border-color: #0E5E6F;
+    border-width: 2.5px;
     font-size: 16px;
-    background-color: #0a6c82;
+    background-color: white;
     font-weight: normal;
-    color: white;
   }
   
   .fixed-header {
     position: sticky;
     top: 0;
     background-color: white;
-    z-index: 1;
   }
   
   .table tr:nth-child(even) {

@@ -38,27 +38,27 @@ function Departments() {
                     </div>
                     <center>
                         <div className="table-container" style={{ marginTop: '30px' }}>
-                        <table className="table">
-                            <thead className="fixed-header">
-                            <tr>
-                                <th>No.</th>
-                                <th>Department</th>
-                                <th>Institute</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            {
-                                departmentsAdded && departments.length !== 0 ?
-                                departments.map((department, index) => (
-                                    <tr key={index}>
-                                        <td>{index+1}</td>
-                                        <td>{department.department_name}</td>
-                                        <td>{institute_name}</td>
+                            <table className="table">
+                                <thead className="fixed-header">
+                                    <tr>
+                                        <th>No.</th>
+                                        <th>Department</th>
+                                        <th>Institute</th>
                                     </tr>
-                                )) : null
-                            }
-                            </tbody>
-                        </table>
+                                </thead>
+                                <tbody>
+                                {
+                                    departmentsAdded && departments.length !== 0 ?
+                                    departments.map((department, index) => (
+                                        <tr key={index}>
+                                            <td>{index+1}</td>
+                                            <td>{department.department_name}</td>
+                                            <td>{institute_name}</td>
+                                        </tr>
+                                    )) : null
+                                }
+                                </tbody>
+                            </table>
                         </div>
                     </center>
                 </div>

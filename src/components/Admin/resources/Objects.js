@@ -27,7 +27,7 @@ function Objects() {
 
     useEffect(() => {
         if (objectsAdded && objectTypesAdded) {
-            if (objects.length !== 0 && objectTypes.length !== 0) {
+            if (objects.length !== 0 && objectTypes.length !== 0 && objectData.length === 0) {
                 for (let i = 0; i < objects.length; i++) {
                     for (let j = 0; j < objectTypes.length; j++) {
                         for (let k = 0; k < rooms.length; k++) {

@@ -14,6 +14,7 @@ function Rooms() {
     const [roomData, setRoomData] = useState([])
 
     const rooms = useSelector((state) => state.getRooms.rooms.data)
+    const roomAdded = useSelector((state) => state.getRooms.added)
     const departments = useSelector((state) => state.getDepartments.departments.data)
     const departmentsAdded = useSelector((state) => state.getDepartments.added)
 
@@ -23,11 +24,11 @@ function Rooms() {
 
     useEffect(() => {
         if (departmentsAdded) {
-            if (rooms.length !== 0 && departments.length !== 0) {
-                for (let i = 0; i < rooms.length; i++) {
-                    for (let j = 0; j < departments.length; j++) {
-                        if (rooms[i].department_id === departments[j].department_id) {
-                            setRoomData(roomData => [...roomData, rooms[i].name + " " + departments[j].department_name])
+            if (rooms.length !== 0 && departments.length !== 0 && roomData.length === 0) {
+                for (let i = 0; i < departments.length; i++) {
+                    for (let j = 0; j < rooms.length; j++) {
+                        if (rooms[j].department_id === departments[i].department_id) {
+                            setRoomData(roomData => [...roomData, rooms[j].name + " " + departments[i].department_name])
                         }
                     }
                 }
@@ -55,7 +56,7 @@ function Rooms() {
                     <center>
                         <div>
                             {
-                                roomData.length !== 0 ? roomData.map((room, index) => <div key={index}>{room}</div>) : null
+                                roomAdded && roomData.length !== 0 ? roomData.map((room, index) => <div key={index}>{room}</div>) : null
                             }
                         </div>
                     </center>
