@@ -52,7 +52,7 @@ function Rooms() {
                         <button className='modal-btn-w' onClick={openModal}>ADD ROOM</button>
                     </div>
                     <div style={{ marginTop: '25px' }} className='center'>
-                        <h2 style={{ color: '#0E5E6F' }}>ROOMS LIST</h2>
+                        <h2 style={{ color: '#0E5E6F' }}>ROOMS</h2>
                     </div>
                     <center>
                         {

@@ -14,7 +14,6 @@ function AddBatches(props) {
 
     const [batch, setBatch] = useState({
         batch_year: "",
-        batch_type: "",
         department_id: ""
     })
 
@@ -62,17 +61,6 @@ const handleDepartmentChange = (e) => {
                                 </InputAdornment>
                             )
                         }} />
-                        <div style={{ margin: '3px' }} className='flexbox-container-y'>
-                            <h3 style={{
-                                fontWeight: 'normal', color: 'gray', marginRight: '3px'
-                            }}>Batch Type</h3>
-                            <select required className='dropdown' onChange={(e) => setBatch({ ...batch, batch_type: e.target.value })}>
-                                <option></option>
-                                <option>Spring</option>
-                                <option>Fall</option>
-                                <option>Summer</option>
-                            </select>
-                        </div>
                         <div style={{ margin: '3px' }} className='flexbox-container-y'>
                             <h3 style={{
                                 fontWeight: 'normal', color: 'gray', marginRight: '3px'

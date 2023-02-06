@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import AdminIcon from '../AdminIcon'
 import AdminNavBar from '../AdminNavbar'
 import AddBatches from './modals/AddBatches'
+import Table from '../../Root/Table'
 
 function Batches() {
     const [openBatchModal, setOpenBatchModal] = useState(false)
@@ -9,6 +10,9 @@ function Batches() {
     const openModal = () => {
         setOpenBatchModal(true)
     }
+
+    const [rowData, setRowData] = useState([])
+
     return (
         <div>
             <div className="flexbox-container-y white-bg-y">
@@ -21,6 +25,11 @@ function Batches() {
                     <div style={{ marginTop: '25px' }} className='center'>
                         <h2 style={{ color: '#0E5E6F' }}>BACTHES LIST</h2>
                     </div>
+                    <center>
+                        {
+                            <Table columns={['No.', 'Batch Year', 'Department']} rows={rowData}/>
+                        }
+                    </center>
                 </div>
             </div>
             <div>
