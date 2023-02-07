@@ -15,6 +15,7 @@ import { resourcesReducer } from './GetResources/getResourcesReducer'
 import { objReqReducer } from './GetObjectRequests/getObjReqReducer'
 import { addObjReqReducer } from './AddObjRequest/addObjRequestReducer'
 import { objectsReducer } from './GetObjects/getObjectsReducer'
+import { addDepartmentReducer } from './AddDepartment/addDepartmentReducer'
 
 export const rootReducer = combineReducers({
     signup: signupReducer,
@@ -32,5 +33,6 @@ export const rootReducer = combineReducers({
     getResources: resourcesReducer,
     getObjRequests: objReqReducer,
     addObjRequest: addObjReqReducer,
-    getObjects: objectsReducer
+    getObjects: objectsReducer,
+    addDepartmentReducer
 })

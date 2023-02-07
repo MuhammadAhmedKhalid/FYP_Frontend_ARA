@@ -1,4 +1,4 @@
-import React, { useRef, useState, useEffect } from 'react'
+import React, { useRef, useState } from 'react'
 import Navbar from '../Root/Navbar'
 import Domains from './Domains'
 import Intro from './Intro'
