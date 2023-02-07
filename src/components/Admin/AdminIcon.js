@@ -1,7 +1,11 @@
 import React from 'react'
 import Img10 from '../../assets/img10.png'
+import { useSelector } from 'react-redux'
 
 function AdminIcon() {
+
+    const adminName = useSelector((state) => state.login.user.name)
+
     return (
         <div style={{ marginTop: '60px', padding: '15px' }}>
             <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
@@ -16,7 +20,7 @@ function AdminIcon() {
                         }}>
                         <img src={Img10} alt='Admin' />
                     </div>
-                    <h2 style={{ color: '#0E5E6F' }}>ADMIN</h2>
+                    <h2 style={{ color: '#0E5E6F' }}>{ adminName }</h2>
                 </div>
             </div>
         </div>
