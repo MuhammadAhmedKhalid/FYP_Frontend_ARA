@@ -38,9 +38,6 @@ function AddDepartment(props) {
         event.preventDefault()
         setOpenDepartmentModal(false)
         dispatch(addDepartmentRequest(department))
-        // axios.post('http://localhost:8080/add_department', department)
-        //     .then((response) => { console.log(response) })
-        //     .catch((error) => { console.log(error) })
         setRefresh(true)
     }
     return (

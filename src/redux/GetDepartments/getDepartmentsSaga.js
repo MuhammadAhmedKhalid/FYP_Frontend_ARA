@@ -3,14 +3,14 @@ import { put, takeEvery, call } from 'redux-saga/effects'
 import { select } from 'redux-saga/effects';
 import axios from 'axios';
 
-function* getDepartmentsRequest() {
+function* getDepartmentsRequest(data) {
     try {
         const token = yield select(state => state.login.user.jwt);
         const headers = {
             'Authorization': `Bearer ${token}`
         };
-        let data = yield call(axios.get, 'http://localhost:8080/departments', { headers });
-        yield put({ type: GET_DEPARTEMNTS_SUCCESS, data })
+        let result = yield call(axios.get, `http://localhost:8080/departments/${data.query}`, { headers });
+        yield put({ type: GET_DEPARTEMNTS_SUCCESS, result })
     } catch (e) {
         yield put({ type: GET_DEPARTEMNTS_FAILURE, message: e.message })
     }

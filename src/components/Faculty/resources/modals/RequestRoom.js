@@ -48,7 +48,7 @@ function RequestRoom(props) {
     })
 
     useEffect(() => {
-        if (roomsAdded) {
+        if (roomsAdded && departmentsAdded) {
             if (rooms.length !== 0 && departments.length !== 0) {
                 setRoomsData([])
                 for (let i = 0; i < rooms.length; i++) {
@@ -70,9 +70,9 @@ function RequestRoom(props) {
     }, [requestAdded, requestSuccessfull])
 
     useEffect(() => {
-        dispatch(getDepartmentsRequest())
+        dispatch(getDepartmentsRequest(institute_id))
         dispatch(getRoomsRequest())
-    }, [])
+    }, [institute_id])
 
     const handleDateChange = (newValue) => {
         const object = newValue

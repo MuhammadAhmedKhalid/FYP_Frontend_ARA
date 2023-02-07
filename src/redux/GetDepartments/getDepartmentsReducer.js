@@ -16,7 +16,7 @@ export const departmentsReducer = (state = departmentsInitialState, action) => {
         case GET_DEPARTEMNTS_SUCCESS: return {
             ...state,
             loading: false,
-            departments: action.data,
+            departments: action.result,
             error: '',
             added: true
         }

@@ -16,6 +16,7 @@ function Departments() {
     const departments = useSelector((state) => state.getDepartments.departments.data)
     const departmentsAdded = useSelector((state) => state.getDepartments.added)
     const institute_name = useSelector((state) => state.login.user.institute_name)
+    const institute_id = useSelector((state) => state.login.user.institute_id)
 
     const [rowData, setRowData] = useState([])
    
@@ -31,7 +32,7 @@ function Departments() {
         setOpenDepartmentModal(true)
     }
     useEffect(() => {
-        dispatch(getDepartmentsRequest())
+        dispatch(getDepartmentsRequest(institute_id))
     }, [refresh])
 
     return (
