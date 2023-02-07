@@ -5,6 +5,7 @@ import AddObject from './modals/AddObject'
 import { useSelector, useDispatch } from 'react-redux'
 import { getRoomsRequest } from '../../../redux/GetRooms/getRoomsActions'
 import { getResourceTypesRequest } from '../../../redux/GetResourceTypes/getResourceActions'
+import { getDepartmentsRequest } from '../../../redux/GetDepartments/getDepartmentsActions'
 import { getResources } from '../../../redux/GetResources/getResourcesActions'
 import Table from '../../Root/Table'
 
@@ -15,6 +16,8 @@ function Objects() {
     const [openObjectModal, setOpenObjectModal] = useState(false)
     const [objectData, setObjectData] = useState([])
 
+    const departments = useSelector((state) => state.getDepartments.departments.data)
+    const departmentsAdded = useSelector((state) => state.getDepartments.added)
     const objects = useSelector((state) => state.getResources.resources.data)
     const objectsAdded = useSelector((state) => state.getResources.added)
     const objectTypes = useSelector((state) => state.getResourceTypes.resource_types.data)
@@ -26,26 +29,31 @@ function Objects() {
     }
 
     useEffect(() => {
-        if (objectsAdded && objectTypesAdded) {
+        if (objectsAdded && objectTypesAdded && departmentsAdded) {
             if (objects.length !== 0 && objectTypes.length !== 0 && objectData.length === 0) {
                 for (let i = 0; i < objects.length; i++) {
                     for (let j = 0; j < objectTypes.length; j++) {
                         for (let k = 0; k < rooms.length; k++) {
-                            if (objects[i].resource_type_id === objectTypes[j].resource_type_id && objects[i].room_id === rooms[k].room_id) {
-                                setObjectData(objectData =>
-                                    [...objectData, {column1: objectTypes[j].name,  column2: objects[i].quantity, column3: rooms[k].name}])
+                            for (let l = 0; l < departments.length; l++){
+                                if (objects[i].resource_type_id === objectTypes[j].resource_type_id && objects[i].room_id === rooms[k].room_id 
+                                    && rooms[k].department_id === departments[l].department_id ) {
+                                    setObjectData(objectData =>
+                                        [...objectData, {column1: objectTypes[j].name,  column2: objects[i].quantity, 
+                                            column3: rooms[k].name, column4: departments[l].department_name}])
+                                }
                             }
                         }
                     }
                 }
             }
         }
-    }, [objects, objectTypes])
+    }, [objects, objectTypes, departmentsAdded])
 
     useEffect(() => {
         dispatch(getResources())
         dispatch(getResourceTypesRequest())
         dispatch(getRoomsRequest())
+        dispatch(getDepartmentsRequest())
     }, [])
 
     return (

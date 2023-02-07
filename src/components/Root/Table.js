@@ -17,11 +17,20 @@ function Table(props) {
                 </thead>
                 <tbody>
                     {
-                        rows.map(({column1, column2}, index) => (
+                        columns.length < 5 ? rows.map(({column1, column2}, index) => (
                             <tr key={index}>
                                 <td>{index+1}</td>
                                 <td>{column1}</td>
                                 <td>{column2}</td>
+                            </tr>
+                        )) :
+                        rows.map(({column1, column2, column3, column4}, index) => (
+                            <tr key={index}>
+                                <td>{index+1}</td>
+                                <td>{column1}</td>
+                                <td>{column2}</td>
+                                <td>{column3}</td>
+                                <td>{column4}</td>
                             </tr>
                         ))
                     }
