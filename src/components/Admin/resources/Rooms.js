@@ -29,7 +29,7 @@ function Rooms() {
                 for (let i = 0; i < departments.length; i++) {
                     for (let j = 0; j < rooms.length; j++) {
                         if (rooms[j].department_id === departments[i].department_id) {
-                            setRoomData(roomData => [...roomData, {column1: rooms[j].name, column2: departments[i].department_name}])
+                            setRoomData(roomData => [...roomData, [rooms[j].name, departments[i].department_name]])
                         }
                     }
                 }

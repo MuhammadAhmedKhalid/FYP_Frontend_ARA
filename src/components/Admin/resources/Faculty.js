@@ -42,7 +42,7 @@ function Faculty() {
     useEffect(()=>{
         if(facultyAdded && rowData.length === 0){
             for(let i=0; i<faculty.length; i++){
-                rowData.push({column1: faculty[i].name, column2: faculty[i].phone_number, column3: faculty[i].department, column4: faculty[i].specialization})
+                rowData.push([faculty[i].name, faculty[i].phone_number, faculty[i].department, faculty[i].specialization])
             }
         }
     }, [facultyAdded])

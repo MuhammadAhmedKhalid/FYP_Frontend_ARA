@@ -22,7 +22,7 @@ function Departments() {
     useEffect(()=>{
         if(departmentsAdded && rowData.length !== departments.length){
             for(let i=0; i<departments.length; i++){
-                rowData.push({column1: departments[i].department_name, column2: institute_name})
+                rowData.push([departments[i].department_name, institute_name])
             }
         }
     },[departmentsAdded])
