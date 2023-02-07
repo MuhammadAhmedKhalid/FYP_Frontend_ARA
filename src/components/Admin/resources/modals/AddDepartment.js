@@ -4,6 +4,7 @@ import TextField from '@material-ui/core/TextField'
 import LocalLibraryIcon from '@mui/icons-material/LocalLibrary';
 import InputAdornment from '@material-ui/core/InputAdornment'
 import { useSelector } from 'react-redux'
+import axios from 'axios'
 
 function AddDepartment(props) {
 
@@ -33,13 +34,11 @@ function AddDepartment(props) {
     };
     const submitHandler = (event) => {
         event.preventDefault()
-
         setOpenDepartmentModal(false)
-        console.log(department)
-        // axios.post('http://localhost:8080/add_department', department)
-        //     .then((response) => { console.log(response) })
-        //     .catch((error) => { console.log(error) })
-        // setRefresh(true)
+        axios.post('http://localhost:8080/add_department', department)
+            .then((response) => { console.log(response) })
+            .catch((error) => { console.log(error) })
+        setRefresh(true)
     }
     return (
         <div>

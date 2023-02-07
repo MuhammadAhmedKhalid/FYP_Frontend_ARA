@@ -22,7 +22,7 @@ function Table(props) {
                                 <td>{index+1}</td>
                                 {
                                     cellData.map((data, dataIndex)=>(
-                                        <td>{data}</td>
+                                        <td key={dataIndex}>{data}</td>
                                     ))
                                 }
                             </tr>
