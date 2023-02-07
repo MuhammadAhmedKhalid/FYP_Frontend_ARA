@@ -2,11 +2,11 @@ import React, { useState, useEffect } from 'react'
 import AdminIcon from '../AdminIcon'
 import AdminNavBar from '../AdminNavbar'
 import AddObject from './modals/AddObject'
-import axios from 'axios'
 import { useSelector, useDispatch } from 'react-redux'
 import { getRoomsRequest } from '../../../redux/GetRooms/getRoomsActions'
 import { getResourceTypesRequest } from '../../../redux/GetResourceTypes/getResourceActions'
 import { getResources } from '../../../redux/GetResources/getResourcesActions'
+import Table from '../../Root/Table'
 
 function Objects() {
 
@@ -33,7 +33,7 @@ function Objects() {
                         for (let k = 0; k < rooms.length; k++) {
                             if (objects[i].resource_type_id === objectTypes[j].resource_type_id && objects[i].room_id === rooms[k].room_id) {
                                 setObjectData(objectData =>
-                                    [...objectData, "Name: " + objectTypes[j].name + " Quantity: " + objects[i].quantity + " Room: " + rooms[k].name])
+                                    [...objectData, {column1: objectTypes[j].name,  column2: objects[i].quantity, column3: rooms[k].name}])
                             }
                         }
                     }
@@ -58,13 +58,12 @@ function Objects() {
                         <button className='modal-btn-w' onClick={openModal}>ADD OBJECT</button>
                     </div>
                     <div style={{ marginTop: '25px' }} className='center'>
-                        <h2 style={{ color: '#0E5E6F' }}>OBJECTS LIST</h2>
+                        <h2 style={{ color: '#0E5E6F' }}>OBJECTS</h2>
                     </div>
                     <center>
                         <div>
                             {
-                                objectData.length !== 0 ? objectData.map((object, index) =>
-                                    <div key={index}>{object}</div>) : null
+                                objectsAdded && <Table columns={['No.', 'Name', 'Quantity', 'Room Name', 'Department']} rows={objectData}/>
                             }
                         </div>
                     </center>

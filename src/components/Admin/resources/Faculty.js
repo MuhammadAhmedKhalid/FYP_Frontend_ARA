@@ -4,6 +4,7 @@ import AdminIcon from '../AdminIcon'
 import AddFaculty from './modals/AddFaculty'
 import { getFacultyRequest } from '../../../redux/GetFaculty/getFacultyActions'
 import { useSelector, useDispatch } from 'react-redux'
+import Table from '../../Root/Table'
 
 function Faculty() {
 
@@ -14,6 +15,7 @@ function Faculty() {
     const dispatch = useDispatch()
 
     const faculty = useSelector((state) => state.getFaculty.faculty)
+    const facultyAdded = useSelector((state) => state.getFaculty.added);
     const institutes = useSelector((state) => state.getInstitutes.institutes.data)
     const isInstitutesAdded = useSelector((state) => state.getInstitutes.added)
     const admin_id = useSelector((state) => state.login.user.user_id)
@@ -35,6 +37,15 @@ function Faculty() {
     const openModal = () => {
         setOpenFacultyModal(true)
     }
+    const [rowData, setRowData] = useState([])
+
+    useEffect(()=>{
+        if(facultyAdded && rowData.length === 0){
+            for(let i=0; i<faculty.length; i++){
+                rowData.push({column1: faculty[i].name, column2: faculty[i].phone_number, column3: faculty[i].department, column4: faculty[i].specialization})
+            }
+        }
+    }, [facultyAdded])
 
     return (
         <div className="flexbox-container-y white-bg-y">
@@ -45,12 +56,12 @@ function Faculty() {
                     <button className='modal-btn-w' onClick={openModal}>ADD FACULTY</button>
                 </div>
                 <div style={{ marginTop: '25px' }} className='center'>
-                    <h2 style={{ color: '#0E5E6F' }}>FACULTY LIST</h2>
+                    <h2 style={{ color: '#0E5E6F' }}>FACULTY</h2>
                 </div>
                 <center>
                     <div>
                         {
-                            faculty.map(faculty => (<h5 key={faculty.faculty_id}>{faculty.name} {faculty.phone_number} {faculty.department} {faculty.specialization}</h5>))
+                            facultyAdded&& <Table columns={['No.', 'Name', 'Phone Number', 'Department', 'Specialization']} rows={rowData}/>
                         }
                     </div>
                 </center>
