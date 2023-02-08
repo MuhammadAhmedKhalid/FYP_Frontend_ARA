@@ -4,6 +4,7 @@ import TextField from '@material-ui/core/TextField'
 import InputAdornment from '@material-ui/core/InputAdornment'
 import EmojiObjectsIcon from '@mui/icons-material/EmojiObjects';
 import { useSelector } from 'react-redux'
+import axios from 'axios'
 
 function AddObject(props) {
 
@@ -30,7 +31,7 @@ function AddObject(props) {
                 for (let i = 0; i < rooms.length; i++) {
                     for (let j = 0; j < departments.length; j++) {
                         if (rooms[i].department_id === departments[j].department_id && departments[j].department_id === object.department_id) {
-                            setRoomsData(roomsData => [...roomsData, { id: rooms[i].room_id, name: rooms[i].name }])
+                            setRoomsData(roomsData => [...roomsData, { id: rooms[i].room_id, name: rooms[i].room_name }])
                         }
                     }
                 }
@@ -62,7 +63,7 @@ function AddObject(props) {
     const handleRoomChange = (event) => {
         const room_name = event.target.value
         for (let i = 0; i < rooms.length; i++) {
-            if (rooms[i].name === room_name) {
+            if (rooms[i].room_name === room_name) {
                 setObject({ ...object, room_id: rooms[i].room_id })
             }
         }
@@ -70,7 +71,10 @@ function AddObject(props) {
 
     const handleSubmit = (e) => {
         e.preventDefault()
-        console.log(object)
+        axios.post('http://localhost:8080/addObject', object)
+            .then((response) => { console.log(response) })
+            .catch((error) => { console.log(error) })
+        setOpenObjectModal(false)
     }
 
     return (

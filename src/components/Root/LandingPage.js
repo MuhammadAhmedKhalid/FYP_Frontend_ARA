@@ -14,15 +14,6 @@ const LandingPage = () => {
     const fac_ref = useRef(null);
     const hosp_ref = useRef(null);
     const off_ref = useRef(null);
-    
-    //     axios.post('http://localhost:8080/addResourceType')
-    //         .then((response) => { console.log(response) })
-    //         .catch((error) => { console.log(error) })
-
-    //     axios.post('http://localhost:8080/add_resources')
-    //         .then((response) => { console.log(response) })
-    //         .catch((error) => { console.log(error) })
-    // }, [])
 
     return (
         <div>
