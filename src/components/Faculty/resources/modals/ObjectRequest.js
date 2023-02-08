@@ -92,9 +92,9 @@ function ObjectRequest(props) {
         if(institute_id > 0){
             dispatch(getDepartmentsRequest(institute_id))
             dispatch(getRoomsRequest(institute_id))
+            dispatch(getResourceTypesRequest(institute_id))
+            dispatch(getResources(institute_id))
         }
-        dispatch(getResourceTypesRequest())
-        dispatch(getResources())
         dispatch(getObjectsRequest())
     }, [institute_id])
 

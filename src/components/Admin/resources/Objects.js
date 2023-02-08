@@ -23,6 +23,7 @@ function Objects() {
     const objectTypes = useSelector((state) => state.getResourceTypes.resource_types.data)
     const objectTypesAdded = useSelector((state) => state.getResourceTypes.added)
     const rooms = useSelector((state) => state.getRooms.rooms.data)
+    const institute_id = useSelector((state) => state.login.user.institute_id)
 
     const openModal = () => {
         setOpenObjectModal(true)
@@ -37,8 +38,8 @@ function Objects() {
                             for (let l = 0; l < departments.length; l++){
                                 if (objects[i].resource_type_id === objectTypes[j].resource_type_id && objects[i].room_id === rooms[k].room_id 
                                     && rooms[k].department_id === departments[l].department_id ) {
-                                    setObjectData(objectData => [...objectData, [objectTypes[j].name,  objects[i].quantity, 
-                                            rooms[k].name, departments[l].department_name]])
+                                    setObjectData(objectData => [...objectData, [objectTypes[j].object_name,  objects[i].quantity, 
+                                            rooms[k].room_name, departments[l].department_name]])
                                 }
                             }
                         }
@@ -49,11 +50,13 @@ function Objects() {
     }, [objects, objectTypes, departmentsAdded])
 
     useEffect(() => {
-        dispatch(getResources())
-        dispatch(getResourceTypesRequest())
-        dispatch(getRoomsRequest())
-        dispatch(getDepartmentsRequest())
-    }, [])
+        if(institute_id > 0){
+            dispatch(getResources(institute_id))
+            dispatch(getResourceTypesRequest(institute_id))
+            dispatch(getRoomsRequest(institute_id))
+            dispatch(getDepartmentsRequest(institute_id))
+        }
+    }, [institute_id])
 
     return (
         <div>

@@ -1,7 +1,8 @@
 import { GET_RESOURCES_REQUEST } from './getResourcesTypes'
 
-export const getResources = () => {
+export const getResources = (query) => {
     return {
-        type: GET_RESOURCES_REQUEST
+        type: GET_RESOURCES_REQUEST,
+        query
     }
 }

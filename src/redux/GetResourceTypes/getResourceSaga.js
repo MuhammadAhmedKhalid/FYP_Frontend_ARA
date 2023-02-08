@@ -2,14 +2,14 @@ import { GET_RESOURCE_TYPES_FAILURE, GET_RESOURCE_TYPES_REQUEST, GET_RESOURCE_TY
 import { put, takeEvery, call, select } from 'redux-saga/effects'
 import axios from 'axios';
 
-function* getResourceTypesRequest() {
+function* getResourceTypesRequest(data) {
     try {
         const token = yield select(state => state.login.user.jwt);
         const headers = {
             'Authorization': `Bearer ${token}`
         };
-        let data = yield call(axios.get, 'http://localhost:8080/resourceTypes', { headers });
-        yield put({ type: GET_RESOURCE_TYPES_SUCCESS, data })
+        let result = yield call(axios.get, `http://localhost:8080/resourceTypes/${data.query}`, { headers });
+        yield put({ type: GET_RESOURCE_TYPES_SUCCESS, result })
     } catch (e) {
         yield put({ type: GET_RESOURCE_TYPES_FAILURE, message: e.message })
     }

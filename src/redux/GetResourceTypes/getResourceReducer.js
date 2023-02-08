@@ -16,7 +16,7 @@ export const resourceTypeReducer = (state = resourceTypesInitialState, action) =
         case GET_RESOURCE_TYPES_SUCCESS: return {
             ...state,
             loading: false,
-            resource_types: action.data,
+            resource_types: action.result,
             error: '',
             added: true
         }

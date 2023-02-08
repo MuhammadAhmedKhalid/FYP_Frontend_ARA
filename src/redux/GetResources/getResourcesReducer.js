@@ -16,7 +16,7 @@ export const resourcesReducer = (state = getResourcesInitialState, action) => {
         case GET_RESOURCES_SUCCESS: return {
             ...state,
             loading: false,
-            resources: action.data,
+            resources: action.result,
             error: '',
             added: true
         }

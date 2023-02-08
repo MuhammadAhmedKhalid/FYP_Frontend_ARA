@@ -15,6 +15,7 @@ function AddObject(props) {
     const rooms = useSelector((state) => state.getRooms.rooms.data)
     const departments = useSelector((state) => state.getDepartments.departments.data)
     const departmentsAdded = useSelector((state) => state.getDepartments.added)
+    const institute_id = useSelector((state) => state.login.user.institute_id)
 
     const [roomsData, setRoomsData] = useState([])
 
@@ -23,7 +24,7 @@ function AddObject(props) {
         quantity: "",
         department_id: "",
         room_id: "",
-        
+        institute_id
     })
 
     useEffect(() => {
