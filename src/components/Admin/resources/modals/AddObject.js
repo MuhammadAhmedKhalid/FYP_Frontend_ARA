@@ -3,12 +3,14 @@ import Modal from 'react-modal'
 import TextField from '@material-ui/core/TextField'
 import InputAdornment from '@material-ui/core/InputAdornment'
 import EmojiObjectsIcon from '@mui/icons-material/EmojiObjects';
-import { useSelector } from 'react-redux'
-import axios from 'axios'
+import { useSelector, useDispatch } from 'react-redux'
+import { addObjectRequest } from '../../../../redux/AddObject/addObjectActions'
 
 function AddObject(props) {
 
     const { openObjectModal, setOpenObjectModal } = props
+
+    const dispatch = useDispatch()
 
     const rooms = useSelector((state) => state.getRooms.rooms.data)
     const departments = useSelector((state) => state.getDepartments.departments.data)
@@ -71,9 +73,7 @@ function AddObject(props) {
 
     const handleSubmit = (e) => {
         e.preventDefault()
-        axios.post('http://localhost:8080/addObject', object)
-            .then((response) => { console.log(response) })
-            .catch((error) => { console.log(error) })
+        dispatch(addObjectRequest(object))
         setOpenObjectModal(false)
     }
 
