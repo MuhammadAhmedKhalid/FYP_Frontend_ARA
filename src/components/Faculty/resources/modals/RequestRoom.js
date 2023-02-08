@@ -63,11 +63,11 @@ function RequestRoom(props) {
     }, [request.department_id])
 
     useEffect(() => {
-        if (requestAdded || requestSuccessfull) {
+        if ((requestAdded || requestSuccessfull) && institute_id > 0) {
             dispatch(getRoomRequest(institute_id))
             setRequestAdded(false)
         }
-    }, [requestAdded, requestSuccessfull])
+    }, [requestAdded, requestSuccessfull, institute_id])
 
     useEffect(() => {
         dispatch(getDepartmentsRequest(institute_id))

@@ -9,8 +9,10 @@ function* getDepartmentsRequest(data) {
         const headers = {
             'Authorization': `Bearer ${token}`
         };
-        let result = yield call(axios.get, `http://localhost:8080/departments/${data.query}`, { headers });
-        yield put({ type: GET_DEPARTEMNTS_SUCCESS, result })
+        if(data.query > 0){
+            let result = yield call(axios.get, `http://localhost:8080/departments/${data.query}`, { headers });
+            yield put({ type: GET_DEPARTEMNTS_SUCCESS, result })
+        }
     } catch (e) {
         yield put({ type: GET_DEPARTEMNTS_FAILURE, message: e.message })
     }

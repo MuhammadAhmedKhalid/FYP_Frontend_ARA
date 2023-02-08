@@ -32,8 +32,10 @@ function Departments() {
         setOpenDepartmentModal(true)
     }
     useEffect(() => {
-        dispatch(getDepartmentsRequest(institute_id))
-    }, [refresh])
+        if(institute_id > 0){
+            dispatch(getDepartmentsRequest(institute_id))
+        }
+    }, [refresh, institute_id])
 
     return (
         <div>
