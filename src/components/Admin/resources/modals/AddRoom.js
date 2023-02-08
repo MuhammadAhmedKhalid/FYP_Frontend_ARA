@@ -4,6 +4,7 @@ import { useSelector } from 'react-redux'
 import TextField from '@material-ui/core/TextField'
 import InputAdornment from '@material-ui/core/InputAdornment'
 import MeetingRoomIcon from '@mui/icons-material/MeetingRoom';
+import axios from 'axios'
 
 function AddRoom(props) {
 
@@ -11,10 +12,12 @@ function AddRoom(props) {
 
     const departments = useSelector((state) => state.getDepartments.departments.data)
     const departmentsAdded = useSelector((state) => state.getDepartments.added)
+    const institute_id = useSelector((state) => state.login.user.institute_id)
 
     const [room, setRoom] = useState({
         room_name: "",
-        department_id: ""
+        department_id: "",
+        institute_id
     })
 
     const customStyles = {
@@ -40,8 +43,11 @@ function AddRoom(props) {
 
     const handleSubmit = (e) => {
         e.preventDefault()
-        setOpenRoomModal(false)
         console.log(room)
+        axios.post('http://localhost:8080/add_room', room)
+            .then((response) => { console.log(response) })
+            .catch((error) => { console.log(error) })
+        setOpenRoomModal(false)
     }
 
     return (
