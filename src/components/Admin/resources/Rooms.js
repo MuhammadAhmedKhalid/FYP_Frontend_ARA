@@ -18,6 +18,7 @@ function Rooms() {
     const roomsAdded = useSelector((state) => state.getRooms.added)
     const departments = useSelector((state) => state.getDepartments.departments.data)
     const departmentsAdded = useSelector((state) => state.getDepartments.added)
+    const institute_id = useSelector((state) => state.login.user.institute_id)
 
     const openModal = () => {
         setOpenRoomModal(true)
@@ -29,7 +30,7 @@ function Rooms() {
                 for (let i = 0; i < departments.length; i++) {
                     for (let j = 0; j < rooms.length; j++) {
                         if (rooms[j].department_id === departments[i].department_id) {
-                            setRoomData(roomData => [...roomData, [rooms[j].name, departments[i].department_name]])
+                            setRoomData(roomData => [...roomData, [rooms[j].room_name, departments[i].department_name]])
                         }
                     }
                 }
@@ -38,9 +39,11 @@ function Rooms() {
     }, [rooms, departments])
 
     useEffect(() => {
-        dispatch(getRoomsRequest())
-        dispatch(getDepartmentsRequest())
-    }, [])
+        if(institute_id > 0){
+            dispatch(getRoomsRequest(institute_id))
+            dispatch(getDepartmentsRequest(institute_id))
+        }
+    }, [institute_id])
 
     return (
         <div>

@@ -67,11 +67,11 @@ function ObjectRequest(props) {
     }, [requestUnsuccessfullMsg])
 
     useEffect(() => {
-        if (requestAdded || requestSuccessfull) {
+        if ((requestAdded || requestSuccessfull) && institute_id > 0) {
             dispatch(getObjReqRequest(institute_id))
             setRequestAdded(false)
         }
-    }, [requestAdded, requestSuccessfull])
+    }, [requestAdded, requestSuccessfull, institute_id])
 
     useEffect(() => {
         if (departmentsAdded) {
@@ -89,12 +89,14 @@ function ObjectRequest(props) {
     }, [request.department_id])
 
     useEffect(() => {
-        dispatch(getDepartmentsRequest())
-        dispatch(getRoomsRequest())
+        if(institute_id > 0){
+            dispatch(getDepartmentsRequest(institute_id))
+            dispatch(getRoomsRequest(institute_id))
+        }
         dispatch(getResourceTypesRequest())
         dispatch(getResources())
         dispatch(getObjectsRequest())
-    }, [])
+    }, [institute_id])
 
     useEffect(() => {
         if (requestSuccessfull) {

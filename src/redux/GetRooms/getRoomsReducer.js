@@ -16,7 +16,7 @@ export const roomsReducer = (state = roomssInitialState, action) => {
         case GET_ROOMS_SUCCESS: return {
             ...state,
             loading: false,
-            rooms: action.data,
+            rooms: action.result,
             error: '',
             added: true
         }

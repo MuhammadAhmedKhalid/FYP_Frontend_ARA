@@ -2,14 +2,16 @@ import { GET_ROOMS_FAILURE, GET_ROOMS_REQUEST, GET_ROOMS_SUCCESS } from './getRo
 import { put, takeEvery, call, select } from 'redux-saga/effects'
 import axios from 'axios';
 
-function* getRoomsRequest() {
+function* getRoomsRequest(data) {
     try {
         const token = yield select(state => state.login.user.jwt);
         const headers = {
             'Authorization': `Bearer ${token}`
         };
-        let data = yield call(axios.get, 'http://localhost:8080/rooms', { headers });
-        yield put({ type: GET_ROOMS_SUCCESS, data })
+        if(data.query > 0){
+            let result = yield call(axios.get, `http://localhost:8080/rooms/${data.query}`, { headers });
+            yield put({ type: GET_ROOMS_SUCCESS, result })
+        }
     } catch (e) {
         yield put({ type: GET_ROOMS_FAILURE, message: e.message })
     }
