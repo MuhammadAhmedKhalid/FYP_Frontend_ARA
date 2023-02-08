@@ -16,6 +16,7 @@ import { getObjReqSaga } from './GetObjectRequests/getObjReqSaga'
 import { addObjRequestSaga } from './AddObjRequest/addObjRequestSaga'
 import { getObjectsSaga } from './GetObjects/getObjectsSaga'
 import { addDepartmentSaga } from './AddDepartment/addDepartmentSaga'
+import { addRoomSaga } from './AddRoom/addRoomSaga'
 
 export function* rootSaga() {
     yield fork(signupSaga)
@@ -35,4 +36,5 @@ export function* rootSaga() {
     yield fork(addObjRequestSaga)
     yield fork(getObjectsSaga)
     yield fork(addDepartmentSaga)
+    yield fork(addRoomSaga)
 }

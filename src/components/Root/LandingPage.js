@@ -14,16 +14,7 @@ const LandingPage = () => {
     const fac_ref = useRef(null);
     const hosp_ref = useRef(null);
     const off_ref = useRef(null);
-
-    // useEffect(() => {
-    //     axios.post('http://localhost:8080/add_department')
-    //         .then((response) => { console.log(response) })
-    //         .catch((error) => { console.log(error) })
-
-    //     axios.post('http://localhost:8080/add_room')
-    //         .then((response) => { console.log(response) })
-    //         .catch((error) => { console.log(error) })
-
+    
     //     axios.post('http://localhost:8080/addResourceType')
     //         .then((response) => { console.log(response) })
     //         .catch((error) => { console.log(error) })

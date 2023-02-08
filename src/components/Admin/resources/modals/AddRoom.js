@@ -1,14 +1,16 @@
 import React, { useState } from 'react'
 import Modal from 'react-modal'
-import { useSelector } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
 import TextField from '@material-ui/core/TextField'
 import InputAdornment from '@material-ui/core/InputAdornment'
 import MeetingRoomIcon from '@mui/icons-material/MeetingRoom';
-import axios from 'axios'
+import { addRoomRequest } from '../../../../redux/AddRoom/addRoomActions'
 
 function AddRoom(props) {
 
     const { openRoomModal, setOpenRoomModal } = props
+
+    const dispatch = useDispatch()
 
     const departments = useSelector((state) => state.getDepartments.departments.data)
     const departmentsAdded = useSelector((state) => state.getDepartments.added)
@@ -43,10 +45,7 @@ function AddRoom(props) {
 
     const handleSubmit = (e) => {
         e.preventDefault()
-        console.log(room)
-        axios.post('http://localhost:8080/add_room', room)
-            .then((response) => { console.log(response) })
-            .catch((error) => { console.log(error) })
+        dispatch(addRoomRequest(room))
         setOpenRoomModal(false)
     }
 
