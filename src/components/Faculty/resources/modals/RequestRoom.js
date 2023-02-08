@@ -54,7 +54,7 @@ function RequestRoom(props) {
                 for (let i = 0; i < rooms.length; i++) {
                     for (let j = 0; j < departments.length; j++) {
                         if (rooms[i].department_id === departments[j].department_id && departments[j].department_id === request.department_id) {
-                            setRoomsData(roomsData => [...roomsData, { id: rooms[i].room_id, name: rooms[i].name }])
+                            setRoomsData(roomsData => [...roomsData, { id: rooms[i].room_id, name: rooms[i].room_name }])
                         }
                     }
                 }
@@ -107,7 +107,7 @@ function RequestRoom(props) {
     const handleRoomChange = (event) => {
         const room_name = event.target.value
         for (let i = 0; i < rooms.length; i++) {
-            if (rooms[i].name === room_name) {
+            if (rooms[i].room_name === room_name) {
                 setRequest({ ...request, room_id: rooms[i].room_id })
             }
         }

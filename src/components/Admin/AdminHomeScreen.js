@@ -15,7 +15,7 @@ function AdminHomeScreen() {
     const [greetings, setGreetings] = useState("")
     const adminName = useSelector((state) => state.login.user.name)
     const instituteName = useSelector((state) => state.login.user.institute_name)
-    const institute_name = useSelector((state) => state.institute.institute_name)
+    const institute_name = useSelector((state) => state.institute.institute.institute_name)
     const institutes = useSelector((state) => state.getInstitutes.institutes.data)
     const isInstitutesAdded = useSelector((state) => state.getInstitutes.added)
     const admin_id = useSelector((state) => state.login.user.user_id)

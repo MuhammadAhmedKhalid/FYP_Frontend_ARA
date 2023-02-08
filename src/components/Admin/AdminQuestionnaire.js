@@ -11,6 +11,7 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from 'react-redux'
 import { addInstituteRequest } from '../../redux/AddInstitute/instituteActions'
 import { getInstitutesRequest } from '../../redux/GetInstitutes/getInstitutesActions'
+import { resetIdRequest } from '../../redux/Login/loginActions'
 
 function AdminQuestionnaire(props) {
 
@@ -20,10 +21,13 @@ function AdminQuestionnaire(props) {
     const dispatch = useDispatch()
 
     const instituteAdded = useSelector((state) => state.institute.added)
+    const institute_id = useSelector((state) => state.institute.institute.institute_id)
+    const institute_name = useSelector((state) => state.institute.institute.institute_name)
     const admin_id = useSelector((state) => state.login.user.user_id)
 
     useEffect(() => {
         if (instituteAdded) {
+            dispatch(resetIdRequest(institute_id, institute_name))
             dispatch(getInstitutesRequest())
             navigate('/admin')
         }

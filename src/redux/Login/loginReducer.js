@@ -1,4 +1,4 @@
-import { LOGIN_REQUEST, LOGIN_SUCCESS, LOGIN_FAILURE, LOGOUT_REQUEST } from "./loginTypes"
+import { LOGIN_REQUEST, LOGIN_SUCCESS, LOGIN_FAILURE, LOGOUT_REQUEST, RESET_ID_REQUEST } from "./loginTypes"
 
 export const loginInitialState = {
     loading: false,
@@ -12,8 +12,8 @@ export const loginInitialState = {
 	    jwt:'',
 	    name:'',
 	    institute_name:'',
-	 institute_id:0,
-	 is_admin:false
+	    institute_id:0,
+	    is_admin:false
     }
 }
 
@@ -48,6 +48,14 @@ export const loginReducer = (state = loginInitialState, action) => {
             isLoggedIn: false,
             user: null,
             loginFailed: false,
+        }
+        case RESET_ID_REQUEST: return {
+            ...state,
+            user : {
+                ...state.user,
+                institute_id: action.id,
+                institute_name: action.name
+            }
         }
         default: return state
     }

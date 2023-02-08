@@ -26,7 +26,7 @@ function Rooms() {
 
     useEffect(() => {
         if (departmentsAdded) {
-            if (rooms.length !== 0 && departments.length !== 0 && roomData.length === 0) {
+            if (rooms !== undefined && departments !== undefined && roomData.length === 0) {
                 for (let i = 0; i < departments.length; i++) {
                     for (let j = 0; j < rooms.length; j++) {
                         if (rooms[j].department_id === departments[i].department_id) {
