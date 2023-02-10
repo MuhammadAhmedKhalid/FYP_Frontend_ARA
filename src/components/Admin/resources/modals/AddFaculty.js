@@ -7,6 +7,7 @@ import CallIcon from '@mui/icons-material/Call';
 import EmailIcon from '@mui/icons-material/Email';
 import { useSelector, useDispatch } from 'react-redux'
 import { addFacultyRequest } from '../../../../redux/AddFaculty/addFacultyActions';
+import { getDepartmentsRequest } from '../../../../redux/GetDepartments/getDepartmentsActions'
 
 function AddFaculty(props) {
 
@@ -16,12 +17,15 @@ function AddFaculty(props) {
     const admin_id = useSelector((state) => state.login.user.user_id)
     const institutes = useSelector((state) => state.getInstitutes.institutes.data)
     const isInstitutesAdded = useSelector((state) => state.getInstitutes.added)
+    const departments = useSelector((state) => state.getDepartments.departments.data)
+    const departmentsAdded = useSelector((state) => state.getDepartments.added)
+    const institute_id = useSelector((state) => state.login.user.institute_id)
 
     const [faculty, setFaculty] = useState({
         name: "",
         phone_number: "",
         officialEmailAddress: "",
-        department: "software engineering",
+        department: "",
         specialization: "cloud computing",
         designation: "lecturer",
         institute_id: "",
@@ -31,6 +35,13 @@ function AddFaculty(props) {
             "email": ""
         }
     })
+
+    useEffect(() => {
+        if(institute_id > 0){
+            dispatch(getDepartmentsRequest(institute_id))
+        }
+    }, [institute_id])
+
 
     useEffect(() => {
         if (isInstitutesAdded && institutes.length !== 0) {
@@ -105,21 +116,17 @@ function AddFaculty(props) {
                         <h3 style={{
                             fontWeight: 'normal', color: 'gray', marginRight: '3px'
                         }}>Department</h3>
-                        <select value={faculty.department} onChange={(e) => setFaculty({ ...faculty, department: e.target.value })} className='dropdown'>
-                            <option value="software engineering">Software Engineering</option>
-                            <option value="civil engineering">Civil Engineering</option>
-                            <option value="urban and infrastructure engineering">Urban and Infrastructure Engineering</option>
-                            <option value="petroleum engineering">Petroleum Engineering</option>
-                            <option value="mechanical engineering">Mechanical Engineering</option>
-                            <option value="textile engineering">Textile Engineering</option>
-                            <option value="electrical engineering">Electrical Engineering</option>
-                            <option value="telecommunications engineering">Telecommunication Engineering</option>
-                            <option value="chemical engineering">Chemical Engineering</option>
+                        <select required value={faculty.department} onChange={(e) => setFaculty({ ...faculty, department: e.target.value })} className='dropdown'>
+                            <option></option>
+                            {
+                                departmentsAdded && departments.length !== 0 ? departments.map(department =>
+                                    <option key={department.department_id}>{department.department_name}</option>) : null
+                            }
                         </select>
                         <h3 style={{
                             fontWeight: 'normal', color: 'gray', marginRight: '3px'
                         }}>Specialization</h3>
-                        <select value={faculty.specialization} onChange={(e) => setFaculty({ ...faculty, specialization: e.target.value })} className='dropdown'>
+                        <select required value={faculty.specialization} onChange={(e) => setFaculty({ ...faculty, specialization: e.target.value })} className='dropdown'>
                             <option value="cloud computing">Cloud Computing</option>
                             <option value="software project management">Software Project Management</option>
                             <option value="human computer interaction">Human Computer Interaction</option>
@@ -131,7 +138,7 @@ function AddFaculty(props) {
                         <h3 style={{
                             fontWeight: 'normal', color: 'gray', marginRight: '3px'
                         }}>Designation</h3>
-                        <select value={faculty.designation} onChange={(e) => setFaculty({ ...faculty, designation: e.target.value })} className='dropdown'>
+                        <select required value={faculty.designation} onChange={(e) => setFaculty({ ...faculty, designation: e.target.value })} className='dropdown'>
                             <option value="lecturer">Lecturer</option>
                             <option value="instructor">Instructor</option>
                             <option value="assistant professor">Assistant Professor</option>
