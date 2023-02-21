@@ -18,6 +18,7 @@ import { objectsReducer } from './GetObjects/getObjectsReducer'
 import { addDepartmentReducer } from './AddDepartment/addDepartmentReducer'
 import { addRoomReducer } from './AddRoom/addRoomReducer'
 import { addObjectReducer } from './AddObject/addObjectReducer'
+import { addPositionReducer } from './AddPosition/addPositionReducer'
 
 export const rootReducer = combineReducers({
     signup: signupReducer,
@@ -39,4 +40,5 @@ export const rootReducer = combineReducers({
     addDepartmentReducer,
     addRoomReducer,
     addObjectReducer,
+    addPositionReducer,
 })
