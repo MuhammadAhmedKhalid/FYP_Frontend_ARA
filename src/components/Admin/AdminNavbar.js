@@ -72,6 +72,16 @@ const AdminNavBar = () => {
                         name: 'Faculty',
                         value: 'faculty',
                         path: '/faculty'
+                    },
+                    {
+                        name: 'Position',
+                        value: 'position',
+                        path: '/positions'
+                    },
+                    {
+                        name: 'Specialization',
+                        value: 'specialization',
+                        path: '/specializations'
                     }]} />
                     <li> <NavLink onClick={handleLogout}>Logout</NavLink></li>
                 </ul >
