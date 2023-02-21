@@ -2,11 +2,13 @@ import React, { useState } from 'react'
 import AdminNavBar from '../AdminNavbar'
 import AdminIcon from '../AdminIcon'
 import AddPosition from './modals/AddPosition'
+import Table from '../../Root/Table'
 
 function Positions() {
 
     const [openPositionModal, setOpenPositionModal] = useState(false)
     const [refresh, setRefresh] = useState(false)
+    const [rowData, setRowData] = useState([])
 
     const openModal = () => {
         setOpenPositionModal(true)
@@ -22,8 +24,13 @@ function Positions() {
                     <button className='modal-btn-w' onClick={openModal}>ADD POSITION</button>
                 </div>
                 <div style={{ marginTop: '30px' }} className='center'>
-                    <h2 style={{ color: '#0E5E6F' }}>POSITIONS</h2>
+                    <h2 style={{ color: '#0E5E6F' }}>POSITIONS LIST</h2>
                 </div>
+                <center>
+                    {
+                        <Table columns={['No.', 'Position']} rows={rowData}/>
+                    }
+                </center>
             </div>
         </div>
         <div>
