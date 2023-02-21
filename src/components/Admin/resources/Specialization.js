@@ -15,20 +15,20 @@ function Specialization() {
   return (
     <div>
         <div className="flexbox-container-y white-bg-y">
-                <div>
-                    <AdminNavBar />
-                    <AdminIcon />
-                    <div style={{ marginTop: '30px' }} className='center'>
-                        <button className='modal-btn-w' onClick={openModal}>ADD SPECIALIZATION</button>
-                    </div>
-                    <div style={{ marginTop: '30px' }} className='center'>
-                        <h2 style={{ color: '#0E5E6F' }}>SPECIALIZATIONS</h2>
-                    </div>
+            <div>
+                <AdminNavBar />
+                <AdminIcon />
+                <div style={{ marginTop: '30px' }} className='center'>
+                    <button className='modal-btn-w' onClick={openModal}>ADD SPECIALIZATION</button>
+                </div>
+                <div style={{ marginTop: '30px' }} className='center'>
+                    <h2 style={{ color: '#0E5E6F' }}>SPECIALIZATIONS</h2>
                 </div>
             </div>
-            <div>
-                <AddSpecialization openSpecializationModal={openSpecializationModal} setOpenSpecializationModal={setOpenSpecializationModal} setRefresh={setRefresh} />
-            </div>
+        </div>
+        <div>
+            <AddSpecialization openSpecializationModal={openSpecializationModal} setOpenSpecializationModal={setOpenSpecializationModal} setRefresh={setRefresh} />
+        </div>
     </div>
   )
 }
