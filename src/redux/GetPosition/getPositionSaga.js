@@ -19,6 +19,6 @@ function* getPositionRequest(data) {
     }
 }
 
-export function* getFacultySaga() {
+export function* getPositionSaga() {
     yield takeEvery(GET_POSITION_REQUEST, getPositionRequest)
 }
