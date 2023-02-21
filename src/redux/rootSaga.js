@@ -19,6 +19,7 @@ import { addDepartmentSaga } from './AddDepartment/addDepartmentSaga'
 import { addRoomSaga } from './AddRoom/addRoomSaga'
 import { addObjectSaga } from './AddObject/addObjectSaga'
 import { addPositionSaga } from './AddPosition/addPositionSaga'
+import { addSpecializationSaga } from './AddSpecialization/addSpecializationSaga'
 
 export function* rootSaga() {
     yield fork(signupSaga)
@@ -41,4 +42,5 @@ export function* rootSaga() {
     yield fork(addRoomSaga)
     yield fork(addObjectSaga)
     yield fork(addPositionSaga)
+    yield fork(addSpecializationSaga)
 }
