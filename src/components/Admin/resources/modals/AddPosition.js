@@ -3,16 +3,19 @@ import Modal from 'react-modal'
 import TextField from '@material-ui/core/TextField'
 import MilitaryTechIcon from '@mui/icons-material/MilitaryTech';
 import InputAdornment from '@material-ui/core/InputAdornment'
-import { useSelector } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
+import { addPositionRequest } from '../../../../redux/AddPosition/addPositionActions'
 
 function AddPosition(props) {
 
     const { openPositionModal, setOpenPositionModal, setRefresh } = props
 
+    const dispatch = useDispatch()
+
     const institute_id = useSelector((state) => state.login.user.institute_id)
 
     const [position, setPosition] = useState({
-        position_name: " ",
+        position_name: "",
         institute_id
     })
 
@@ -31,8 +34,8 @@ function AddPosition(props) {
     const submitHandler = (event) => {
         event.preventDefault()
         setOpenPositionModal(false)
+        dispatch(addPositionRequest(position))
         setRefresh(true)
-        console.log(position)
     }
 
     return (

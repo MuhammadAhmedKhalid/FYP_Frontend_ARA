@@ -2,7 +2,7 @@ import { GET_SPECIALIZATION_FAILURE, GET_SPECIALIZATION_REQUEST, GET_SPECIALIZAT
 
 const getSpecializationInitialState = {
     loading: false,
-    faculty: [],
+    specializations: [],
     error: '',
     added: false
 }
@@ -16,14 +16,14 @@ export const getSpecializationReducer = (state = getSpecializationInitialState, 
         case GET_SPECIALIZATION_SUCCESS: return {
             ...state,
             loading: false,
-            faculty: action.data,
+            specializations: action.data,
             error: '',
             added: true
         }
         case GET_SPECIALIZATION_FAILURE: return {
             ...state,
             loading: false,
-            faculty: [],
+            specializations: [],
             error: action.message,
             added: false
         }

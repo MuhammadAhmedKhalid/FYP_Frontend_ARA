@@ -2,7 +2,7 @@ import { GET_POSITION_FAILURE, GET_POSITION_REQUEST, GET_POSITION_SUCCESS } from
 
 const getPositionInitialState = {
     loading: false,
-    faculty: [],
+    positions: [],
     error: '',
     added: false
 }
@@ -16,14 +16,14 @@ export const getPositionReducer = (state = getPositionInitialState, action) => {
         case GET_POSITION_SUCCESS: return {
             ...state,
             loading: false,
-            faculty: action.data,
+            positions: action.data,
             error: '',
             added: true
         }
         case GET_POSITION_FAILURE: return {
             ...state,
             loading: false,
-            faculty: [],
+            positions: [],
             error: action.message,
             added: false
         }

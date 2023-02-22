@@ -1,14 +1,38 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import AdminNavBar from '../AdminNavbar'
 import AdminIcon from '../AdminIcon'
 import AddPosition from './modals/AddPosition'
 import Table from '../../Root/Table'
+import { useSelector, useDispatch } from 'react-redux'
+import { getPositionRequest } from '../../../redux/GetPosition/getPositionActions'
 
 function Positions() {
 
+    const dispatch = useDispatch()
+
     const [openPositionModal, setOpenPositionModal] = useState(false)
     const [refresh, setRefresh] = useState(false)
+   
+    const positions = useSelector((state) => state.getPositionReducer.positions)
+    const positionsAdded = useSelector((state) => state.getPositionReducer.added)
+    const institute_name = useSelector((state) => state.login.user.institute_name)
+    const institute_id = useSelector((state) => state.login.user.institute_id)
+
     const [rowData, setRowData] = useState([])
+
+    useEffect(()=>{
+        if(positionsAdded && rowData.length !== positions.length){
+            for(let i=0; i<positions.length; i++){
+                rowData.push([positions[i].position_name, institute_name])
+            }
+        }
+    }, [positionsAdded])
+
+    useEffect(()=>{
+        if(institute_id > 0){
+            dispatch(getPositionRequest(institute_id))
+        }
+    },[refresh, institute_id])
 
     const openModal = () => {
         setOpenPositionModal(true)
@@ -28,7 +52,7 @@ function Positions() {
                 </div>
                 <center>
                     {
-                        <Table columns={['No.', 'Position']} rows={rowData}/>
+                        positionsAdded && <Table columns={['No.', 'Position', 'Institute']} rows={rowData}/>
                     }
                 </center>
             </div>
