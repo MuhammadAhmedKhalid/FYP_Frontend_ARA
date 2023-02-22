@@ -5,6 +5,7 @@ import TextField from '@material-ui/core/TextField'
 import InputAdornment from '@material-ui/core/InputAdornment'
 import { useSelector, useDispatch } from 'react-redux'
 import { getDepartmentsRequest } from '../../../../redux/GetDepartments/getDepartmentsActions'
+import { addSpecializationRequest } from '../../../../redux/AddSpecialization/addSpecializationActions'
 
 function AddSpecialization(props) {
 
@@ -17,7 +18,7 @@ function AddSpecialization(props) {
     const departmentsAdded = useSelector((state) => state.getDepartments.added)
 
     const [specialization, setSpecialization] = useState({
-        specialization_name: " ",
+        specialization_name: "",
         department_id: " ",
         institute_id
     })
@@ -52,8 +53,8 @@ function AddSpecialization(props) {
     const submitHandler = (event) => {
         event.preventDefault()
         setOpenSpecializationModal(false)
+        dispatch(addSpecializationRequest(specialization))
         setRefresh(true)
-        console.log(specialization)
     }
 
     return (
@@ -66,7 +67,9 @@ function AddSpecialization(props) {
                 <div className='center flexbox-container-y'>
                     <h2 style={{ color: "#115868", fontSize: 20 }}>Add Specialization</h2>
                     <form onSubmit={submitHandler}>
-                    <TextField required autoFocus value={specialization.specialization_name} onChange={(e) => setSpecialization({ ...specialization, specialization_name: e.target.value })}
+                    <TextField required autoFocus 
+                            value={specialization.specialization_name} 
+                            onChange={(e) => setSpecialization({ ...specialization, specialization_name: e.target.value })}
                             style={{ margin: '3px' }} size='small' variant="outlined" type='text' placeholder='Specialization Name' InputProps={{
                                 startAdornment: (
                                     <InputAdornment position='start'>
