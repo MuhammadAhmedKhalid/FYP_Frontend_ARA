@@ -8,6 +8,8 @@ import EmailIcon from '@mui/icons-material/Email';
 import { useSelector, useDispatch } from 'react-redux'
 import { addFacultyRequest } from '../../../../redux/AddFaculty/addFacultyActions';
 import { getDepartmentsRequest } from '../../../../redux/GetDepartments/getDepartmentsActions'
+import { getSpecializationRequest } from '../../../../redux/GetSpecialization/getSpecializationActions'
+import { getPositionRequest } from '../../../../redux/GetPosition/getPositionActions'
 
 function AddFaculty(props) {
 
@@ -19,7 +21,12 @@ function AddFaculty(props) {
     const isInstitutesAdded = useSelector((state) => state.getInstitutes.added)
     const departments = useSelector((state) => state.getDepartments.departments.data)
     const departmentsAdded = useSelector((state) => state.getDepartments.added)
+    const positions = useSelector((state) => state.getPositionReducer.positions)
+    const positionsAdded = useSelector((state) => state.getPositionReducer.added)
+    const specializations = useSelector((state) => state.getSpecializationReducer.specializations)
+    const specializationsAdded = useSelector((state) => state.getSpecializationReducer.added)
     const institute_id = useSelector((state) => state.login.user.institute_id)
+    const [specializationData, setSpecializationData] = useState([])
 
     const [faculty, setFaculty] = useState({
         name: "",
@@ -39,6 +46,8 @@ function AddFaculty(props) {
     useEffect(() => {
         if(institute_id > 0){
             dispatch(getDepartmentsRequest(institute_id))
+            dispatch(getPositionRequest(institute_id))
+            dispatch(getSpecializationRequest(institute_id))
         }
     }, [institute_id])
 
@@ -56,6 +65,22 @@ function AddFaculty(props) {
     useEffect(() => {
         setRefresh(false)
     })
+
+    useEffect(()=>{
+        if(departmentsAdded){
+            if (specializations !== undefined && departments !== undefined) {
+                setSpecializationData([])
+                for (let i = 0; i < specializations.length; i++) {
+                    for (let j = 0; j < departments.length; j++) {
+                        if (specializations[i].department_id === departments[j].department_id && departments[j].department_name === faculty.department) {
+                            setSpecializationData(specializationData => 
+                                [...specializationData, { id: specializations[i].specialization_id, name: specializations[i].specialization_name }])
+                        }
+                    }
+                }
+            }
+        }
+    }, [faculty.department])
 
     const customStyles = {
         overlay: {
@@ -115,6 +140,16 @@ function AddFaculty(props) {
                             }} />
                         <h3 style={{
                             fontWeight: 'normal', color: 'gray', marginRight: '3px'
+                        }}>Designation</h3>
+                        <select required value={faculty.designation} onChange={(e) => setFaculty({ ...faculty, designation: e.target.value })} className='dropdown'>
+                            <option></option>
+                            {
+                                positionsAdded && positions.length !== 0 ? positions.map(position =>
+                                    <option key={position.position_id}>{position.position_name}</option>) : null
+                            }
+                        </select>
+                        <h3 style={{
+                            fontWeight: 'normal', color: 'gray', marginRight: '3px'
                         }}>Department</h3>
                         <select required value={faculty.department} onChange={(e) => setFaculty({ ...faculty, department: e.target.value })} className='dropdown'>
                             <option></option>
@@ -127,25 +162,11 @@ function AddFaculty(props) {
                             fontWeight: 'normal', color: 'gray', marginRight: '3px'
                         }}>Specialization</h3>
                         <select required value={faculty.specialization} onChange={(e) => setFaculty({ ...faculty, specialization: e.target.value })} className='dropdown'>
-                            <option value="cloud computing">Cloud Computing</option>
-                            <option value="software project management">Software Project Management</option>
-                            <option value="human computer interaction">Human Computer Interaction</option>
-                            <option value="e-commerce">E-Commerce</option>
-                            <option value="marketing">Marketing</option>
-                            <option value="programming fundamentals">Programming Fundamentals</option>
-                            <option value="introduction to software engineering">Introduction to Software Engineering</option>
-                        </select>
-                        <h3 style={{
-                            fontWeight: 'normal', color: 'gray', marginRight: '3px'
-                        }}>Designation</h3>
-                        <select required value={faculty.designation} onChange={(e) => setFaculty({ ...faculty, designation: e.target.value })} className='dropdown'>
-                            <option value="lecturer">Lecturer</option>
-                            <option value="instructor">Instructor</option>
-                            <option value="assistant professor">Assistant Professor</option>
-                            <option value="associate professor">Associate Professor</option>
-                            <option value="professor">Professor</option>
-                            <option value="research">Research Associate</option>
-                            <option value="lab engineer">Lab Engineer</option>
+                            <option></option>
+                            {
+                                specializationData.length !== 0 ? specializationData.map(specialization =>
+                                    <option key={specialization.id}>{specialization.name}</option>) : null
+                            }
                         </select>
                         <div className='center flexbox-container-y'>
                             <button style={{ marginTop: '1rem' }} type='submit' className='modal-btn'>Add</button>

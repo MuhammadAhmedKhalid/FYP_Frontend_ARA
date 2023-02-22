@@ -36,6 +36,7 @@ function Specialization() {
 
     useEffect(()=>{
         if(institute_id > 0){
+            dispatch(getDepartmentsRequest(institute_id))
             dispatch(getSpecializationRequest(institute_id))
         }
     }, [refresh, institute_id])
