@@ -71,7 +71,7 @@ function RequestRoom(props) {
 
     useEffect(() => {
         dispatch(getDepartmentsRequest(institute_id))
-        dispatch(getRoomsRequest())
+        dispatch(getRoomsRequest(institute_id))
     }, [institute_id])
 
     const handleDateChange = (newValue) => {

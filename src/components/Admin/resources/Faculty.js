@@ -15,7 +15,7 @@ function Faculty() {
     const dispatch = useDispatch()
 
     const faculty = useSelector((state) => state.getFaculty.faculty)
-    const facultyAdded = useSelector((state) => state.getFaculty.added);
+    const facultyAdded = useSelector((state) => state.getFaculty.added)
     const institutes = useSelector((state) => state.getInstitutes.institutes.data)
     const isInstitutesAdded = useSelector((state) => state.getInstitutes.added)
     const admin_id = useSelector((state) => state.login.user.user_id)
