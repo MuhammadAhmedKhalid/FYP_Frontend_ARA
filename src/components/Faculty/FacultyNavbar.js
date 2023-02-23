@@ -41,12 +41,6 @@ const AdminNavBar = () => {
     }
     window.addEventListener("scroll", changeColor);
 
-    // const [openLeaveModal, setLeaveModal] = useState(false)
-    // const openModal1 = () => {
-    //     setLeaveModal(true)
-    //     console.log(openLeaveModal)
-    // }
-
     return (
         <div>
             <div className={color ? 'header header-bg' : 'header'}>
@@ -68,6 +62,11 @@ const AdminNavBar = () => {
                     {
                         name: 'Request Room',
                         value: 'request room',
+                        onClick: true
+                    },
+                    {
+                        name: 'Staff Request',
+                        value: 'staff request',
                         onClick: true
                     }]} />
                     <li> <NavLink to='/update-profile'>Update Profile</NavLink></li>

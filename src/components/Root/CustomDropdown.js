@@ -4,6 +4,7 @@ import '../Styling/CustomDropdownStyles.css'
 import AddLeave from '../Faculty/resources/modals/AddLeave'
 import ObjectRequest from '../Faculty/resources/modals/ObjectRequest'
 import RequestRoom from '../Faculty/resources/modals/RequestRoom'
+import StaffRequest from '../Faculty/resources/modals/StaffRequest'
 
 function CustomDropdown(props) {
     const { items } = props
@@ -24,6 +25,7 @@ function CustomDropdown(props) {
     const [openLeaveModal, setLeaveModal] = useState(false)
     const [openObjectModal, setObjectModal] = useState(false)
     const [openRoomModal, setRoomModal] = useState(false)
+    const [openStaffModal, setStaffModal] = useState(false)
 
     const clicked = (item) => {
         switch (item.value) {
@@ -35,6 +37,9 @@ function CustomDropdown(props) {
                 break
             case 'request room':
                 setRoomModal(true)
+                break
+            case 'staff request':
+                setStaffModal(true)
                 break
             default:
                 break
@@ -86,6 +91,9 @@ function CustomDropdown(props) {
             </div>
             <div>
                 <RequestRoom openRoomModal={openRoomModal} setRoomModal={setRoomModal} />
+            </div>
+            <div>
+                <StaffRequest openStaffModal={openStaffModal} setStaffModal={setStaffModal} />
             </div>
         </div>
     )
