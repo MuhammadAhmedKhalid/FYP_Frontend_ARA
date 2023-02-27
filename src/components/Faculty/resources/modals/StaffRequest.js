@@ -14,6 +14,8 @@ import TextField from '@material-ui/core/TextField'
 import { Alert } from '@mui/material';
 import { getFacultyRequest } from '../../../../redux/GetFaculty/getFacultyActions'
 import { addRequestedStaff } from '../../../../redux/AddStaffRequest/staffRequestActions'
+import { getStaffRequest } from '../../../../redux/GetStaffRequest/getStaffReqActions'
+import { checkConflict } from '../../utils'
 
 function StaffRequest(props) {
 
@@ -29,12 +31,15 @@ function StaffRequest(props) {
     const roomsAdded = useSelector((state) => state.getRooms.added)
     const faculty = useSelector((state) => state.getFaculty.faculty)
     const facultyAdded = useSelector((state) => state.getFaculty.added)
+    const requestedStaff = useSelector((state) => state.staffReqReducer.staff_req.data)
+    const requestSuccessfull = useSelector((state) => state.addStaffReqeReducer.added)
 
     const [value, setValue] = useState(dayjs(new Date()));
     const [value1, setValue1] = useState(dayjs(new Date()));
     const [showError, setShowError] = useState(false);
     const [roomsData, setRoomsData] = useState([])
     const [facultyData, setFacultyData] = useState([])
+    const [requestAdded, setRequestAdded] = useState(true);
 
     const [request, setRequest] = useState({
         department_id: '',
@@ -46,6 +51,14 @@ function StaffRequest(props) {
         startTime: format(new Date(), 'HH:mm'),
         endTime: format(new Date(), 'HH:mm')
     })
+
+    useEffect(()=>{
+        if ((requestAdded || requestSuccessfull) && institute_id > 0) {
+            dispatch(getStaffRequest(institute_id))
+            setRequestAdded(false)
+        }
+    }, [requestAdded, requestSuccessfull, institute_id])
+
 
     useEffect(()=>{
         if(institute_id > 0){
@@ -151,17 +164,58 @@ function StaffRequest(props) {
 
     const closeModal = () => {
         setStaffModal(false)
+        setShowError(false)
     }
 
     const onKeyDown = (e) => {
         e.preventDefault();
     };
 
-    const handleForm = (e) => {
-        e.preventDefault();
+    const addStaffRequest = () => {
         setStaffModal(false)
         alert("Operation performed successfully!")
         dispatch(addRequestedStaff(request))
+        if (requestSuccessfull) {
+            setRequestAdded(true)
+            setShowError(false)
+        }
+    }
+
+    const handleForm = (e) => {
+        let conflict = false;
+        e.preventDefault();
+        
+        if(requestedStaff.length === 0){
+            addStaffRequest()
+        } else {
+            for (let i = 0; i < requestedStaff.length; i++) {
+
+                var startTime = new Date();
+                var endTime = new Date();
+                var requestStartTime = new Date();
+                var requestEndTime = new Date();
+
+                startTime.setHours(requestedStaff[i].startTime.substring(0, 2), requestedStaff[i].startTime.substring(3), 0, 0);
+                endTime.setHours(requestedStaff[i].endTime.substring(0, 2), requestedStaff[i].endTime.substring(3), 0, 0);
+                requestStartTime.setHours(request.startTime.substring(0, 2), request.startTime.substring(3), 0, 0);
+                requestEndTime.setHours(request.endTime.substring(0, 2), request.endTime.substring(3), 0, 0);
+
+                conflict = checkConflict(requestedStaff[i].requested_faculty_id, request.requested_faculty_id, requestedStaff[i].date, request.date,
+                    requestStartTime, startTime, requestEndTime, endTime,
+                    requestStartTime.getTime(), startTime.getTime(), requestEndTime.getTime(), endTime.getTime())
+
+                if (conflict) {
+                    setShowError(true)
+                    break
+                }
+
+            }
+            if (!conflict) {
+                addStaffRequest()
+                conflict = false
+            }
+        }
+
     }
 
     return (
@@ -228,6 +282,11 @@ function StaffRequest(props) {
                                             variant="outlined" />} />
                                 </Stack>
                             </LocalizationProvider>
+                        </div>
+                        <div>
+                            {
+                                showError && <Alert style={{ marginTop: '12px' }} severity="error">Faculty member is not available between this interval.</Alert>
+                            }
                         </div>
                         <div className='center flexbox-container-y'>
                             <button style={{ marginTop: '1rem' }} type='submit' className='modal-btn'>Save</button>
