@@ -13,6 +13,7 @@ import { TimePicker } from '@mui/x-date-pickers/TimePicker';
 import TextField from '@material-ui/core/TextField'
 import { Alert } from '@mui/material';
 import { getFacultyRequest } from '../../../../redux/GetFaculty/getFacultyActions'
+import { addRequestedStaff } from '../../../../redux/AddStaffRequest/staffRequestActions'
 
 function StaffRequest(props) {
 
@@ -156,11 +157,12 @@ function StaffRequest(props) {
         e.preventDefault();
     };
 
-     const handleForm = (e) => {
+    const handleForm = (e) => {
         e.preventDefault();
         setStaffModal(false)
-        console.log(request)
-     }
+        alert("Operation performed successfully!")
+        dispatch(addRequestedStaff(request))
+    }
 
     return (
         <div>
