@@ -22,6 +22,7 @@ import { addPositionReducer } from './AddPosition/addPositionReducer'
 import { addSpecializationReducer } from './AddSpecialization/addSpecializationReducer'
 import { getPositionReducer } from './GetPosition/getPositionReducer'
 import { getSpecializationReducer } from './GetSpecialization/getSpecializationReducer'
+import { addStaffReqeReducer } from './AddStaffRequest/staffRequestReducer'
 
 export const rootReducer = combineReducers({
     signup: signupReducer,
@@ -47,4 +48,5 @@ export const rootReducer = combineReducers({
     addSpecializationReducer,
     getPositionReducer,
     getSpecializationReducer,
+    addStaffReqeReducer,
 })
