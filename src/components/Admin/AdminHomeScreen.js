@@ -106,7 +106,7 @@ function AdminHomeScreen() {
                         <FullCalendar
                             messages={{ next: '>', previous: '<', today: 'Current' }}
                             views={['month']}
-                            style={{ height: 350, width: 450, padding: '15px' }}
+                            style={{ height: 280, width: 450, padding: '15px' }}
                         />
                     </div>
                 </div>

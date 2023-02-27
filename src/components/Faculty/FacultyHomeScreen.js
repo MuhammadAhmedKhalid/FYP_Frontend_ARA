@@ -64,10 +64,45 @@ function FacultyHomeScreen() {
                         <FullCalendar
                             messages={{ next: '>', previous: '<', today: 'Current' }}
                             views={['week', 'day']}
-                            style={{ height: 350, width: 700, padding: '15px' }}
+                            style={{ height: 280, width: 700, padding: '15px' }}
                             defaultView="week"
                         />
                     </div>
+                </div>
+                <div style={{ marginTop: '25px', marginLeft: '25px' }}>
+                    <h3 style={{ fontWeight: 'revert', color: 'black' }}>Request Applied For: </h3>
+                </div>
+                <div style={{
+                        width: '98%',
+                        height: 238,
+                        borderRadius: 15,
+                        margin: '15px',
+                        border: '2px solid black'
+                    }}>
+                        <div className="grid-container">
+                            <div className="col">
+                                <p>Leave Request</p>
+                                <div className="col-data" style={{marginTop: '10px'}}>
+                                    <div className='align'>
+                                        <div className="circle">
+                                            R
+                                        </div>
+                                        <div style={{marginLeft: '15px'}}>
+                                            <h5>Projector</h5>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="col">
+                                <p>Object Request</p>
+                            </div>
+                            <div className="col">
+                                <p>Room Request</p>
+                            </div>
+                            <div className="col">
+                                <p>Staff Request</p>
+                            </div>
+                        </div>
                 </div>
             </div>
         </div>
