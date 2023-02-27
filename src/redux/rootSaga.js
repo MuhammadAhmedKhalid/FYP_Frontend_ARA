@@ -23,6 +23,7 @@ import { addSpecializationSaga } from './AddSpecialization/addSpecializationSaga
 import { getPositionSaga } from './GetPosition/getPositionSaga'
 import { getSpecializationSaga } from './GetSpecialization/getSpecializationSaga'
 import { addStaffRequestSaga } from './AddStaffRequest/staffRequestSaga'
+import { getStaffReqSaga } from './GetStaffRequest/getStaffReqSaga'
 
 export function* rootSaga() {
     yield fork(signupSaga)
@@ -49,4 +50,5 @@ export function* rootSaga() {
     yield fork(getPositionSaga)
     yield fork(getSpecializationSaga)
     yield fork(addStaffRequestSaga)
+    yield fork(getStaffReqSaga)
 }
