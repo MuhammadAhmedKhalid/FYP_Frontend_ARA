@@ -29,6 +29,8 @@ function RequestedData() {
     const departmentsAdded = useSelector((state) => state.getDepartments.added)
     const faculty = useSelector((state) => state.getFaculty.faculty)
     const facultyAdded = useSelector((state) => state.getFaculty.added)
+    const user_id = useSelector((state) => state.login.user.user_id)
+    const isAdmin = useSelector((state) => state.login.user._admin)
 
     useEffect(()=>{
         if(institute_id > 0){
@@ -72,7 +74,8 @@ function RequestedData() {
                                                         if(objectsTypes[i].resource_type_id === requestedObject.resource_type_id 
                                                             && departments[j].department_id === requestedObject.department_id
                                                             && rooms[k].room_id === requestedObject.room_id
-                                                            && faculty[l].user.user_id === requestedObject.user_id){
+                                                            && faculty[l].user.user_id === requestedObject.user_id
+                                                            && (user_id === requestedObject.user_id || isAdmin)){
                                                             return <RequestedDataField index={index} 
                                                             name={objectsTypes[i].object_name} 
                                                             details={"Department: " + departments[j].department_name + " - Room: " + rooms[k].room_name}
@@ -101,7 +104,8 @@ function RequestedData() {
                                                 for(let k = 0; k < faculty.length; k++){
                                                     if(rooms[i].room_id === requestedRoom.room_id 
                                                         && departments[j].department_id === requestedRoom.department_id
-                                                        && faculty[k].user.user_id === requestedRoom.user_id){
+                                                        && faculty[k].user.user_id === requestedRoom.user_id
+                                                        && (user_id === requestedRoom.user_id || isAdmin)){
                                                         return <RequestedDataField index={index} 
                                                         name={rooms[i].room_name} 
                                                         details={"Department: " + departments[j].department_name}
@@ -130,7 +134,8 @@ function RequestedData() {
                                             }
                                             for(let j = 0; j < departments.length; j++){
                                                 if(faculty[i].faculty_id === staff.requested_faculty_id 
-                                                    && departments[j].department_id === staff.department_id){
+                                                    && departments[j].department_id === staff.department_id
+                                                    && (user_id === staff.user_id || isAdmin)){
                                                     return <RequestedDataField index={index} 
                                                     name={faculty[i].name} 
                                                     details={"Department: " + departments[j].department_name}
