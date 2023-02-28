@@ -9,6 +9,7 @@ import { getStaffRequest } from '../../redux/GetStaffRequest/getStaffReqActions'
 import { getResourceTypesRequest } from '../../redux/GetResourceTypes/getResourceActions'
 import { getRoomsRequest } from '../../redux/GetRooms/getRoomsActions'
 import { getFacultyRequest } from '../../redux/GetFaculty/getFacultyActions'
+import { getDepartmentsRequest } from '../../redux/GetDepartments/getDepartmentsActions'
 import RequestedDataField from '../Root/RequestedDataField'
 
 function FacultyHomeScreen() {
@@ -29,6 +30,8 @@ function FacultyHomeScreen() {
     const objectsTypesAdded = useSelector((state) => state.getResourceTypes.added)
     const rooms = useSelector((state) => state.getRooms.rooms.data)
     const roomsAdded = useSelector((state) => state.getRooms.added)
+    const departments = useSelector((state) => state.getDepartments.departments.data)
+    const departmentsAdded = useSelector((state) => state.getDepartments.added)
     const faculty = useSelector((state) => state.getFaculty.faculty)
     const facultyAdded = useSelector((state) => state.getFaculty.added)
 
@@ -40,6 +43,7 @@ function FacultyHomeScreen() {
             dispatch(getResourceTypesRequest(institute_id))
             dispatch(getRoomsRequest(institute_id))
             dispatch(getFacultyRequest(institute_id))
+            dispatch(getDepartmentsRequest(institute_id))
         }
     },[dispatch, institute_id])
 
@@ -123,11 +127,13 @@ function FacultyHomeScreen() {
                                     requestedObjectsAdded ? 
                                         requestedObjects.map((requestedObject, index)=> 
                                         {
-                                            if(objectsTypesAdded){
+                                            if(objectsTypesAdded && departmentsAdded){
                                                 for(let i = 0; i < objectsTypes.length; i++){
-                                                    if(objectsTypes[i].resource_type_id === requestedObject.resource_type_id){
-                                                        return <RequestedDataField index={index} name={objectsTypes[i].object_name} date={requestedObject.date} 
-                                                        startTime={requestedObject.startTime} endTime={requestedObject.endTime}/>
+                                                    for(let j = 0; j < departments.length; j++){
+                                                        if(objectsTypes[i].resource_type_id === requestedObject.resource_type_id && departments[j].department_id === requestedObject.department_id){
+                                                            return <RequestedDataField index={index} name={objectsTypes[i].object_name + " - " + departments[j].department_name} 
+                                                            date={requestedObject.date} startTime={requestedObject.startTime} endTime={requestedObject.endTime}/>
+                                                        }
                                                     }
                                                 }
                                             }
@@ -142,11 +148,13 @@ function FacultyHomeScreen() {
                                     requestedRoomsAdded ?
                                         requestedRooms.map((requestedRoom, index) =>
                                         {
-                                            if(roomsAdded){
+                                            if(roomsAdded && departmentsAdded){
                                                 for(let i = 0; i < rooms.length; i++){
-                                                    if(rooms[i].room_id === requestedRoom.room_id){
-                                                        return <RequestedDataField index={index} name={rooms[i].room_name} date={requestedRoom.date} 
-                                                        startTime={requestedRoom.startTime} endTime={requestedRoom.endTime}/>
+                                                    for(let j = 0; j < departments.length; j++){
+                                                        if(rooms[i].room_id === requestedRoom.room_id && departments[j].department_id === requestedRoom.department_id){
+                                                            return <RequestedDataField index={index} name={rooms[i].room_name + " - " + departments[j].department_name} 
+                                                            date={requestedRoom.date} startTime={requestedRoom.startTime} endTime={requestedRoom.endTime}/>
+                                                        }
                                                     }
                                                 }
                                             }
@@ -160,11 +168,13 @@ function FacultyHomeScreen() {
                                     requestedStaffAdded ?
                                         requestedStaff.map((staff, index) => 
                                         {
-                                            if(facultyAdded){
+                                            if(facultyAdded && departmentsAdded){
                                                 for(let i = 0; i < faculty.length; i++){
-                                                    if(faculty[i].faculty_id === staff.requested_faculty_id){
-                                                        return <RequestedDataField index={index} name={faculty[i].name} date={staff.date} 
-                                                        startTime={staff.startTime} endTime={staff.endTime}/>
+                                                    for(let j = 0; j < departments.length; j++){
+                                                        if(faculty[i].faculty_id === staff.requested_faculty_id && departments[j].department_id === staff.department_id){
+                                                            return <RequestedDataField index={index} name={faculty[i].name + " - " + departments[j].department_name} 
+                                                            date={staff.date} startTime={staff.startTime} endTime={staff.endTime}/>
+                                                        }
                                                     }
                                                 }
                                             }
