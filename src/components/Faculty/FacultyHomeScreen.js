@@ -7,7 +7,7 @@ import { getObjReqRequest } from '../../redux/GetObjectRequests/getObjReqActions
 import { getRoomRequest } from '../../redux/GetRoomRequests/getRoomReqActions'
 import { getStaffRequest } from '../../redux/GetStaffRequest/getStaffReqActions'
 import { getResourceTypesRequest } from '../../redux/GetResourceTypes/getResourceActions'
-
+import { getRoomsRequest } from '../../redux/GetRooms/getRoomsActions'
 
 function FacultyHomeScreen() {
 
@@ -24,6 +24,9 @@ function FacultyHomeScreen() {
     const requestedStaff = useSelector((state) => state.staffReqReducer.staff_req.data)
     const requestedStaffAdded = useSelector((state) => state.staffReqReducer.added)
     const objectsTypes = useSelector((state) => state.getResourceTypes.resource_types.data)
+    const objectsTypesAdded = useSelector((state) => state.getResourceTypes.added)
+    const rooms = useSelector((state) => state.getRooms.rooms.data)
+    const roomsAdded = useSelector((state) => state.getRooms.added)
 
     useEffect(()=>{
         if(institute_id > 0){
@@ -31,6 +34,7 @@ function FacultyHomeScreen() {
             dispatch(getRoomRequest(institute_id))
             dispatch(getStaffRequest(institute_id))
             dispatch(getResourceTypesRequest(institute_id))
+            dispatch(getRoomsRequest(institute_id))
         }
     },[dispatch, institute_id])
 
@@ -115,19 +119,21 @@ function FacultyHomeScreen() {
                                     requestedObjectsAdded ? 
                                         requestedObjects.map((requestedObject, index)=> 
                                         {
-                                            for(let i = 0; i < objectsTypes.length; i++){
-                                                if(objectsTypes[i].resource_type_id === requestedObject.resource_type_id){
-                                                    return <div className="col-data" style={{marginTop: '10px'}}>
-                                                                <div className='align'>
-                                                                    <div className="circle">
-                                                                        R
-                                                                    </div>
-                                                                    <div style={{marginLeft: '15px'}}>
-                                                                        <h5>{objectsTypes[i].object_name}</h5>
-                                                                        <h6>{requestedObject.date} | {requestedObject.startTime} - {requestedObject.endTime}</h6>
+                                            if(objectsTypesAdded){
+                                                for(let i = 0; i < objectsTypes.length; i++){
+                                                    if(objectsTypes[i].resource_type_id === requestedObject.resource_type_id){
+                                                        return <div key={index} className="col-data" style={{marginTop: '10px'}}>
+                                                                    <div className='align'>
+                                                                        <div className="circle">
+                                                                            R
+                                                                        </div>
+                                                                        <div style={{marginLeft: '15px'}}>
+                                                                            <h5>{objectsTypes[i].object_name}</h5>
+                                                                            <h6>{requestedObject.date} | {requestedObject.startTime} - {requestedObject.endTime}</h6>
+                                                                        </div>
                                                                     </div>
                                                                 </div>
-                                                            </div>
+                                                    }
                                                 }
                                             }
                                         }
@@ -137,6 +143,30 @@ function FacultyHomeScreen() {
                             </div>
                             <div className="col">
                                 <p>Room Request</p>
+                                {
+                                    requestedRoomsAdded ?
+                                        requestedRooms.map((requestedRoom, index) =>
+                                        {
+                                            if(roomsAdded){
+                                                for(let i = 0; i < rooms.length; i++){
+                                                    if(rooms[i].room_id === requestedRoom.room_id){
+                                                        return <div key={index} className="col-data" style={{marginTop: '10px'}}>
+                                                                    <div className='align'>
+                                                                        <div className="circle">
+                                                                            R
+                                                                        </div>
+                                                                        <div style={{marginLeft: '15px'}}>
+                                                                            <h5>{rooms[i].room_name}</h5>
+                                                                            <h6>{requestedRoom.date} | {requestedRoom.startTime} - {requestedRoom.endTime}</h6>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                    }
+                                                }
+                                            }
+                                        })
+                                    : null
+                                }
                             </div>
                             <div className="col">
                                 <p>Staff Request</p>
