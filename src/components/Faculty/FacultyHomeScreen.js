@@ -2,50 +2,14 @@ import React, { useState, useEffect } from 'react'
 import FacultyNavbar from './FacultyNavbar'
 import FullCalendar from '../Root/FullCalendar'
 import '../Styling/HomeScreen.css'
-import { useSelector, useDispatch } from 'react-redux'
-import { getObjReqRequest } from '../../redux/GetObjectRequests/getObjReqActions'
-import { getRoomRequest } from '../../redux/GetRoomRequests/getRoomReqActions'
-import { getStaffRequest } from '../../redux/GetStaffRequest/getStaffReqActions'
-import { getResourceTypesRequest } from '../../redux/GetResourceTypes/getResourceActions'
-import { getRoomsRequest } from '../../redux/GetRooms/getRoomsActions'
-import { getFacultyRequest } from '../../redux/GetFaculty/getFacultyActions'
-import { getDepartmentsRequest } from '../../redux/GetDepartments/getDepartmentsActions'
-import RequestedDataField from '../Root/RequestedDataField'
+import { useSelector } from 'react-redux'
+import RequestedData from '../Root/RequestedData'
 
 function FacultyHomeScreen() {
-
-    const dispatch = useDispatch()
 
     const [greetings, setGreetings] = useState("")
 
     const facultyName = useSelector((state) => state.login.user.name)
-    const institute_id = useSelector((state) => state.login.user.institute_id)
-    const requestedObjects = useSelector((state) => state.getObjRequests.obj_requests.data)
-    const requestedObjectsAdded = useSelector((state) => state.getObjRequests.added)
-    const requestedRooms = useSelector((state) => state.getRoomRequest.room_req.data)
-    const requestedRoomsAdded = useSelector((state) => state.getRoomRequest.added)
-    const requestedStaff = useSelector((state) => state.staffReqReducer.staff_req.data)
-    const requestedStaffAdded = useSelector((state) => state.staffReqReducer.added)
-    const objectsTypes = useSelector((state) => state.getResourceTypes.resource_types.data)
-    const objectsTypesAdded = useSelector((state) => state.getResourceTypes.added)
-    const rooms = useSelector((state) => state.getRooms.rooms.data)
-    const roomsAdded = useSelector((state) => state.getRooms.added)
-    const departments = useSelector((state) => state.getDepartments.departments.data)
-    const departmentsAdded = useSelector((state) => state.getDepartments.added)
-    const faculty = useSelector((state) => state.getFaculty.faculty)
-    const facultyAdded = useSelector((state) => state.getFaculty.added)
-
-    useEffect(()=>{
-        if(institute_id > 0){
-            dispatch(getObjReqRequest(institute_id))
-            dispatch(getRoomRequest(institute_id))
-            dispatch(getStaffRequest(institute_id))
-            dispatch(getResourceTypesRequest(institute_id))
-            dispatch(getRoomsRequest(institute_id))
-            dispatch(getFacultyRequest(institute_id))
-            dispatch(getDepartmentsRequest(institute_id))
-        }
-    },[dispatch, institute_id])
 
     useEffect(() => {
         let date = new Date();
@@ -107,83 +71,7 @@ function FacultyHomeScreen() {
                         />
                     </div>
                 </div>
-                <div style={{ marginTop: '25px', marginLeft: '25px' }}>
-                    <h3 style={{ fontWeight: 'revert', color: 'black' }}>Request Applied For: </h3>
-                </div>
-                <div style={{
-                        width: '98%',
-                        height: 238,
-                        margin: '15px',
-                        border: '2px solid black',
-                        overflow: 'auto'
-                    }}>
-                        <div className="grid-container">
-                            <div className="col">
-                                <p>Leave Request</p>
-                            </div>
-                            <div className="col">
-                                <p>Object Request</p>
-                                {
-                                    requestedObjectsAdded ? 
-                                        requestedObjects.map((requestedObject, index)=> 
-                                        {
-                                            if(objectsTypesAdded && departmentsAdded){
-                                                for(let i = 0; i < objectsTypes.length; i++){
-                                                    for(let j = 0; j < departments.length; j++){
-                                                        if(objectsTypes[i].resource_type_id === requestedObject.resource_type_id && departments[j].department_id === requestedObject.department_id){
-                                                            return <RequestedDataField index={index} name={objectsTypes[i].object_name + " - " + departments[j].department_name} 
-                                                            date={requestedObject.date} startTime={requestedObject.startTime} endTime={requestedObject.endTime}/>
-                                                        }
-                                                    }
-                                                }
-                                            }
-                                        }
-                                        )
-                                    : null
-                                }
-                            </div>
-                            <div className="col">
-                                <p>Room Request</p>
-                                {
-                                    requestedRoomsAdded ?
-                                        requestedRooms.map((requestedRoom, index) =>
-                                        {
-                                            if(roomsAdded && departmentsAdded){
-                                                for(let i = 0; i < rooms.length; i++){
-                                                    for(let j = 0; j < departments.length; j++){
-                                                        if(rooms[i].room_id === requestedRoom.room_id && departments[j].department_id === requestedRoom.department_id){
-                                                            return <RequestedDataField index={index} name={rooms[i].room_name + " - " + departments[j].department_name} 
-                                                            date={requestedRoom.date} startTime={requestedRoom.startTime} endTime={requestedRoom.endTime}/>
-                                                        }
-                                                    }
-                                                }
-                                            }
-                                        })
-                                    : null
-                                }
-                            </div>
-                            <div className="col">
-                                <p>Staff Request</p>
-                                {
-                                    requestedStaffAdded ?
-                                        requestedStaff.map((staff, index) => 
-                                        {
-                                            if(facultyAdded && departmentsAdded){
-                                                for(let i = 0; i < faculty.length; i++){
-                                                    for(let j = 0; j < departments.length; j++){
-                                                        if(faculty[i].faculty_id === staff.requested_faculty_id && departments[j].department_id === staff.department_id){
-                                                            return <RequestedDataField index={index} name={faculty[i].name + " - " + departments[j].department_name} 
-                                                            date={staff.date} startTime={staff.startTime} endTime={staff.endTime}/>
-                                                        }
-                                                    }
-                                                }
-                                            }
-                                        })
-                                    : null
-                                }
-                            </div>
-                        </div>
-                </div>
+                <RequestedData/>
             </div>
         </div>
     )
