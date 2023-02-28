@@ -22,19 +22,24 @@
 .col-data {
   background-color: #dfeff6;
   padding: 10px;
-  text-align: center;
+  text-align: left;
   border-radius: 10px;
 }
 
 .align {
   display: flex;
   flex-direction: row;
-  line-height: 35px;
+  line-height: 17.5px;
 }
 
 .align h5 {
   font-size: 12px;
   font-weight: medium;
+}
+
+.align h6 {
+  color: gray;
+  font-weight: 600;
 }
 
 .circle {

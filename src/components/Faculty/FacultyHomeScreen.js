@@ -75,13 +75,17 @@ function FacultyHomeScreen() {
                 <div style={{
                         width: '98%',
                         height: 238,
-                        borderRadius: 15,
+                        // borderRadius: 15,
                         margin: '15px',
-                        border: '2px solid black'
+                        border: '2px solid black',
+                        overflow: 'auto'
                     }}>
                         <div className="grid-container">
                             <div className="col">
                                 <p>Leave Request</p>
+                            </div>
+                            <div className="col">
+                                <p>Object Request</p>
                                 <div className="col-data" style={{marginTop: '10px'}}>
                                     <div className='align'>
                                         <div className="circle">
@@ -89,12 +93,10 @@ function FacultyHomeScreen() {
                                         </div>
                                         <div style={{marginLeft: '15px'}}>
                                             <h5>Projector</h5>
+                                            <h6>18 April, 2021 | 04:00 PM - 06:00 PM</h6>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div className="col">
-                                <p>Object Request</p>
                             </div>
                             <div className="col">
                                 <p>Room Request</p>
