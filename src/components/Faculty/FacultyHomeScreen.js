@@ -8,6 +8,7 @@ import { getRoomRequest } from '../../redux/GetRoomRequests/getRoomReqActions'
 import { getStaffRequest } from '../../redux/GetStaffRequest/getStaffReqActions'
 import { getResourceTypesRequest } from '../../redux/GetResourceTypes/getResourceActions'
 import { getRoomsRequest } from '../../redux/GetRooms/getRoomsActions'
+import { getFacultyRequest } from '../../redux/GetFaculty/getFacultyActions'
 
 function FacultyHomeScreen() {
 
@@ -27,6 +28,8 @@ function FacultyHomeScreen() {
     const objectsTypesAdded = useSelector((state) => state.getResourceTypes.added)
     const rooms = useSelector((state) => state.getRooms.rooms.data)
     const roomsAdded = useSelector((state) => state.getRooms.added)
+    const faculty = useSelector((state) => state.getFaculty.faculty)
+    const facultyAdded = useSelector((state) => state.getFaculty.added)
 
     useEffect(()=>{
         if(institute_id > 0){
@@ -170,6 +173,30 @@ function FacultyHomeScreen() {
                             </div>
                             <div className="col">
                                 <p>Staff Request</p>
+                                {
+                                    requestedStaffAdded ?
+                                        requestedStaff.map((staff, index) => 
+                                        {
+                                            if(facultyAdded){
+                                                for(let i = 0; i < faculty.length; i++){
+                                                    if(faculty[i].faculty_id === staff.requested_faculty_id){
+                                                        return <div key={index} className="col-data" style={{marginTop: '10px'}}>
+                                                                    <div className='align'>
+                                                                        <div className="circle">
+                                                                            R
+                                                                        </div>
+                                                                        <div style={{marginLeft: '15px'}}>
+                                                                            <h5>{faculty[i].name}</h5>
+                                                                            <h6>{staff.date} | {staff.startTime} - {staff.endTime}</h6>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                    }
+                                                }
+                                            }
+                                        })
+                                    : null
+                                }
                             </div>
                         </div>
                 </div>
