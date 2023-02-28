@@ -3,7 +3,8 @@ import { GET_STAFF_REQ_FAILURE, GET_STAFF_REQ_REQUEST, GET_STAFF_REQ_SUCCESS } f
 const staffRequestInitialState = {
     loading: false,
     staff_req: [],
-    error: ''
+    error: '',
+    added: false
 }
 
 export const staffReqReducer = (state = staffRequestInitialState, action) => {
@@ -16,13 +17,15 @@ export const staffReqReducer = (state = staffRequestInitialState, action) => {
             ...state,
             loading: false,
             staff_req: action.result,
-            error: ''
+            error: '',
+            added: true
         }
         case GET_STAFF_REQ_FAILURE: return {
             ...state,
             loading: false,
             staff_req: [],
-            error: action.message
+            error: action.message,
+            added: false
         }
         default: return state
     }

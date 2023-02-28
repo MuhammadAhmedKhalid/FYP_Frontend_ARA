@@ -2,12 +2,37 @@ import React, { useState, useEffect } from 'react'
 import FacultyNavbar from './FacultyNavbar'
 import FullCalendar from '../Root/FullCalendar'
 import '../Styling/HomeScreen.css'
-import { useSelector } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
+import { getObjReqRequest } from '../../redux/GetObjectRequests/getObjReqActions'
+import { getRoomRequest } from '../../redux/GetRoomRequests/getRoomReqActions'
+import { getStaffRequest } from '../../redux/GetStaffRequest/getStaffReqActions'
+import { getResourceTypesRequest } from '../../redux/GetResourceTypes/getResourceActions'
+
 
 function FacultyHomeScreen() {
 
+    const dispatch = useDispatch()
+
     const [greetings, setGreetings] = useState("")
+
     const facultyName = useSelector((state) => state.login.user.name)
+    const institute_id = useSelector((state) => state.login.user.institute_id)
+    const requestedObjects = useSelector((state) => state.getObjRequests.obj_requests.data)
+    const requestedObjectsAdded = useSelector((state) => state.getObjRequests.added)
+    const requestedRooms = useSelector((state) => state.getRoomRequest.room_req.data)
+    const requestedRoomsAdded = useSelector((state) => state.getRoomRequest.added)
+    const requestedStaff = useSelector((state) => state.staffReqReducer.staff_req.data)
+    const requestedStaffAdded = useSelector((state) => state.staffReqReducer.added)
+    const objectsTypes = useSelector((state) => state.getResourceTypes.resource_types.data)
+
+    useEffect(()=>{
+        if(institute_id > 0){
+            dispatch(getObjReqRequest(institute_id))
+            dispatch(getRoomRequest(institute_id))
+            dispatch(getStaffRequest(institute_id))
+            dispatch(getResourceTypesRequest(institute_id))
+        }
+    },[dispatch, institute_id])
 
     useEffect(() => {
         let date = new Date();
@@ -86,17 +111,29 @@ function FacultyHomeScreen() {
                             </div>
                             <div className="col">
                                 <p>Object Request</p>
-                                <div className="col-data" style={{marginTop: '10px'}}>
-                                    <div className='align'>
-                                        <div className="circle">
-                                            R
-                                        </div>
-                                        <div style={{marginLeft: '15px'}}>
-                                            <h5>Projector</h5>
-                                            <h6>18 April, 2021 | 04:00 PM - 06:00 PM</h6>
-                                        </div>
-                                    </div>
-                                </div>
+                                {
+                                    requestedObjectsAdded ? 
+                                        requestedObjects.map((requestedObject, index)=> 
+                                        {
+                                            for(let i = 0; i < objectsTypes.length; i++){
+                                                if(objectsTypes[i].resource_type_id === requestedObject.resource_type_id){
+                                                    return <div className="col-data" style={{marginTop: '10px'}}>
+                                                                <div className='align'>
+                                                                    <div className="circle">
+                                                                        R
+                                                                    </div>
+                                                                    <div style={{marginLeft: '15px'}}>
+                                                                        <h5>{objectsTypes[i].object_name}</h5>
+                                                                        <h6>{requestedObject.date} | {requestedObject.startTime} - {requestedObject.endTime}</h6>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                }
+                                            }
+                                        }
+                                        )
+                                    : null
+                                }
                             </div>
                             <div className="col">
                                 <p>Room Request</p>

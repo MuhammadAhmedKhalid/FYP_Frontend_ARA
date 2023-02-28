@@ -3,7 +3,8 @@ import { GET_ROOM_REQ_FAILURE, GET_ROOM_REQ_REQUEST, GET_ROOM_REQ_SUCCESS } from
 const roomRequestInitialState = {
     loading: false,
     room_req: [],
-    error: ''
+    error: '',
+    added: false
 }
 
 export const roomReqReducer = (state = roomRequestInitialState, action) => {
@@ -16,13 +17,15 @@ export const roomReqReducer = (state = roomRequestInitialState, action) => {
             ...state,
             loading: false,
             room_req: action.result,
-            error: ''
+            error: '',
+            added: true
         }
         case GET_ROOM_REQ_FAILURE: return {
             ...state,
             loading: false,
             room_req: [],
-            error: action.message
+            error: action.message,
+            added: false
         }
         default: return state
     }
