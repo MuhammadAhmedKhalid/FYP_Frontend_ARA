@@ -9,6 +9,7 @@ import { getStaffRequest } from '../../redux/GetStaffRequest/getStaffReqActions'
 import { getResourceTypesRequest } from '../../redux/GetResourceTypes/getResourceActions'
 import { getRoomsRequest } from '../../redux/GetRooms/getRoomsActions'
 import { getFacultyRequest } from '../../redux/GetFaculty/getFacultyActions'
+import RequestedDataField from '../Root/RequestedDataField'
 
 function FacultyHomeScreen() {
 
@@ -38,6 +39,7 @@ function FacultyHomeScreen() {
             dispatch(getStaffRequest(institute_id))
             dispatch(getResourceTypesRequest(institute_id))
             dispatch(getRoomsRequest(institute_id))
+            dispatch(getFacultyRequest(institute_id))
         }
     },[dispatch, institute_id])
 
@@ -107,7 +109,6 @@ function FacultyHomeScreen() {
                 <div style={{
                         width: '98%',
                         height: 238,
-                        // borderRadius: 15,
                         margin: '15px',
                         border: '2px solid black',
                         overflow: 'auto'
@@ -125,17 +126,8 @@ function FacultyHomeScreen() {
                                             if(objectsTypesAdded){
                                                 for(let i = 0; i < objectsTypes.length; i++){
                                                     if(objectsTypes[i].resource_type_id === requestedObject.resource_type_id){
-                                                        return <div key={index} className="col-data" style={{marginTop: '10px'}}>
-                                                                    <div className='align'>
-                                                                        <div className="circle">
-                                                                            R
-                                                                        </div>
-                                                                        <div style={{marginLeft: '15px'}}>
-                                                                            <h5>{objectsTypes[i].object_name}</h5>
-                                                                            <h6>{requestedObject.date} | {requestedObject.startTime} - {requestedObject.endTime}</h6>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
+                                                        return <RequestedDataField index={index} name={objectsTypes[i].object_name} date={requestedObject.date} 
+                                                        startTime={requestedObject.startTime} endTime={requestedObject.endTime}/>
                                                     }
                                                 }
                                             }
@@ -153,17 +145,8 @@ function FacultyHomeScreen() {
                                             if(roomsAdded){
                                                 for(let i = 0; i < rooms.length; i++){
                                                     if(rooms[i].room_id === requestedRoom.room_id){
-                                                        return <div key={index} className="col-data" style={{marginTop: '10px'}}>
-                                                                    <div className='align'>
-                                                                        <div className="circle">
-                                                                            R
-                                                                        </div>
-                                                                        <div style={{marginLeft: '15px'}}>
-                                                                            <h5>{rooms[i].room_name}</h5>
-                                                                            <h6>{requestedRoom.date} | {requestedRoom.startTime} - {requestedRoom.endTime}</h6>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
+                                                        return <RequestedDataField index={index} name={rooms[i].room_name} date={requestedRoom.date} 
+                                                        startTime={requestedRoom.startTime} endTime={requestedRoom.endTime}/>
                                                     }
                                                 }
                                             }
@@ -180,17 +163,8 @@ function FacultyHomeScreen() {
                                             if(facultyAdded){
                                                 for(let i = 0; i < faculty.length; i++){
                                                     if(faculty[i].faculty_id === staff.requested_faculty_id){
-                                                        return <div key={index} className="col-data" style={{marginTop: '10px'}}>
-                                                                    <div className='align'>
-                                                                        <div className="circle">
-                                                                            R
-                                                                        </div>
-                                                                        <div style={{marginLeft: '15px'}}>
-                                                                            <h5>{faculty[i].name}</h5>
-                                                                            <h6>{staff.date} | {staff.startTime} - {staff.endTime}</h6>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
+                                                        return <RequestedDataField index={index} name={faculty[i].name} date={staff.date} 
+                                                        startTime={staff.startTime} endTime={staff.endTime}/>
                                                     }
                                                 }
                                             }
