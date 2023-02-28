@@ -67,9 +67,15 @@ function RequestedData() {
                                     if(objectsTypesAdded && departmentsAdded){
                                         for(let i = 0; i < objectsTypes.length; i++){
                                             for(let j = 0; j < departments.length; j++){
-                                                if(objectsTypes[i].resource_type_id === requestedObject.resource_type_id && departments[j].department_id === requestedObject.department_id){
-                                                    return <RequestedDataField index={index} name={objectsTypes[i].object_name + " - " + departments[j].department_name} 
-                                                    date={requestedObject.date} startTime={requestedObject.startTime} endTime={requestedObject.endTime}/>
+                                                for(let k = 0; k < rooms.length; k++){
+                                                    if(objectsTypes[i].resource_type_id === requestedObject.resource_type_id 
+                                                        && departments[j].department_id === requestedObject.department_id
+                                                        && rooms[k].room_id === requestedObject.room_id){
+                                                        return <RequestedDataField index={index} 
+                                                        name={objectsTypes[i].object_name} 
+                                                        details={"Department: " + departments[j].department_name + " - Room: " + rooms[k].room_name}
+                                                        date={requestedObject.date} startTime={requestedObject.startTime} endTime={requestedObject.endTime}/>
+                                                    }
                                                 }
                                             }
                                         }
@@ -89,7 +95,9 @@ function RequestedData() {
                                         for(let i = 0; i < rooms.length; i++){
                                             for(let j = 0; j < departments.length; j++){
                                                 if(rooms[i].room_id === requestedRoom.room_id && departments[j].department_id === requestedRoom.department_id){
-                                                    return <RequestedDataField index={index} name={rooms[i].room_name + " - " + departments[j].department_name} 
+                                                    return <RequestedDataField index={index} 
+                                                    name={rooms[i].room_name} 
+                                                    details={"Department: " + departments[j].department_name}
                                                     date={requestedRoom.date} startTime={requestedRoom.startTime} endTime={requestedRoom.endTime}/>
                                                 }
                                             }
@@ -109,7 +117,9 @@ function RequestedData() {
                                         for(let i = 0; i < faculty.length; i++){
                                             for(let j = 0; j < departments.length; j++){
                                                 if(faculty[i].faculty_id === staff.requested_faculty_id && departments[j].department_id === staff.department_id){
-                                                    return <RequestedDataField index={index} name={faculty[i].name + " - " + departments[j].department_name} 
+                                                    return <RequestedDataField index={index} 
+                                                    name={faculty[i].name} 
+                                                    details={"Department: " + departments[j].department_name}
                                                     date={staff.date} startTime={staff.startTime} endTime={staff.endTime}/>
                                                 }
                                             }

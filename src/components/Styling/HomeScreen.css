@@ -30,6 +30,7 @@
   display: flex;
   flex-direction: row;
   line-height: 17.5px;
+  align-items: center;
 }
 
 .align h5 {
