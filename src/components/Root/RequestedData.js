@@ -44,7 +44,7 @@ function RequestedData() {
 
     return (
         <div>
-            <div style={{ marginTop: '25px', marginLeft: '25px' }}>
+            <div style={{ marginTop: '15px', marginLeft: '15px' }}>
                 <h3 style={{ fontWeight: 'revert', color: 'black' }}>Request Applied For: </h3>
             </div>
             <div style={{
@@ -64,17 +64,21 @@ function RequestedData() {
                             requestedObjectsAdded ? 
                                 requestedObjects.map((requestedObject, index)=> 
                                 {
-                                    if(objectsTypesAdded && departmentsAdded){
+                                    if(objectsTypesAdded && departmentsAdded && roomsAdded && facultyAdded){
                                         for(let i = 0; i < objectsTypes.length; i++){
                                             for(let j = 0; j < departments.length; j++){
                                                 for(let k = 0; k < rooms.length; k++){
-                                                    if(objectsTypes[i].resource_type_id === requestedObject.resource_type_id 
-                                                        && departments[j].department_id === requestedObject.department_id
-                                                        && rooms[k].room_id === requestedObject.room_id){
-                                                        return <RequestedDataField index={index} 
-                                                        name={objectsTypes[i].object_name} 
-                                                        details={"Department: " + departments[j].department_name + " - Room: " + rooms[k].room_name}
-                                                        date={requestedObject.date} startTime={requestedObject.startTime} endTime={requestedObject.endTime}/>
+                                                    for(let l = 0; l < faculty.length; l++){
+                                                        if(objectsTypes[i].resource_type_id === requestedObject.resource_type_id 
+                                                            && departments[j].department_id === requestedObject.department_id
+                                                            && rooms[k].room_id === requestedObject.room_id
+                                                            && faculty[l].user.user_id === requestedObject.user_id){
+                                                            return <RequestedDataField index={index} 
+                                                            name={objectsTypes[i].object_name} 
+                                                            details={"Department: " + departments[j].department_name + " - Room: " + rooms[k].room_name}
+                                                            from={"By: " + faculty[l].name}
+                                                            date={requestedObject.date} startTime={requestedObject.startTime} endTime={requestedObject.endTime}/>
+                                                        }
                                                     }
                                                 }
                                             }
@@ -91,14 +95,19 @@ function RequestedData() {
                             requestedRoomsAdded ?
                                 requestedRooms.map((requestedRoom, index) =>
                                 {
-                                    if(roomsAdded && departmentsAdded){
+                                    if(roomsAdded && departmentsAdded && facultyAdded){
                                         for(let i = 0; i < rooms.length; i++){
                                             for(let j = 0; j < departments.length; j++){
-                                                if(rooms[i].room_id === requestedRoom.room_id && departments[j].department_id === requestedRoom.department_id){
-                                                    return <RequestedDataField index={index} 
-                                                    name={rooms[i].room_name} 
-                                                    details={"Department: " + departments[j].department_name}
-                                                    date={requestedRoom.date} startTime={requestedRoom.startTime} endTime={requestedRoom.endTime}/>
+                                                for(let k = 0; k < faculty.length; k++){
+                                                    if(rooms[i].room_id === requestedRoom.room_id 
+                                                        && departments[j].department_id === requestedRoom.department_id
+                                                        && faculty[k].user.user_id === requestedRoom.user_id){
+                                                        return <RequestedDataField index={index} 
+                                                        name={rooms[i].room_name} 
+                                                        details={"Department: " + departments[j].department_name}
+                                                        from={"By: " + faculty[k].name}
+                                                        date={requestedRoom.date} startTime={requestedRoom.startTime} endTime={requestedRoom.endTime}/>
+                                                    }
                                                 }
                                             }
                                         }
@@ -114,12 +123,18 @@ function RequestedData() {
                                 requestedStaff.map((staff, index) => 
                                 {
                                     if(facultyAdded && departmentsAdded){
+                                        let from;
                                         for(let i = 0; i < faculty.length; i++){
+                                            if(faculty[i].user.user_id === staff.user_id){
+                                                from = faculty[i].user.name
+                                            }
                                             for(let j = 0; j < departments.length; j++){
-                                                if(faculty[i].faculty_id === staff.requested_faculty_id && departments[j].department_id === staff.department_id){
+                                                if(faculty[i].faculty_id === staff.requested_faculty_id 
+                                                    && departments[j].department_id === staff.department_id){
                                                     return <RequestedDataField index={index} 
                                                     name={faculty[i].name} 
                                                     details={"Department: " + departments[j].department_name}
+                                                    from={"By: " + from}
                                                     date={staff.date} startTime={staff.startTime} endTime={staff.endTime}/>
                                                 }
                                             }

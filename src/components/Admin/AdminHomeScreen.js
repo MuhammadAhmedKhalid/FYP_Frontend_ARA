@@ -5,6 +5,7 @@ import Img10 from '../../assets/img10.png'
 import '../Styling/HomeScreen.css'
 import { useSelector, useDispatch } from 'react-redux'
 import { getFacultyRequest } from '../../redux/GetFaculty/getFacultyActions'
+import RequestedData from '../Root/RequestedData'
 
 function AdminHomeScreen() {
 
@@ -110,6 +111,7 @@ function AdminHomeScreen() {
                         />
                     </div>
                 </div>
+                <RequestedData/>
             </div>
         </div>
     )
