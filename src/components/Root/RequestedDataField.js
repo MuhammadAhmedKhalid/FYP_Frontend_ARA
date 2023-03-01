@@ -5,12 +5,15 @@ import DeleteIcon from '@mui/icons-material/Delete';
 
 function RequestedDataField(props) {
 
-    const{index, name, date, startTime, endTime, details, from} = props
+    const{index, name, date, startTime, endTime, details, from , setDel, setReq_id, id, setResource, resource_type} = props
 
     const handleClick = () => {
         const result = window.confirm('Are you sure you want to delete it?');
         if (result === true) {
-            console.log('Yes')
+            alert('Operation performed successfully.')
+            setDel(true)
+            setReq_id(id)
+            setResource(resource_type)
           } else {
             console.log('No')
           }

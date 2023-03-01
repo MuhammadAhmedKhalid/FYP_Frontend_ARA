@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import '../Styling/HomeScreen.css'
 import RequestedDataField from './RequestedDataField'
 import { useSelector, useDispatch } from 'react-redux'
@@ -9,10 +9,15 @@ import { getResourceTypesRequest } from '../../redux/GetResourceTypes/getResourc
 import { getRoomsRequest } from '../../redux/GetRooms/getRoomsActions'
 import { getFacultyRequest } from '../../redux/GetFaculty/getFacultyActions'
 import { getDepartmentsRequest } from '../../redux/GetDepartments/getDepartmentsActions'
+import { deleteRequestedObj } from '../../redux/DeleteObjectRequest/delObjReqActions'
  
 function RequestedData() {
 
     const dispatch = useDispatch()
+
+    const [del, setDel] = useState(false)
+    const [req_id, setReq_id] = useState(0)
+    const [resource, setResource] = useState('')
 
     const institute_id = useSelector((state) => state.login.user.institute_id)
     const requestedObjects = useSelector((state) => state.getObjRequests.obj_requests.data)
@@ -31,6 +36,23 @@ function RequestedData() {
     const facultyAdded = useSelector((state) => state.getFaculty.added)
     const user_id = useSelector((state) => state.login.user.user_id)
     const isAdmin = useSelector((state) => state.login.user._admin)
+
+    useEffect(()=>{
+        if(del){
+            setDel(false)
+            switch(resource){
+                case 'OR':
+                    dispatch(deleteRequestedObj(req_id))
+                    break;
+                case 'RR':
+                    break;
+                case 'SR':
+                    break;
+                default:
+                    break;
+            }
+        }
+    },[del])
 
     useEffect(()=>{
         if(institute_id > 0){
@@ -80,7 +102,9 @@ function RequestedData() {
                                                             name={objectsTypes[i].object_name} 
                                                             details={"Department: " + departments[j].department_name + " - Room: " + rooms[k].room_name}
                                                             from={"By: " + faculty[l].name}
-                                                            date={requestedObject.date} startTime={requestedObject.startTime} endTime={requestedObject.endTime}/>
+                                                            date={requestedObject.date} startTime={requestedObject.startTime} endTime={requestedObject.endTime}
+                                                            setDel={setDel} setReq_id={setReq_id} id={requestedObject.obj_req_id} setResource={setResource}
+                                                            resource_type={'OR'}/>
                                                         }
                                                     }
                                                 }
@@ -110,7 +134,9 @@ function RequestedData() {
                                                         name={rooms[i].room_name} 
                                                         details={"Department: " + departments[j].department_name}
                                                         from={"By: " + faculty[k].name}
-                                                        date={requestedRoom.date} startTime={requestedRoom.startTime} endTime={requestedRoom.endTime}/>
+                                                        date={requestedRoom.date} startTime={requestedRoom.startTime} endTime={requestedRoom.endTime}
+                                                        setDel={setDel} setReq_id={setReq_id} id={requestedRoom.room_req_id} setResource={setResource}
+                                                        resource_type={'RR'}/>
                                                     }
                                                 }
                                             }
@@ -140,7 +166,9 @@ function RequestedData() {
                                                     name={faculty[i].name} 
                                                     details={"Department: " + departments[j].department_name}
                                                     from={"By: " + from}
-                                                    date={staff.date} startTime={staff.startTime} endTime={staff.endTime}/>
+                                                    date={staff.date} startTime={staff.startTime} endTime={staff.endTime}
+                                                    setDel={setDel} setReq_id={setReq_id} id={staff.staff_req_id} setResource={setResource}
+                                                    resource_type={'SR'}/>
                                                 }
                                             }
                                         }
