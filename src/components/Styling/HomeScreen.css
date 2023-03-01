@@ -26,6 +26,10 @@
   border-radius: 10px;
 }
 
+.col :not(:first-child):hover {
+  background-color: #85cded;
+}
+
 .align {
   display: flex;
   flex-direction: row;
