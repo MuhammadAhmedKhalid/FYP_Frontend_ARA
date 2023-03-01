@@ -7,6 +7,15 @@ function RequestedDataField(props) {
 
     const{index, name, date, startTime, endTime, details, from} = props
 
+    const handleClick = () => {
+        const result = window.confirm('Are you sure you want to delete it?');
+        if (result === true) {
+            console.log('Yes')
+          } else {
+            console.log('No')
+          }
+    }
+
     const isAdmin = useSelector((state) => state.login.user._admin)
 
     return (
@@ -25,7 +34,7 @@ function RequestedDataField(props) {
                     </div>
                 </div>
                 <div className='align-y right-div'>
-                    <DeleteIcon className='delete-btn' />
+                    <DeleteIcon className='delete-btn' onClick={handleClick}/>
                 </div>
         </div>
     )
