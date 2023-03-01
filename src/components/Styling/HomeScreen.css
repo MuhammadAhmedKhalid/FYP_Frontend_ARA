@@ -55,3 +55,27 @@
   text-align: center;
   line-height: 35px;
 }
+
+.delete-btn :hover{
+  color: rgb(255, 0, 0);
+  cursor: pointer;
+}
+
+.align-y {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.container {
+  display: flex;
+  justify-content: space-between;
+}
+
+.left-div {
+  float: left;
+}
+
+.right-div {
+  float: right;
+}
