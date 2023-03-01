@@ -24,6 +24,7 @@ import { getPositionSaga } from './GetPosition/getPositionSaga'
 import { getSpecializationSaga } from './GetSpecialization/getSpecializationSaga'
 import { addStaffRequestSaga } from './AddStaffRequest/staffRequestSaga'
 import { getStaffReqSaga } from './GetStaffRequest/getStaffReqSaga'
+import { deleteObjRequestSaga } from './DeleteObjectRequest/delObjReqSaga'
 
 export function* rootSaga() {
     yield fork(signupSaga)
@@ -51,4 +52,5 @@ export function* rootSaga() {
     yield fork(getSpecializationSaga)
     yield fork(addStaffRequestSaga)
     yield fork(getStaffReqSaga)
+    yield fork(deleteObjRequestSaga)
 }

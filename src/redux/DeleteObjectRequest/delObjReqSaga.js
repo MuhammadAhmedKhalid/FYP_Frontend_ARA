@@ -1,0 +1,20 @@
+import { DELETE_OBJ_REQ_FAILURE, DELETE_OBJ_REQ_REQUEST, DELETE_OBJ_REQ_SUCCESS } from './delObjReqTypes'
+import { call, put, takeEvery, select } from 'redux-saga/effects'
+import axios from 'axios'
+
+function* deleteObjRequest(data) {
+    try {
+        const token = yield select(state => state.login.user.jwt);
+        const headers = {
+            'Authorization': `Bearer ${token}`
+        };
+        let result = yield call(axios.delete, `http://localhost:8080/deleteObjectRequest/${data.query}`, { headers });
+        yield put({ type: DELETE_OBJ_REQ_SUCCESS, message: result })
+    } catch (e) {
+        yield put({ type: DELETE_OBJ_REQ_FAILURE, message: e.message})
+    }
+}
+
+export function* deleteObjRequestSaga() {
+    yield takeEvery(DELETE_OBJ_REQ_REQUEST, deleteObjRequest)
+}
