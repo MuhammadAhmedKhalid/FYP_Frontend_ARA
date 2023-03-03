@@ -12,7 +12,7 @@ function* addDepartment(department) {
         yield call(axios.post, 'http://localhost:8080/add_department', department.department, { headers });
         yield put({ type: ADD_DEPARTMENT_SUCCESS, message: "Department added successfully." })
     } catch (error) {
-        yield put({ type: ADD_DEPARTMENT_FAILURE, message: "Add Department operation failed." })
+        yield put({ type: ADD_DEPARTMENT_FAILURE, message: error.response.data })
     }
 }
 
