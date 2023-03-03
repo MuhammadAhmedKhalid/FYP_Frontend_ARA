@@ -16,6 +16,7 @@ import { getFacultyRequest } from '../../../../redux/GetFaculty/getFacultyAction
 import { addRequestedStaff } from '../../../../redux/AddStaffRequest/staffRequestActions'
 import { getStaffRequest } from '../../../../redux/GetStaffRequest/getStaffReqActions'
 import { checkConflict } from '../../utils'
+import { getRoomRequest } from '../../../../redux/GetRoomRequests/getRoomReqActions'
 
 function StaffRequest(props) {
 
@@ -33,6 +34,7 @@ function StaffRequest(props) {
     const facultyAdded = useSelector((state) => state.getFaculty.added)
     const requestedStaff = useSelector((state) => state.staffReqReducer.staff_req.data)
     const requestSuccessfull = useSelector((state) => state.addStaffReqeReducer.added)
+    const requestedRoom = useSelector((state) => state.getRoomRequest.room_req.data)
 
     const [value, setValue] = useState(dayjs(new Date()));
     const [value1, setValue1] = useState(dayjs(new Date()));
@@ -55,6 +57,7 @@ function StaffRequest(props) {
     useEffect(()=>{
         if ((requestAdded || requestSuccessfull) && institute_id > 0) {
             dispatch(getStaffRequest(institute_id))
+            dispatch(getRoomRequest(institute_id))
             setRequestAdded(false)
         }
     }, [requestAdded, requestSuccessfull, institute_id])
@@ -182,37 +185,62 @@ function StaffRequest(props) {
     }
 
     const handleForm = (e) => {
-        let conflict = false;
+        let faculty_conflict = false;
+        let room_conflict = false;
         e.preventDefault();
         
-        if(requestedStaff.length === 0){
+        if(requestedStaff.length === 0 && requestedRoom.length === 0){
             addStaffRequest()
         } else {
+
+            var requestStartTime = new Date();
+            var requestEndTime = new Date();
+
+            requestStartTime.setHours(request.startTime.substring(0, 2), request.startTime.substring(3), 0, 0);
+            requestEndTime.setHours(request.endTime.substring(0, 2), request.endTime.substring(3), 0, 0);
+
             for (let i = 0; i < requestedStaff.length; i++) {
 
-                var startTime = new Date();
-                var endTime = new Date();
-                var requestStartTime = new Date();
-                var requestEndTime = new Date();
+                let startTime = new Date();
+                let endTime = new Date();
 
                 startTime.setHours(requestedStaff[i].startTime.substring(0, 2), requestedStaff[i].startTime.substring(3), 0, 0);
                 endTime.setHours(requestedStaff[i].endTime.substring(0, 2), requestedStaff[i].endTime.substring(3), 0, 0);
-                requestStartTime.setHours(request.startTime.substring(0, 2), request.startTime.substring(3), 0, 0);
-                requestEndTime.setHours(request.endTime.substring(0, 2), request.endTime.substring(3), 0, 0);
 
-                conflict = checkConflict(requestedStaff[i].requested_faculty_id, request.requested_faculty_id, requestedStaff[i].date, request.date,
+                faculty_conflict = checkConflict(requestedStaff[i].requested_faculty_id, request.requested_faculty_id, requestedStaff[i].date, request.date,
                     requestStartTime, startTime, requestEndTime, endTime,
                     requestStartTime.getTime(), startTime.getTime(), requestEndTime.getTime(), endTime.getTime())
 
-                if (conflict) {
+                if (faculty_conflict) {
                     setShowError(true)
                     break
                 }
 
             }
-            if (!conflict) {
+
+            for (let j = 0; j < requestedRoom.length; j++){
+
+                let startTime = new Date();
+                let endTime = new Date();
+
+                startTime.setHours(requestedRoom[j].startTime.substring(0, 2), requestedRoom[j].startTime.substring(3), 0, 0);
+                endTime.setHours(requestedRoom[j].endTime.substring(0, 2), requestedRoom[j].endTime.substring(3), 0, 0);
+
+                room_conflict = checkConflict(requestedRoom[j].room_id, request.room_id, requestedRoom[j].date, request.date,
+                    requestStartTime, startTime, requestEndTime, endTime,
+                    requestStartTime.getTime(), startTime.getTime(), requestEndTime.getTime(), endTime.getTime())
+
+                if (room_conflict) {
+                    setShowError(true)
+                    break
+                }
+
+            }
+
+            if (!faculty_conflict && !room_conflict) {
                 addStaffRequest()
-                conflict = false
+                faculty_conflict = false
+                room_conflict = false
             }
         }
 
@@ -285,7 +313,7 @@ function StaffRequest(props) {
                         </div>
                         <div>
                             {
-                                showError && <Alert style={{ marginTop: '12px' }} severity="error">Faculty member is not available between this interval.</Alert>
+                                showError && <Alert style={{ marginTop: '12px' }} severity="error">Faculty member or Room is not available between this interval.</Alert>
                             }
                         </div>
                         <div className='center flexbox-container-y'>

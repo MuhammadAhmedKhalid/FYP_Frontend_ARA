@@ -27,6 +27,10 @@ export const addFacultyReducer = (state = addFacultyInitialState, action) => {
             error: action.message,
             added: false
         }
+        case RESET_STATE: return {
+            ...state,
+            added: null
+        }
         default: return state
     }
 }

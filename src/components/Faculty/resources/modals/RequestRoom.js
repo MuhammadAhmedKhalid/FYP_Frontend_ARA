@@ -107,7 +107,7 @@ function RequestRoom(props) {
     const handleRoomChange = (event) => {
         const room_name = event.target.value
         for (let i = 0; i < rooms.length; i++) {
-            if (rooms[i].room_name === room_name) {
+            if (rooms[i].room_name === room_name && rooms[i].department_id === request.department_id) {
                 setRequest({ ...request, room_id: rooms[i].room_id })
             }
         }
