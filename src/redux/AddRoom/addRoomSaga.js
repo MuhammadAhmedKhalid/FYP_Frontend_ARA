@@ -12,7 +12,7 @@ function* addRoom(room) {
         yield call(axios.post, 'http://localhost:8080/add_room', room.room, { headers });
         yield put({ type: ADD_ROOM_SUCCESS, message: "Room added successfully." })
     } catch (error) {
-        yield put({ type: ADD_ROOM_FAILURE, message: "Add Room operation failed." })
+        yield put({ type: ADD_ROOM_FAILURE, message: error.response.data })
     }
 }
 

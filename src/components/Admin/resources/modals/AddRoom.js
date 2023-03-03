@@ -1,10 +1,11 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import Modal from 'react-modal'
 import { useSelector, useDispatch } from 'react-redux'
 import TextField from '@material-ui/core/TextField'
 import InputAdornment from '@material-ui/core/InputAdornment'
 import MeetingRoomIcon from '@mui/icons-material/MeetingRoom';
-import { addRoomRequest } from '../../../../redux/AddRoom/addRoomActions'
+import { addRoomRequest, resetState } from '../../../../redux/AddRoom/addRoomActions'
+import { Alert } from '@mui/material';
 
 function AddRoom(props) {
 
@@ -15,12 +16,31 @@ function AddRoom(props) {
     const departments = useSelector((state) => state.getDepartments.departments.data)
     const departmentsAdded = useSelector((state) => state.getDepartments.added)
     const institute_id = useSelector((state) => state.login.user.institute_id)
+    const requestSuccessfull = useSelector((state) => state.addRoomReducer.added)
+    const requestUnsuccessfullMsg = useSelector((state) => state.addRoomReducer.error)
+
+    const [showError, setShowError] = useState(false);
+    const [errorMsg, setErrorMsg] = useState('')
 
     const [room, setRoom] = useState({
         room_name: "",
         department_id: "",
         institute_id
     })
+
+    useEffect(() => {
+        if(requestSuccessfull){
+            setOpenRoomModal(false)
+            setErrorMsg('')
+            setShowError(false)
+            alert("Operation performed successfully!")
+            dispatch(resetState())
+        } else if (requestSuccessfull === false) {
+            setErrorMsg(requestUnsuccessfullMsg)
+            setShowError(true)
+            dispatch(resetState())
+        }
+    }, [requestSuccessfull])
 
     const customStyles = {
         overlay: {
@@ -43,10 +63,15 @@ function AddRoom(props) {
             }
     }
 
+    const closeModal = () => {
+        setOpenRoomModal(false)
+        setShowError(false)
+        setErrorMsg('')
+    }
+
     const handleSubmit = (e) => {
         e.preventDefault()
         dispatch(addRoomRequest(room))
-        setOpenRoomModal(false)
     }
 
     return (
@@ -55,7 +80,7 @@ function AddRoom(props) {
                 className='modal-content'
                 style={customStyles}
                 isOpen={openRoomModal}
-                onRequestClose={() => setOpenRoomModal(false)}>
+                onRequestClose={() => closeModal()}>
                 <div className='center flexbox-container-y'>
                     <h2 style={{ color: "#115868", fontSize: 20 }}>Add Room</h2>
                     <form onSubmit={handleSubmit}>
@@ -79,6 +104,11 @@ function AddRoom(props) {
                                         <option key={department.department_id}>{department.department_name}</option>) : null
                                 }
                             </select>
+                        </div>
+                        <div>
+                            {
+                                showError && <Alert style={{ marginTop: '12px' }} severity="error">{errorMsg}</Alert>
+                            }
                         </div>
                         <center><button className='modal-btn' style={{marginTop: '20px'}} type='submit'>Add</button></center>
                     </form>

@@ -22,7 +22,6 @@ function AddDepartment(props) {
 
     useEffect(() => {
         setRefresh(false)
-        console.log(showError)
     })
 
     useEffect(() => {
