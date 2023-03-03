@@ -10,6 +10,8 @@ import { getRoomsRequest } from '../../redux/GetRooms/getRoomsActions'
 import { getFacultyRequest } from '../../redux/GetFaculty/getFacultyActions'
 import { getDepartmentsRequest } from '../../redux/GetDepartments/getDepartmentsActions'
 import { deleteRequestedObj } from '../../redux/DeleteObjectRequest/delObjReqActions'
+import { deleteRequestedRoom } from '../../redux/DeleteRoomRequest/delRoomReqActions'
+import { deleteRequestedStaff } from '../../redux/DeleteStaffRequest/delStaffReqActions'
  
 function RequestedData() {
 
@@ -45,8 +47,10 @@ function RequestedData() {
                     dispatch(deleteRequestedObj(req_id))
                     break;
                 case 'RR':
+                    dispatch(deleteRequestedRoom(req_id))
                     break;
                 case 'SR':
+                    dispatch(deleteRequestedStaff(req_id))
                     break;
                 default:
                     break;
