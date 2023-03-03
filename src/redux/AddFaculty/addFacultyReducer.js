@@ -1,9 +1,10 @@
-import { ADD_FACULTY_FAILURE, ADD_FACULTY_REQUEST, ADD_FACULTY_SUCCESS } from './addFacultyTypes'
+import { ADD_FACULTY_FAILURE, ADD_FACULTY_REQUEST, ADD_FACULTY_SUCCESS, RESET_STATE } from './addFacultyTypes'
 
 export const addFacultyInitialState = {
     loading: false,
     success: '',
     error: '',
+    added: null
 }
 
 export const addFacultyReducer = (state = addFacultyInitialState, action) => {
@@ -17,12 +18,14 @@ export const addFacultyReducer = (state = addFacultyInitialState, action) => {
             loading: false,
             success: action.message,
             error: '',
+            added: true
         }
         case ADD_FACULTY_FAILURE: return {
             ...state,
             loading: false,
             success: '',
             error: action.message,
+            added: false
         }
         default: return state
     }

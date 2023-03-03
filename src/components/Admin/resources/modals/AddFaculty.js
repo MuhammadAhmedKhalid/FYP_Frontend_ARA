@@ -6,10 +6,11 @@ import PersonIcon from '@mui/icons-material/Person';
 import CallIcon from '@mui/icons-material/Call';
 import EmailIcon from '@mui/icons-material/Email';
 import { useSelector, useDispatch } from 'react-redux'
-import { addFacultyRequest } from '../../../../redux/AddFaculty/addFacultyActions';
+import { addFacultyRequest, resetState } from '../../../../redux/AddFaculty/addFacultyActions';
 import { getDepartmentsRequest } from '../../../../redux/GetDepartments/getDepartmentsActions'
 import { getSpecializationRequest } from '../../../../redux/GetSpecialization/getSpecializationActions'
 import { getPositionRequest } from '../../../../redux/GetPosition/getPositionActions'
+import { Alert } from '@mui/material';
 
 function AddFaculty(props) {
 
@@ -24,9 +25,14 @@ function AddFaculty(props) {
     const positions = useSelector((state) => state.getPositionReducer.positions)
     const positionsAdded = useSelector((state) => state.getPositionReducer.added)
     const specializations = useSelector((state) => state.getSpecializationReducer.specializations)
-    const specializationsAdded = useSelector((state) => state.getSpecializationReducer.added)
     const institute_id = useSelector((state) => state.login.user.institute_id)
     const [specializationData, setSpecializationData] = useState([])
+    const requestSuccessfull = useSelector((state) => state.addFaculty.added)
+    const requestUnsuccessfullMsg = useSelector((state) => state.addFaculty.error)
+
+    const [showError, setShowError] = useState(false);
+    const [errorMsg, setErrorMsg] = useState('')
+
 
     const [faculty, setFaculty] = useState({
         name: "",
@@ -66,6 +72,21 @@ function AddFaculty(props) {
         setRefresh(false)
     })
 
+    useEffect(() => {
+        if(requestSuccessfull){
+            setOpenFacultyModal(false)
+            setRefresh(true)
+            setErrorMsg('')
+            setShowError(false)
+            alert("Operation performed successfully!")
+            dispatch(resetState())
+        } else if (requestSuccessfull === false) {
+            setErrorMsg(requestUnsuccessfullMsg)
+            setShowError(true)
+            dispatch(resetState())
+        }
+    }, [requestSuccessfull])
+
     useEffect(()=>{
         if(departmentsAdded){
             if (specializations !== undefined && departments !== undefined) {
@@ -94,11 +115,15 @@ function AddFaculty(props) {
         },
     };
 
+    const closeModal = () => {
+        setOpenFacultyModal(false)
+        setShowError(false)
+        setErrorMsg('')
+    }
+
     const submitHandler = (event) => {
         event.preventDefault()
-        setOpenFacultyModal(false)
         dispatch(addFacultyRequest(faculty))
-        setRefresh(true)
     }
 
     return (
@@ -168,6 +193,11 @@ function AddFaculty(props) {
                                     <option key={specialization.id}>{specialization.name}</option>) : null
                             }
                         </select>
+                        <div>
+                            {
+                                showError && <Alert style={{ marginTop: '12px' }} severity="error">{errorMsg}</Alert>
+                            }
+                        </div>
                         <div className='center flexbox-container-y'>
                             <button style={{ marginTop: '1rem' }} type='submit' className='modal-btn'>Add</button>
                         </div>

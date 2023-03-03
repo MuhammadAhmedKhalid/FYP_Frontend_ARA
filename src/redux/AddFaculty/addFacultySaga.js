@@ -12,7 +12,7 @@ function* addFaculty(faculty) {
         yield call(axios.post, 'http://localhost:8080/create-faculty', faculty.faculty, { headers });
         yield put({ type: ADD_FACULTY_SUCCESS, message: "Faculty added successfully." })
     } catch (error) {
-        yield put({ type: ADD_FACULTY_FAILURE, message: "Add faculty operation failed." })
+        yield put({ type: ADD_FACULTY_FAILURE, message: error.response.data })
     }
 }
 
