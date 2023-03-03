@@ -25,6 +25,7 @@ import { getSpecializationReducer } from './GetSpecialization/getSpecializationR
 import { addStaffReqeReducer } from './AddStaffRequest/staffRequestReducer'
 import { staffReqReducer } from './GetStaffRequest/getStaffReqReducer'
 import { deleteObjReqReducer } from './DeleteObjectRequest/delObjReqReducer'
+import { deleteRoomReqReducer } from './DeleteRoomRequest/delRoomReqReducer'
 
 export const rootReducer = combineReducers({
     signup: signupReducer,
@@ -53,4 +54,5 @@ export const rootReducer = combineReducers({
     addStaffReqeReducer,
     staffReqReducer,
     deleteObjReqReducer,
+    deleteRoomReqReducer,
 })
