@@ -12,7 +12,7 @@ function* addPosition(position) {
         yield call(axios.post, 'http://localhost:8080/addPosition', position.position, { headers });
         yield put({ type: ADD_POSITION_SUCCESS, message: "Position added successfully." })
     } catch (error) {
-        yield put({ type: ADD_POSITION_FAILURE, message: "Add Position operation failed." })
+        yield put({ type: ADD_POSITION_FAILURE, message: error.response.data })
     }
 }
 

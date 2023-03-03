@@ -1,10 +1,11 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import Modal from 'react-modal'
 import TextField from '@material-ui/core/TextField'
 import MilitaryTechIcon from '@mui/icons-material/MilitaryTech';
 import InputAdornment from '@material-ui/core/InputAdornment'
 import { useSelector, useDispatch } from 'react-redux'
-import { addPositionRequest } from '../../../../redux/AddPosition/addPositionActions'
+import { addPositionRequest, resetState } from '../../../../redux/AddPosition/addPositionActions'
+import { Alert } from '@mui/material';
 
 function AddPosition(props) {
 
@@ -13,11 +14,31 @@ function AddPosition(props) {
     const dispatch = useDispatch()
 
     const institute_id = useSelector((state) => state.login.user.institute_id)
+    const requestSuccessfull = useSelector((state) => state.addPositionReducer.added)
+    const requestUnsuccessfullMsg = useSelector((state) => state.addPositionReducer.error)
+
+    const [showError, setShowError] = useState(false);
+    const [errorMsg, setErrorMsg] = useState('')
 
     const [position, setPosition] = useState({
         position_name: "",
         institute_id
     })
+
+    useEffect(() => {
+        if(requestSuccessfull){
+            setOpenPositionModal(false)
+            setRefresh(true)
+            setErrorMsg('')
+            setShowError(false)
+            alert("Operation performed successfully!")
+            dispatch(resetState())
+        } else if (requestSuccessfull === false) {
+            setErrorMsg(requestUnsuccessfullMsg)
+            setShowError(true)
+            dispatch(resetState())
+        }
+    }, [requestSuccessfull])
 
     const customStyles = {
         overlay: {
@@ -31,11 +52,15 @@ function AddPosition(props) {
         },
     };
 
+    const closeModal = () => {
+        setOpenPositionModal(false)
+        setShowError(false)
+        setErrorMsg('')
+    }
+
     const submitHandler = (event) => {
         event.preventDefault()
-        setOpenPositionModal(false)
         dispatch(addPositionRequest(position))
-        setRefresh(true)
     }
 
     return (
@@ -44,7 +69,7 @@ function AddPosition(props) {
                 className='modal-content'
                 style={customStyles}
                 isOpen={openPositionModal}
-                onRequestClose={() => setOpenPositionModal(false)}>
+                onRequestClose={() => closeModal()}>
                 <div className='center flexbox-container-y'>
                     <h2 style={{ color: "#115868", fontSize: 20 }}>Add Position</h2>
                     <form onSubmit={submitHandler}>
@@ -56,6 +81,11 @@ function AddPosition(props) {
                                     </InputAdornment>
                                 )
                             }} />
+                        <div>
+                            {
+                                showError && <Alert style={{ marginTop: '12px' }} severity="error">{errorMsg}</Alert>
+                            }
+                        </div>
                         <div className='center flexbox-container-y'>
                             <button style={{ marginTop: '1rem' }} type='submit' className='modal-btn'>Add</button>
                         </div>
