@@ -94,8 +94,8 @@ function ObjectRequest(props) {
             dispatch(getRoomsRequest(institute_id))
             dispatch(getResourceTypesRequest(institute_id))
             dispatch(getResources(institute_id))
+            dispatch(getObjectsRequest(institute_id))
         }
-        dispatch(getObjectsRequest())
     }, [institute_id])
 
     useEffect(() => {

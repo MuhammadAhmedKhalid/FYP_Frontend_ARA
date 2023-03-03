@@ -16,7 +16,7 @@ export const objectsReducer = (state = objectssInitialState, action) => {
         case GET_OBJECTS_SUCCESS: return {
             ...state,
             loading: false,
-            objects: action.data,
+            objects: action.result,
             error: '',
             added: true
         }
