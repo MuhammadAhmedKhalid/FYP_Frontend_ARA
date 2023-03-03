@@ -5,7 +5,8 @@ import TextField from '@material-ui/core/TextField'
 import InputAdornment from '@material-ui/core/InputAdornment'
 import { useSelector, useDispatch } from 'react-redux'
 import { getDepartmentsRequest } from '../../../../redux/GetDepartments/getDepartmentsActions'
-import { addSpecializationRequest } from '../../../../redux/AddSpecialization/addSpecializationActions'
+import { addSpecializationRequest, resetState } from '../../../../redux/AddSpecialization/addSpecializationActions'
+import { Alert } from '@mui/material';
 
 function AddSpecialization(props) {
 
@@ -16,6 +17,11 @@ function AddSpecialization(props) {
     const institute_id = useSelector((state) => state.login.user.institute_id)
     const departments = useSelector((state) => state.getDepartments.departments.data)
     const departmentsAdded = useSelector((state) => state.getDepartments.added)
+    const requestSuccessfull = useSelector((state) => state.addSpecializationReducer.added)
+    const requestUnsuccessfullMsg = useSelector((state) => state.addSpecializationReducer.error)
+
+    const [showError, setShowError] = useState(false);
+    const [errorMsg, setErrorMsg] = useState('')
 
     const [specialization, setSpecialization] = useState({
         specialization_name: "",
@@ -29,6 +35,21 @@ function AddSpecialization(props) {
         }
     }, [institute_id])
     
+    useEffect(() => {
+        if(requestSuccessfull){
+            setOpenSpecializationModal(false)
+            setRefresh(true)
+            setErrorMsg('')
+            setShowError(false)
+            alert("Operation performed successfully!")
+            dispatch(resetState())
+        } else if (requestSuccessfull === false) {
+            setErrorMsg(requestUnsuccessfullMsg)
+            setShowError(true)
+            dispatch(resetState())
+        }
+    }, [requestSuccessfull])
+
     const customStyles = {
         overlay: {
             backgroundColor: 'rgba(0, 0, 0, .7)',
@@ -50,11 +71,15 @@ function AddSpecialization(props) {
         }
     }
 
+    const closeModal = () => {
+        setOpenSpecializationModal(false)
+        setShowError(false)
+        setErrorMsg('')
+    }
+
     const submitHandler = (event) => {
         event.preventDefault()
-        setOpenSpecializationModal(false)
         dispatch(addSpecializationRequest(specialization))
-        setRefresh(true)
     }
 
     return (
@@ -63,7 +88,7 @@ function AddSpecialization(props) {
                 className='modal-content'
                 style={customStyles}
                 isOpen={openSpecializationModal}
-                onRequestClose={() => setOpenSpecializationModal(false)}>
+                onRequestClose={() => closeModal()}>
                 <div className='center flexbox-container-y'>
                     <h2 style={{ color: "#115868", fontSize: 20 }}>Add Specialization</h2>
                     <form onSubmit={submitHandler}>
@@ -87,6 +112,11 @@ function AddSpecialization(props) {
                                     <option key={department.department_id}>{department.department_name}</option>) : null
                             }
                         </select>
+                        <div>
+                            {
+                                showError && <Alert style={{ marginTop: '12px' }} severity="error">{errorMsg}</Alert>
+                            }
+                        </div>
                         <div className='center flexbox-container-y'>
                             <button style={{ marginTop: '1rem' }} type='submit' className='modal-btn'>Add</button>
                         </div>

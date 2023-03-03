@@ -12,7 +12,7 @@ function* addSpecialization(specialization) {
         yield call(axios.post, 'http://localhost:8080/addSpecialization', specialization.specialization, { headers });
         yield put({ type: ADD_SPECIALIZATION_SUCCESS, message: "Specialization added successfully." })
     } catch (error) {
-        yield put({ type: ADD_SPECIALIZATION_FAILURE, message: "Add Specialization operation failed." })
+        yield put({ type: ADD_SPECIALIZATION_FAILURE, message: error.response.data })
     }
 }
 
