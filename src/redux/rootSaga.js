@@ -26,6 +26,7 @@ import { addStaffRequestSaga } from './AddStaffRequest/staffRequestSaga'
 import { getStaffReqSaga } from './GetStaffRequest/getStaffReqSaga'
 import { deleteObjRequestSaga } from './DeleteObjectRequest/delObjReqSaga'
 import { deleteRoomRequestSaga } from './DeleteRoomRequest/delRoomReqSaga'
+import { deleteStaffRequestSaga } from './DeleteStaffRequest/delStaffReqSaga'
 
 export function* rootSaga() {
     yield fork(signupSaga)
@@ -55,4 +56,5 @@ export function* rootSaga() {
     yield fork(getStaffReqSaga)
     yield fork(deleteObjRequestSaga)
     yield fork(deleteRoomRequestSaga)
+    yield fork(deleteStaffRequestSaga)
 }
