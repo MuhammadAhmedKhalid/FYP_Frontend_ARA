@@ -12,7 +12,7 @@ function* addObject(object) {
         yield call(axios.post, 'http://localhost:8080/addObject', object.object, { headers });
         yield put({ type: ADD_OBJECT_SUCCESS, message: "Object added successfully." })
     } catch (error) {
-        yield put({ type: ADD_OBJECT_FAILURE, message: "Add Object operation failed." })
+        yield put({ type: ADD_OBJECT_FAILURE, message: error.response.data })
     }
 }
 
