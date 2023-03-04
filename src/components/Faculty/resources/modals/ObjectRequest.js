@@ -34,10 +34,11 @@ function ObjectRequest(props) {
     const requestSuccessfull = useSelector((state) => state.addObjRequest.added)
     const requestUnsuccessfullMsg = useSelector((state) => state.addObjRequest.error)
     const objects = useSelector((state) => state.getObjects.objects.data)
+    const objectss = [...new Set(objects)]
     const objectsAdded = useSelector((state) => state.getObjects.added)
     const institute_id = useSelector((state) => state.login.user.institute_id)
     const user_id = useSelector((state) => state.login.user.user_id)
-
+    
     const [value, setValue] = useState(dayjs(new Date()));
     const [value1, setValue1] = useState(dayjs(new Date()));
     const [roomsData, setRoomsData] = useState([])
@@ -268,7 +269,7 @@ function ObjectRequest(props) {
                         <select required className='dropdown' onChange={handleObjectChange}>
                             <option></option>
                             {
-                                objectsAdded && objects.length !== 0 ? objects.map((object, index) =>
+                                objectsAdded && objectss.length !== 0 ? objectss.map((object, index) =>
                                     <option key={index}>{object}</option>) : null
                             }
                         </select>
