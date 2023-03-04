@@ -18,6 +18,7 @@ import { getObjReqRequest } from '../../../../redux/GetObjectRequests/getObjReqA
 import { addRequestedObj, resetState } from '../../../../redux/AddObjRequest/addObjRequestActions'
 import { checkConflict, checkValidTime } from '../../utils'
 import { getObjectsRequest } from '../../../../redux/GetObjects/getObjectsActions'
+import { getObjectsPerResRequest } from '../../../../redux/GetObjsPerResourceType/getObjsPerResActions'
 
 function ObjectRequest(props) {
 
@@ -38,6 +39,7 @@ function ObjectRequest(props) {
     const objectsAdded = useSelector((state) => state.getObjects.added)
     const institute_id = useSelector((state) => state.login.user.institute_id)
     const user_id = useSelector((state) => state.login.user.user_id)
+    const objectsPerResType = useSelector((state) => state.objectsPerResReducer.objects.data)
     
     const [value, setValue] = useState(dayjs(new Date()));
     const [value1, setValue1] = useState(dayjs(new Date()));
@@ -58,6 +60,12 @@ function ObjectRequest(props) {
         startTime: format(new Date(), 'HH:mm'),
         endTime: format(new Date(), 'HH:mm'),
     })
+
+    useEffect(() => {
+        if(request.resource_type_id > 0){
+            dispatch(getObjectsPerResRequest(request.resource_type_id))
+        }
+    }, [request.resource_type_id])
 
     useEffect(() => {
         if (requestUnsuccessfullMsg.length === 0) {
@@ -184,11 +192,11 @@ function ObjectRequest(props) {
     }
 
     const handleForm = (e) => {
-        let conflict = false;
         e.preventDefault();
-        if (objectsRequest.length === 0) {
-            addObjectRequest()
+        if(request.quantity > objectsPerResType){
+            setShowError(true)
         } else {
+            let conflict = false
             let alreadyRequestedQuantity = 0
             for (let i = 0; i < objectsRequest.length; i++) {
 
@@ -211,15 +219,7 @@ function ObjectRequest(props) {
                 }
                 conflict = false
             }
-
-            let availableQuantity = 0
-            for (let j = 0; j < objectsInfo.length; j++) {
-                if (objectsInfo[j].resource_type_id === request.resource_type_id) {
-                    availableQuantity = objectsInfo[j].quantity - alreadyRequestedQuantity
-                    break
-                }
-            }
-
+            const availableQuantity = objectsPerResType - alreadyRequestedQuantity
             if (availableQuantity < request.quantity) {
                 setShowError(true)
                 conflict = true
@@ -228,7 +228,6 @@ function ObjectRequest(props) {
                 addObjectRequest()
                 conflict = false
             }
-
         }
     }
 
