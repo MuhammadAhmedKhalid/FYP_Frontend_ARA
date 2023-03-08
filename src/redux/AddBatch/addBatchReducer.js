@@ -1,4 +1,4 @@
-import { ADD_BATCH_FAILURE, ADD_BATCH_REQUEST, ADD_BATCH_SUCCESS } from './addBatchTypes'
+import { ADD_BATCH_FAILURE, ADD_BATCH_REQUEST, ADD_BATCH_SUCCESS, RESET_STATE } from './addBatchTypes'
 
 export const addBatchInitialState = {
     loading: false,
@@ -26,6 +26,10 @@ export const addBatchReducer = (state = addBatchInitialState, action) => {
             success: '',
             error: action.message,
             added: false
+        }
+        case RESET_STATE: return {
+            ...state,
+            added: null
         }
         default: return state
     }
