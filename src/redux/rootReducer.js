@@ -28,6 +28,7 @@ import { deleteObjReqReducer } from './DeleteObjectRequest/delObjReqReducer'
 import { deleteRoomReqReducer } from './DeleteRoomRequest/delRoomReqReducer'
 import { deleteStaffReqReducer } from './DeleteStaffRequest/delStaffReqReducer'
 import { objectsPerResReducer } from './GetObjsPerResourceType/getObjsPerResReducer'
+import { addBatchReducer } from './AddBatch/addBatchReducer'
 
 export const rootReducer = combineReducers({
     signup: signupReducer,
@@ -59,4 +60,5 @@ export const rootReducer = combineReducers({
     deleteRoomReqReducer,
     deleteStaffReqReducer,
     objectsPerResReducer,
+    addBatchReducer,
 })

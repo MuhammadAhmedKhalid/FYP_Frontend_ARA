@@ -28,6 +28,7 @@ import { deleteObjRequestSaga } from './DeleteObjectRequest/delObjReqSaga'
 import { deleteRoomRequestSaga } from './DeleteRoomRequest/delRoomReqSaga'
 import { deleteStaffRequestSaga } from './DeleteStaffRequest/delStaffReqSaga'
 import { getObjectsPerResSaga } from './GetObjsPerResourceType/getObjsPerResSaga'
+import { addBatchSaga } from './AddBatch/addBatchSaga'
 
 export function* rootSaga() {
     yield fork(signupSaga)
@@ -59,4 +60,5 @@ export function* rootSaga() {
     yield fork(deleteRoomRequestSaga)
     yield fork(deleteStaffRequestSaga)
     yield fork(getObjectsPerResSaga)
+    yield fork(addBatchSaga)
 }
