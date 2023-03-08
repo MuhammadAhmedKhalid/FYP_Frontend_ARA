@@ -5,6 +5,7 @@ import AddBatches from './modals/AddBatches'
 import Table from '../../Root/Table'
 import { useSelector, useDispatch } from 'react-redux'
 import { getBatchesRequest } from '../../../redux/GetBatches/getBatchesActions'
+import { getDepartmentsRequest } from '../../../redux/GetDepartments/getDepartmentsActions'
 
 function Batches() {
 
@@ -12,6 +13,8 @@ function Batches() {
 
     const batches = useSelector((state) => state.getBatchesReducer.batches.data)
     const batchesAdded = useSelector((state) => state.getBatchesReducer.added)
+    const departments = useSelector((state) => state.getDepartments.departments.data)
+    const departmentsAdded = useSelector((state) => state.getDepartments.added)
     const institute_name = useSelector((state) => state.login.user.institute_name)
     const institute_id = useSelector((state) => state.login.user.institute_id)
 
@@ -20,16 +23,21 @@ function Batches() {
     const [refresh, setRefresh] = useState(false)
 
     useEffect(()=>{
-        if(batchesAdded && rowData.length !== batches.length){
+        if(batchesAdded && rowData.length !== batches.length && departmentsAdded){
             for(let i=0; i<batches.length; i++){
-                rowData.push([batches[i].batchYear, institute_name])
+                for(let j in departments){
+                    if(departments[j].department_id == batches[i].department_id){
+                        rowData.push([batches[i].batchYear, departments[j].department_name])
+                    }
+                }
             }
         }
-    },[batchesAdded, batches, institute_name, rowData])
+    },[batchesAdded, batches, institute_name, rowData, departments, departmentsAdded])
 
     useEffect(() => {
         if(institute_id > 0){
             dispatch(getBatchesRequest(institute_id))
+            dispatch(getDepartmentsRequest(institute_id))
         }
     }, [refresh, institute_id, dispatch])
 
