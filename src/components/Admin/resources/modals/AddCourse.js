@@ -19,7 +19,7 @@ function AddCourse(props) {
     const departmentsAdded = useSelector((state) => state.getDepartments.added)
     const requestSuccessfull = useSelector((state) => state.addCourseReducer.added)
     const requestUnsuccessfullMsg = useSelector((state) => state.addCourseReducer.error)
-
+    
     const [showError, setShowError] = useState(false);
     const [errorMsg, setErrorMsg] = useState('')
 
