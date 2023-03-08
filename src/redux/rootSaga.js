@@ -19,9 +19,9 @@ import { addDepartmentSaga } from './AddDepartment/addDepartmentSaga'
 import { addRoomSaga } from './AddRoom/addRoomSaga'
 import { addObjectSaga } from './AddObject/addObjectSaga'
 import { addPositionSaga } from './AddPosition/addPositionSaga'
-import { addSpecializationSaga } from './AddSpecialization/addSpecializationSaga'
+import { addCourseSaga } from './AddCourse/addCourseSaga'
 import { getPositionSaga } from './GetPosition/getPositionSaga'
-import { getSpecializationSaga } from './GetSpecialization/getSpecializationSaga'
+import { getCourseSaga } from './GetCourse/getCourseSaga'
 import { addStaffRequestSaga } from './AddStaffRequest/staffRequestSaga'
 import { getStaffReqSaga } from './GetStaffRequest/getStaffReqSaga'
 import { deleteObjRequestSaga } from './DeleteObjectRequest/delObjReqSaga'
@@ -52,9 +52,9 @@ export function* rootSaga() {
     yield fork(addRoomSaga)
     yield fork(addObjectSaga)
     yield fork(addPositionSaga)
-    yield fork(addSpecializationSaga)
+    yield fork(addCourseSaga)
     yield fork(getPositionSaga)
-    yield fork(getSpecializationSaga)
+    yield fork(getCourseSaga)
     yield fork(addStaffRequestSaga)
     yield fork(getStaffReqSaga)
     yield fork(deleteObjRequestSaga)

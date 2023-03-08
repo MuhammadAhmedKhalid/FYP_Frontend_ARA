@@ -8,7 +8,7 @@ import EmailIcon from '@mui/icons-material/Email';
 import { useSelector, useDispatch } from 'react-redux'
 import { addFacultyRequest, resetState } from '../../../../redux/AddFaculty/addFacultyActions';
 import { getDepartmentsRequest } from '../../../../redux/GetDepartments/getDepartmentsActions'
-import { getSpecializationRequest } from '../../../../redux/GetSpecialization/getSpecializationActions'
+import { getCourseRequest } from '../../../../redux/GetCourse/getCourseActions'
 import { getPositionRequest } from '../../../../redux/GetPosition/getPositionActions'
 import { Alert } from '@mui/material';
 
@@ -24,7 +24,7 @@ function AddFaculty(props) {
     const departmentsAdded = useSelector((state) => state.getDepartments.added)
     const positions = useSelector((state) => state.getPositionReducer.positions)
     const positionsAdded = useSelector((state) => state.getPositionReducer.added)
-    const specializations = useSelector((state) => state.getSpecializationReducer.specializations)
+    const courses = useSelector((state) => state.getCourseReducer.courses)
     const institute_id = useSelector((state) => state.login.user.institute_id)
     const [specializationData, setSpecializationData] = useState([])
     const requestSuccessfull = useSelector((state) => state.addFaculty.added)
@@ -39,8 +39,8 @@ function AddFaculty(props) {
         phone_number: "",
         officialEmailAddress: "",
         department: "",
-        specialization: "cloud computing",
-        designation: "lecturer",
+        specialization: "",
+        designation: "",
         institute_id: "",
         user: {
             "name": "",
@@ -53,7 +53,7 @@ function AddFaculty(props) {
         if(institute_id > 0){
             dispatch(getDepartmentsRequest(institute_id))
             dispatch(getPositionRequest(institute_id))
-            dispatch(getSpecializationRequest(institute_id))
+            dispatch(getCourseRequest(institute_id))
         }
     }, [institute_id])
 
@@ -89,13 +89,13 @@ function AddFaculty(props) {
 
     useEffect(()=>{
         if(departmentsAdded){
-            if (specializations !== undefined && departments !== undefined) {
+            if (courses !== undefined && departments !== undefined) {
                 setSpecializationData([])
-                for (let i = 0; i < specializations.length; i++) {
+                for (let i = 0; i < courses.length; i++) {
                     for (let j = 0; j < departments.length; j++) {
-                        if (specializations[i].department_id === departments[j].department_id && departments[j].department_name === faculty.department) {
+                        if (courses[i].department_id === departments[j].department_id && departments[j].department_name === faculty.department) {
                             setSpecializationData(specializationData => 
-                                [...specializationData, { id: specializations[i].specialization_id, name: specializations[i].specialization_name }])
+                                [...specializationData, { id: courses[i].course_id, name: courses[i].course_name }])
                         }
                     }
                 }
@@ -136,7 +136,8 @@ function AddFaculty(props) {
                 <div className='center flexbox-container-y'>
                     <h2 style={{ color: "#115868", fontSize: 20 }}>Add Faculty</h2>
                     <form onSubmit={submitHandler}>
-                        <TextField autoFocus required value={faculty.first_name} onChange={(e) => setFaculty({ ...faculty, name: e.target.value, user: { ...faculty.user, name: e.target.value } })}
+                        <TextField autoFocus required value={faculty.first_name} 
+                        onChange={(e) => setFaculty({ ...faculty, name: e.target.value, user: { ...faculty.user, name: e.target.value } })}
                             style={{ margin: '3px' }} size='small' variant="outlined" type='text' placeholder='Name' InputProps={{
                                 startAdornment: (
                                     <InputAdornment position='start'>

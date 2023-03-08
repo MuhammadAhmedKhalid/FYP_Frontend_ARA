@@ -74,9 +74,9 @@ const AdminNavBar = () => {
                         path: '/positions'
                     },
                     {
-                        name: 'Specialization',
-                        value: 'specialization',
-                        path: '/specializations'
+                        name: 'Courses',
+                        value: 'courses',
+                        path: '/courses'
                     },
                     {
                         name: 'Faculty',

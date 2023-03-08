@@ -19,9 +19,9 @@ import { addDepartmentReducer } from './AddDepartment/addDepartmentReducer'
 import { addRoomReducer } from './AddRoom/addRoomReducer'
 import { addObjectReducer } from './AddObject/addObjectReducer'
 import { addPositionReducer } from './AddPosition/addPositionReducer'
-import { addSpecializationReducer } from './AddSpecialization/addSpecializationReducer'
+import { addCourseReducer } from './AddCourse/addCourseReducer'
 import { getPositionReducer } from './GetPosition/getPositionReducer'
-import { getSpecializationReducer } from './GetSpecialization/getSpecializationReducer'
+import { getCourseReducer } from './GetCourse/getCourseReducer'
 import { addStaffReqeReducer } from './AddStaffRequest/staffRequestReducer'
 import { staffReqReducer } from './GetStaffRequest/getStaffReqReducer'
 import { deleteObjReqReducer } from './DeleteObjectRequest/delObjReqReducer'
@@ -52,9 +52,9 @@ export const rootReducer = combineReducers({
     addRoomReducer,
     addObjectReducer,
     addPositionReducer,
-    addSpecializationReducer,
+    addCourseReducer,
     getPositionReducer,
-    getSpecializationReducer,
+    getCourseReducer,
     addStaffReqeReducer,
     staffReqReducer,
     deleteObjReqReducer,

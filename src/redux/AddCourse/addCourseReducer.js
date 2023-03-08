@@ -1,26 +1,26 @@
-import { ADD_SPECIALIZATION_FAILURE, ADD_SPECIALIZATION_REQUEST, ADD_SPECIALIZATION_SUCCESS, RESET_STATE } from './addSpecializationTypes'
+import { ADD_COURSE_FAILURE, ADD_COURSE_REQUEST, ADD_COURSE_SUCCESS, RESET_STATE } from './addCourseTypes'
 
-export const addSpecializationInitialState = {
+export const addCourseInitialState = {
     loading: false,
     success: '',
     error: '',
     added: null
 }
 
-export const addSpecializationReducer = (state = addSpecializationInitialState, action) => {
+export const addCourseReducer = (state = addCourseInitialState, action) => {
     switch (action.type) {
-        case ADD_SPECIALIZATION_REQUEST: return {
+        case ADD_COURSE_REQUEST: return {
             ...state,
             loading: true
         }
-        case ADD_SPECIALIZATION_SUCCESS: return {
+        case ADD_COURSE_SUCCESS: return {
             ...state,
             loading: false,
             success: action.message,
             error: '',
             added: true
         }
-        case ADD_SPECIALIZATION_FAILURE: return {
+        case ADD_COURSE_FAILURE: return {
             ...state,
             loading: false,
             success: '',
