@@ -42,11 +42,11 @@ function Faculty() {
     useEffect(()=>{
         if(facultyAdded && rowData.length === 0){
             for(let i=0; i<faculty.length; i++){
-                rowData.push([faculty[i].name, faculty[i].phone_number, faculty[i].department, faculty[i].specialization, faculty[i].designation])
+                rowData.push([faculty[i].name, faculty[i].phone_number, faculty[i].department, faculty[i].specialization.join(', '), faculty[i].designation])
             }
         }
     }, [facultyAdded])
-
+    
     return (
         <div className="flexbox-container-y white-bg-y">
             <div>

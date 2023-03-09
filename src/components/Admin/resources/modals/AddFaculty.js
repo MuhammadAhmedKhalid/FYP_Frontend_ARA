@@ -11,6 +11,7 @@ import { getDepartmentsRequest } from '../../../../redux/GetDepartments/getDepar
 import { getCourseRequest } from '../../../../redux/GetCourse/getCourseActions'
 import { getPositionRequest } from '../../../../redux/GetPosition/getPositionActions'
 import { Alert } from '@mui/material';
+import Select from "react-select";
 
 function AddFaculty(props) {
 
@@ -33,13 +34,12 @@ function AddFaculty(props) {
     const [showError, setShowError] = useState(false);
     const [errorMsg, setErrorMsg] = useState('')
 
-
     const [faculty, setFaculty] = useState({
         name: "",
         phone_number: "",
         officialEmailAddress: "",
         department: "",
-        specialization: "",
+        specialization: [],
         designation: "",
         institute_id: "",
         user: {
@@ -95,7 +95,7 @@ function AddFaculty(props) {
                     for (let j = 0; j < departments.length; j++) {
                         if (courses[i].department_id === departments[j].department_id && departments[j].department_name === faculty.department) {
                             setSpecializationData(specializationData => 
-                                [...specializationData, { id: courses[i].course_id, name: courses[i].course_name }])
+                                [...specializationData, { label: courses[i].course_name, value: courses[i].course_name }])
                         }
                     }
                 }
@@ -123,7 +123,15 @@ function AddFaculty(props) {
 
     const submitHandler = (event) => {
         event.preventDefault()
-        dispatch(addFacultyRequest(faculty))
+        if(faculty.specialization.length === 0){
+            alert('Select specialization.')
+        }else{
+            dispatch(addFacultyRequest(faculty))
+        }
+    }
+    
+    function handleSelect(data) {
+        setFaculty({ ...faculty, specialization: data.map(obj => obj.value) })
     }
 
     return (
@@ -187,13 +195,12 @@ function AddFaculty(props) {
                         <h3 style={{
                             fontWeight: 'normal', color: 'gray', marginRight: '3px'
                         }}>Specialization</h3>
-                        <select required value={faculty.specialization} onChange={(e) => setFaculty({ ...faculty, specialization: e.target.value })} className='dropdown'>
-                            <option></option>
-                            {
-                                specializationData.length !== 0 ? specializationData.map(specialization =>
-                                    <option key={specialization.id}>{specialization.name}</option>) : null
-                            }
-                        </select>
+                        <Select
+                            options={specializationData}
+                            onChange={handleSelect}
+                            isSearchable={true}
+                            isMulti
+                        />
                         <div>
                             {
                                 showError && <Alert style={{ marginTop: '12px' }} severity="error">{errorMsg}</Alert>
