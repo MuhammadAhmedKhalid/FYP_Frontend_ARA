@@ -15,6 +15,7 @@ import FacultyHomeScreen from './components/Faculty/FacultyHomeScreen';
 import UpdateProfile from './components/Faculty/UpdateProfile';
 import Positions from './components/Admin/resources/Positions';
 import Courses from './components/Admin/resources/Courses';
+import AssignedCourses from './components/Admin/resources/AssignedCourses';
 
 Modal.setAppElement('#root')
 function App() {
@@ -34,6 +35,7 @@ function App() {
           <Route path='/update-profile' element={<UpdateProfile />} />
           <Route path='/positions' element={<Positions/>} />
           <Route path='/courses' element={<Courses/>} />
+          <Route path='/assignedCourses' element={<AssignedCourses/>}/>
           <Route path='*' element={<NoMatch />} />
         </Routes>
       </Provider>
