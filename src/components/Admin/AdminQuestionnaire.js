@@ -12,6 +12,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { addInstituteRequest } from '../../redux/AddInstitute/instituteActions'
 import { getInstitutesRequest } from '../../redux/GetInstitutes/getInstitutesActions'
 import { resetIdRequest } from '../../redux/Login/loginActions'
+import { format } from 'date-fns';
 
 function AdminQuestionnaire(props) {
 
@@ -33,13 +34,31 @@ function AdminQuestionnaire(props) {
         }
     }, [instituteAdded])
 
+    const [date, setDate] = useState(new Date());
+
+    const handleChange = (date) => {
+        setDate(date);
+    };
+
+    const monthNames = Array.from({ length: 12 }, (_, index) => {
+        const date = new Date();
+        date.setMonth(index);
+        return date.toLocaleString('default', { month: 'long' });
+    });
+
+  const selectedMonth = monthNames[date.getMonth()];
+
     const [institute, setInstitute] = useState({
         institute_type_id: 0,
         institute_name: "",
         branch: "",
         address: "",
         contact: "",
-        user_id: admin_id
+        user_id: admin_id,
+        fallStartMonth: format(new Date(), 'MMMM'),
+        fallEndMonth: format(new Date(), 'MMMM'),
+        springStartMonth: format(new Date(), 'MMMM'),
+        springEndMonth: format(new Date(), 'MMMM'),
     })
 
     const customStyles = {
@@ -113,6 +132,50 @@ function AdminQuestionnaire(props) {
                                     </InputAdornment>
                                 )
                             }} />
+                            <h3 style={{fontWeight: 'normal', color: 'gray', marginRight: '3px'}}>
+                                Spring semester starting month:
+                            </h3>
+                            <select required className='dropdown' onChange={(e) => setInstitute({ ...institute, springStartMonth: e.target.value })}>
+                                value={selectedMonth}
+                                <option></option>
+                                {
+                                    monthNames.map((month, index) => (
+                                    <option key={index} value={month}>{month}</option>))
+                                }
+                            </select>
+                            <h3 style={{fontWeight: 'normal', color: 'gray', marginRight: '3px'}}>
+                                Spring semester ending month:
+                            </h3>
+                            <select required className='dropdown' onChange={(e) => setInstitute({ ...institute, springEndMonth: e.target.value })}>
+                                value={selectedMonth}
+                                <option></option>
+                                {
+                                    monthNames.map((month, index) => (
+                                    <option key={index} value={month}>{month}</option>))
+                                }
+                            </select>
+                            <h3 style={{fontWeight: 'normal', color: 'gray', marginRight: '3px'}}>
+                                Fall semester starting month:
+                            </h3>
+                            <select required className='dropdown' onChange={(e) => setInstitute({ ...institute, fallStartMonth: e.target.value })}>
+                                value={selectedMonth}
+                                <option></option>
+                                {
+                                    monthNames.map((month, index) => (
+                                    <option key={index} value={month}>{month}</option>))
+                                }
+                            </select>
+                            <h3 style={{fontWeight: 'normal', color: 'gray', marginRight: '3px'}}>
+                                Fall semester ending month:
+                            </h3>
+                            <select required className='dropdown' onChange={(e) => setInstitute({ ...institute, fallEndMonth: e.target.value })}>
+                                value={selectedMonth}
+                                <option></option>
+                                {
+                                    monthNames.map((month, index) => (
+                                    <option key={index} value={month}>{month}</option>))
+                                }
+                            </select>
                         </div>
                         <center><button style={{marginTop: '20px'}} type='submit' className='modal-btn'>Save</button></center>
                     </form>
