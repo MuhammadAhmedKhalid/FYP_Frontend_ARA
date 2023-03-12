@@ -14,6 +14,7 @@ import { format } from 'date-fns';
 import dayjs from 'dayjs';
 import { checkValidTime } from '../../../Faculty/utils'
 import { getRoomsRequest } from '../../../../redux/GetRooms/getRoomsActions'
+import { assignCourseRequest } from '../../../../redux/AssignCourse/assignCourseActions'
 
 function AssignCourse(props) {
 
@@ -198,7 +199,10 @@ function AssignCourse(props) {
         if(result){
             alert('Invalid time. Start time should always be less than End time.')
         }else{
-          console.log(assignCourse)
+          // console.log(assignCourse)
+          dispatch(assignCourseRequest(assignCourse))
+          setOpenAssignCourseModal(false)
+          alert("Operation performed successfully!")
         }
       }
 
