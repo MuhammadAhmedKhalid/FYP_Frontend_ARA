@@ -13,6 +13,7 @@ import { TimePicker } from '@mui/x-date-pickers/TimePicker';
 import { format } from 'date-fns';
 import dayjs from 'dayjs';
 import { checkValidTime } from '../../../Faculty/utils'
+import { getRoomsRequest } from '../../../../redux/GetRooms/getRoomsActions'
 
 function AssignCourse(props) {
 
@@ -29,10 +30,13 @@ function AssignCourse(props) {
       const facultyAdded = useSelector((state) => state.getFaculty.added)
       const courses = useSelector((state) => state.getCourseReducer.courses)
       const coursessAdded = useSelector((state) => state.getCourseReducer.added)
+      const rooms = useSelector((state) => state.getRooms.rooms.data)
+      const roomsAdded = useSelector((state) => state.getRooms.added)
 
       const [batchesData, setBatchesData] = useState([])
       const [facultyData, setFacultyData] = useState([])
       const [coursesData, setCoursesData] = useState([])
+      const [roomsData, setRoomsData] = useState([])
       const [value, setValue] = useState(dayjs(new Date()));
       const [value1, setValue1] = useState(dayjs(new Date()));
 
@@ -43,6 +47,7 @@ function AssignCourse(props) {
         faculty_id: "",
         course_id: "",
         day: "",
+        room_id: "",
         startTime: format(new Date(), 'HH:mm'),
         endTime: format(new Date(), 'HH:mm'),
         institute_id
@@ -50,10 +55,11 @@ function AssignCourse(props) {
 
       useEffect(() => {
         
-        if(departmentsAdded && coursessAdded && facultyAdded){
+        if(departmentsAdded && coursessAdded && facultyAdded && roomsAdded){
           
           setCoursesData([])
           setFacultyData([])
+          setRoomsData([])
 
           for(let i in courses){
             if(assignCourse.department_id === courses[i].department_id){
@@ -73,6 +79,13 @@ function AssignCourse(props) {
               setFacultyData(facultyData => [...facultyData, { id: faculty[i].faculty_id, name: faculty[i].name }])
             }
           }
+
+          for(let i in rooms){
+            if(assignCourse.department_id === rooms[i].department_id){
+              setRoomsData(roomsData => [...roomsData, {id: rooms[i].room_id, name: rooms[i].room_name}])
+            }
+          }
+
         }
       }, [assignCourse.department_id])
 
@@ -96,6 +109,7 @@ function AssignCourse(props) {
             dispatch(getDepartmentsRequest(institute_id))
             dispatch(getFacultyRequest(institute_id))
             dispatch(getCourseRequest(institute_id))
+            dispatch(getRoomsRequest(institute_id))
         }
     }, [institute_id, dispatch])
 
@@ -131,6 +145,14 @@ function AssignCourse(props) {
         for(let i of coursesData){
           if(i.name === e.target.value){
             setAssignCourse({...assignCourse, course_id: i.id})
+          }
+        }
+      }
+
+      const handleRoomChange = (e) => {
+        for(let i of roomsData){
+          if(i.name === e.target.value){
+            setAssignCourse({...assignCourse, room_id: i.id})
           }
         }
       }
@@ -241,6 +263,16 @@ function AssignCourse(props) {
                             <option value="Friday">FRIDAY</option>
                             <option valye="Saturday">SATURDAY</option>
                             <option value="Sunday">SUNDAY</option>
+                          </select>
+                          <h3 style={{
+                              fontWeight: 'normal', color: 'gray', marginRight: '3px'
+                          }}>Room</h3>
+                          <select required className='dropdown' onChange={handleRoomChange}>
+                          <option></option>
+                              {
+                                  roomsData.length !== 0 ? roomsData.map(room => 
+                                      <option key={room.id}>{room.name}</option>) : null
+                              }
                           </select>
                           <div style={{ marginTop: '12px' }}>
                                 <LocalizationProvider dateAdapter={AdapterDayjs}>
