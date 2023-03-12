@@ -31,6 +31,7 @@ import { objectsPerResReducer } from './GetObjsPerResourceType/getObjsPerResRedu
 import { addBatchReducer } from './AddBatch/addBatchReducer'
 import { getBatchesReducer } from './GetBatches/getBatchesReducer'
 import { assignCourseReducer } from './AssignCourse/assignCourseReducer'
+import { assignedCoursesReducer } from './AssignedCourses/assignedCoursesReducer'
 
 export const rootReducer = combineReducers({
     signup: signupReducer,
@@ -65,4 +66,5 @@ export const rootReducer = combineReducers({
     addBatchReducer,
     getBatchesReducer,
     assignCourseReducer,
+    assignedCoursesReducer,
 })

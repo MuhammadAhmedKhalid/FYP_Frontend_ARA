@@ -31,6 +31,7 @@ import { getObjectsPerResSaga } from './GetObjsPerResourceType/getObjsPerResSaga
 import { addBatchSaga } from './AddBatch/addBatchSaga'
 import { getBatchesSaga } from './GetBatches/getBatchesSaga'
 import { assignCourseSaga } from './AssignCourse/assignCourseSaga'
+import { assignedCoursesSaga } from './AssignedCourses/assignedCoursesSaga'
 
 export function* rootSaga() {
     yield fork(signupSaga)
@@ -65,4 +66,5 @@ export function* rootSaga() {
     yield fork(addBatchSaga)
     yield fork(getBatchesSaga)
     yield fork(assignCourseSaga)
+    yield fork(assignedCoursesSaga)
 }
