@@ -18,6 +18,7 @@ function Schedule() {
     const [showDetailModal, setShowDetailModal] = useState(false)
 
     const institute_id = useSelector((state) => state.login.user.institute_id)
+    const faculty_id = useSelector((state) => state.login.user.faculty_id)
     const assignedCourses = useSelector((state) => state.assignedCoursesReducer.assignedCourses.data)
     const assignedCoursesAdded = useSelector((state) => state.assignedCoursesReducer.added)
     const courses = useSelector((state) => state.getCourseReducer.courses)
@@ -31,11 +32,11 @@ function Schedule() {
     }, [])
 
     useEffect(() => {
-        if(assignedCoursesAdded && coursessAdded && assignedCourses.length > 0 && courses.length > 0){
+        if(assignedCoursesAdded && coursessAdded && assignedCourses.length > 0 && courses.length > 0 && faculty_id > 0){
             setEvents([])
             for(let i of assignedCourses){
                 for(let j of courses){
-                    if(j.course_id == i.course_id){
+                    if(j.course_id == i.course_id && i.faculty_id == faculty_id){
                         setEvents(events => [...events, 
                             {title: j.course_name, startDate: new Date(i.date + " " +i.startTime), endDate: new Date(i.date + " " +i.endTime)}])
                     }
@@ -43,7 +44,7 @@ function Schedule() {
                 }
             }
         }
-    }, [assignedCourses, courses])
+    }, [assignedCourses, courses, faculty_id])
 
     const showDetails = (details) => {
         setDetails(details)
