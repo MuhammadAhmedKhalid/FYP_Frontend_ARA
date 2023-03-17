@@ -38,7 +38,7 @@ function Schedule() {
                 for(let j of courses){
                     if(j.course_id == i.course_id && i.faculty_id == faculty_id){
                         setEvents(events => [...events, 
-                            {title: j.course_name, startDate: new Date(i.date + " " +i.startTime), endDate: new Date(i.date + " " +i.endTime)}])
+                            {id: i.assignedCourseId, title: j.course_name, startDate: new Date(i.date + " " +i.startTime), endDate: new Date(i.date + " " +i.endTime)}])
                     }
                     break
                 }
@@ -47,7 +47,11 @@ function Schedule() {
     }, [assignedCourses, courses, faculty_id])
 
     const showDetails = (details) => {
-        setDetails(details)
+        for(let i of assignedCourses){
+            if(i.assignedCourseId == details.id){
+                setDetails(i)
+            }
+        }
         setShowDetailModal(true)
     }
     
