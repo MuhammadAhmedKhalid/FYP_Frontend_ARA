@@ -25,22 +25,22 @@ function Schedule() {
     const coursessAdded = useSelector((state) => state.getCourseReducer.added)
 
     useEffect(() => {
-        if(institute_id){
+        if(institute_id > 0){
             dispatch(assignedCoursesRequest(institute_id))
             dispatch(getCourseRequest(institute_id))
         }
-    }, [])
+    }, [institute_id])
 
     useEffect(() => {
         if(assignedCoursesAdded && coursessAdded && assignedCourses.length > 0 && courses.length > 0 && faculty_id > 0){
             setEvents([])
             for(let i of assignedCourses){
                 for(let j of courses){
-                    if(j.course_id == i.course_id && i.faculty_id == faculty_id){
+                    if(j.course_id === i.course_id && i.faculty_id === faculty_id){
                         setEvents(events => [...events, 
                             {id: i.assignedCourseId, title: j.course_name, startDate: new Date(i.date + " " +i.startTime), endDate: new Date(i.date + " " +i.endTime)}])
+                            break
                     }
-                    break
                 }
             }
         }
@@ -48,7 +48,7 @@ function Schedule() {
 
     const showDetails = (details) => {
         for(let i of assignedCourses){
-            if(i.assignedCourseId == details.id){
+            if(i.assignedCourseId === details.id){
                 setDetails(i)
             }
         }
