@@ -12,7 +12,7 @@ import { store } from './redux/store'
 import { Provider } from 'react-redux'
 import Faculty from './components/Admin/resources/Faculty';
 import FacultyHomeScreen from './components/Faculty/FacultyHomeScreen';
-import UpdateProfile from './components/Faculty/UpdateProfile';
+import Schedule from './components/Faculty/Schedule';
 import Positions from './components/Admin/resources/Positions';
 import Courses from './components/Admin/resources/Courses';
 import AssignedCourses from './components/Admin/resources/AssignedCourses';
@@ -32,7 +32,7 @@ function App() {
           <Route path='/rooms' element={<Rooms />} />
           <Route path='/domains' element={<Domains />} />
           <Route path='/faculty' element={<Faculty />} />
-          <Route path='/update-profile' element={<UpdateProfile />} />
+          <Route path='/schedule' element={<Schedule />} />
           <Route path='/positions' element={<Positions/>} />
           <Route path='/courses' element={<Courses/>} />
           <Route path='/assignedCourses' element={<AssignedCourses/>}/>

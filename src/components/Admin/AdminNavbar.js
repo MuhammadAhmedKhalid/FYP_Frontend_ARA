@@ -69,8 +69,8 @@ const AdminNavBar = () => {
                         path: '/objects'
                     },
                     {
-                        name: 'Position',
-                        value: 'position',
+                        name: 'Positions',
+                        value: 'positions',
                         path: '/positions'
                     },
                     {

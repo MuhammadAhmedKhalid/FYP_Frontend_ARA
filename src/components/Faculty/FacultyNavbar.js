@@ -69,7 +69,7 @@ const AdminNavBar = () => {
                         value: 'staff request',
                         onClick: true
                     }]} />
-                    <li> <NavLink to='/update-profile'>Update Profile</NavLink></li>
+                    <li> <NavLink to='/schedule'>My Schedule</NavLink></li>
                     <li> <NavLink onClick={handleLogout}>Logout</NavLink></li>
 
                 </ul >
