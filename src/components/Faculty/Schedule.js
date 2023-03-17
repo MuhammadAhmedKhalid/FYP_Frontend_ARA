@@ -6,6 +6,7 @@ import moment from 'moment';
 import { useSelector, useDispatch } from 'react-redux'
 import { assignedCoursesRequest } from '../../redux/AssignedCourses/assignedCoursesActions'
 import { getCourseRequest } from '../../redux/GetCourse/getCourseActions'
+import ShowEventDetials from './resources/modals/ShowEventDetials';
 
 function Schedule() {
 
@@ -13,6 +14,8 @@ function Schedule() {
     const dispatch = useDispatch()
 
     const [events, setEvents] = useState([])
+    const [details, setDetails] = useState()
+    const [showDetailModal, setShowDetailModal] = useState(false)
 
     const institute_id = useSelector((state) => state.login.user.institute_id)
     const assignedCourses = useSelector((state) => state.assignedCoursesReducer.assignedCourses.data)
@@ -33,13 +36,19 @@ function Schedule() {
             for(let i of assignedCourses){
                 for(let j of courses){
                     if(j.course_id == i.course_id){
-                        setEvents(events => [...events, {title: j.course_name, startDate: new Date(i.date + " " +i.startTime), endDate: new Date(i.date + " " +i.endTime)}])
+                        setEvents(events => [...events, 
+                            {title: j.course_name, startDate: new Date(i.date + " " +i.startTime), endDate: new Date(i.date + " " +i.endTime)}])
                     }
                     break
                 }
             }
         }
     }, [assignedCourses, courses])
+
+    const showDetails = (details) => {
+        setDetails(details)
+        setShowDetailModal(true)
+    }
     
     return (
         <div className="flexbox-container-y"
@@ -57,7 +66,11 @@ function Schedule() {
                 events={events}
                 startAccessor="startDate"
                 endAccessor="endDate"
+                onSelectEvent={event => showDetails(event)}
             />
+            <div>
+                <ShowEventDetials details={details} showDetailModal={showDetailModal} setShowDetailModal={setShowDetailModal}/>
+            </div>
         </div>
     )
 }
