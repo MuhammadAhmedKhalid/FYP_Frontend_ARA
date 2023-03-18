@@ -4,7 +4,7 @@ import AdminNavBar from '../AdminNavbar'
 import Table from '../../Root/Table'
 import AssignCourse from './modals/AssignCourse'
 import { useSelector, useDispatch } from 'react-redux'
-import { assignedCoursesRequest } from '../../../redux/AssignedCourses/assignedCoursesActions'
+import { assignedCoursesForTableRequest } from '../../../redux/AssignedCoursesForTable/assignedCoursesForTableActions'
 import { getDepartmentsRequest } from '../../../redux/GetDepartments/getDepartmentsActions'
 import { getCourseRequest } from '../../../redux/GetCourse/getCourseActions'
 import { getFacultyRequest } from '../../../redux/GetFaculty/getFacultyActions'
@@ -15,8 +15,8 @@ function AssignedCourses() {
   const dispatch = useDispatch()
 
   const institute_id = useSelector((state) => state.login.user.institute_id)
-  const assignedCourses = useSelector((state) => state.assignedCoursesReducer.assignedCourses.data)
-  const assignedCoursesAdded = useSelector((state) => state.assignedCoursesReducer.added)
+  const assignedCourses = useSelector((state) => state.assignedCoursesForTableReducer.assignedCourses.data)
+  const assignedCoursesAdded = useSelector((state) => state.assignedCoursesForTableReducer.added)
   const faculty = useSelector((state) => state.getFaculty.faculty)
   const facultyAdded = useSelector((state) => state.getFaculty.added)
   const courses = useSelector((state) => state.getCourseReducer.courses)
@@ -38,8 +38,8 @@ function AssignedCourses() {
             for(let k=0; k<courses.length; k++){
               for(let l=0; l<faculty.length; l++){
                 for(let m=0; m<batches.length; m++){
-                  if(assignedCourses[i].department_id == departments[j].department_id && assignedCourses[i].course_id == courses[k].course_id
-                    && assignedCourses[i].faculty_id == faculty[l].faculty_id && assignedCourses[i].batchId == batches[m].batchId){
+                  if(assignedCourses[i].departmentId == departments[j].department_id && assignedCourses[i].courseId == courses[k].course_id
+                    && assignedCourses[i].facultyId == faculty[l].faculty_id && assignedCourses[i].batchId == batches[m].batchId){
                       rowData.push([courses[k].course_name, departments[j].department_name, faculty[l].name, batches[m].batchYear, assignedCourses[i].semesterType])
                     }
                 }
@@ -50,11 +50,9 @@ function AssignedCourses() {
     }
   },[assignedCoursesAdded, assignedCourses, rowData])
 
-  console.log(assignedCourses)
-
   useEffect(() => {
     if(institute_id){
-      dispatch(assignedCoursesRequest(institute_id))
+      dispatch(assignedCoursesForTableRequest(institute_id))
       dispatch(getDepartmentsRequest(institute_id))
       dispatch(getCourseRequest(institute_id))
       dispatch(getFacultyRequest(institute_id))
