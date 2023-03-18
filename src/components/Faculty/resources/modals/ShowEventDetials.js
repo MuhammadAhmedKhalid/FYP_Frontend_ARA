@@ -102,6 +102,7 @@ function ShowEventDetials(props) {
                             </div> : null
                           }
                     </h3>
+                    <center><button className='modal-btn' style={{marginTop: '20px'}} onClick={() => closeModal()}>Close</button></center>
                 </div>
         </Modal>
     </div>
