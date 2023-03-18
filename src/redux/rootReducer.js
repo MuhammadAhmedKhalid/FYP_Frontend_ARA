@@ -32,6 +32,7 @@ import { addBatchReducer } from './AddBatch/addBatchReducer'
 import { getBatchesReducer } from './GetBatches/getBatchesReducer'
 import { assignCourseReducer } from './AssignCourse/assignCourseReducer'
 import { assignedCoursesReducer } from './AssignedCourses/assignedCoursesReducer'
+import { assignedCoursesForTableReducer } from './AssignedCoursesForTable/assignedCoursesForTableReducer'
 
 export const rootReducer = combineReducers({
     signup: signupReducer,
@@ -67,4 +68,5 @@ export const rootReducer = combineReducers({
     getBatchesReducer,
     assignCourseReducer,
     assignedCoursesReducer,
+    assignedCoursesForTableReducer,
 })

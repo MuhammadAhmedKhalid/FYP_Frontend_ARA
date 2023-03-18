@@ -32,6 +32,7 @@ import { addBatchSaga } from './AddBatch/addBatchSaga'
 import { getBatchesSaga } from './GetBatches/getBatchesSaga'
 import { assignCourseSaga } from './AssignCourse/assignCourseSaga'
 import { assignedCoursesSaga } from './AssignedCourses/assignedCoursesSaga'
+import { assignedCoursesForTableSaga } from './AssignedCoursesForTable/assignedCoursesForTableSaga'
 
 export function* rootSaga() {
     yield fork(signupSaga)
@@ -67,4 +68,5 @@ export function* rootSaga() {
     yield fork(getBatchesSaga)
     yield fork(assignCourseSaga)
     yield fork(assignedCoursesSaga)
+    yield fork(assignedCoursesForTableSaga)
 }
