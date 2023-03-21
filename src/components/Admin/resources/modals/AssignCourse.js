@@ -16,6 +16,7 @@ import { checkValidTime, checkConflict } from '../../../Faculty/utils'
 import { getRoomsRequest } from '../../../../redux/GetRooms/getRoomsActions'
 import { assignCourseRequest } from '../../../../redux/AssignCourse/assignCourseActions'
 import { assignedCoursesRequest } from '../../../../redux/AssignedCourses/assignedCoursesActions'
+import { Alert } from '@mui/material';
 
 function AssignCourse(props) {
 
@@ -43,6 +44,7 @@ function AssignCourse(props) {
       const [roomsData, setRoomsData] = useState([])
       const [value, setValue] = useState(dayjs(new Date()));
       const [value1, setValue1] = useState(dayjs(new Date()));
+      const [showError, setShowError] = useState(false);
 
       const [assignCourse, setAssignCourse] = useState({
         batchId: "",
@@ -188,6 +190,7 @@ function AssignCourse(props) {
 
       const closeModal = () => {
         setOpenAssignCourseModal(false)
+        setShowError(false)
       }
 
       const handleSubmit = (e) => {
@@ -209,6 +212,7 @@ function AssignCourse(props) {
             if(assignedCourses.length == 0){
               dispatch(assignCourseRequest(assignCourse))
               setOpenAssignCourseModal(false)
+              setShowError(false)
               alert("Operation performed successfully!")
             }   
             
@@ -232,7 +236,14 @@ function AssignCourse(props) {
                   }
                 }
             }
-            console.log(conflict)
+            if(conflict){
+              setShowError(true)
+            }else {
+              dispatch(assignCourseRequest(assignCourse))
+              setOpenAssignCourseModal(false)
+              setShowError(false)
+              alert("Operation performed successfully!")
+            }
             }
 
         }
@@ -328,6 +339,11 @@ function AssignCourse(props) {
                                     </Stack>
                                 </LocalizationProvider>
                             </div>
+                      </div>
+                      <div>
+                        {
+                            showError && <Alert style={{ marginTop: '12px' }} severity="error">Course is already assigned during this time interval.</Alert>
+                        }
                       </div>
                       <center><button className='modal-btn' style={{marginTop: '20px'}} type='submit'>Add</button></center>
                     </form>
