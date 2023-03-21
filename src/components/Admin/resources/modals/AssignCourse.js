@@ -72,7 +72,7 @@ function AssignCourse(props) {
     })
 
       useEffect(() => {
-        let dayNumber = 0;
+        let dayNumber = undefined;
 
         const weekdays = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
         for(let i in weekdays){
@@ -80,11 +80,12 @@ function AssignCourse(props) {
             dayNumber = i
           }
         }
-        if(dayNumber > 0){
+        
+        if(dayNumber !== undefined && assignCourse.semesterType.length > 0){
           if(assignCourse.semesterType === "Spring"){
-            
+            // extract dates list between spring start and end month and then make resources busy (room , faculty)
           }else if(assignCourse.semesterType === "Fall"){
-
+            
           }
         }
       }, [assignCourse.day, assignCourse.semesterType])
@@ -317,6 +318,8 @@ function AssignCourse(props) {
               setShowError(true)
             }else {
               // dispatch(assignCourseRequest(assignCourse))
+              // dispatch(addRequestedStaff())
+              // dispatch(addRequestedRoom())
               setOpenAssignCourseModal(false)
               setShowError(false)
               alert("Operation performed successfully!")
@@ -381,11 +384,11 @@ function AssignCourse(props) {
                           <select required className='dropdown' onChange={(e) => setAssignCourse({...assignCourse, day: e.target.value})}>
                             <option></option>
                             <option value="Monday">MONDAY</option>
-                            <option valye="Tuesday">TUESDAY</option>
+                            <option value="Tuesday">TUESDAY</option>
                             <option value="Wednesday">WEDNESDAY</option>
-                            <option valye="Thursday">THURSDAY</option>
+                            <option value="Thursday">THURSDAY</option>
                             <option value="Friday">FRIDAY</option>
-                            <option valye="Saturday">SATURDAY</option>
+                            <option value="Saturday">SATURDAY</option>
                             <option value="Sunday">SUNDAY</option>
                           </select>
                           <h3 style={{
