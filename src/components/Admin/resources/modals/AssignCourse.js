@@ -20,6 +20,8 @@ import { assignedCoursesRequest } from '../../../../redux/AssignedCourses/assign
 import { Alert } from '@mui/material';
 import { getStaffRequest } from '../../../../redux/GetStaffRequest/getStaffReqActions'
 import { getRoomRequest } from '../../../../redux/GetRoomRequests/getRoomReqActions'
+import { addRequestedStaff } from '../../../../redux/AddStaffRequest/staffRequestActions'
+import { addRequestedRoom } from '../../../../redux/AddRoomRequest/roomRequestActions'
 
 function AssignCourse(props) {
 
@@ -41,6 +43,10 @@ function AssignCourse(props) {
       const assignedCourses = useSelector((state) => state.assignedCoursesReducer.assignedCourses.data)
       const assignedCoursesAdded = useSelector((state) => state.assignedCoursesReducer.added)
       const requestedStaff = useSelector((state) => state.staffReqReducer.staff_req.data)
+      const springStart = useSelector((state) => state.login.user.springStartMonth)
+      const springEnd = useSelector((state) => state.login.user.springEndMonth)
+      const fallStart = useSelector((state) => state.login.user.fallStartMonth)
+      const fallEnd = useSelector((state) => state.login.user.fallEndMonth)
 
       const [batchesData, setBatchesData] = useState([])
       const [facultyData, setFacultyData] = useState([])
@@ -64,6 +70,24 @@ function AssignCourse(props) {
         endTime: format(new Date(), 'HH:mm'),
         institute_id
     })
+
+      useEffect(() => {
+        let dayNumber = 0;
+
+        const weekdays = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+        for(let i in weekdays){
+          if(weekdays[i] === assignCourse.day){
+            dayNumber = i
+          }
+        }
+        if(dayNumber > 0){
+          if(assignCourse.semesterType === "Spring"){
+            
+          }else if(assignCourse.semesterType === "Fall"){
+
+          }
+        }
+      }, [assignCourse.day, assignCourse.semesterType])
 
       useEffect(() => {
         
@@ -221,6 +245,8 @@ function AssignCourse(props) {
 
             if(assignedCourses.length == 0){
               dispatch(assignCourseRequest(assignCourse))
+              // dispatch(addRequestedStaff())
+              // dispatch(addRequestedRoom())
               setOpenAssignCourseModal(false)
               setShowError(false)
               alert("Operation performed successfully!")
@@ -327,7 +353,7 @@ function AssignCourse(props) {
                           <select required className='dropdown' onChange={(e) => setAssignCourse({...assignCourse, semesterType: e.target.value})}>
                             <option></option>
                             <option value="Fall">FALL</option>
-                            <option valye="Spring">SPRING</option>
+                            <option value="Spring">SPRING</option>
                           </select>
                           <h3 style={{
                               fontWeight: 'normal', color: 'gray', marginRight: '3px'

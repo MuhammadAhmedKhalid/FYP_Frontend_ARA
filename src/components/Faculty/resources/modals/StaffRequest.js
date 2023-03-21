@@ -17,6 +17,7 @@ import { addRequestedStaff } from '../../../../redux/AddStaffRequest/staffReques
 import { getStaffRequest } from '../../../../redux/GetStaffRequest/getStaffReqActions'
 import { checkConflict } from '../../utils'
 import { getRoomRequest } from '../../../../redux/GetRoomRequests/getRoomReqActions'
+import { addRequestedRoom } from '../../../../redux/AddRoomRequest/roomRequestActions'
 
 function StaffRequest(props) {
 
@@ -178,6 +179,7 @@ function StaffRequest(props) {
         setStaffModal(false)
         alert("Operation performed successfully!")
         dispatch(addRequestedStaff(request))
+        dispatch(addRequestedRoom(request))
         if (requestSuccessfull) {
             setRequestAdded(true)
             setShowError(false)
