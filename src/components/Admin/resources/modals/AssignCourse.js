@@ -13,6 +13,7 @@ import { TimePicker } from '@mui/x-date-pickers/TimePicker';
 import { format } from 'date-fns';
 import dayjs from 'dayjs';
 import { checkValidTime } from '../../../Faculty/utils'
+import { checkConflict } from '../../utils'
 import { getRoomsRequest } from '../../../../redux/GetRooms/getRoomsActions'
 import { assignCourseRequest } from '../../../../redux/AssignCourse/assignCourseActions'
 import { assignedCoursesRequest } from '../../../../redux/AssignedCourses/assignedCoursesActions'
@@ -230,15 +231,14 @@ function AssignCourse(props) {
                   assignedStartTime.setHours(assignedCourses[i].startTime.substring(0, 2), assignedCourses[i].startTime.substring(3), 0, 0);
                   assignedEndTime.setHours(assignedCourses[i].endTime.substring(0, 2), assignedCourses[i].endTime.substring(3), 0, 0);
 
-                  if ((startTime.getTime() === assignedEndTime.getTime() || endTime.getTime() === assignedStartTime.getTime())) {
-                    courseConflict = false;
+                  courseConflict = checkConflict(startTime, assignedStartTime, endTime, assignedEndTime,
+                    startTime.getTime(), assignedStartTime.getTime(), endTime.getTime(), assignedEndTime.getTime());
+
+                  if(courseConflict){
+                    setShowError(true)
+                    break
                   }
-          
-                  if ((Math.min(startTime, endTime) <= Math.max(assignedStartTime, assignedEndTime) &&
-                      Math.max(startTime, endTime) >= Math.min(assignedStartTime, assignedEndTime))) {
-                      courseConflict = true;
-                      break
-                  }
+
                 }
             }
 
@@ -251,17 +251,14 @@ function AssignCourse(props) {
 
                 if ((requestedStaff[j].requested_faculty_id === assignCourse.faculty_id)) {
 
-                  if ((startTime.getTime() === facultyEndTime.getTime() || endTime.getTime() === facultyStartTime.getTime())) {
-                    facultyConflict = false;
-                  }
-          
-                  if ((Math.min(startTime, endTime) <= Math.max(facultyStartTime, facultyEndTime) &&
-                      Math.max(startTime, endTime) >= Math.min(facultyStartTime, facultyEndTime))) {
-                        facultyConflict = true;
-                        break
+                  facultyConflict = checkConflict(startTime, facultyStartTime, endTime, facultyEndTime,
+                    startTime.getTime(), facultyStartTime.getTime(), endTime.getTime(), facultyEndTime.getTime());
+
+                  if(facultyConflict){
+                    setShowError(true)
+                    break
                   }
                 }
-                facultyConflict = false
             }
 
             if(courseConflict || facultyConflict){
