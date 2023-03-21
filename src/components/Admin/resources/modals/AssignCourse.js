@@ -12,11 +12,12 @@ import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
 import { TimePicker } from '@mui/x-date-pickers/TimePicker';
 import { format } from 'date-fns';
 import dayjs from 'dayjs';
-import { checkValidTime, checkConflict } from '../../../Faculty/utils'
+import { checkValidTime } from '../../../Faculty/utils'
 import { getRoomsRequest } from '../../../../redux/GetRooms/getRoomsActions'
 import { assignCourseRequest } from '../../../../redux/AssignCourse/assignCourseActions'
 import { assignedCoursesRequest } from '../../../../redux/AssignedCourses/assignedCoursesActions'
 import { Alert } from '@mui/material';
+import { getStaffRequest } from '../../../../redux/GetStaffRequest/getStaffReqActions'
 
 function AssignCourse(props) {
 
@@ -37,6 +38,7 @@ function AssignCourse(props) {
       const roomsAdded = useSelector((state) => state.getRooms.added)
       const assignedCourses = useSelector((state) => state.assignedCoursesReducer.assignedCourses.data)
       const assignedCoursesAdded = useSelector((state) => state.assignedCoursesReducer.added)
+      const requestedStaff = useSelector((state) => state.staffReqReducer.staff_req.data)
 
       const [batchesData, setBatchesData] = useState([])
       const [facultyData, setFacultyData] = useState([])
@@ -117,6 +119,7 @@ function AssignCourse(props) {
             dispatch(getCourseRequest(institute_id))
             dispatch(getRoomsRequest(institute_id))
             dispatch(assignedCoursesRequest(institute_id))
+            dispatch(getStaffRequest(institute_id))
         }
     }, [institute_id, dispatch])
 
@@ -207,7 +210,8 @@ function AssignCourse(props) {
             alert('Invalid time. Start time should always be less than End time.')
         }else{
           if(assignedCoursesAdded){  
-            let conflict = false;
+            let courseConflict = false;
+            let facultyConflict = false;
             
             if(assignedCourses.length == 0){
               dispatch(assignCourseRequest(assignCourse))
@@ -227,19 +231,43 @@ function AssignCourse(props) {
                   assignedEndTime.setHours(assignedCourses[i].endTime.substring(0, 2), assignedCourses[i].endTime.substring(3), 0, 0);
 
                   if ((startTime.getTime() === assignedEndTime.getTime() || endTime.getTime() === assignedStartTime.getTime())) {
-                    conflict = false;
+                    courseConflict = false;
                   }
           
                   if ((Math.min(startTime, endTime) <= Math.max(assignedStartTime, assignedEndTime) &&
                       Math.max(startTime, endTime) >= Math.min(assignedStartTime, assignedEndTime))) {
-                      conflict = true;
+                      courseConflict = true;
+                      break
                   }
                 }
             }
-            if(conflict){
+
+            for(let j = 0; j < requestedStaff.length; j++){
+                let facultyStartTime = new Date();
+                let facultyEndTime = new Date();
+
+                facultyStartTime.setHours(requestedStaff[j].startTime.substring(0, 2), requestedStaff[j].startTime.substring(3), 0, 0);
+                facultyEndTime.setHours(requestedStaff[j].endTime.substring(0, 2), requestedStaff[j].endTime.substring(3), 0, 0);
+
+                if ((requestedStaff[j].requested_faculty_id === assignCourse.faculty_id)) {
+
+                  if ((startTime.getTime() === facultyEndTime.getTime() || endTime.getTime() === facultyStartTime.getTime())) {
+                    facultyConflict = false;
+                  }
+          
+                  if ((Math.min(startTime, endTime) <= Math.max(facultyStartTime, facultyEndTime) &&
+                      Math.max(startTime, endTime) >= Math.min(facultyStartTime, facultyEndTime))) {
+                        facultyConflict = true;
+                        break
+                  }
+                }
+                facultyConflict = false
+            }
+
+            if(courseConflict || facultyConflict){
               setShowError(true)
             }else {
-              dispatch(assignCourseRequest(assignCourse))
+              // dispatch(assignCourseRequest(assignCourse))
               setOpenAssignCourseModal(false)
               setShowError(false)
               alert("Operation performed successfully!")
