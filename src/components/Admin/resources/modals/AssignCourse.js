@@ -12,9 +12,10 @@ import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
 import { TimePicker } from '@mui/x-date-pickers/TimePicker';
 import { format } from 'date-fns';
 import dayjs from 'dayjs';
-import { checkValidTime } from '../../../Faculty/utils'
+import { checkValidTime, checkConflict } from '../../../Faculty/utils'
 import { getRoomsRequest } from '../../../../redux/GetRooms/getRoomsActions'
 import { assignCourseRequest } from '../../../../redux/AssignCourse/assignCourseActions'
+import { assignedCoursesRequest } from '../../../../redux/AssignedCourses/assignedCoursesActions'
 
 function AssignCourse(props) {
 
@@ -33,6 +34,8 @@ function AssignCourse(props) {
       const coursessAdded = useSelector((state) => state.getCourseReducer.added)
       const rooms = useSelector((state) => state.getRooms.rooms.data)
       const roomsAdded = useSelector((state) => state.getRooms.added)
+      const assignedCourses = useSelector((state) => state.assignedCoursesReducer.assignedCourses.data)
+      const assignedCoursesAdded = useSelector((state) => state.assignedCoursesReducer.added)
 
       const [batchesData, setBatchesData] = useState([])
       const [facultyData, setFacultyData] = useState([])
@@ -111,6 +114,7 @@ function AssignCourse(props) {
             dispatch(getFacultyRequest(institute_id))
             dispatch(getCourseRequest(institute_id))
             dispatch(getRoomsRequest(institute_id))
+            dispatch(assignedCoursesRequest(institute_id))
         }
     }, [institute_id, dispatch])
 
@@ -199,10 +203,38 @@ function AssignCourse(props) {
         if(result){
             alert('Invalid time. Start time should always be less than End time.')
         }else{
-          // console.log(assignCourse)
-          dispatch(assignCourseRequest(assignCourse))
-          setOpenAssignCourseModal(false)
-          alert("Operation performed successfully!")
+          if(assignedCoursesAdded){  
+            let conflict = false;
+            
+            if(assignedCourses.length == 0){
+              dispatch(assignCourseRequest(assignCourse))
+              setOpenAssignCourseModal(false)
+              alert("Operation performed successfully!")
+            }   
+            
+            for (let i = 0; i < assignedCourses.length; i++) {
+              if(assignedCourses[i].department_id === assignCourse.department_id && assignedCourses[i].semesterType === assignCourse.semesterType
+                && assignedCourses[i].day === assignCourse.day && assignedCourses[i].batchId === assignCourse.batchId){
+                  
+                  var assignedStartTime = new Date();
+                  var assignedEndTime = new Date();
+
+                  assignedStartTime.setHours(assignedCourses[i].startTime.substring(0, 2), assignedCourses[i].startTime.substring(3), 0, 0);
+                  assignedEndTime.setHours(assignedCourses[i].endTime.substring(0, 2), assignedCourses[i].endTime.substring(3), 0, 0);
+
+                  if ((startTime.getTime() === assignedEndTime.getTime() || endTime.getTime() === assignedStartTime.getTime())) {
+                    conflict = false;
+                  }
+          
+                  if ((Math.min(startTime, endTime) <= Math.max(assignedStartTime, assignedEndTime) &&
+                      Math.max(startTime, endTime) >= Math.min(assignedStartTime, assignedEndTime))) {
+                      conflict = true;
+                  }
+                }
+            }
+            console.log(conflict)
+            }
+
         }
       }
 
