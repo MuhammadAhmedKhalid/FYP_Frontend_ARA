@@ -48,6 +48,7 @@ function AssignCourse(props) {
       const [value, setValue] = useState(dayjs(new Date()));
       const [value1, setValue1] = useState(dayjs(new Date()));
       const [showError, setShowError] = useState(false);
+      const [errorMsg, setErrorMsg] = useState(""); 
 
       const [assignCourse, setAssignCourse] = useState({
         batchId: "",
@@ -236,6 +237,7 @@ function AssignCourse(props) {
 
                   if(courseConflict){
                     setShowError(true)
+                    setErrorMsg('Course is already assigned during this time interval.')
                     break
                   }
 
@@ -256,6 +258,7 @@ function AssignCourse(props) {
 
                   if(facultyConflict){
                     setShowError(true)
+                    setErrorMsg('Faculty is not available between this time interval.')
                     break
                   }
                 }
@@ -367,7 +370,7 @@ function AssignCourse(props) {
                       </div>
                       <div>
                         {
-                            showError && <Alert style={{ marginTop: '12px' }} severity="error">Course is already assigned during this time interval.</Alert>
+                            showError && <Alert style={{ marginTop: '12px' }} severity="error">{errorMsg}</Alert>
                         }
                       </div>
                       <center><button className='modal-btn' style={{marginTop: '20px'}} type='submit'>Add</button></center>
