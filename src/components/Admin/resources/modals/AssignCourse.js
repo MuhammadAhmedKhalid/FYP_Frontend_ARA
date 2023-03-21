@@ -19,6 +19,7 @@ import { assignCourseRequest } from '../../../../redux/AssignCourse/assignCourse
 import { assignedCoursesRequest } from '../../../../redux/AssignedCourses/assignedCoursesActions'
 import { Alert } from '@mui/material';
 import { getStaffRequest } from '../../../../redux/GetStaffRequest/getStaffReqActions'
+import { getRoomRequest } from '../../../../redux/GetRoomRequests/getRoomReqActions'
 
 function AssignCourse(props) {
 
@@ -48,7 +49,8 @@ function AssignCourse(props) {
       const [value, setValue] = useState(dayjs(new Date()));
       const [value1, setValue1] = useState(dayjs(new Date()));
       const [showError, setShowError] = useState(false);
-      const [errorMsg, setErrorMsg] = useState(""); 
+      const [errorMsg, setErrorMsg] = useState("");
+      const requestedRoom = useSelector((state) => state.getRoomRequest.room_req.data) 
 
       const [assignCourse, setAssignCourse] = useState({
         batchId: "",
@@ -122,6 +124,7 @@ function AssignCourse(props) {
             dispatch(getRoomsRequest(institute_id))
             dispatch(assignedCoursesRequest(institute_id))
             dispatch(getStaffRequest(institute_id))
+            dispatch(getRoomRequest(institute_id))
         }
     }, [institute_id, dispatch])
 
@@ -214,7 +217,8 @@ function AssignCourse(props) {
           if(assignedCoursesAdded){  
             let courseConflict = false;
             let facultyConflict = false;
-            
+            let roomConflict = false;
+
             if(assignedCourses.length == 0){
               dispatch(assignCourseRequest(assignCourse))
               setOpenAssignCourseModal(false)
@@ -264,7 +268,26 @@ function AssignCourse(props) {
                 }
             }
 
-            if(courseConflict || facultyConflict){
+            for (let k = 0; k < requestedRoom.length; k++){
+
+              let roomStartTime = new Date();
+              let roomEndTime = new Date();
+
+              roomStartTime.setHours(requestedRoom[k].startTime.substring(0, 2), requestedRoom[k].startTime.substring(3), 0, 0);
+              roomEndTime.setHours(requestedRoom[k].endTime.substring(0, 2), requestedRoom[k].endTime.substring(3), 0, 0);
+
+              roomConflict = checkConflict(startTime, roomStartTime, endTime, roomEndTime,
+                  startTime.getTime(), roomStartTime.getTime(), endTime.getTime(), roomEndTime.getTime())
+
+              if (roomConflict) {
+                  setShowError(true)
+                  setErrorMsg('Room is not available between this time interval.')
+                  break
+              }
+
+          }
+
+            if(courseConflict || facultyConflict || roomConflict){
               setShowError(true)
             }else {
               // dispatch(assignCourseRequest(assignCourse))
