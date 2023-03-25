@@ -57,6 +57,7 @@ function AssignCourse(props) {
       const [showError, setShowError] = useState(false);
       const [errorMsg, setErrorMsg] = useState("");
       const requestedRoom = useSelector((state) => state.getRoomRequest.room_req.data) 
+      const [dates, setDates] = useState([])
 
       const [assignCourse, setAssignCourse] = useState({
         batchId: "",
@@ -71,24 +72,43 @@ function AssignCourse(props) {
         institute_id
     })
 
-      useEffect(() => {
-        let dayNumber = undefined;
+    function getDatesForWeekday(startMonth, endMonth, weekday) {
+      const result = [];
+      const startDate = new Date(2023, startMonth - 1, 1); 
+      const endDate = new Date(2023, endMonth, 0); 
+      for (let d = startDate; d <= endDate; d.setDate(d.getDate() + 1)) {
+        if (d.getDay() == weekday) {
+          result.push(format(new Date(d), 'MM/dd/yyyy'));
+        }
+      }
+      return result;
+    }
 
-        const weekdays = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
-        for(let i in weekdays){
-          if(weekdays[i] === assignCourse.day){
-            dayNumber = i
-          }
+    function getMonthNumber(monthName) {
+      const date = new Date(Date.parse(monthName + " 1, 2023")); 
+      const monthNumber = date.getMonth() + 1; 
+      return monthNumber;
+    }
+
+    useEffect(() => {
+      let dayNumber = undefined;
+
+      const weekdays = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+      for(let i in weekdays){
+        if(weekdays[i] === assignCourse.day){
+          dayNumber = i
         }
-        
-        if(dayNumber !== undefined && assignCourse.semesterType.length > 0){
-          if(assignCourse.semesterType === "Spring"){
-            // extract dates list between spring start and end month and then make resources busy (room , faculty)
-          }else if(assignCourse.semesterType === "Fall"){
-            
-          }
+      }
+      
+      if(dayNumber !== undefined && assignCourse.semesterType.length > 0){
+        console.log(weekdays[dayNumber])
+        if(assignCourse.semesterType === "Spring"){
+          setDates(getDatesForWeekday(getMonthNumber(springStart), getMonthNumber(springEnd), dayNumber));
+        }else if(assignCourse.semesterType === "Fall"){
+          setDates(getDatesForWeekday(getMonthNumber(fallStart), getMonthNumber(fallEnd), dayNumber));
         }
-      }, [assignCourse.day, assignCourse.semesterType])
+      }
+    }, [assignCourse.day, assignCourse.semesterType])
 
       useEffect(() => {
         
