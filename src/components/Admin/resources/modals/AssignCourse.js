@@ -47,6 +47,7 @@ function AssignCourse(props) {
       const springEnd = useSelector((state) => state.login.user.springEndMonth)
       const fallStart = useSelector((state) => state.login.user.fallStartMonth)
       const fallEnd = useSelector((state) => state.login.user.fallEndMonth)
+      const user_id = useSelector((state) => state.login.user.user_id)
 
       const [batchesData, setBatchesData] = useState([])
       const [facultyData, setFacultyData] = useState([])
@@ -72,10 +73,21 @@ function AssignCourse(props) {
         institute_id
     })
 
+      const [request, setRequest] = useState({
+        department_id: '',
+        institute_id,
+        user_id,
+        room_id: '',
+        requested_faculty_id: '',
+        date: format(new Date(), 'MM/dd/yyyy'),
+        startTime: format(new Date(), 'HH:mm'),
+        endTime: format(new Date(), 'HH:mm')
+    })
+
     function getDatesForWeekday(startMonth, endMonth, weekday) {
       const result = [];
-      const startDate = new Date(2023, startMonth - 1, 1); 
-      const endDate = new Date(2023, endMonth, 0); 
+      const startDate = new Date(new Date().getFullYear(), startMonth - 1, 1); 
+      const endDate = new Date(new Date().getFullYear(), endMonth, 0); 
       for (let d = startDate; d <= endDate; d.setDate(d.getDate() + 1)) {
         if (d.getDay() == weekday) {
           result.push(format(new Date(d), 'MM/dd/yyyy'));
@@ -101,7 +113,6 @@ function AssignCourse(props) {
       }
       
       if(dayNumber !== undefined && assignCourse.semesterType.length > 0){
-        console.log(weekdays[dayNumber])
         if(assignCourse.semesterType === "Spring"){
           setDates(getDatesForWeekday(getMonthNumber(springStart), getMonthNumber(springEnd), dayNumber));
         }else if(assignCourse.semesterType === "Fall"){
@@ -153,7 +164,7 @@ function AssignCourse(props) {
             for(let j in departments){
               if(batches[i].department_id === departments[j].department_id){
                 setBatchesData(batchesData => [...batchesData, {batchId: batches[i].batchId, name: `${batches[i].batchYear} - ${departments[j].department_name}`, 
-              department_id: departments[j].department_id}])
+                  department_id: departments[j].department_id}])
               }
             }
           }
@@ -189,6 +200,7 @@ function AssignCourse(props) {
         for(let i of batchesData){
           if(i.name === e.target.value){
             setAssignCourse({ ...assignCourse, batchId: i.batchId, department_id: i.department_id})
+            setRequest({...request, department_id: i.department_id})
           }
         }
       }
@@ -197,6 +209,7 @@ function AssignCourse(props) {
         for(let i of facultyData){
           if(i.name === e.target.value){
             setAssignCourse({ ...assignCourse, faculty_id: i.id})
+            setRequest({...request, requested_faculty_id: i.id})
           }
         }
       }
@@ -213,6 +226,7 @@ function AssignCourse(props) {
         for(let i of roomsData){
           if(i.name === e.target.value){
             setAssignCourse({...assignCourse, room_id: i.id})
+            setRequest({...request, room_id: i.id})
           }
         }
       }
@@ -222,6 +236,7 @@ function AssignCourse(props) {
         for (const key in object) {
             if (key === '$d') {
               setAssignCourse({ ...assignCourse, startTime: format(new Date(object[key]), 'HH:mm') })
+              setRequest({...request, startTime: format(new Date(object[key]), 'HH:mm')})
             }
         }
         setValue(newValue);
@@ -232,6 +247,7 @@ function AssignCourse(props) {
         for (const key in object) {
             if (key === '$d') {
               setAssignCourse({ ...assignCourse, endTime: format(new Date(object[key]), 'HH:mm') })
+              setRequest({...request, endTime: format(new Date(object[key]), 'HH:mm')})
             }
         }
         setValue1(newValue);
@@ -265,9 +281,7 @@ function AssignCourse(props) {
             let roomConflict = false;
 
             if(assignedCourses.length == 0){
-              dispatch(assignCourseRequest(assignCourse))
-              // dispatch(addRequestedStaff())
-              // dispatch(addRequestedRoom())
+              // dispatch(assignCourseRequest(assignCourse))
               setOpenAssignCourseModal(false)
               setShowError(false)
               alert("Operation performed successfully!")
@@ -338,11 +352,9 @@ function AssignCourse(props) {
               setShowError(true)
             }else {
               // dispatch(assignCourseRequest(assignCourse))
-              // dispatch(addRequestedStaff())
-              // dispatch(addRequestedRoom())
-              setOpenAssignCourseModal(false)
-              setShowError(false)
-              alert("Operation performed successfully!")
+              // setOpenAssignCourseModal(false)
+              // setShowError(false)
+              // alert("Operation performed successfully!")
             }
             }
 
