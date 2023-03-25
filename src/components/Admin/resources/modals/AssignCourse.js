@@ -22,6 +22,7 @@ import { getStaffRequest } from '../../../../redux/GetStaffRequest/getStaffReqAc
 import { getRoomRequest } from '../../../../redux/GetRoomRequests/getRoomReqActions'
 import { addRequestedStaff } from '../../../../redux/AddStaffRequest/staffRequestActions'
 import { addRequestedRoom } from '../../../../redux/AddRoomRequest/roomRequestActions'
+import { makeResBusy } from '../../../../redux/MakeResourcesBusy/makeResBusyActions'
 
 function AssignCourse(props) {
 
@@ -282,6 +283,7 @@ function AssignCourse(props) {
 
             if(assignedCourses.length == 0){
               // dispatch(assignCourseRequest(assignCourse))
+              dispatch(makeResBusy(request, dates))
               setOpenAssignCourseModal(false)
               setShowError(false)
               alert("Operation performed successfully!")
@@ -352,6 +354,7 @@ function AssignCourse(props) {
               setShowError(true)
             }else {
               // dispatch(assignCourseRequest(assignCourse))
+              dispatch(makeResBusy(request, dates))
               // setOpenAssignCourseModal(false)
               // setShowError(false)
               // alert("Operation performed successfully!")
