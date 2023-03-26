@@ -20,8 +20,6 @@ import { assignedCoursesRequest } from '../../../../redux/AssignedCourses/assign
 import { Alert } from '@mui/material';
 import { getStaffRequest } from '../../../../redux/GetStaffRequest/getStaffReqActions'
 import { getRoomRequest } from '../../../../redux/GetRoomRequests/getRoomReqActions'
-import { addRequestedStaff } from '../../../../redux/AddStaffRequest/staffRequestActions'
-import { addRequestedRoom } from '../../../../redux/AddRoomRequest/roomRequestActions'
 import { makeResBusy } from '../../../../redux/MakeResourcesBusy/makeResBusyActions'
 
 function AssignCourse(props) {
@@ -263,6 +261,14 @@ function AssignCourse(props) {
         setShowError(false)
       }
 
+      const assigningCourse = () => {
+        dispatch(assignCourseRequest(assignCourse))
+        dispatch(makeResBusy(request, dates))
+        setOpenAssignCourseModal(false)
+        setShowError(false)
+        alert("Operation performed successfully!")
+      }
+
       const handleSubmit = (e) => {
         e.preventDefault()
 
@@ -282,11 +288,7 @@ function AssignCourse(props) {
             let roomConflict = false;
 
             if(assignedCourses.length == 0){
-              // dispatch(assignCourseRequest(assignCourse))
-              dispatch(makeResBusy(request, dates))
-              setOpenAssignCourseModal(false)
-              setShowError(false)
-              alert("Operation performed successfully!")
+              assigningCourse()
             }   
             
             for (let i = 0; i < assignedCourses.length; i++) {
@@ -353,11 +355,7 @@ function AssignCourse(props) {
             if(courseConflict || facultyConflict || roomConflict){
               setShowError(true)
             }else {
-              // dispatch(assignCourseRequest(assignCourse))
-              dispatch(makeResBusy(request, dates))
-              // setOpenAssignCourseModal(false)
-              // setShowError(false)
-              // alert("Operation performed successfully!")
+              assigningCourse()
             }
             }
 
