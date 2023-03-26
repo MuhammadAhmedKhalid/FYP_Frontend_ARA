@@ -162,17 +162,19 @@ function RequestedData() {
                                             if(faculty[i].user.user_id === staff.user_id){
                                                 from = faculty[i].user.name
                                             }
-                                            for(let j = 0; j < departments.length; j++){
-                                                if(faculty[i].faculty_id === staff.requested_faculty_id 
-                                                    && departments[j].department_id === staff.department_id
-                                                    && (user_id === staff.user_id || isAdmin)){
-                                                    return <RequestedDataField index={index} 
-                                                    name={faculty[i].name} 
-                                                    details={"Department: " + departments[j].department_name}
-                                                    from={"By: " + from}
-                                                    date={staff.date} startTime={staff.startTime} endTime={staff.endTime}
-                                                    setDel={setDel} setReq_id={setReq_id} id={staff.staff_req_id} setResource={setResource}
-                                                    resource_type={'SR'}/>
+                                            if (from !== undefined){
+                                                for(let j = 0; j < departments.length; j++){
+                                                    if(faculty[i].faculty_id === staff.requested_faculty_id 
+                                                        && departments[j].department_id === staff.department_id
+                                                        && (user_id === staff.user_id || isAdmin)){
+                                                        return <RequestedDataField index={index} 
+                                                        name={faculty[i].name} 
+                                                        details={"Department: " + departments[j].department_name}
+                                                        from={"By: " + from}
+                                                        date={staff.date} startTime={staff.startTime} endTime={staff.endTime}
+                                                        setDel={setDel} setReq_id={setReq_id} id={staff.staff_req_id} setResource={setResource}
+                                                        resource_type={'SR'}/>
+                                                    }
                                                 }
                                             }
                                         }
