@@ -8,7 +8,7 @@ function* makeResBusyRequest(payload) {
         const headers = {
             'Authorization': `Bearer ${token}`
         };
-        yield call(axios.post, 'http://localhost:8080/makeResBusy', [payload.room_obj, payload.staff_obj, payload.lst], { headers });
+        yield call(axios.post, 'http://localhost:8080/makeResBusy', payload, { headers });
         yield put({ type: MAKE_RES_BUSY_SUCCESS, message: "Operation performed successfully." })
     
     } catch (error) {
