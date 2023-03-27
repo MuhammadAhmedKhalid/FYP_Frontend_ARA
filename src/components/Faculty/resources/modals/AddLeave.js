@@ -8,6 +8,7 @@ import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
 import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker';
 import { TimePicker } from '@mui/x-date-pickers/TimePicker';
 import { format } from 'date-fns';
+import { checkValidTime } from '../../utils'
 
 function AddLeave(props) {
 
@@ -72,7 +73,19 @@ function AddLeave(props) {
 
     const handleForm = (e) => {
         e.preventDefault();
-        console.log(request)
+
+        let startTime = new Date();
+        let endTime = new Date();
+
+        startTime.setHours(request.startTime.substring(0, 2), request.startTime.substring(3), 0, 0);
+        endTime.setHours(request.endTime.substring(0, 2), request.endTime.substring(3), 0, 0);
+
+        const result = checkValidTime(startTime.getHours(), endTime.getHours(), startTime.getTime(), endTime.getTime())
+        if(result){
+            alert('Invalid time. Start time should always be less than End time.')
+        }else{
+            console.log(request)
+        }
     }
 
     return (
