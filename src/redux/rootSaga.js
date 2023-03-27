@@ -34,6 +34,7 @@ import { assignCourseSaga } from './AssignCourse/assignCourseSaga'
 import { assignedCoursesSaga } from './AssignedCourses/assignedCoursesSaga'
 import { assignedCoursesForTableSaga } from './AssignedCoursesForTable/assignedCoursesForTableSaga'
 import { makeResBusySaga } from './MakeResourcesBusy/makeResBusySaga'
+import { addLeaveRequestSaga } from './AddLeaveRequest/addLeaveRequestSaga'
 
 export function* rootSaga() {
     yield fork(signupSaga)
@@ -71,4 +72,5 @@ export function* rootSaga() {
     yield fork(assignedCoursesSaga)
     yield fork(assignedCoursesForTableSaga)
     yield fork(makeResBusySaga)
+    yield fork(addLeaveRequestSaga)
 }
