@@ -34,6 +34,7 @@ import { assignCourseReducer } from './AssignCourse/assignCourseReducer'
 import { assignedCoursesReducer } from './AssignedCourses/assignedCoursesReducer'
 import { assignedCoursesForTableReducer } from './AssignedCoursesForTable/assignedCoursesForTableReducer'
 import { addLeaveReducer } from './AddLeaveRequest/addLeaveRequestReducer'
+import { leaveReqReducer } from './GetLeaveRequests/getLeaveRequestReducer'
 
 export const rootReducer = combineReducers({
     signup: signupReducer,
@@ -71,4 +72,5 @@ export const rootReducer = combineReducers({
     assignedCoursesReducer,
     assignedCoursesForTableReducer,
     addLeaveReducer,
+    leaveReqReducer,
 })
