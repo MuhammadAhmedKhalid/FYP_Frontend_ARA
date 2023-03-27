@@ -7,15 +7,43 @@ import Stack from '@mui/material/Stack';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
 import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker';
 import { TimePicker } from '@mui/x-date-pickers/TimePicker';
+import { format } from 'date-fns';
 
 function AddLeave(props) {
 
     const { openLeaveModal, setLeaveModal } = props
 
     const [value, setValue] = useState(dayjs(new Date()));
+    const [value1, setValue1] = useState(dayjs(new Date()));
 
-    const handleChange = (newValue) => {
+    const handleDateChange = (newValue) => {
+        const object = newValue
+        for (const key in object) {
+            if (key === '$d') {
+                setRequest({ ...request, date: format(new Date(object[key]), 'MM/dd/yyyy') })
+            }
+        }
         setValue(newValue);
+    };
+
+    const handleStartTimeChange = (newValue) => {
+        const object = newValue
+        for (const key in object) {
+            if (key === '$d') {
+                setRequest({ ...request, startTime: format(new Date(object[key]), 'HH:mm') })
+            }
+        }
+        setValue(newValue);
+    };
+
+    const handleEndTimeChange = (newValue) => {
+        const object = newValue
+        for (const key in object) {
+            if (key === '$d') {
+                setRequest({ ...request, endTime: format(new Date(object[key]), 'HH:mm') })
+            }
+        }
+        setValue1(newValue);
     };
 
     const customStyles = {
@@ -30,6 +58,23 @@ function AddLeave(props) {
         },
     };
 
+    const onKeyDown = (e) => {
+        e.preventDefault();
+     };
+
+    const [request, setRequest] = useState({
+        reason: "",
+        date: format(new Date(), 'MM/dd/yyyy'),
+        startTime: format(new Date(), 'HH:mm'),
+        endTime: format(new Date(), 'HH:mm'),
+    }
+    )
+
+    const handleForm = (e) => {
+        e.preventDefault();
+        console.log(request)
+    }
+
     return (
         <div>
             <Modal
@@ -39,39 +84,41 @@ function AddLeave(props) {
                 onRequestClose={() => setLeaveModal(false)}>
                 <div className='center flexbox-container-y'>
                     <h2 style={{ color: "#115868", fontSize: 20 }}>Add Leave</h2>
-                    <form>
+                    <form onSubmit={handleForm}>
                         <TextField
-                        autoFocus
+                            autoFocus
                             required
                             style={{ marginBottom: '1rem' }}
                             label="Reason"
                             placeholder="Add text here..."
                             variant="outlined"
                             multiline={true}
-                            rows={4} />
+                            rows={4}
+                            value={request.reason}
+                            onChange={(e) => setRequest({ ...request, reason: e.target.value })} />
                         <LocalizationProvider dateAdapter={AdapterDayjs}>
                             <Stack spacing={1.5}>
                                 <DesktopDatePicker
                                     label="Date"
                                     inputFormat="DD/MM/YYYY"
                                     value={value}
-                                    onChange={handleChange}
-                                    renderInput={(params) => <TextField {...params}
+                                    onChange={handleDateChange}
+                                    renderInput={(params) => <TextField onKeyDown={onKeyDown} {...params}
                                         variant="outlined" />} />
                                 <TimePicker
                                     value={value}
-                                    onChange={handleChange}
+                                    onChange={handleStartTimeChange}
                                     label="Start Time"
-                                    renderInput={(params) => <TextField {...params}
+                                    renderInput={(params) => <TextField onKeyDown={onKeyDown} {...params}
                                         variant="outlined" />} />
                                 <TimePicker
-                                    value={value}
-                                    onChange={handleChange}
+                                    value={value1}
+                                    onChange={handleEndTimeChange}
                                     label="End Time"
-                                    renderInput={(params) => <TextField {...params}
+                                    renderInput={(params) => <TextField onKeyDown={onKeyDown} {...params}
                                         variant="outlined" />} />
                             </Stack>
-                        </LocalizationProvider>
+                            </LocalizationProvider>
                         <div className='center flexbox-container-y'>
                             <button style={{ marginTop: '1rem' }} type='submit' className='modal-btn'>Save</button>
                         </div>
