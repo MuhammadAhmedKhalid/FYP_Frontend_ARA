@@ -9,10 +9,14 @@ import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker';
 import { TimePicker } from '@mui/x-date-pickers/TimePicker';
 import { format } from 'date-fns';
 import { checkValidTime } from '../../utils'
+import { useSelector } from 'react-redux'
 
 function AddLeave(props) {
 
     const { openLeaveModal, setLeaveModal } = props
+
+    const institute_id = useSelector((state) => state.login.user.institute_id)
+    const faculty_id = useSelector((state) => state.login.user.faculty_id)
 
     const [value, setValue] = useState(dayjs(new Date()));
     const [value1, setValue1] = useState(dayjs(new Date()));
@@ -65,6 +69,8 @@ function AddLeave(props) {
 
     const [request, setRequest] = useState({
         reason: "",
+        institute_id,
+        faculty_id,
         date: format(new Date(), 'MM/dd/yyyy'),
         startTime: format(new Date(), 'HH:mm'),
         endTime: format(new Date(), 'HH:mm'),
@@ -106,7 +112,7 @@ function AddLeave(props) {
                             placeholder="Add text here..."
                             variant="outlined"
                             multiline={true}
-                            rows={4}
+                            minRows={4}
                             value={request.reason}
                             onChange={(e) => setRequest({ ...request, reason: e.target.value })} />
                         <LocalizationProvider dateAdapter={AdapterDayjs}>
