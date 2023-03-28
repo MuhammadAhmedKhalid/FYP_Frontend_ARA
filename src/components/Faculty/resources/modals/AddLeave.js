@@ -34,6 +34,7 @@ function AddLeave(props) {
     const [value, setValue] = useState(dayjs(new Date()));
     const [value1, setValue1] = useState(dayjs(new Date()));
     const [courseName, setCourseName] = useState("") 
+    const [availableFaculty, setAvailableFaculty] = useState([])
 
     useEffect(() => {
         if(institute_id > 0){
@@ -127,7 +128,10 @@ function AddLeave(props) {
         if(result){
             alert('Invalid time. Start time should always be less than End time.')
         }else{
-            dispatch(addLeave(request, courseName))
+            // if availableFaculty > 1 then pass for best choice (algorithm) 
+            // else if === 1 then just assign that course to him/her
+            // else (means === 0) make that batch and room free
+            dispatch(addLeave(request, courseName, availableFaculty))
             setLeaveModal(false)
             alert("Operation performed successfully!")
         }
