@@ -12,6 +12,7 @@ import { getDepartmentsRequest } from '../../redux/GetDepartments/getDepartments
 import { deleteRequestedObj } from '../../redux/DeleteObjectRequest/delObjReqActions'
 import { deleteRequestedRoom } from '../../redux/DeleteRoomRequest/delRoomReqActions'
 import { deleteRequestedStaff } from '../../redux/DeleteStaffRequest/delStaffReqActions'
+import { getLeaveRequest } from '../../redux/GetLeaveRequests/getLeaveRequestActions'
  
 function RequestedData() {
 
@@ -38,6 +39,8 @@ function RequestedData() {
     const facultyAdded = useSelector((state) => state.getFaculty.added)
     const user_id = useSelector((state) => state.login.user.user_id)
     const isAdmin = useSelector((state) => state.login.user._admin)
+    const requestedLeaves = useSelector((state) => state.leaveReqReducer.requestedLeaves.data)
+    const requestedLeavesAdded = useSelector((state) => state.leaveReqReducer.added)
 
     useEffect(()=>{
         if(del){
@@ -67,6 +70,7 @@ function RequestedData() {
             dispatch(getRoomsRequest(institute_id))
             dispatch(getFacultyRequest(institute_id))
             dispatch(getDepartmentsRequest(institute_id))
+            dispatch(getLeaveRequest(institute_id))
         }
     },[dispatch, institute_id])
 
@@ -85,6 +89,33 @@ function RequestedData() {
                 <div className="grid-container">
                     <div className="col">
                         <p>Leave Request</p>
+                        {
+                            requestedLeavesAdded ? 
+                            requestedLeaves.map((leave, index) =>
+                            {
+                                if(facultyAdded && departmentsAdded){
+                                    let from;
+                                    for(let i = 0; i < faculty.length; i++){
+                                        if(faculty[i].faculty_id === leave.faculty_id){
+                                            from = faculty[i].name
+                                        }
+                                        for(let j = 0; j < departments.length; j++){
+                                            if(faculty[i].faculty_id === leave.faculty_id
+                                                && departments[j].department_name === faculty[i].department){
+                                                return <RequestedDataField index={index} 
+                                                name={faculty[i].name} 
+                                                details={"Department: " + departments[j].department_name}
+                                                from={"By: " + from}
+                                                date={leave.date} startTime={leave.startTime} endTime={leave.endTime}
+                                                setDel={setDel} setReq_id={setReq_id} id={leave.leaveId} setResource={setResource}
+                                                resource_type={'LR'}/>
+                                            }
+                                            
+                                        }
+                                    }
+                                }
+                            }) : null
+                        }
                     </div>
                     <div className="col">
                         <p>Object Request</p>

@@ -94,6 +94,8 @@ function AddLeave(props) {
             alert('Invalid time. Start time should always be less than End time.')
         }else{
             dispatch(addLeave(request))
+            setLeaveModal(false)
+            alert("Operation performed successfully!")
         }
     }
 
