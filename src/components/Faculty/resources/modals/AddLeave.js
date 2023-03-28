@@ -9,11 +9,14 @@ import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker';
 import { TimePicker } from '@mui/x-date-pickers/TimePicker';
 import { format } from 'date-fns';
 import { checkValidTime } from '../../utils'
-import { useSelector } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
+import { addLeave } from '../../../../redux/AddLeaveRequest/addLeaveRequestActions'
 
 function AddLeave(props) {
 
     const { openLeaveModal, setLeaveModal } = props
+
+    const dispatch = useDispatch()
 
     const institute_id = useSelector((state) => state.login.user.institute_id)
     const faculty_id = useSelector((state) => state.login.user.faculty_id)
@@ -90,7 +93,7 @@ function AddLeave(props) {
         if(result){
             alert('Invalid time. Start time should always be less than End time.')
         }else{
-            console.log(request)
+            dispatch(addLeave(request))
         }
     }
 
