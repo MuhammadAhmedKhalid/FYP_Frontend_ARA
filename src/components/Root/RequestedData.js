@@ -13,6 +13,7 @@ import { deleteRequestedObj } from '../../redux/DeleteObjectRequest/delObjReqAct
 import { deleteRequestedRoom } from '../../redux/DeleteRoomRequest/delRoomReqActions'
 import { deleteRequestedStaff } from '../../redux/DeleteStaffRequest/delStaffReqActions'
 import { getLeaveRequest } from '../../redux/GetLeaveRequests/getLeaveRequestActions'
+import { deleteLeaveRequest } from '../../redux/DeleteLeaveRequest/deleteLeaveRequestActions'
  
 function RequestedData() {
 
@@ -54,6 +55,9 @@ function RequestedData() {
                     break;
                 case 'SR':
                     dispatch(deleteRequestedStaff(req_id))
+                    break;
+                case 'LR':
+                    dispatch(deleteLeaveRequest(req_id))
                     break;
                 default:
                     break;
