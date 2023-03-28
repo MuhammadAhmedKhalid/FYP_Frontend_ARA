@@ -13,6 +13,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import { addLeave } from '../../../../redux/AddLeaveRequest/addLeaveRequestActions'
 import { getDepartmentsRequest } from '../../../../redux/GetDepartments/getDepartmentsActions'
 import { getFacultyRequest } from '../../../../redux/GetFaculty/getFacultyActions'
+import { assignedCoursesRequest } from '../../../../redux/AssignedCourses/assignedCoursesActions'
 
 function AddLeave(props) {
 
@@ -27,14 +28,18 @@ function AddLeave(props) {
     const departmentsAdded = useSelector((state) => state.getDepartments.added)
     const faculty = useSelector((state) => state.getFaculty.faculty)
     const facultyAdded = useSelector((state) => state.getFaculty.added)
+    const assignedCourses = useSelector((state) => state.assignedCoursesReducer.assignedCourses.data)
+    const assignedCoursesAdded = useSelector((state) => state.assignedCoursesReducer.added)
 
     const [value, setValue] = useState(dayjs(new Date()));
     const [value1, setValue1] = useState(dayjs(new Date()));
+    const [courseName, setCourseName] = useState("") 
 
     useEffect(() => {
         if(institute_id > 0){
             dispatch(getDepartmentsRequest(institute_id))
             dispatch(getFacultyRequest(institute_id))
+            dispatch(assignedCoursesRequest(institute_id))
         }
     },[institute_id, dispatch])
 
@@ -122,7 +127,7 @@ function AddLeave(props) {
         if(result){
             alert('Invalid time. Start time should always be less than End time.')
         }else{
-            dispatch(addLeave(request))
+            dispatch(addLeave(request, courseName))
             setLeaveModal(false)
             alert("Operation performed successfully!")
         }
