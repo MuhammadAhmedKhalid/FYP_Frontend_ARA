@@ -105,7 +105,6 @@ function RequestedData() {
                                                 return <RequestedDataField index={index} 
                                                 name={faculty[i].name} 
                                                 details={"Department: " + departments[j].department_name}
-                                                from={"By: " + from}
                                                 date={leave.date} startTime={leave.startTime} endTime={leave.endTime}
                                                 setDel={setDel} setReq_id={setReq_id} id={leave.leaveId} setResource={setResource}
                                                 resource_type={'LR'}/>

@@ -27,14 +27,28 @@ function RequestedDataField(props) {
                     <div className="circle">
                         R
                     </div>
-                    <div style={{marginLeft: '15px'}}>
-                        <h5>{name}</h5>
-                        <h6>{details}</h6>
-                        {
-                            isAdmin ? <h6>{from}</h6> : null
-                        }
-                        <h6>{date} | {startTime} - {endTime}</h6>
-                    </div>
+                    {
+                        isAdmin && resource_type === "LR" ? 
+                        <div style={{marginLeft: '15px'}}>
+                            <h5>{name}</h5>
+                            <h6>{details}</h6>
+                            <h6>{date} | {startTime} - {endTime}</h6>
+                        </div> : 
+                        !isAdmin && resource_type === "LR" ? 
+                        <div style={{marginLeft: '15px'}}>
+                            <h5>{date}</h5>
+                            <h6>{details}</h6>
+                            <h6>{startTime} - {endTime}</h6>
+                        </div> : 
+                        <div style={{marginLeft: '15px'}}>
+                            <h5>{name}</h5>
+                            <h6>{details}</h6>
+                            {
+                                isAdmin ? <h6>{from}</h6> : null
+                            }
+                            <h6>{date} | {startTime} - {endTime}</h6>
+                        </div>
+                    }
                 </div>
                 <div className='align-y right-div'>
                     <DeleteIcon className='delete-btn' onClick={handleClick}/>
