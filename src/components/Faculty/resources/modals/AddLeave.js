@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import Modal from 'react-modal'
 import dayjs from 'dayjs';
 import TextField from '@material-ui/core/TextField'
@@ -11,6 +11,9 @@ import { format } from 'date-fns';
 import { checkValidTime } from '../../utils'
 import { useSelector, useDispatch } from 'react-redux'
 import { addLeave } from '../../../../redux/AddLeaveRequest/addLeaveRequestActions'
+import { addRequestedStaff } from '../../../../redux/AddStaffRequest/staffRequestActions' 
+import { getDepartmentsRequest } from '../../../../redux/GetDepartments/getDepartmentsActions'
+import { getFacultyRequest } from '../../../../redux/GetFaculty/getFacultyActions'
 
 function AddLeave(props) {
 
@@ -20,9 +23,33 @@ function AddLeave(props) {
 
     const institute_id = useSelector((state) => state.login.user.institute_id)
     const faculty_id = useSelector((state) => state.login.user.faculty_id)
+    const user_id = useSelector((state) => state.login.user.user_id)
+    const departments = useSelector((state) => state.getDepartments.departments.data)
+    const departmentsAdded = useSelector((state) => state.getDepartments.added)
+    const faculty = useSelector((state) => state.getFaculty.faculty)
+    const facultyAdded = useSelector((state) => state.getFaculty.added)
 
     const [value, setValue] = useState(dayjs(new Date()));
     const [value1, setValue1] = useState(dayjs(new Date()));
+
+    useEffect(() => {
+        if(institute_id > 0){
+            dispatch(getDepartmentsRequest(institute_id))
+            dispatch(getFacultyRequest(institute_id))
+        }
+    },[institute_id, dispatch])
+
+    useEffect(() => {
+        if(faculty_id > 0 && departmentsAdded && facultyAdded){
+            for(let i of departments){
+                for(let j of faculty){
+                    if(i.department_name === j.department){
+                        setRequest({...request, department_id: i.department_id})
+                    }
+                }
+            }
+        }
+    }, [faculty_id, departments, departmentsAdded, faculty, facultyAdded])
 
     const handleDateChange = (newValue) => {
         const object = newValue
@@ -74,6 +101,9 @@ function AddLeave(props) {
         reason: "",
         institute_id,
         faculty_id,
+        department_id: '',
+        user_id,
+        requested_faculty_id: faculty_id,
         date: format(new Date(), 'MM/dd/yyyy'),
         startTime: format(new Date(), 'HH:mm'),
         endTime: format(new Date(), 'HH:mm'),
@@ -94,6 +124,7 @@ function AddLeave(props) {
             alert('Invalid time. Start time should always be less than End time.')
         }else{
             dispatch(addLeave(request))
+            dispatch(addRequestedStaff(request))
             setLeaveModal(false)
             alert("Operation performed successfully!")
         }
