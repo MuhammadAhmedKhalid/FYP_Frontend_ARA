@@ -11,7 +11,6 @@ import { format } from 'date-fns';
 import { checkValidTime } from '../../utils'
 import { useSelector, useDispatch } from 'react-redux'
 import { addLeave } from '../../../../redux/AddLeaveRequest/addLeaveRequestActions'
-import { addRequestedStaff } from '../../../../redux/AddStaffRequest/staffRequestActions' 
 import { getDepartmentsRequest } from '../../../../redux/GetDepartments/getDepartmentsActions'
 import { getFacultyRequest } from '../../../../redux/GetFaculty/getFacultyActions'
 
@@ -124,7 +123,6 @@ function AddLeave(props) {
             alert('Invalid time. Start time should always be less than End time.')
         }else{
             dispatch(addLeave(request))
-            dispatch(addRequestedStaff(request))
             setLeaveModal(false)
             alert("Operation performed successfully!")
         }
