@@ -15,6 +15,7 @@ import { addLeave } from '../../../../redux/AddLeaveRequest/addLeaveRequestActio
 import { getDepartmentsRequest } from '../../../../redux/GetDepartments/getDepartmentsActions'
 import { getFacultyRequest } from '../../../../redux/GetFaculty/getFacultyActions'
 import { assignedCoursesRequest } from '../../../../redux/AssignedCourses/assignedCoursesActions'
+import { getCourseRequest } from '../../../../redux/GetCourse/getCourseActions'
 
 function AddLeave(props) {
 
@@ -31,6 +32,8 @@ function AddLeave(props) {
     const facultyAdded = useSelector((state) => state.getFaculty.added)
     const assignedCourses = useSelector((state) => state.assignedCoursesReducer.assignedCourses.data)
     const assignedCoursesAdded = useSelector((state) => state.assignedCoursesReducer.added)
+    const courses = useSelector((state) => state.getCourseReducer.courses)
+    const coursessAdded = useSelector((state) => state.getCourseReducer.added)
 
     const [value, setValue] = useState(dayjs(new Date()));
     const [value1, setValue1] = useState(dayjs(new Date()));
@@ -41,6 +44,7 @@ function AddLeave(props) {
             dispatch(getDepartmentsRequest(institute_id))
             dispatch(getFacultyRequest(institute_id))
             dispatch(assignedCoursesRequest(institute_id))
+            dispatch(getCourseRequest(institute_id))
         }
     },[institute_id, dispatch])
 
@@ -120,7 +124,7 @@ function AddLeave(props) {
         if(assignedCoursesAdded){
             
             let conflict = false
-            let courses = []
+            let coursesList = []
 
             for(let i of assignedCourses){
                 if(i.faculty_id === id && format(new Date(i.date), 'MM/dd/yyyy') === date){
@@ -140,13 +144,13 @@ function AddLeave(props) {
                         startTime.getTime(), assignedStartTime.getTime(), endTime.getTime(), assignedEndTime.getTime());
     
                       if(conflict){
-                        courses.push(i)
+                        coursesList.push(i)
                         conflict = false
                       }
 
                 }
             }
-            console.log(courses)
+            return coursesList
         }
 
     }
@@ -167,7 +171,32 @@ function AddLeave(props) {
             // if availableFaculty > 1 then pass for best choice (algorithm) 
             // else if === 1 then just assign that course to him/her
             // else (means === 0) make that batch and room free(means delete room request and delete assigned course for that particular day)
-            checkCourse(faculty_id, request.startTime, request.endTime, request.date)
+            let coursesList = checkCourse(faculty_id, request.startTime, request.endTime, request.date)
+            if(courses.length > 0 && facultyAdded && coursessAdded){
+                
+                let coursesLst = []
+                let availableFaculty = []
+
+                for(let a in courses){
+                    for(let b of coursesList){
+                        if(courses[a].course_id === b.course_id){
+                            coursesLst.push({course_id: courses[a].course_id, course_name: courses[a].course_name})
+                        }
+                    }
+                }
+                
+                for(let i of faculty){
+                    for(let j of i.specialization){
+                       for(let k of coursesLst){
+                        if(j === k.course_name){
+                            availableFaculty.push({faculty_id: i.faculty_id, course_id: k.course_id, course_name: k.course_name})
+                        }
+                       }
+                    }
+                }
+                console.log(coursesLst)
+                console.log(availableFaculty)
+            }
             // dispatch(addLeave(request, courseName, availableFaculty))
             // setLeaveModal(false)
             // alert("Operation performed successfully!")
