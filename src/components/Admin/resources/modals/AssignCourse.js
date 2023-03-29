@@ -121,18 +121,34 @@ function AssignCourse(props) {
     }, [assignCourse.day, assignCourse.semesterType])
 
       useEffect(() => {
+        if(assignCourse.faculty_id > 0){
+          setCoursesData([])
+          for(let i in faculty){
+            if(assignCourse.faculty_id === faculty[i].faculty_id){
+              for(let j of faculty[i].specialization){
+                for(let k of courses){
+                  if(j === k.course_name){
+                    setCoursesData(coursesData => [...coursesData, {id: k.course_id, name: k.course_name}])
+                  }
+                }
+              }
+            }
+          }
+        }
+      }, [assignCourse.faculty_id])
+
+      useEffect(() => {
         
         if(departmentsAdded && coursessAdded && facultyAdded && roomsAdded){
           
-          setCoursesData([])
           setFacultyData([])
           setRoomsData([])
 
-          for(let i in courses){
-            if(assignCourse.department_id === courses[i].department_id){
-              setCoursesData(coursesData => [...coursesData, {id: courses[i].course_id, name: courses[i].course_name}])
-            }
-          }
+          // for(let i in courses){
+          //   if(assignCourse.department_id === courses[i].department_id){
+          //     setCoursesData(coursesData => [...coursesData, {id: courses[i].course_id, name: courses[i].course_name}])
+          //   }
+          // }
           
           let department_name = "";
           for(let i in departments){

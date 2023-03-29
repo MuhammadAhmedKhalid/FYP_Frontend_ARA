@@ -16,6 +16,7 @@ import { getDepartmentsRequest } from '../../../../redux/GetDepartments/getDepar
 import { getFacultyRequest } from '../../../../redux/GetFaculty/getFacultyActions'
 import { assignedCoursesRequest } from '../../../../redux/AssignedCourses/assignedCoursesActions'
 import { getCourseRequest } from '../../../../redux/GetCourse/getCourseActions'
+import { getStaffRequest } from '../../../../redux/GetStaffRequest/getStaffReqActions'
 
 function AddLeave(props) {
 
@@ -34,10 +35,10 @@ function AddLeave(props) {
     const assignedCoursesAdded = useSelector((state) => state.assignedCoursesReducer.added)
     const courses = useSelector((state) => state.getCourseReducer.courses)
     const coursessAdded = useSelector((state) => state.getCourseReducer.added)
+    const requestedStaff = useSelector((state) => state.staffReqReducer.staff_req.data)
 
     const [value, setValue] = useState(dayjs(new Date()));
     const [value1, setValue1] = useState(dayjs(new Date()));
-    // const [availableFaculty, setAvailableFaculty] = useState([])
 
     useEffect(() => {
         if(institute_id > 0){
@@ -45,6 +46,7 @@ function AddLeave(props) {
             dispatch(getFacultyRequest(institute_id))
             dispatch(assignedCoursesRequest(institute_id))
             dispatch(getCourseRequest(institute_id))
+            dispatch(getStaffRequest(institute_id))
         }
     },[institute_id, dispatch])
 
@@ -172,11 +174,11 @@ function AddLeave(props) {
             // else if === 1 then just assign that course to him/her
             // else (means === 0) make that batch and room free(means delete room request and delete assigned course for that particular day)
             let coursesList = checkCourse(faculty_id, request.startTime, request.endTime, request.date)
-            if(courses.length > 0 && facultyAdded && coursessAdded){
-                
-                let coursesLst = []
-                let availableFaculty = []
 
+            let coursesLst = []
+            let availableFaculty = []
+
+            if(courses.length > 0 && facultyAdded && coursessAdded){
                 for(let a in courses){
                     for(let b of coursesList){
                         if(courses[a].course_id === b.course_id){
@@ -186,16 +188,19 @@ function AddLeave(props) {
                 }
                 
                 for(let i of faculty){
-                    for(let j of i.specialization){
-                       for(let k of coursesLst){
-                        if(j === k.course_name){
-                            availableFaculty.push({faculty_id: i.faculty_id, course_id: k.course_id, course_name: k.course_name})
-                        }
-                       }
+                    if(faculty_id !== i.faculty_id){
+                        for(let j of i.specialization){
+                            for(let k of coursesLst){
+                             if(j === k.course_name){
+                                 availableFaculty.push({faculty_id: i.faculty_id, course_id: k.course_id, course_name: k.course_name})
+                             }
+                            }
+                         }
                     }
                 }
                 console.log(coursesLst)
                 console.log(availableFaculty)
+                // available faculty ko check karna hai requested staff may
             }
             // dispatch(addLeave(request, courseName, availableFaculty))
             // setLeaveModal(false)
