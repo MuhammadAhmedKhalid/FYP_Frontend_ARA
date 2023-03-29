@@ -9,6 +9,7 @@ import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker';
 import { TimePicker } from '@mui/x-date-pickers/TimePicker';
 import { format } from 'date-fns';
 import { checkValidTime } from '../../utils'
+import { checkConflict } from '../../../Admin/utils'
 import { useSelector, useDispatch } from 'react-redux'
 import { addLeave } from '../../../../redux/AddLeaveRequest/addLeaveRequestActions'
 import { getDepartmentsRequest } from '../../../../redux/GetDepartments/getDepartmentsActions'
@@ -33,8 +34,7 @@ function AddLeave(props) {
 
     const [value, setValue] = useState(dayjs(new Date()));
     const [value1, setValue1] = useState(dayjs(new Date()));
-    const [courseName, setCourseName] = useState("") 
-    const [availableFaculty, setAvailableFaculty] = useState([])
+    // const [availableFaculty, setAvailableFaculty] = useState([])
 
     useEffect(() => {
         if(institute_id > 0){
@@ -115,6 +115,42 @@ function AddLeave(props) {
     }
     )
 
+    const checkCourse = (id, startTime, endTime, date) => {
+        
+        if(assignedCoursesAdded){
+            
+            let conflict = false
+            let courses = []
+
+            for(let i of assignedCourses){
+                if(i.faculty_id === id && format(new Date(i.date), 'MM/dd/yyyy') === date){
+                    
+                    var startTime = new Date();
+                    var endTime = new Date();
+                    var assignedStartTime = new Date();
+                    var assignedEndTime = new Date();
+                    
+                    startTime.setHours(request.startTime.substring(0, 2), request.startTime.substring(3), 0, 0);
+                    endTime.setHours(request.endTime.substring(0, 2), request.endTime.substring(3), 0, 0);
+                    assignedStartTime.setHours(i.startTime.substring(0, 2), i.startTime.substring(3), 0, 0);
+                    assignedEndTime.setHours(i.endTime.substring(0, 2), i.endTime.substring(3), 0, 0);
+                    
+
+                    conflict = checkConflict(startTime, assignedStartTime, endTime, assignedEndTime,
+                        startTime.getTime(), assignedStartTime.getTime(), endTime.getTime(), assignedEndTime.getTime());
+    
+                      if(conflict){
+                        courses.push(i)
+                        conflict = false
+                      }
+
+                }
+            }
+            console.log(courses)
+        }
+
+    }
+
     const handleForm = (e) => {
         e.preventDefault();
 
@@ -130,10 +166,11 @@ function AddLeave(props) {
         }else{
             // if availableFaculty > 1 then pass for best choice (algorithm) 
             // else if === 1 then just assign that course to him/her
-            // else (means === 0) make that batch and room free
-            dispatch(addLeave(request, courseName, availableFaculty))
-            setLeaveModal(false)
-            alert("Operation performed successfully!")
+            // else (means === 0) make that batch and room free(means delete room request and delete assigned course for that particular day)
+            checkCourse(faculty_id, request.startTime, request.endTime, request.date)
+            // dispatch(addLeave(request, courseName, availableFaculty))
+            // setLeaveModal(false)
+            // alert("Operation performed successfully!")
         }
     }
 
