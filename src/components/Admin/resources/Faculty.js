@@ -42,7 +42,8 @@ function Faculty() {
     useEffect(()=>{
         if(facultyAdded && rowData.length === 0){
             for(let i=0; i<faculty.length; i++){
-                rowData.push([faculty[i].name, faculty[i].phone_number, faculty[i].department, faculty[i].specialization.join(', '), faculty[i].designation])
+                rowData.push([faculty[i].name, faculty[i].phone_number, faculty[i].department, 
+                    faculty[i].specialization.join(', '), faculty[i].designation, faculty[i].yearsOfExperience])
             }
         }
     }, [facultyAdded])
@@ -61,7 +62,8 @@ function Faculty() {
                 <center>
                     <div>
                         {
-                            facultyAdded&& <Table columns={['No.', 'Name', 'Phone Number', 'Department', 'Specialization', 'Designation']} rows={rowData}/>
+                            facultyAdded&& <Table columns={['No.', 'Name', 'Phone Number', 'Department', 'Specialization', 
+                            'Designation', 'Years of Experience']} rows={rowData}/>
                         }
                     </div>
                 </center>
