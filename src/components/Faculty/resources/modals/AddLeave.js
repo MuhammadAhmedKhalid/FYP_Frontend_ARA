@@ -202,7 +202,7 @@ function AddLeave(props) {
                 console.log(availableFaculty)
                 // available faculty ko check karna hai requested staff may
             }
-            // dispatch(addLeave(request, courseName, availableFaculty))
+             dispatch(addLeave(request, coursesLst, availableFaculty))
             // setLeaveModal(false)
             // alert("Operation performed successfully!")
         }
