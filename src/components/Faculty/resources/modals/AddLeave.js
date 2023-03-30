@@ -200,9 +200,37 @@ function AddLeave(props) {
                 }
                 console.log(coursesLst)
                 console.log(availableFaculty)
+
+                if(availableFaculty.length > 0){
+                    for(let i of coursesList){
+                        
+                        let startTime = new Date();
+                        let endTime = new Date();
+
+                        startTime.setHours(i.startTime.substring(0, 2), i.startTime.substring(3), 0, 0);
+                        endTime.setHours(i.endTime.substring(0, 2), i.endTime.substring(3), 0, 0);
+
+                        console.log(startTime)
+                        console.log(endTime)
+                        console.log(i.date)
+                        console.log(requestedStaff)
+                        
+                        for(let j of availableFaculty){
+                            for(let k of requestedStaff){
+                                if(j.faculty_id === k.requested_faculty_id && format(new Date(i.date), 'MM/dd/yyyy') === k.date){
+
+                                    // now we have to check if there is any conflict or not
+                                    console.log(k)
+                                }
+                            }
+                        }
+
+                    }
+                }
+
                 // available faculty ko check karna hai requested staff may
             }
-             dispatch(addLeave(request, coursesLst, availableFaculty))
+            // dispatch(addLeave(request, coursesLst, availableFaculty))
             // setLeaveModal(false)
             // alert("Operation performed successfully!")
         }
