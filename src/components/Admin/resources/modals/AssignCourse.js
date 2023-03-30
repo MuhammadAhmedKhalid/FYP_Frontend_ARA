@@ -298,14 +298,13 @@ function AssignCourse(props) {
         if(result){
             alert('Invalid time. Start time should always be less than End time.')
         }else{
-          if(assignedCoursesAdded){  
+          if(assignedCourses === undefined){
+            assigningCourse()
+          }else if(assignedCoursesAdded){  
+
             let courseConflict = false;
             let facultyConflict = false;
             let roomConflict = false;
-
-            if(assignedCourses.length == 0){
-              assigningCourse()
-            }   
             
             for (let i = 0; i < assignedCourses.length; i++) {
               if(assignedCourses[i].department_id === assignCourse.department_id && assignedCourses[i].semesterType === assignCourse.semesterType
@@ -322,7 +321,7 @@ function AssignCourse(props) {
 
                   if(courseConflict){
                     setShowError(true)
-                    setErrorMsg('Course is already assigned during this time interval.')
+                    setErrorMsg("Operation can't be performed during this time interval.")
                     break
                   }
 
@@ -343,7 +342,7 @@ function AssignCourse(props) {
 
                   if(facultyConflict){
                     setShowError(true)
-                    setErrorMsg('Faculty is not available between this time interval.')
+                    setErrorMsg("Operation can't be performed during this time interval.")
                     break
                   }
                 }
@@ -362,7 +361,7 @@ function AssignCourse(props) {
 
               if (roomConflict) {
                   setShowError(true)
-                  setErrorMsg('Room is not available between this time interval.')
+                  setErrorMsg("Operation can't be performed during this time interval.")
                   break
               }
 
