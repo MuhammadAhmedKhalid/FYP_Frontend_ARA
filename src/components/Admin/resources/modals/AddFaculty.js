@@ -12,6 +12,7 @@ import { getCourseRequest } from '../../../../redux/GetCourse/getCourseActions'
 import { getPositionRequest } from '../../../../redux/GetPosition/getPositionActions'
 import { Alert } from '@mui/material';
 import Select from "react-select";
+import GradeIcon from '@mui/icons-material/Grade';
 
 function AddFaculty(props) {
 
@@ -46,7 +47,8 @@ function AddFaculty(props) {
             "name": "",
             "password": "12345678",
             "email": ""
-        }
+        },
+        yearsOfExperience: ""
     })
 
     useEffect(() => {
@@ -125,6 +127,9 @@ function AddFaculty(props) {
         event.preventDefault()
         if(faculty.specialization.length === 0){
             alert('Select specialization.')
+        } 
+        if(faculty.yearsOfExperience < 0){
+            alert('Years of experience should be in positive.')
         }else{
             dispatch(addFacultyRequest(faculty))
         }
@@ -169,6 +174,16 @@ function AddFaculty(props) {
                                 startAdornment: (
                                     <InputAdornment position='start'>
                                         <EmailIcon style={{ height: '20px' }} color="action" />
+                                    </InputAdornment>
+                                )
+                            }} />
+                        <TextField
+                        required
+                            value={faculty.yearsOfExperience} onChange={(e) => setFaculty({ ...faculty, yearsOfExperience: e.target.value })}
+                            style={{ margin: '3px' }} size='small' variant="outlined" type='number' placeholder='Years of Experience' InputProps={{
+                                startAdornment: (
+                                    <InputAdornment position='start'>
+                                        <GradeIcon style={{ height: '20px' }} color="action" />
                                     </InputAdornment>
                                 )
                             }} />
