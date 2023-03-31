@@ -187,10 +187,10 @@ function AddLeave(props) {
                     }
                 }
                 
-                for(let i of faculty){
-                    if(faculty_id !== i.faculty_id){
-                        for(let j of i.specialization){
-                            for(let k of coursesLst){
+                for(let k of coursesLst){
+                    for(let i of faculty){
+                        if(faculty_id !== i.faculty_id){
+                            for(let j of i.specialization){
                              if(j === k.course_name){
                                  availableFaculty.push({faculty_id: i.faculty_id, course_id: k.course_id, course_name: k.course_name})
                              }
@@ -198,33 +198,73 @@ function AddLeave(props) {
                          }
                     }
                 }
-                console.log(coursesLst)
-                console.log(availableFaculty)
 
-                if(availableFaculty.length > 0){
-                    for(let i of coursesList){
-                        
-                        let startTime = new Date();
-                        let endTime = new Date();
+                let groups = {};
+                for (let obj of availableFaculty) {
+                if (groups[obj.course_id]) {
+                    groups[obj.course_id].push(obj);
+                } else {
+                    groups[obj.course_id] = [obj];
+                }
+                }
 
-                        startTime.setHours(i.startTime.substring(0, 2), i.startTime.substring(3), 0, 0);
-                        endTime.setHours(i.endTime.substring(0, 2), i.endTime.substring(3), 0, 0);
+                let nestedList = Object.values(groups);
 
-                        console.log(startTime)
-                        console.log(endTime)
-                        console.log(i.date)
-                        console.log(requestedStaff)
-                        
-                        for(let j of availableFaculty){
-                            for(let k of requestedStaff){
-                                if(j.faculty_id === k.requested_faculty_id && format(new Date(i.date), 'MM/dd/yyyy') === k.date){
+                let list = []
+                for(let i of coursesLst){
+                    for(let j in nestedList){
+                        for(let k of nestedList[j]){
+                            if(k.course_id === i.course_id){
+                                list.push(nestedList[j])
+                            }
+                            break
+                        }
+                    }
+                }
 
-                                    // now we have to check if there is any conflict or not
-                                    console.log(k)
+                availableFaculty = list
+
+                // console.log(coursesLst)
+                 console.log(availableFaculty)
+
+                for(let i in availableFaculty){
+                    if(availableFaculty[i].length > 0){
+                        for(let a of coursesList){
+                            
+                            let startTime = new Date();
+                            let endTime = new Date();
+    
+                            startTime.setHours(a.startTime.substring(0, 2), a.startTime.substring(3), 0, 0);
+                            endTime.setHours(a.endTime.substring(0, 2), a.endTime.substring(3), 0, 0);
+    
+                            // console.log(startTime)
+                            // console.log(endTime)
+                            // console.log(a.date)
+                            // console.log(requestedStaff)
+                            
+                            for(let j of availableFaculty[i]){
+                                // console.log(j)
+                                for(let k of requestedStaff){
+                                    if(j.faculty_id === k.requested_faculty_id && format(new Date(a.date), 'MM/dd/yyyy') === k.date){
+    
+                                        let assignedStartTime = new Date();
+                                        let assignedEndTime = new Date();
+    
+                                        assignedStartTime.setHours(k.startTime.substring(0, 2), k.startTime.substring(3), 0, 0);
+                                        assignedEndTime.setHours(k.endTime.substring(0, 2), k.endTime.substring(3), 0, 0);
+    
+                                        console.log(assignedStartTime)
+                                        console.log(assignedEndTime)
+    
+                                        // now we have to check if there is any conflict or not
+                                        // if conflict = true then remove that faculty from the available faculty list
+    
+                                        console.log(k)
+                                    }
                                 }
                             }
+                            break
                         }
-
                     }
                 }
 
