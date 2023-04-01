@@ -236,14 +236,9 @@ function AddLeave(props) {
     
                             startTime.setHours(a.startTime.substring(0, 2), a.startTime.substring(3), 0, 0);
                             endTime.setHours(a.endTime.substring(0, 2), a.endTime.substring(3), 0, 0);
-    
-                            // console.log(startTime)
-                            // console.log(endTime)
-                            // console.log(a.date)
-                            // console.log(requestedStaff)
                             
+                            let facultyConflict = false;
                             for(let j of availableFaculty[i]){
-                                // console.log(j)
                                 for(let k of requestedStaff){
                                     if(j.faculty_id === k.requested_faculty_id && format(new Date(a.date), 'MM/dd/yyyy') === k.date){
     
@@ -252,14 +247,12 @@ function AddLeave(props) {
     
                                         assignedStartTime.setHours(k.startTime.substring(0, 2), k.startTime.substring(3), 0, 0);
                                         assignedEndTime.setHours(k.endTime.substring(0, 2), k.endTime.substring(3), 0, 0);
-    
-                                        console.log(assignedStartTime)
-                                        console.log(assignedEndTime)
-    
-                                        // now we have to check if there is any conflict or not
-                                        // if conflict = true then remove that faculty from the available faculty list
-    
-                                        console.log(k)
+
+                                        facultyConflict = checkConflict(startTime, assignedStartTime, endTime, assignedEndTime,
+                                            startTime.getTime(), assignedStartTime.getTime(), endTime.getTime(), assignedEndTime.getTime());
+                                        if(facultyConflict){
+                                            availableFaculty[i].splice(k, 1)
+                                        }
                                     }
                                 }
                             }
@@ -267,6 +260,7 @@ function AddLeave(props) {
                         }
                     }
                 }
+                console.log(availableFaculty)
 
                 // available faculty ko check karna hai requested staff may
             }

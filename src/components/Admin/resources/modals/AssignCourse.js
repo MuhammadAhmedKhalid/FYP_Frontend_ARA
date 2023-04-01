@@ -334,7 +334,7 @@ function AssignCourse(props) {
 
                 facultyStartTime.setHours(requestedStaff[j].startTime.substring(0, 2), requestedStaff[j].startTime.substring(3), 0, 0);
                 facultyEndTime.setHours(requestedStaff[j].endTime.substring(0, 2), requestedStaff[j].endTime.substring(3), 0, 0);
-
+                
                 if ((requestedStaff[j].requested_faculty_id === assignCourse.faculty_id)) {
 
                   facultyConflict = checkConflict(startTime, facultyStartTime, endTime, facultyEndTime,
@@ -356,13 +356,15 @@ function AssignCourse(props) {
               roomStartTime.setHours(requestedRoom[k].startTime.substring(0, 2), requestedRoom[k].startTime.substring(3), 0, 0);
               roomEndTime.setHours(requestedRoom[k].endTime.substring(0, 2), requestedRoom[k].endTime.substring(3), 0, 0);
 
-              roomConflict = checkConflict(startTime, roomStartTime, endTime, roomEndTime,
+              if(assignCourse.room_id === requestedRoom[k].room_id){
+                roomConflict = checkConflict(startTime, roomStartTime, endTime, roomEndTime,
                   startTime.getTime(), roomStartTime.getTime(), endTime.getTime(), roomEndTime.getTime())
-
-              if (roomConflict) {
-                  setShowError(true)
-                  setErrorMsg("Operation can't be performed during this time interval.")
-                  break
+                console.log(roomConflict)
+                if (roomConflict) {
+                    setShowError(true)
+                    setErrorMsg("Operation can't be performed during this time interval.")
+                    break
+                }
               }
 
           }
