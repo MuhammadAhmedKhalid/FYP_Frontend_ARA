@@ -37,6 +37,7 @@ function AddLeave(props) {
     const courses = useSelector((state) => state.getCourseReducer.courses)
     const coursessAdded = useSelector((state) => state.getCourseReducer.added)
     const requestedStaff = useSelector((state) => state.staffReqReducer.staff_req.data)
+    const jaccardFacultyId = useSelector((state) => state.jaccardReducer.faculty_id.data)
 
     const [value, setValue] = useState(dayjs(new Date()));
     const [value1, setValue1] = useState(dayjs(new Date()));
@@ -258,16 +259,22 @@ function AddLeave(props) {
                 }
                 console.log(availableFaculty)
 
-                for(let i of availableFaculty){
-                    if(i.length > 1){
+                for(let i in availableFaculty){
+                    if(availableFaculty[i].length > 1){
                         // if availableFaculty > 1 then pass for best choice (algorithm) 
-                        dispatch(jaccardRequest(i))
+                        dispatch(jaccardRequest(availableFaculty[i]))
+                        for(let j in availableFaculty[i]){
+                            if(availableFaculty[i][j].faculty_id !== jaccardFacultyId){
+                                availableFaculty[i].splice(j, 1)
+                            }
+                        }
                     } else if (i.length === 1){
                         // else if === 1 then just assign that course to him/her
                     } else {
                         // else (means === 0) make that batch and room free(means delete room request and delete assigned course for that particular day)
                     }
                 }
+                console.log(availableFaculty)
             }
             // dispatch(addLeave(request, coursesLst, availableFaculty))
             // setLeaveModal(false)
