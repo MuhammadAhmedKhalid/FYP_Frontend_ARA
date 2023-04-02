@@ -222,7 +222,6 @@ function AddLeave(props) {
                 }
 
                 availableFaculty = list
-                console.log(availableFaculty)
 
                 for(let i in availableFaculty){
                     if(availableFaculty[i].length > 0){
@@ -257,7 +256,6 @@ function AddLeave(props) {
                         }
                     }
                 }
-                console.log(availableFaculty)
 
                 for(let i in availableFaculty){
                     if(availableFaculty[i].length > 1){
@@ -268,15 +266,32 @@ function AddLeave(props) {
                                 availableFaculty[i].splice(j, 1)
                             }
                         }
-                    } else if (i.length === 1){
+                        for(let k in coursesList){
+                            if(k === i && availableFaculty[i].course_id === k.course_id){
+                                console.log(coursesList[k])
+                            }
+                        }
+                        // assign that course to jaccardFacultyId
+                    } 
+                    else if (availableFaculty[i].length === 1){
                         // else if === 1 then just assign that course to him/her
+                        for(let k in coursesList){
+                            if(k === i && availableFaculty[i].course_id === k.course_id){
+                                console.log(coursesList[k])
+                            }
+                        }
                     } else {
                         // else (means === 0) make that batch and room free(means delete room request and delete assigned course for that particular day)
+                        for(let k in coursesList){
+                            if(k === i){
+                                console.log(coursesList[k])
+                            }
+                        }
                     }
                 }
-                console.log(availableFaculty)
+
             }
-            // dispatch(addLeave(request, coursesLst, availableFaculty))
+            // dispatch(addLeave(request))
             // setLeaveModal(false)
             // alert("Operation performed successfully!")
         }
