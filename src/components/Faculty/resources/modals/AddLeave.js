@@ -17,6 +17,7 @@ import { getFacultyRequest } from '../../../../redux/GetFaculty/getFacultyAction
 import { assignedCoursesRequest } from '../../../../redux/AssignedCourses/assignedCoursesActions'
 import { getCourseRequest } from '../../../../redux/GetCourse/getCourseActions'
 import { getStaffRequest } from '../../../../redux/GetStaffRequest/getStaffReqActions'
+import { jaccardRequest } from '../../../../redux/Jaccard/jaccardActions'
 
 function AddLeave(props) {
 
@@ -170,9 +171,6 @@ function AddLeave(props) {
         if(result){
             alert('Invalid time. Start time should always be less than End time.')
         }else{
-            // if availableFaculty > 1 then pass for best choice (algorithm) 
-            // else if === 1 then just assign that course to him/her
-            // else (means === 0) make that batch and room free(means delete room request and delete assigned course for that particular day)
             let coursesList = checkCourse(faculty_id, request.startTime, request.endTime, request.date)
 
             let coursesLst = []
@@ -192,7 +190,7 @@ function AddLeave(props) {
                         if(faculty_id !== i.faculty_id){
                             for(let j of i.specialization){
                              if(j === k.course_name){
-                                 availableFaculty.push({faculty_id: i.faculty_id, course_id: k.course_id, course_name: k.course_name})
+                                 availableFaculty.push({faculty_id: i.faculty_id, course_id: k.course_id, course_name: k.course_name, yearsOfExperience: i.yearsOfExperience})
                              }
                             }
                          }
@@ -223,9 +221,7 @@ function AddLeave(props) {
                 }
 
                 availableFaculty = list
-
-                // console.log(coursesLst)
-                 console.log(availableFaculty)
+                console.log(availableFaculty)
 
                 for(let i in availableFaculty){
                     if(availableFaculty[i].length > 0){
@@ -262,7 +258,16 @@ function AddLeave(props) {
                 }
                 console.log(availableFaculty)
 
-                // available faculty ko check karna hai requested staff may
+                for(let i of availableFaculty){
+                    if(i.length > 1){
+                        // if availableFaculty > 1 then pass for best choice (algorithm) 
+                        dispatch(jaccardRequest(i))
+                    } else if (i.length === 1){
+                        // else if === 1 then just assign that course to him/her
+                    } else {
+                        // else (means === 0) make that batch and room free(means delete room request and delete assigned course for that particular day)
+                    }
+                }
             }
             // dispatch(addLeave(request, coursesLst, availableFaculty))
             // setLeaveModal(false)

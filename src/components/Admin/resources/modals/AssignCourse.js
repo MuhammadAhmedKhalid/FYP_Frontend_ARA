@@ -359,7 +359,6 @@ function AssignCourse(props) {
               if(assignCourse.room_id === requestedRoom[k].room_id){
                 roomConflict = checkConflict(startTime, roomStartTime, endTime, roomEndTime,
                   startTime.getTime(), roomStartTime.getTime(), endTime.getTime(), roomEndTime.getTime())
-                console.log(roomConflict)
                 if (roomConflict) {
                     setShowError(true)
                     setErrorMsg("Operation can't be performed during this time interval.")
