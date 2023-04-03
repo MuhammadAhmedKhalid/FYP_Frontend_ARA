@@ -37,6 +37,7 @@ import { addLeaveReducer } from './AddLeaveRequest/addLeaveRequestReducer'
 import { leaveReqReducer } from './GetLeaveRequests/getLeaveRequestReducer'
 import { deleteLeaveRequestReducer } from './DeleteLeaveRequest/deleteLeaveRequestReducer'
 import { jaccardReducer } from './Jaccard/jaccardReducer'
+import { updateAssignedCourseReducer } from './UpdateAssignedCourse/updateAssignedCourseReducer'
 
 export const rootReducer = combineReducers({
     signup: signupReducer,
@@ -77,4 +78,5 @@ export const rootReducer = combineReducers({
     leaveReqReducer,
     deleteLeaveRequestReducer,
     jaccardReducer,
+    updateAssignedCourseReducer,
 })

@@ -38,6 +38,7 @@ import { addLeaveRequestSaga } from './AddLeaveRequest/addLeaveRequestSaga'
 import { getLeaveReqSaga } from './GetLeaveRequests/getLeaveRequestSaga'
 import { deleteLeaveRequestSaga } from './DeleteLeaveRequest/deleteLeaveRequestSaga'
 import { jaccardSaga } from './Jaccard/jaccardSaga'
+import { updateAssignedCourseSaga } from './UpdateAssignedCourse/updateAssignedCourseSaga'
 
 export function* rootSaga() {
     yield fork(signupSaga)
@@ -79,4 +80,5 @@ export function* rootSaga() {
     yield fork(getLeaveReqSaga)
     yield fork(deleteLeaveRequestSaga)
     yield fork(jaccardSaga)
+    yield fork(updateAssignedCourseSaga)
 }

@@ -18,6 +18,7 @@ import { assignedCoursesRequest } from '../../../../redux/AssignedCourses/assign
 import { getCourseRequest } from '../../../../redux/GetCourse/getCourseActions'
 import { getStaffRequest } from '../../../../redux/GetStaffRequest/getStaffReqActions'
 import { jaccardRequest } from '../../../../redux/Jaccard/jaccardActions'
+import { updateAssignedCourse } from '../../../../redux/UpdateAssignedCourse/updateAssignedCourseActions'
 
 function AddLeave(props) {
 
@@ -269,11 +270,12 @@ function AddLeave(props) {
                         }
                         
                         for(let k in coursesList){
-                            if(k === i){
+                            if(k === i && jaccardFacultyId !== undefined){
                                 console.log(coursesList[k])
+                                console.log(coursesList[k].assignedCourseId + " " + jaccardFacultyId)
+                                dispatch(updateAssignedCourse(institute_id, coursesList[k].assignedCourseId, jaccardFacultyId))
                             }
                         }
-                        console.log(jaccardFacultyId)
                         // assign that course to jaccardFacultyId
                     } 
                     else if (availableFaculty[i].length === 1){
@@ -281,14 +283,15 @@ function AddLeave(props) {
                         for(let k in coursesList){
                             if(k === i){
                                 console.log(coursesList[k])
+                                console.log(coursesList[k].assignedCourseId + " " + availableFaculty[i][0].faculty_id)
                             }
                         }
-                        console.log(availableFaculty[i][0].faculty_id)
                     } else {
                         // else (means === 0) make that batch and room free(means delete room request and delete assigned course for that particular day)
                         for(let k in coursesList){
                             if(k === i){
                                 console.log(coursesList[k])
+                                console.log(coursesList[k].assignedCourseId)
                             }
                         }
                     }
