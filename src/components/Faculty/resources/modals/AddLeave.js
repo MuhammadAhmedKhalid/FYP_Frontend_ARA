@@ -256,30 +256,34 @@ function AddLeave(props) {
                         }
                     }
                 }
-
+               
                 for(let i in availableFaculty){
                     if(availableFaculty[i].length > 1){
                         // if availableFaculty > 1 then pass for best choice (algorithm) 
                         dispatch(jaccardRequest(availableFaculty[i]))
+
                         for(let j in availableFaculty[i]){
                             if(availableFaculty[i][j].faculty_id !== jaccardFacultyId){
                                 availableFaculty[i].splice(j, 1)
                             }
                         }
+                        
                         for(let k in coursesList){
-                            if(k === i && availableFaculty[i].course_id === k.course_id){
+                            if(k === i){
                                 console.log(coursesList[k])
                             }
                         }
+                        console.log(jaccardFacultyId)
                         // assign that course to jaccardFacultyId
                     } 
                     else if (availableFaculty[i].length === 1){
                         // else if === 1 then just assign that course to him/her
                         for(let k in coursesList){
-                            if(k === i && availableFaculty[i].course_id === k.course_id){
+                            if(k === i){
                                 console.log(coursesList[k])
                             }
                         }
+                        console.log(availableFaculty[i][0].faculty_id)
                     } else {
                         // else (means === 0) make that batch and room free(means delete room request and delete assigned course for that particular day)
                         for(let k in coursesList){
@@ -289,7 +293,6 @@ function AddLeave(props) {
                         }
                     }
                 }
-
             }
             // dispatch(addLeave(request))
             // setLeaveModal(false)
