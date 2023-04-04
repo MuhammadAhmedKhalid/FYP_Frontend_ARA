@@ -34,6 +34,7 @@ const AdminNavBar = () => {
     const [click, setClick] = useState(false)
     const [color, setColor] = useState(false)
     const [isNotificationPanelOpen, setIsNotificationPanelOpen] = useState(false);
+    const [notificationNum, setNotificationNum] = useState(0)
 
     const handleClick = () => setClick(!click)
     const changeColor = () => {
@@ -104,7 +105,7 @@ const AdminNavBar = () => {
                     }]} />
                     <li>
                         <NavLink onClick={handleNotificationIconClick}>
-                            <Badge badgeContent={6} color="info">
+                            <Badge badgeContent={notificationNum} color="info">
                                 <NotificationsIcon style={{color: '#fff', height: '20px'}} />
                             </Badge>
                         </NavLink>
@@ -114,7 +115,9 @@ const AdminNavBar = () => {
                 {isNotificationPanelOpen && (
                     <div className="notification-panel" onMouseLeave={handleNotificationPanelClose}>
                         <h2>NOTIFICATIONS</h2>
-                        <ul>
+                        {
+                            notificationNum !== 0 ? 
+                            <ul>
                             <li>
                                 <h3 style={{fontWeight: 'bold', fontSize: '15px'}}>Kinza's Replacement for ISE (2019-SE).</h3>
                                 <h3>Date: 04/Apr/2023</h3>
@@ -154,8 +157,8 @@ const AdminNavBar = () => {
                             <li>Notification.</li>
                             <li>Notification.</li>
                             <li>Notification.</li>
-                        </ul>
-                        {/* <h4 style={{color: 'gray', fontWeight: 'normal', marginTop: '15px'}}>No notifications found.</h4> */}
+                        </ul> : <h4 style={{color: 'gray', fontWeight: 'normal', marginTop: '15px'}}>No notifications found.</h4>
+                        }
                     </div>
                 )}
                 <div className="hamburger" onClick={handleClick}>

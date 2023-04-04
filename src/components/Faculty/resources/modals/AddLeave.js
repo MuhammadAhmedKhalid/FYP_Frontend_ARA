@@ -184,7 +184,7 @@ function AddLeave(props) {
             let coursesLst = []
             let availableFaculty = []
 
-            if(courses.length > 0 && facultyAdded && coursessAdded){
+            if(courses.length > 0 && facultyAdded && coursessAdded && coursesList.length > 0){
                 for(let a in courses){
                     for(let b of coursesList){
                         if(courses[a].course_id === b.course_id){
@@ -229,6 +229,9 @@ function AddLeave(props) {
                 }
 
                 availableFaculty = list
+                if(coursesLst.length > availableFaculty.length){
+                    availableFaculty.push([])
+                }
 
                 for(let i in availableFaculty){
                     if(availableFaculty[i].length > 0){
@@ -275,6 +278,11 @@ function AddLeave(props) {
                     else if (availableFaculty[i].length === 1){
                         console.log('else if')
                         // else if === 1 then just assign that course to him/her
+
+                        // directly dispatch update assign course action
+                        // no need to delete anything
+                        // also show notification to that faculty
+
                         for(let k in coursesList){
                             if(k === i){
                                 console.log(coursesList[k])
@@ -284,6 +292,9 @@ function AddLeave(props) {
                     } else {
                         console.log('else')
                         // else (means === 0) make that batch and room free(means delete room request and delete assigned course for that particular day)
+
+                        // delete assignedCourse and room request 
+
                         for(let k in coursesList){
                             if(k === i){
                                 console.log(coursesList[k])
@@ -292,11 +303,17 @@ function AddLeave(props) {
                         }
                     }
                 }
-                showBestFaculty(facultyListJaccard)
+                if(facultyListJaccard.length > 1){
+                    showBestFaculty(facultyListJaccard)
+
+                    // after this pass all as notification to admin 
+                    // on admin side read all data from store with the help of useEffect
+
+                }
             }
-            // dispatch(addLeave(request))
-            // setLeaveModal(false)
-            // alert("Operation performed successfully!")
+            dispatch(addLeave(request))
+            setLeaveModal(false)
+            alert("Operation performed successfully!")
         }
     }
 
