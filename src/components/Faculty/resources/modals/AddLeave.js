@@ -38,7 +38,7 @@ function AddLeave(props) {
     const courses = useSelector((state) => state.getCourseReducer.courses)
     const coursessAdded = useSelector((state) => state.getCourseReducer.added)
     const requestedStaff = useSelector((state) => state.staffReqReducer.staff_req.data)
-    const jaccardFacultyId = useSelector((state) => state.jaccardReducer.faculty_id.data)
+    const jaccardFaculty = useSelector((state) => state.jaccardReducer.faculty)
 
     const [value, setValue] = useState(dayjs(new Date()));
     const [value1, setValue1] = useState(dayjs(new Date()));
@@ -160,6 +160,12 @@ function AddLeave(props) {
 
     }
 
+    const showBestFaculty = (faculty) => {
+        faculty.forEach(item => {
+            dispatch(jaccardRequest(item));
+          });
+    }
+
     const handleForm = (e) => {
         e.preventDefault();
 
@@ -258,44 +264,35 @@ function AddLeave(props) {
                     }
                 }
                
+                console.log(availableFaculty)
+                let facultyListJaccard = []
                 for(let i in availableFaculty){
                     if(availableFaculty[i].length > 1){
-                        // if availableFaculty > 1 then pass for best choice (algorithm) 
-                        dispatch(jaccardRequest(availableFaculty[i]))
-
-                        for(let j in availableFaculty[i]){
-                            if(availableFaculty[i][j].faculty_id !== jaccardFacultyId){
-                                availableFaculty[i].splice(j, 1)
-                            }
-                        }
-                        
-                        for(let k in coursesList){
-                            if(k === i && jaccardFacultyId !== undefined){
-                                console.log(coursesList[k])
-                                console.log(coursesList[k].assignedCourseId + " " + jaccardFacultyId)
-                                dispatch(updateAssignedCourse(institute_id, coursesList[k].assignedCourseId, jaccardFacultyId))
-                            }
-                        }
-                        // assign that course to jaccardFacultyId
+                        //console.log('if')
+                        // if availableFaculty > 1 then pass for best choice (algorithm)
+                        facultyListJaccard.push(availableFaculty[i])
                     } 
                     else if (availableFaculty[i].length === 1){
+                        //console.log('else if')
                         // else if === 1 then just assign that course to him/her
-                        for(let k in coursesList){
-                            if(k === i){
-                                console.log(coursesList[k])
-                                console.log(coursesList[k].assignedCourseId + " " + availableFaculty[i][0].faculty_id)
-                            }
-                        }
+                        // for(let k in coursesList){
+                        //     if(k === i){
+                        //         console.log(coursesList[k])
+                        //         console.log(coursesList[k].assignedCourseId + " " + availableFaculty[i][0].faculty_id)
+                        //     }
+                        // }
                     } else {
+                        //console.log('else')
                         // else (means === 0) make that batch and room free(means delete room request and delete assigned course for that particular day)
-                        for(let k in coursesList){
-                            if(k === i){
-                                console.log(coursesList[k])
-                                console.log(coursesList[k].assignedCourseId)
-                            }
-                        }
+                        // for(let k in coursesList){
+                        //     if(k === i){
+                        //         console.log(coursesList[k])
+                        //         console.log(coursesList[k].assignedCourseId)
+                        //     }
+                        // }
                     }
                 }
+                showBestFaculty(facultyListJaccard)
             }
             // dispatch(addLeave(request))
             // setLeaveModal(false)

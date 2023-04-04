@@ -2,7 +2,7 @@ import { JACCARD_FAILURE, JACCARD_REQUEST, JACCARD_SUCCESS } from './jaccardType
 
 const jaccardInitialState = {
     loading: false,
-    faculty_id: 0,
+    faculty: [],
     error: '',
     added: false
 }
@@ -16,14 +16,14 @@ export const jaccardReducer = (state = jaccardInitialState, action) => {
         case JACCARD_SUCCESS: return {
             ...state,
             loading: false,
-            faculty_id: action.result,
+            faculty: [...state.faculty, action.result.data],
             error: '',
             added: true
         }
         case JACCARD_FAILURE: return {
             ...state,
             loading: false,
-            faculty_id: [],
+            faculty: [],
             error: action.message,
             added: false
         }
