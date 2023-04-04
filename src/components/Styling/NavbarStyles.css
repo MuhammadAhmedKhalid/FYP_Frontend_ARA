@@ -39,6 +39,8 @@
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
     padding: 1em;
     z-index: 1;
+    max-height: 250px; 
+    overflow: auto;
   }
   
   .notification-panel h2 {
@@ -56,17 +58,40 @@
   
   .notification-panel li {
     padding: 0.5em;
-    border-bottom: 1px solid #eee;
+    border-bottom: 1px solid #ccc;
+    height: 3em;
+    overflow: hidden;
+    transition: height 0.2s ease; 
+  }
+
+  .notification-panel li h3 {
+    color: black;
+    font-weight: normal;
+  }
+
+  .notification-panel li p {
+    color: black;
+    font-weight: bold;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    display: inline;
   }
 
   .notification-panel li:hover {
     background-color: #f0f0f0;
     cursor: pointer;
+    height: auto;
   }
   
   
   .notification-panel li:last-child {
     border-bottom: none;
+  }
+
+  .notification-panel .space-line {
+    content: "";
+    display: block;
+    height: 0.02px;
   }
 
 @media screen and (max-width: 1040px) {

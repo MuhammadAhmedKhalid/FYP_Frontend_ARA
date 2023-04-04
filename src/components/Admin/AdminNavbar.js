@@ -103,7 +103,7 @@ const AdminNavBar = () => {
                     }]} />
                     <li>
                         <NavLink onClick={handleNotificationIconClick}>
-                            <Badge badgeContent={3} color="info">
+                            <Badge badgeContent={6} color="info">
                                 <NotificationsIcon style={{color: '#fff', height: '20px'}} />
                             </Badge>
                         </NavLink>
@@ -112,8 +112,20 @@ const AdminNavBar = () => {
                 </ul >
                 {isNotificationPanelOpen && (
                     <div className="notification-panel" onMouseLeave={handleNotificationPanelClose}>
-                        <h2>Notifications</h2>
+                        <h2>NOTIFICATIONS</h2>
                         <ul>
+                            <li>
+                                <h3 style={{fontWeight: 'bold', fontSize: '15px'}}>Kinza's Replacement.</h3>
+                                <h3>Date: 04/Apr/2023</h3>
+                                <div>
+                                    <p className="space-line"></p> 
+                                    <p style={{display: 'block'}}>Muhammad Ahmed <p style={{fontWeight: 'lighter'}}>(Weightage: 0.3 out of 1)</p></p>
+                                    <p style={{display: 'block'}}>Khalid Hussain <p style={{fontWeight: 'lighter'}}>(Weightage: 0.7 out of 1)</p></p>
+                                    <p style={{display: 'block'}}>Manal Ali <p style={{fontWeight: 'lighter'}}>(Weightage: 0.2 out of 1)</p></p>
+                                </div>
+                            </li>
+                            <li>Notification.</li>
+                            <li>Notification.</li>
                             <li>Notification.</li>
                             <li>Notification.</li>
                             <li>Notification.</li>
