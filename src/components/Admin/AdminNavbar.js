@@ -116,7 +116,7 @@ const AdminNavBar = () => {
                         <h2>NOTIFICATIONS</h2>
                         <ul>
                             <li>
-                                <h3 style={{fontWeight: 'bold', fontSize: '15px'}}>Kinza's Replacement.</h3>
+                                <h3 style={{fontWeight: 'bold', fontSize: '15px'}}>Kinza's Replacement for ISE (2019-SE).</h3>
                                 <h3>Date: 04/Apr/2023</h3>
                                 <div>
                                     <p className="space-line"></p> 
@@ -134,6 +134,21 @@ const AdminNavBar = () => {
                                     </p>
                                 </div>
                             </li>
+                            <li>
+                                <h3 style={{fontWeight: 'bold', fontSize: '15px'}}>Kinza's Replacement for PP (2019-SE).</h3>
+                                <h3>Date: 04/Apr/2023</h3>
+                                <div>
+                                    <p className="space-line"></p>
+                                    <p style={{display: 'block'}}> 
+                                        <p style={{fontWeight: 'lighter'}}>Replaced by: </p>
+                                        Khalid Hussain (SE)
+                                        <p style={{fontWeight: 'lighter'}}> (Weightage: 0.3 out of 1)</p>
+                                    </p>
+                                </div>
+                            </li>
+                            <li>Notification.</li>
+                            <li>Notification.</li>
+                            <li>Notification.</li>
                             <li>Notification.</li>
                             <li>Notification.</li>
                             <li>Notification.</li>
