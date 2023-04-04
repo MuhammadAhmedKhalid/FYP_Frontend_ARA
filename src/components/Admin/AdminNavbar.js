@@ -6,6 +6,8 @@ import CustomDropdown from '../Root/CustomDropdown';
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from "react-router-dom";
 import { logoutRequest } from '../.././redux/Login/loginActions'
+import Badge from '@mui/material/Badge';
+import NotificationsIcon from '@mui/icons-material/Notifications';
 
 const logo = {
     fontSize: '20px',
@@ -30,6 +32,7 @@ const AdminNavBar = () => {
 
     const [click, setClick] = useState(false)
     const [color, setColor] = useState(false)
+    const [isNotificationPanelOpen, setIsNotificationPanelOpen] = useState(false);
 
     const handleClick = () => setClick(!click)
     const changeColor = () => {
@@ -39,7 +42,17 @@ const AdminNavBar = () => {
             setColor(false);
         }
     }
+
     window.addEventListener("scroll", changeColor);
+
+    function handleNotificationIconClick() {
+        setIsNotificationPanelOpen(!isNotificationPanelOpen);
+    }
+    
+    function handleNotificationPanelClose() {
+        setIsNotificationPanelOpen(false);
+    }
+
     return (
         <div>
             <div className={color ? 'header header-bg' : 'header'}>
@@ -88,8 +101,25 @@ const AdminNavBar = () => {
                         value: 'assigned courses',
                         path: '/assignedCourses'
                     }]} />
+                    <li>
+                        <NavLink onClick={handleNotificationIconClick}>
+                            <Badge badgeContent={3} color="info">
+                                <NotificationsIcon style={{color: '#fff', height: '20px'}} />
+                            </Badge>
+                        </NavLink>
+                    </li>
                     <li> <NavLink onClick={handleLogout}>Logout</NavLink></li>
                 </ul >
+                {isNotificationPanelOpen && (
+                    <div className="notification-panel" onMouseLeave={handleNotificationPanelClose}>
+                        <h2>Notifications</h2>
+                        <ul>
+                            <li>Notification.</li>
+                            <li>Notification.</li>
+                            <li>Notification.</li>
+                        </ul>
+                    </div>
+                )}
                 <div className="hamburger" onClick={handleClick}>
                     {
                         click ? <FaTimes size={20} style={{ color: '#fff' }} /> :

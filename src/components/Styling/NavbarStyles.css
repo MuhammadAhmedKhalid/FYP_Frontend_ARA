@@ -29,6 +29,46 @@
     display: none;
   }
 
+  .notification-panel {
+    position: absolute;
+    top: 4em;
+    right: 1em;
+    width: 30em;
+    background-color: #f9f9f9;
+    border-radius: 4px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+    padding: 1em;
+    z-index: 1;
+  }
+  
+  .notification-panel h2 {
+    font-size: 1.2em;
+    font-weight: bold;
+    margin-top: 0;
+    margin-bottom: 0.5em;
+  }
+
+  .notification-panel ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  .notification-panel li {
+    padding: 0.5em;
+    border-bottom: 1px solid #eee;
+  }
+
+  .notification-panel li:hover {
+    background-color: #f0f0f0;
+    cursor: pointer;
+  }
+  
+  
+  .notification-panel li:last-child {
+    border-bottom: none;
+  }
+
 @media screen and (max-width: 1040px) {
     .nav-menu {
         flex-direction: column;
