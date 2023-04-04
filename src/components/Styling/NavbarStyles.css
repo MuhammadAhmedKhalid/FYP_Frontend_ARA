@@ -94,6 +94,18 @@
     height: 0.02px;
   }
 
+  .inline {
+    display: inline;
+  }
+
+  .checked-icon-container:hover > svg {
+    color: green;
+  }
+
+  .unchecked-icon-container:hover > svg {
+    color: red;
+  }
+
 @media screen and (max-width: 1040px) {
     .nav-menu {
         flex-direction: column;

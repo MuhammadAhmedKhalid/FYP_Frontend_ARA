@@ -8,7 +8,8 @@ import { useNavigate } from "react-router-dom";
 import { logoutRequest } from '../.././redux/Login/loginActions'
 import Badge from '@mui/material/Badge';
 import NotificationsIcon from '@mui/icons-material/Notifications';
-
+import CheckUnCheckIcon from '../Root/CheckUnCheckIcon';
+ 
 const logo = {
     fontSize: '20px',
     fontFamily: 'Segoe UI'
@@ -119,9 +120,18 @@ const AdminNavBar = () => {
                                 <h3>Date: 04/Apr/2023</h3>
                                 <div>
                                     <p className="space-line"></p> 
-                                    <p style={{display: 'block'}}>Muhammad Ahmed <p style={{fontWeight: 'lighter'}}>(Weightage: 0.3 out of 1)</p></p>
-                                    <p style={{display: 'block'}}>Khalid Hussain <p style={{fontWeight: 'lighter'}}>(Weightage: 0.7 out of 1)</p></p>
-                                    <p style={{display: 'block'}}>Manal Ali <p style={{fontWeight: 'lighter'}}>(Weightage: 0.2 out of 1)</p></p>
+                                    <p style={{display: 'block'}}>Muhammad Ahmed 
+                                        <p style={{fontWeight: 'lighter'}}> (Weightage: 0.3 out of 1)</p>
+                                        <CheckUnCheckIcon/>
+                                    </p>
+                                    <p style={{display: 'block'}}>Khalid Hussain 
+                                        <p style={{fontWeight: 'lighter'}}> (Weightage: 0.7 out of 1)</p>
+                                        <CheckUnCheckIcon/>
+                                    </p>
+                                    <p style={{display: 'block'}}>Manal Ali 
+                                        <p style={{fontWeight: 'lighter'}}> (Weightage: 0.2 out of 1)</p>
+                                        <CheckUnCheckIcon/>
+                                    </p>
                                 </div>
                             </li>
                             <li>Notification.</li>
@@ -130,6 +140,7 @@ const AdminNavBar = () => {
                             <li>Notification.</li>
                             <li>Notification.</li>
                         </ul>
+                        {/* <h4 style={{color: 'gray', fontWeight: 'normal', marginTop: '15px'}}>No notifications found.</h4> */}
                     </div>
                 )}
                 <div className="hamburger" onClick={handleClick}>
