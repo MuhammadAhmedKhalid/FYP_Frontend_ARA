@@ -39,6 +39,8 @@ function RequestedData() {
     const faculty = useSelector((state) => state.getFaculty.faculty)
     const facultyAdded = useSelector((state) => state.getFaculty.added)
     const user_id = useSelector((state) => state.login.user.user_id)
+    const name = useSelector((state) => state.login.user.name)
+    console.log(name)
     const isAdmin = useSelector((state) => state.login.user._admin)
     const requestedLeaves = useSelector((state) => state.leaveReqReducer.requestedLeaves.data)
     const requestedLeavesAdded = useSelector((state) => state.leaveReqReducer.added)
@@ -105,6 +107,7 @@ function RequestedData() {
                                         }
                                         for(let j = 0; j < departments.length; j++){
                                             if(faculty[i].faculty_id === leave.faculty_id
+                                                && ((name === faculty[i].name)||(isAdmin))
                                                 && departments[j].department_name === faculty[i].department){
                                                 return <RequestedDataField index={index} 
                                                 name={faculty[i].name} 
