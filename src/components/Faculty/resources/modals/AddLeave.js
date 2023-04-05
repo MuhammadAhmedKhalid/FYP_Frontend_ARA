@@ -274,6 +274,7 @@ function AddLeave(props) {
                         facultyListJaccard.push(availableFaculty[i])
                     } 
                     else if (availableFaculty[i].length === 1){
+                        console.log('else if')
                         // else if === 1 then just assign that course to him/her
 
                         // directly dispatch update assign course action
@@ -284,7 +285,7 @@ function AddLeave(props) {
                             if(k === i){
                                 console.log(coursesList[k])
                                 console.log(coursesList[k].assignedCourseId + " " + availableFaculty[i][0].faculty_id)
-                                dispatch(updateAssignedCourse(institute_id, coursesList[k].assignedCourseId, availableFaculty[i][0].faculty_id))
+                                dispatch(updateAssignedCourse(coursesList[k], availableFaculty[i][0].faculty_id))
                             }
                         }
                     } else {
