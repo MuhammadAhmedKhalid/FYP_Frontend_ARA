@@ -271,12 +271,9 @@ function AddLeave(props) {
                 let facultyListJaccard = []
                 for(let i in availableFaculty){
                     if(availableFaculty[i].length > 1){
-                        console.log('if')
-                        // if availableFaculty > 1 then pass for best choice (algorithm)
                         facultyListJaccard.push(availableFaculty[i])
                     } 
                     else if (availableFaculty[i].length === 1){
-                        console.log('else if')
                         // else if === 1 then just assign that course to him/her
 
                         // directly dispatch update assign course action
@@ -287,13 +284,14 @@ function AddLeave(props) {
                             if(k === i){
                                 console.log(coursesList[k])
                                 console.log(coursesList[k].assignedCourseId + " " + availableFaculty[i][0].faculty_id)
+                                dispatch(updateAssignedCourse(institute_id, coursesList[k].assignedCourseId, availableFaculty[i][0].faculty_id))
                             }
                         }
                     } else {
-                        console.log('else')
                         // else (means === 0) make that batch and room free(means delete room request and delete assigned course for that particular day)
 
                         // delete assignedCourse and room request 
+                        // also show notification to admin
 
                         for(let k in coursesList){
                             if(k === i){

@@ -8,7 +8,7 @@ function* addLeaveRequest(payload) {
         const headers = {
             'Authorization': `Bearer ${token}`
         };
-        yield call(axios.post, 'http://localhost:8080/addLeaveRequest', payload, { headers });
+        yield call(axios.post, 'http://localhost:8080/addLeaveRequest', payload.leaveRequest, { headers });
         yield put({ type: ADD_LEAVE_SUCCESS, message: "Leave request added successfully." })
     } catch (error) {
         yield put({ type: ADD_LEAVE_FAILURE, message: "Add leave request operation failed." })
