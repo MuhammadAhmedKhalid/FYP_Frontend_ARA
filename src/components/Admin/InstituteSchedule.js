@@ -1,23 +1,51 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import AdminNavbar from './AdminNavbar'
 import { Calendar, momentLocalizer } from 'react-big-calendar'
 import 'react-big-calendar/lib/css/react-big-calendar.css';
 import moment from 'moment';
 import '../Styling/InstituteSchedule.css'
+import { useSelector, useDispatch } from 'react-redux'
+import { getBatchesRequest } from '../../redux/GetBatches/getBatchesActions'
+import { getDepartmentsRequest } from '../../redux/GetDepartments/getDepartmentsActions'
  
 function InstituteSchedule() {
+
+  const dispatch = useDispatch()
+
+  const institute_id = useSelector((state) => state.login.user.institute_id)
+  const batches = useSelector((state) => state.getBatchesReducer.batches.data)
+  const batchesAdded = useSelector((state) => state.getBatchesReducer.added)
+  const departments = useSelector((state) => state.getDepartments.departments.data)
+  const departmentsAdded = useSelector((state) => state.getDepartments.added)
 
   const localizer = momentLocalizer(moment)
 
   const options = ["Spring", "Fall"];
 
-  const [selectedOption, setSelectedOption] = useState(options[0]);
+  const [selectedSemesterType, setselectedSemesterType] = useState(options[0]);
+  const [batchData, setBatchData] = useState([])
+
+  useEffect(() => {
+    dispatch(getBatchesRequest(institute_id))
+    dispatch(getDepartmentsRequest(institute_id))
+  }, [dispatch, institute_id])
+
+  useEffect(() => {
+    if(batchesAdded && departmentsAdded){
+      setBatchData([])
+      for(let i of batches){
+        for(let j of departments){
+          if(i.department_id === j.department_id){
+            setBatchData(batchData => [...batchData, [i.batchYear, j.department_name]])
+          }
+        }
+      }
+    }
+  }, [batchesAdded, departmentsAdded])
 
   const handleOptionClick = (option) => {
-    setSelectedOption(option);
+    setselectedSemesterType(option);
   };
-
-  
 
   return (
     <div className="flexbox-container-y"
@@ -33,9 +61,11 @@ function InstituteSchedule() {
               <h3 style={{fontWeight: 'normal', color: 'gray', marginRight: '3px'}}>Choose Batch</h3>
                 <select className='dropdown'>
                   <option/>
-                  <option>2019-SE</option>
-                  <option>2020-SE</option>
-                  <option>2019-EE</option>
+                  {
+                    batchData.length !== 0 ? batchData.map((batch, index) => 
+                      <option key={index}>{batch.join(' - ')}</option>
+                      ) : null
+                  }
                 </select>
               </div>
             </form>
@@ -44,7 +74,7 @@ function InstituteSchedule() {
                 {options.map((option, index) => (
                   <div
                     key={index}
-                    className={`option ${selectedOption === option ? "selected" : ""}`}
+                    className={`option ${selectedSemesterType === option ? "selected" : ""}`}
                     onClick={() => handleOptionClick(option)}
                   >
                     {option}
