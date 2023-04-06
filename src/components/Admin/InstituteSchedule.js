@@ -10,6 +10,7 @@ import { getDepartmentsRequest } from '../../redux/GetDepartments/getDepartments
 import { assignedCoursesRequest } from '../../redux/AssignedCourses/assignedCoursesActions'
 import { getCourseRequest } from '../../redux/GetCourse/getCourseActions'
 import { getFacultyRequest } from '../../redux/GetFaculty/getFacultyActions'
+import ShowEventDetails from './resources/modals/ShowEventDetails' 
  
 function InstituteSchedule() {
 
@@ -38,6 +39,8 @@ function InstituteSchedule() {
   const [events, setEvents] = useState([])
   const [batchId, setBatchId] = useState(0)
   const [departmentId, setDepartmentId] = useState(0)
+  const [showDetailModal, setShowDetailModal] = useState(false)
+  const [details, setDetails] = useState()
 
   useEffect(() => {
     dispatch(getBatchesRequest(institute_id))
@@ -101,6 +104,15 @@ function InstituteSchedule() {
     setSelectedBatch(event.target.value)
   }
 
+  const showDetails = (details) => {
+    for(let i of assignedCourses){
+        if(i.assignedCourseId === details.id){
+            setDetails(i)
+        }
+    }
+    setShowDetailModal(true)
+}
+
   return (
     <div className="flexbox-container-y"
             style={{
@@ -143,7 +155,11 @@ function InstituteSchedule() {
                 startAccessor="startDate"
                 endAccessor="endDate"
                 events={events}
+                onSelectEvent={event => showDetails(event)}
             />
+            <div>
+                <ShowEventDetails details={details} showDetailModal={showDetailModal} setShowDetailModal={setShowDetailModal}/>
+            </div>
         </div>
   )
 }
