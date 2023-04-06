@@ -40,7 +40,6 @@ function RequestedData() {
     const facultyAdded = useSelector((state) => state.getFaculty.added)
     const user_id = useSelector((state) => state.login.user.user_id)
     const name = useSelector((state) => state.login.user.name)
-    console.log(name)
     const isAdmin = useSelector((state) => state.login.user._admin)
     const requestedLeaves = useSelector((state) => state.leaveReqReducer.requestedLeaves.data)
     const requestedLeavesAdded = useSelector((state) => state.leaveReqReducer.added)
@@ -199,7 +198,7 @@ function RequestedData() {
                                             if(faculty[i].user.user_id === staff.user_id){
                                                 from = faculty[i].user.name
                                             }
-                                            if (from !== undefined){
+                                            if (from !== undefined && from !== faculty[i].name){
                                                 for(let j = 0; j < departments.length; j++){
                                                     if(faculty[i].faculty_id === staff.requested_faculty_id 
                                                         && departments[j].department_id === staff.department_id
