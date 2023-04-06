@@ -7,6 +7,9 @@ import '../Styling/InstituteSchedule.css'
 import { useSelector, useDispatch } from 'react-redux'
 import { getBatchesRequest } from '../../redux/GetBatches/getBatchesActions'
 import { getDepartmentsRequest } from '../../redux/GetDepartments/getDepartmentsActions'
+import { assignedCoursesRequest } from '../../redux/AssignedCourses/assignedCoursesActions'
+import { getCourseRequest } from '../../redux/GetCourse/getCourseActions'
+import { getFacultyRequest } from '../../redux/GetFaculty/getFacultyActions'
  
 function InstituteSchedule() {
 
@@ -17,6 +20,12 @@ function InstituteSchedule() {
   const batchesAdded = useSelector((state) => state.getBatchesReducer.added)
   const departments = useSelector((state) => state.getDepartments.departments.data)
   const departmentsAdded = useSelector((state) => state.getDepartments.added)
+  const assignedCourses = useSelector((state) => state.assignedCoursesReducer.assignedCourses.data)
+  const assignedCoursesAdded = useSelector((state) => state.assignedCoursesReducer.added)
+  const courses = useSelector((state) => state.getCourseReducer.courses)
+  const coursessAdded = useSelector((state) => state.getCourseReducer.added)
+  const faculty = useSelector((state) => state.getFaculty.faculty)
+  const facultyAdded = useSelector((state) => state.getFaculty.added)
 
   const localizer = momentLocalizer(moment)
 
@@ -26,11 +35,34 @@ function InstituteSchedule() {
   const [semesterTypeChange, setSemesterTypeChange] = useState(false)
   const [selectedBatch, setSelectedBatch] = useState("")
   const [batchData, setBatchData] = useState([])
+  const [events, setEvents] = useState([])
+  const [batchId, setBatchId] = useState(0)
+  const [departmentId, setDepartmentId] = useState(0)
 
   useEffect(() => {
     dispatch(getBatchesRequest(institute_id))
     dispatch(getDepartmentsRequest(institute_id))
+    dispatch(assignedCoursesRequest(institute_id))
+    dispatch(getCourseRequest(institute_id))
+    dispatch(getFacultyRequest(institute_id))
   }, [dispatch, institute_id])
+
+  useEffect(() => {
+    if(assignedCoursesAdded && coursessAdded && facultyAdded && assignedCourses.length > 0 && courses.length > 0 && faculty.length > 0 &&batchId > 0 && departmentId > 0){
+        setEvents([])
+        for(let i of assignedCourses){
+            for(let j of courses){
+                for(let k of faculty){
+                  if(j.course_id === i.course_id && i.batchId === batchId && i.department_id === departmentId && i.semesterType === selectedSemesterType && k.faculty_id === i.faculty_id){
+                    setEvents(events => [...events, 
+                        {id: i.assignedCourseId, title: j.course_name + " (" + k.name + ")", startDate: new Date(i.date + " " +i.startTime), endDate: new Date(i.date + " " +i.endTime)}])
+                        break
+                }
+                }
+            }
+        }
+    }
+  }, [assignedCourses, courses, batchId, departmentId, selectedSemesterType, faculty])
 
   useEffect(() => {
     if(batchesAdded && departmentsAdded){
@@ -47,8 +79,16 @@ function InstituteSchedule() {
 
   useEffect(() => {
     if(selectedBatch.length > 0){
-      console.log(selectedSemesterType)
-      console.log(selectedBatch)
+      let selectedData = selectedBatch.split(" - ");
+      for(let i of batches){
+        for(let j of departments){
+          if(i.batchYear == selectedData[0] && selectedData[1] === j.department_name && i.department_id === j.department_id){
+            setBatchId(i.batchId)
+            setDepartmentId(j.department_id)
+            break
+          }
+        }
+      }
     }
   }, [semesterTypeChange, selectedBatch])
 
@@ -102,6 +142,7 @@ function InstituteSchedule() {
                 localizer={localizer}
                 startAccessor="startDate"
                 endAccessor="endDate"
+                events={events}
             />
         </div>
   )
