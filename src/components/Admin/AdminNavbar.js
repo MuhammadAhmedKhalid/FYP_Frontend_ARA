@@ -63,6 +63,7 @@ const AdminNavBar = () => {
                 </Link>
                 <ul style={{ listStyle: 'none' }} className={click ? 'nav-menu active' : 'nav-menu'}>
                     <li><NavLink to='/admin'>Home</NavLink></li>
+                    <li><NavLink to='/instituteSchedule'>Schedule</NavLink></li>
                     <CustomDropdown items={[{
                         name: 'Departments',
                         value: 'departments',

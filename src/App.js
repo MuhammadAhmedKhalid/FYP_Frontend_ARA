@@ -16,6 +16,7 @@ import Schedule from './components/Faculty/Schedule';
 import Positions from './components/Admin/resources/Positions';
 import Courses from './components/Admin/resources/Courses';
 import AssignedCourses from './components/Admin/resources/AssignedCourses';
+import InstituteSchedule from './components/Admin/InstituteSchedule'
 
 Modal.setAppElement('#root')
 function App() {
@@ -36,6 +37,7 @@ function App() {
           <Route path='/positions' element={<Positions/>} />
           <Route path='/courses' element={<Courses/>} />
           <Route path='/assignedCourses' element={<AssignedCourses/>}/>
+          <Route path='/instituteSchedule' element={<InstituteSchedule/>}/>
           <Route path='*' element={<NoMatch />} />
         </Routes>
       </Provider>
