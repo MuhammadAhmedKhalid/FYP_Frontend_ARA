@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react'
 import Modal from 'react-modal'
 import { useSelector, useDispatch } from 'react-redux'
-import { getDepartmentsRequest } from '../../../../redux/GetDepartments/getDepartmentsActions'
-import { getCourseRequest } from '../../../../redux/GetCourse/getCourseActions'
-import { getRoomsRequest } from '../../../../redux/GetRooms/getRoomsActions'
-import { getBatchesRequest } from '../../../../redux/GetBatches/getBatchesActions'
+import { getDepartmentsRequest } from '../../redux/GetDepartments/getDepartmentsActions'
+import { getCourseRequest } from '../../redux/GetCourse/getCourseActions'
+import { getRoomsRequest } from '../../redux/GetRooms/getRoomsActions'
+import { getBatchesRequest } from '../../redux/GetBatches/getBatchesActions'
 
 function ShowEventDetials(props) {
 

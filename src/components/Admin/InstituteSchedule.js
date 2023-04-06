@@ -10,7 +10,7 @@ import { getDepartmentsRequest } from '../../redux/GetDepartments/getDepartments
 import { assignedCoursesRequest } from '../../redux/AssignedCourses/assignedCoursesActions'
 import { getCourseRequest } from '../../redux/GetCourse/getCourseActions'
 import { getFacultyRequest } from '../../redux/GetFaculty/getFacultyActions'
-import ShowEventDetails from './resources/modals/ShowEventDetails' 
+import ShowEventDetails from '../Root/ShowEventDetials' 
  
 function InstituteSchedule() {
 

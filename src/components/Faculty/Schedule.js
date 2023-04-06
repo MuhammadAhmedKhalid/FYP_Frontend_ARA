@@ -6,7 +6,7 @@ import moment from 'moment';
 import { useSelector, useDispatch } from 'react-redux'
 import { assignedCoursesRequest } from '../../redux/AssignedCourses/assignedCoursesActions'
 import { getCourseRequest } from '../../redux/GetCourse/getCourseActions'
-import ShowEventDetials from './resources/modals/ShowEventDetials';
+import ShowEventDetials from '../Root/ShowEventDetials';
 
 function Schedule() {
 
