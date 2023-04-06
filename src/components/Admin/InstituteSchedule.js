@@ -23,6 +23,8 @@ function InstituteSchedule() {
   const options = ["Spring", "Fall"];
 
   const [selectedSemesterType, setselectedSemesterType] = useState(options[0]);
+  const [semesterTypeChange, setSemesterTypeChange] = useState(false)
+  const [selectedBatch, setSelectedBatch] = useState("")
   const [batchData, setBatchData] = useState([])
 
   useEffect(() => {
@@ -43,9 +45,21 @@ function InstituteSchedule() {
     }
   }, [batchesAdded, departmentsAdded])
 
+  useEffect(() => {
+    if(selectedBatch.length > 0){
+      console.log(selectedSemesterType)
+      console.log(selectedBatch)
+    }
+  }, [semesterTypeChange, selectedBatch])
+
   const handleOptionClick = (option) => {
     setselectedSemesterType(option);
+    setSemesterTypeChange(!semesterTypeChange)
   };
+
+  const handleBatchChange = (event) => {
+    setSelectedBatch(event.target.value)
+  }
 
   return (
     <div className="flexbox-container-y"
@@ -59,7 +73,7 @@ function InstituteSchedule() {
             <form>
               <div style={{ marginTop: '50px', marginBottom: '0px' }} className='flexbox-container-y'>
               <h3 style={{fontWeight: 'normal', color: 'gray', marginRight: '3px'}}>Choose Batch</h3>
-                <select className='dropdown'>
+                <select className='dropdown' onChange={handleBatchChange}>
                   <option/>
                   {
                     batchData.length !== 0 ? batchData.map((batch, index) => 
