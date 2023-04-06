@@ -19,6 +19,9 @@ import { getCourseRequest } from '../../../../redux/GetCourse/getCourseActions'
 import { getStaffRequest } from '../../../../redux/GetStaffRequest/getStaffReqActions'
 import { jaccardRequest } from '../../../../redux/Jaccard/jaccardActions'
 import { updateAssignedCourse } from '../../../../redux/UpdateAssignedCourse/updateAssignedCourseActions'
+import { getRoomRequest } from '../../../../redux/GetRoomRequests/getRoomReqActions'
+import { deletassignedCourseRequest } from '../../../../redux/DeleteAssignedCourse/deleteAssignedCourseActions'
+import { deleteRequestedRoom } from '../../../../redux/DeleteRoomRequest/delRoomReqActions' 
 
 function AddLeave(props) {
 
@@ -38,7 +41,7 @@ function AddLeave(props) {
     const courses = useSelector((state) => state.getCourseReducer.courses)
     const coursessAdded = useSelector((state) => state.getCourseReducer.added)
     const requestedStaff = useSelector((state) => state.staffReqReducer.staff_req.data)
-    const jaccardFaculty = useSelector((state) => state.jaccardReducer.faculty)
+    const requestedRooms = useSelector((state) => state.getRoomRequest.room_req.data)
 
     const [value, setValue] = useState(dayjs(new Date()));
     const [value1, setValue1] = useState(dayjs(new Date()));
@@ -50,6 +53,7 @@ function AddLeave(props) {
             dispatch(assignedCoursesRequest(institute_id))
             dispatch(getCourseRequest(institute_id))
             dispatch(getStaffRequest(institute_id))
+            dispatch(dispatch(getRoomRequest(institute_id)))
         }
     },[institute_id, dispatch])
 
@@ -274,31 +278,30 @@ function AddLeave(props) {
                         facultyListJaccard.push(availableFaculty[i])
                     } 
                     else if (availableFaculty[i].length === 1){
-                        
                         // also show notification to that faculty
-
                         for(let k in coursesList){
                             if(k === i){
                                 dispatch(updateAssignedCourse(coursesList[k], availableFaculty[i][0].faculty_id))
                             }
                         }
                     } else {
-                        // else (means === 0) make that batch and room free(means delete room request and delete assigned course for that particular day)
-
-                        // delete assignedCourse and room request 
                         // also show notification to admin
-
                         for(let k in coursesList){
                             if(k === i){
-                                console.log(coursesList[k])
-                                console.log(coursesList[k].assignedCourseId)
+                                for(let l in requestedRooms){
+                                    if(requestedRooms[l].room_id === coursesList[k].room_id && requestedRooms[l].startTime === coursesList[k].startTime
+                                        && requestedRooms[l].endTime === coursesList[k].endTime && requestedRooms[l].date === format(new Date(coursesList[k].date), 'MM/dd/yyyy')){
+                                            dispatch(deletassignedCourseRequest(coursesList[k].assignedCourseId))
+                                            dispatch(deleteRequestedRoom(requestedRooms[l].room_req_id))
+                                    }   
+                                }
+
                             }
                         }
                     }
                 }
                 if(facultyListJaccard.length > 1){
                     showBestFaculty(facultyListJaccard)
-
                     // after this pass all as notification to admin 
                     // on admin side read all data from store with the help of useEffect
 
