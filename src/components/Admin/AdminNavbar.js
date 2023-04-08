@@ -34,7 +34,7 @@ const AdminNavBar = () => {
     const [click, setClick] = useState(false)
     const [color, setColor] = useState(false)
     const [isNotificationPanelOpen, setIsNotificationPanelOpen] = useState(false);
-    const [notificationNum, setNotificationNum] = useState(0)
+    const [notificationNum, setNotificationNum] = useState(10)
 
     const handleClick = () => setClick(!click)
     const changeColor = () => {

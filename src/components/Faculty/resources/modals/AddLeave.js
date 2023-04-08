@@ -21,7 +21,8 @@ import { jaccardRequest } from '../../../../redux/Jaccard/jaccardActions'
 import { updateAssignedCourse } from '../../../../redux/UpdateAssignedCourse/updateAssignedCourseActions'
 import { getRoomRequest } from '../../../../redux/GetRoomRequests/getRoomReqActions'
 import { deletassignedCourseRequest } from '../../../../redux/DeleteAssignedCourse/deleteAssignedCourseActions'
-import { deleteRequestedRoom } from '../../../../redux/DeleteRoomRequest/delRoomReqActions' 
+import { deleteRequestedRoom } from '../../../../redux/DeleteRoomRequest/delRoomReqActions'
+import { getBatchesRequest } from '../../../../redux/GetBatches/getBatchesActions' 
 
 function AddLeave(props) {
 
@@ -42,9 +43,33 @@ function AddLeave(props) {
     const coursessAdded = useSelector((state) => state.getCourseReducer.added)
     const requestedStaff = useSelector((state) => state.staffReqReducer.staff_req.data)
     const requestedRooms = useSelector((state) => state.getRoomRequest.room_req.data)
+    const jaccardFaculty = useSelector((state) => state.jaccardReducer.faculty)
+    const jaccardFacultyAdded = useSelector((state) => state.jaccardReducer.added)
+    const facultyName = useSelector((state) => state.login.user.name)
+    const batches = useSelector((state) => state.getBatchesReducer.batches.data)
 
     const [value, setValue] = useState(dayjs(new Date()));
     const [value1, setValue1] = useState(dayjs(new Date()));
+
+    const [request, setRequest] = useState({
+        reason: "",
+        institute_id,
+        faculty_id,
+        department_id: '',
+        user_id,
+        requested_faculty_id: faculty_id,
+        date: format(new Date(), 'MM/dd/yyyy'),
+        startTime: format(new Date(), 'HH:mm'),
+        endTime: format(new Date(), 'HH:mm'),
+    })
+
+    const [notifications, setNotifications] = useState([]);
+
+    useEffect(() => {
+        if(jaccardFacultyAdded){
+            console.log(jaccardFaculty)
+        }
+    }, [jaccardFaculty, jaccardFacultyAdded])
 
     useEffect(() => {
         if(institute_id > 0){
@@ -54,6 +79,7 @@ function AddLeave(props) {
             dispatch(getCourseRequest(institute_id))
             dispatch(getStaffRequest(institute_id))
             dispatch(dispatch(getRoomRequest(institute_id)))
+            dispatch(getBatchesRequest(institute_id))
         }
     },[institute_id, dispatch])
 
@@ -115,19 +141,6 @@ function AddLeave(props) {
         e.preventDefault();
      };
 
-    const [request, setRequest] = useState({
-        reason: "",
-        institute_id,
-        faculty_id,
-        department_id: '',
-        user_id,
-        requested_faculty_id: faculty_id,
-        date: format(new Date(), 'MM/dd/yyyy'),
-        startTime: format(new Date(), 'HH:mm'),
-        endTime: format(new Date(), 'HH:mm'),
-    }
-    )
-
     const checkCourse = (id, startTime, endTime, date) => {
         
         if(assignedCoursesAdded){
@@ -184,7 +197,7 @@ function AddLeave(props) {
             alert('Invalid time. Start time should always be less than End time.')
         }else{
             let coursesList = checkCourse(faculty_id, request.startTime, request.endTime, request.date)
-
+            
             let coursesLst = []
             let availableFaculty = []
 
@@ -278,41 +291,102 @@ function AddLeave(props) {
                         facultyListJaccard.push(availableFaculty[i])
                     } 
                     else if (availableFaculty[i].length === 1){
-                        // also show notification to that faculty
+                        let courseName;
+                        let batch;
+                        let department;
+                        let replacedFacultyDepartment;
+                        let replacedFacultyName;
                         for(let k in coursesList){
                             if(k === i){
-                                dispatch(updateAssignedCourse(coursesList[k], availableFaculty[i][0].faculty_id))
+                                // dispatch(updateAssignedCourse(coursesList[k], availableFaculty[i][0].faculty_id))
+                                for(let m of coursesLst){
+                                    if(coursesList[k].course_id === m.course_id){
+                                        courseName = m.course_name
+                                    }
+                                }
+                                for(let n of batches){
+                                    for(let o of departments){
+
+                                        for(let p of faculty){
+                                            if(p.faculty_id === availableFaculty[i][0].faculty_id){
+                                                replacedFacultyName = p.name
+                                            }
+                                            if(p.department === o.department_name && p.faculty_id === availableFaculty[i][0].faculty_id){
+                                                replacedFacultyDepartment = p.department
+                                            }
+                                        }
+
+                                        if(n.batchId === coursesList[k].batchId && coursesList[k].department_id === n.department_id
+                                            && coursesList[k].department_id === o.department_id){
+                                            batch = n.batchYear
+                                            department = o.department_name
+                                        }
+                                    }
+                                }
+
+                                notifications.push([{title: facultyName + "'s replacement for " + courseName + " (" + batch + "-" + department + ").", 
+                                    date: request.date, 
+                                    details: "Replaced by: " + replacedFacultyName + " (" + replacedFacultyDepartment + ")", 
+                                    department_id: request.department_id}])
                             }
                         }
                     } else {
-                        // also show notification to admin
+                        let courseName;
+                        let batch;
+                        let department;
                         for(let k in coursesList){
                             if(k === i){
                                 for(let l in requestedRooms){
                                     if(requestedRooms[l].room_id === coursesList[k].room_id && requestedRooms[l].startTime === coursesList[k].startTime
-                                        && requestedRooms[l].endTime === coursesList[k].endTime && requestedRooms[l].date === format(new Date(coursesList[k].date), 'MM/dd/yyyy')){
-                                            dispatch(deletassignedCourseRequest(coursesList[k].assignedCourseId))
-                                            dispatch(deleteRequestedRoom(requestedRooms[l].room_req_id))
+                                        && requestedRooms[l].endTime === coursesList[k].endTime 
+                                        && requestedRooms[l].date === format(new Date(coursesList[k].date), 'MM/dd/yyyy')){
+                                            // dispatch(deletassignedCourseRequest(coursesList[k].assignedCourseId))
+                                            // dispatch(deleteRequestedRoom(requestedRooms[l].room_req_id))
+
+                                            for(let m of coursesLst){
+                                                if(coursesList[k].course_id === m.course_id){
+                                                    courseName = m.course_name
+                                                }
+                                            }
+                                            for(let n of batches){
+                                                for(let o of departments){
+                                                    if(n.batchId === coursesList[k].batchId && coursesList[k].department_id === n.department_id
+                                                        && coursesList[k].department_id === o.department_id){
+                                                        batch = n.batchYear
+                                                        department = o.department_name
+                                                    }
+                                                }
+                                            }
                                     }   
                                 }
 
                             }
                         }
+                        notifications.push([{
+                            title: "Class Cancelled of " + courseName + " (" + batch + "-" + department + ").",  
+                            date: request.date, 
+                            details: "", 
+                            department_id: request.department_id
+                        }])
                     }
                 }
                 if(facultyListJaccard.length > 1){
                     showBestFaculty(facultyListJaccard)
                     // after this pass all as notification to admin 
+                    // Kinza's replacements
                     // on admin side read all data from store with the help of useEffect
-
                 }
             }
-            dispatch(addLeave(request))
+            // dispatch(addLeave(request))
             setLeaveModal(false)
             alert("Operation performed successfully!")
+            if(notifications.length > 0){
+                console.log(notifications)
+                // dispatch add notifications action
+            }
         }
     }
-
+    
     return (
         <div>
             <Modal
