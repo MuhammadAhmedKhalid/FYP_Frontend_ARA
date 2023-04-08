@@ -23,6 +23,7 @@ import { getRoomRequest } from '../../../../redux/GetRoomRequests/getRoomReqActi
 import { deletassignedCourseRequest } from '../../../../redux/DeleteAssignedCourse/deleteAssignedCourseActions'
 import { deleteRequestedRoom } from '../../../../redux/DeleteRoomRequest/delRoomReqActions'
 import { getBatchesRequest } from '../../../../redux/GetBatches/getBatchesActions' 
+import { addNotificationRequest } from '../../../../redux/AddNotification/addNotificationActions'
 
 function AddLeave(props) {
 
@@ -381,8 +382,7 @@ function AddLeave(props) {
             setLeaveModal(false)
             alert("Operation performed successfully!")
             if(notifications.length > 0){
-                console.log(notifications)
-                // dispatch add notifications action
+                dispatch(addNotificationRequest(notifications))
             }
         }
     }
