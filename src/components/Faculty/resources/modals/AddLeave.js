@@ -325,10 +325,12 @@ function AddLeave(props) {
                                     }
                                 }
 
-                                notifications.push([{title: facultyName + "'s replacement for " + courseName + " (" + batch + "-" + department + ").", 
+                                notifications.push({title: facultyName + "'s replacement for " + courseName + " (" + batch + "-" + department + ").", 
                                     date: request.date, 
                                     details: "Replaced by: " + replacedFacultyName + " (" + replacedFacultyDepartment + ")", 
-                                    department_id: request.department_id}])
+                                    department_id: request.department_id,
+                                    institute_id    
+                                })
                             }
                         }
                     } else {
@@ -363,12 +365,13 @@ function AddLeave(props) {
 
                             }
                         }
-                        notifications.push([{
+                        notifications.push({
                             title: "Class Cancelled of " + courseName + " (" + batch + "-" + department + ").",  
                             date: request.date, 
                             details: "", 
-                            department_id: request.department_id
-                        }])
+                            department_id: request.department_id,
+                            institute_id
+                        })
                     }
                 }
                 if(facultyListJaccard.length > 1){
