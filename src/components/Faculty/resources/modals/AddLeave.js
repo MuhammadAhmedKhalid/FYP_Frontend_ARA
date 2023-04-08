@@ -292,14 +292,18 @@ function AddLeave(props) {
                         facultyListJaccard.push(availableFaculty[i])
                     } 
                     else if (availableFaculty[i].length === 1){
+                        
                         let courseName;
                         let batch;
                         let department;
                         let replacedFacultyDepartment;
                         let replacedFacultyName;
+                        let facultyUserId;
+
                         for(let k in coursesList){
                             if(k === i){
                                 // dispatch(updateAssignedCourse(coursesList[k], availableFaculty[i][0].faculty_id))
+
                                 for(let m of coursesLst){
                                     if(coursesList[k].course_id === m.course_id){
                                         courseName = m.course_name
@@ -310,6 +314,7 @@ function AddLeave(props) {
 
                                         for(let p of faculty){
                                             if(p.faculty_id === availableFaculty[i][0].faculty_id){
+                                                facultyUserId = p.user.user_id
                                                 replacedFacultyName = p.name
                                             }
                                             if(p.department === o.department_name && p.faculty_id === availableFaculty[i][0].faculty_id){
@@ -325,11 +330,12 @@ function AddLeave(props) {
                                     }
                                 }
 
-                                notifications.push({title: facultyName + "'s replacement for " + courseName + " (" + batch + "-" + department + ").", 
+                                notifications.push({title: replacedFacultyName + " (" + replacedFacultyDepartment + ")" + " replaced " + facultyName + " for " + courseName + " (" + batch + "-" + department + ").", 
                                     date: request.date, 
-                                    details: "Replaced by: " + replacedFacultyName + " (" + replacedFacultyDepartment + ")", 
+                                    details: "", 
                                     department_id: request.department_id,
-                                    institute_id    
+                                    institute_id,
+                                    user_id: facultyUserId    
                                 })
                             }
                         }
@@ -366,7 +372,7 @@ function AddLeave(props) {
                             }
                         }
                         notifications.push({
-                            title: "Class Cancelled of " + courseName + " (" + batch + "-" + department + ").",  
+                            title: facultyName + "'s " + courseName + " (" + batch + "-" + department + ") class has been cancelled.",  
                             date: request.date, 
                             details: "", 
                             department_id: request.department_id,

@@ -9,6 +9,7 @@ import { logoutRequest } from '../.././redux/Login/loginActions'
 import Badge from '@mui/material/Badge';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import CheckUnCheckIcon from '../Root/CheckUnCheckIcon';
+import { getNotificationsRequest } from '../../redux/GetNotifications/getNotificationsActions'
  
 const logo = {
     fontSize: '20px',
@@ -18,8 +19,30 @@ const logo = {
 const AdminNavBar = () => {
 
     const navigate = useNavigate()
+    
+    const [click, setClick] = useState(false)
+    const [color, setColor] = useState(false)
+    const [isNotificationPanelOpen, setIsNotificationPanelOpen] = useState(false);
+    const [notificationNum, setNotificationNum] = useState(0)
+
     const dispatch = useDispatch()
+    
     const isLoggedIn = useSelector((state) => state.login.isLoggedIn)
+    const institute_id = useSelector((state) => state.login.user.institute_id)
+    const notifications = useSelector((state) => state.notificationsReqReducer.notifications.data)
+    const notificationsAdded = useSelector((state) => state.notificationsReqReducer.added)
+
+    useEffect(() => {
+        if(notificationsAdded){
+            setNotificationNum(notifications.length)
+        }
+    }, [notificationsAdded])
+
+    useEffect(() => {
+        if(institute_id > 0){
+            dispatch(getNotificationsRequest(institute_id))
+        }
+    }, [institute_id])
 
     useEffect(() => {
         if (!isLoggedIn) {
@@ -30,11 +53,6 @@ const AdminNavBar = () => {
     const handleLogout = () => {
         dispatch(logoutRequest)
     }
-
-    const [click, setClick] = useState(false)
-    const [color, setColor] = useState(false)
-    const [isNotificationPanelOpen, setIsNotificationPanelOpen] = useState(false);
-    const [notificationNum, setNotificationNum] = useState(10)
 
     const handleClick = () => setClick(!click)
     const changeColor = () => {
@@ -119,46 +137,44 @@ const AdminNavBar = () => {
                         {
                             notificationNum !== 0 ? 
                             <ul>
-                            <li>
-                                <h3 style={{fontWeight: 'bold', fontSize: '15px'}}>Kinza's Replacement for ISE (2019-SE).</h3>
-                                <h3>Date: 04/Apr/2023</h3>
-                                <div>
-                                    <p className="space-line"></p> 
-                                    <p style={{display: 'block'}}>Muhammad Ahmed 
-                                        <p style={{fontWeight: 'lighter'}}> (Weightage: 0.3 out of 1)</p>
-                                        <CheckUnCheckIcon/>
-                                    </p>
-                                    <p style={{display: 'block'}}>Khalid Hussain 
-                                        <p style={{fontWeight: 'lighter'}}> (Weightage: 0.7 out of 1)</p>
-                                        <CheckUnCheckIcon/>
-                                    </p>
-                                    <p style={{display: 'block'}}>Manal Ali 
-                                        <p style={{fontWeight: 'lighter'}}> (Weightage: 0.2 out of 1)</p>
-                                        <CheckUnCheckIcon/>
-                                    </p>
-                                </div>
-                            </li>
-                            <li>
-                                <h3 style={{fontWeight: 'bold', fontSize: '15px'}}>Kinza's Replacement for PP (2019-SE).</h3>
-                                <h3>Date: 04/Apr/2023</h3>
-                                <div>
-                                    <p className="space-line"></p>
-                                    <p style={{display: 'block'}}> 
-                                        <p style={{fontWeight: 'lighter'}}>Replaced by: </p>
-                                        Khalid Hussain (SE)
-                                        <p style={{fontWeight: 'lighter'}}> (Weightage: 0.3 out of 1)</p>
-                                    </p>
-                                </div>
-                            </li>
-                            <li>Notification.</li>
-                            <li>Notification.</li>
-                            <li>Notification.</li>
-                            <li>Notification.</li>
-                            <li>Notification.</li>
-                            <li>Notification.</li>
-                            <li>Notification.</li>
-                            <li>Notification.</li>
-                        </ul> : <h4 style={{color: 'gray', fontWeight: 'normal', marginTop: '15px'}}>No notifications found.</h4>
+                                {/* <li>
+                                    <h3 style={{fontWeight: 'bold', fontSize: '15px'}}>Kinza's Replacement for ISE (2019-SE).</h3>
+                                    <h3>Date: 04/Apr/2023</h3>
+                                    <div>
+                                        <p className="space-line"></p> 
+                                        <p style={{display: 'block'}}>Muhammad Ahmed 
+                                            <p style={{fontWeight: 'lighter'}}> (Weightage: 0.3 out of 1)</p>
+                                            <CheckUnCheckIcon/>
+                                        </p>
+                                        <p style={{display: 'block'}}>Khalid Hussain 
+                                            <p style={{fontWeight: 'lighter'}}> (Weightage: 0.7 out of 1)</p>
+                                            <CheckUnCheckIcon/>
+                                        </p>
+                                        <p style={{display: 'block'}}>Manal Ali 
+                                            <p style={{fontWeight: 'lighter'}}> (Weightage: 0.2 out of 1)</p>
+                                            <CheckUnCheckIcon/>
+                                        </p>
+                                    </div>
+                                </li> */}
+                                {
+                                    notifications.slice(0).reverse().map((notification, index) =>
+                                    <li key={index}>
+                                        <h3 style={{fontWeight: 'bold', fontSize: '15px'}}>{notification.title}</h3>
+                                        <h3>Date: {notification.date}</h3>
+                                        {
+                                            notification.details.length > 0 ? 
+                                            <div>
+                                                <p className="space-line"></p>
+                                                <p style={{display: 'block'}}> 
+                                                    <p style={{fontWeight: 'lighter'}}>Replaced by: </p>
+                                                    {notification.details}
+                                                </p>
+                                            </div> : null
+                                        }
+                                    </li>
+                                    )
+                                }
+                            </ul> : <h4 style={{color: 'gray', fontWeight: 'normal', marginTop: '15px'}}>No notifications found.</h4>
                         }
                     </div>
                 )}
