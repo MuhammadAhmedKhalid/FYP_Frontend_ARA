@@ -41,6 +41,7 @@ import { jaccardSaga } from './Jaccard/jaccardSaga'
 import { updateAssignedCourseSaga } from './UpdateAssignedCourse/updateAssignedCourseSaga'
 import { deleteAssignedCourseSaga } from './DeleteAssignedCourse/deleteAssignedCourseSaga'
 import { addNotificationSaga } from './AddNotification/addNotificationSaga'
+import { getNotificationsReqSaga } from './GetNotifications/getNotificationsSaga'
 
 export function* rootSaga() {
     yield fork(signupSaga)
@@ -85,4 +86,5 @@ export function* rootSaga() {
     yield fork(updateAssignedCourseSaga)
     yield fork(deleteAssignedCourseSaga)
     yield fork(addNotificationSaga)
+    yield fork(getNotificationsReqSaga)
 }

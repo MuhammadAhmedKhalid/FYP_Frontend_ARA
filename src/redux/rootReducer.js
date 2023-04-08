@@ -40,6 +40,7 @@ import { jaccardReducer } from './Jaccard/jaccardReducer'
 import { updateAssignedCourseReducer } from './UpdateAssignedCourse/updateAssignedCourseReducer'
 import { deleteAssignedCourseRequestReducer } from './DeleteAssignedCourse/deleteAssignedCourseReducer'
 import { addNotificationReducer } from './AddNotification/addNotificationReducer'
+import { notificationsReqReducer } from './GetNotifications/getNotificationsReducer'
 
 export const rootReducer = combineReducers({
     signup: signupReducer,
@@ -83,4 +84,5 @@ export const rootReducer = combineReducers({
     updateAssignedCourseReducer,
     deleteAssignedCourseRequestReducer,
     addNotificationReducer,
+    notificationsReqReducer
 })
