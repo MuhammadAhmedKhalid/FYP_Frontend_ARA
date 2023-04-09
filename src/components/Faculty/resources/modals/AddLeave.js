@@ -70,7 +70,7 @@ function AddLeave(props) {
         if(jaccardFacultyAdded){
             console.log(jaccardFaculty)
         }
-    }, [jaccardFaculty, jaccardFacultyAdded])
+    }, [jaccardFaculty, jaccardFacultyAdded, dispatch])
 
     useEffect(() => {
         if(institute_id > 0){
@@ -287,9 +287,15 @@ function AddLeave(props) {
                
                 console.log(availableFaculty)
                 let facultyListJaccard = []
+                let jaccardCourses = []
                 for(let i in availableFaculty){
                     if(availableFaculty[i].length > 1){
                         facultyListJaccard.push(availableFaculty[i])
+                        for(let j of coursesList){
+                            if(j.course_id === coursesLst[i].course_id){
+                                jaccardCourses.push(j)
+                            }
+                        }
                     } 
                     else if (availableFaculty[i].length === 1){
                         
@@ -380,18 +386,18 @@ function AddLeave(props) {
                         })
                     }
                 }
-                if(facultyListJaccard.length > 1){
+                
+                if(facultyListJaccard.length > 0){
+                    console.log(jaccardCourses)
                     showBestFaculty(facultyListJaccard)
-                    // after this pass all as notification to admin 
-                    // Kinza's replacements
-                    // on admin side read all data from store with the help of useEffect
+                    // save best faculty record in a db and show it on admin side as a notification
                 }
             }
             // dispatch(addLeave(request))
             setLeaveModal(false)
             alert("Operation performed successfully!")
             if(notifications.length > 0){
-                dispatch(addNotificationRequest(notifications))
+                //dispatch(addNotificationRequest(notifications))
             }
         }
     }
