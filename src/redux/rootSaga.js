@@ -42,6 +42,7 @@ import { updateAssignedCourseSaga } from './UpdateAssignedCourse/updateAssignedC
 import { deleteAssignedCourseSaga } from './DeleteAssignedCourse/deleteAssignedCourseSaga'
 import { addNotificationSaga } from './AddNotification/addNotificationSaga'
 import { getNotificationsReqSaga } from './GetNotifications/getNotificationsSaga'
+import { addWeightageSaga } from './AddWeightage/addWeightageSaga'
 
 export function* rootSaga() {
     yield fork(signupSaga)
@@ -87,4 +88,5 @@ export function* rootSaga() {
     yield fork(deleteAssignedCourseSaga)
     yield fork(addNotificationSaga)
     yield fork(getNotificationsReqSaga)
+    yield fork(addWeightageSaga)
 }

@@ -388,7 +388,6 @@ function AddLeave(props) {
                 }
                 
                 if(facultyListJaccard.length > 0){
-                    console.log(jaccardCourses)
                     showBestFaculty(facultyListJaccard)
                     // save best faculty record in a db and show it on admin side as a notification
                 }

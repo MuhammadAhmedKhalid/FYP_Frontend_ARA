@@ -41,6 +41,7 @@ import { updateAssignedCourseReducer } from './UpdateAssignedCourse/updateAssign
 import { deleteAssignedCourseRequestReducer } from './DeleteAssignedCourse/deleteAssignedCourseReducer'
 import { addNotificationReducer } from './AddNotification/addNotificationReducer'
 import { notificationsReqReducer } from './GetNotifications/getNotificationsReducer'
+import { addWeightageReducer } from './AddWeightage/addWeightageReducer'
 
 export const rootReducer = combineReducers({
     signup: signupReducer,
@@ -84,5 +85,6 @@ export const rootReducer = combineReducers({
     updateAssignedCourseReducer,
     deleteAssignedCourseRequestReducer,
     addNotificationReducer,
-    notificationsReqReducer
+    notificationsReqReducer,
+    addWeightageReducer,
 })
