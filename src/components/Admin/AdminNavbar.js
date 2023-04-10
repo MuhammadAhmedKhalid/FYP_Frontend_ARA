@@ -10,6 +10,7 @@ import Badge from '@mui/material/Badge';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import CheckUnCheckIcon from '../Root/CheckUnCheckIcon';
 import { getNotificationsRequest } from '../../redux/GetNotifications/getNotificationsActions'
+import { getWeightageRequest } from '../../redux/GetWeightages/getWeightageActions'
  
 const logo = {
     fontSize: '20px',
@@ -31,6 +32,14 @@ const AdminNavBar = () => {
     const institute_id = useSelector((state) => state.login.user.institute_id)
     const notifications = useSelector((state) => state.notificationsReqReducer.notifications.data)
     const notificationsAdded = useSelector((state) => state.notificationsReqReducer.added)
+    const weightages = useSelector((state) => state.weightageReducer.weightages.data)
+    const weightagesAdded = useSelector((state) => state.weightageReducer.added)
+
+    useEffect(() => {
+        if(weightagesAdded){
+            console.log(weightages)
+        }
+    }, [weightagesAdded])
 
     useEffect(() => {
         if(notificationsAdded){
@@ -41,6 +50,7 @@ const AdminNavBar = () => {
     useEffect(() => {
         if(institute_id > 0){
             dispatch(getNotificationsRequest(institute_id))
+            dispatch(getWeightageRequest(institute_id))
         }
     }, [institute_id])
 
