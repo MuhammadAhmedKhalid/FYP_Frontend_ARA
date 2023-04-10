@@ -9,7 +9,7 @@ function* addWeightage(payload) {
         const headers = {
             'Authorization': `Bearer ${token}`
         };
-        yield call(axios.post, 'http://localhost:8080/addWeightage', payload.weightage, { headers });
+        yield call(axios.post, 'http://localhost:8080/addWeightage', payload.obj, { headers });
         yield put({ type: ADD_WEIGHTAGE_SUCCESS, message: "Weightage added successfully." })
     } catch (error) {
         yield put({ type: ADD_WEIGHTAGE_FAILURE, message: error.response.data })

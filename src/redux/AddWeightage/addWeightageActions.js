@@ -1,8 +1,8 @@
 import { ADD_WEIGHTAGE_REQUEST } from './addWeightageTypes'
 
-export const addWeightageRequest = (weightage) => {
+export const addWeightageRequest = (obj) => {
     return {
         type: ADD_WEIGHTAGE_REQUEST,
-        weightage
+        obj
     }
 }

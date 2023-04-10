@@ -24,6 +24,7 @@ import { deletassignedCourseRequest } from '../../../../redux/DeleteAssignedCour
 import { deleteRequestedRoom } from '../../../../redux/DeleteRoomRequest/delRoomReqActions'
 import { getBatchesRequest } from '../../../../redux/GetBatches/getBatchesActions' 
 import { addNotificationRequest } from '../../../../redux/AddNotification/addNotificationActions'
+import { addWeightageRequest } from '../../../../redux/AddWeightage/addWeightageActions'
 
 function AddLeave(props) {
 
@@ -65,12 +66,14 @@ function AddLeave(props) {
     })
 
     const [notifications, setNotifications] = useState([]);
+    const [jaccardCourses, setJaccardCourses] = useState([]);
 
     useEffect(() => {
-        if(jaccardFacultyAdded){
-            console.log(jaccardFaculty)
+        if(jaccardFacultyAdded && jaccardCourses.length > 0 && jaccardFaculty.length > 0){
+            dispatch(addWeightageRequest({institute_id, jaccardResults: jaccardFaculty, assignedCourse: jaccardCourses}))
+            // delete assigned course
         }
-    }, [jaccardFaculty, jaccardFacultyAdded, dispatch])
+    }, [jaccardFaculty, jaccardFacultyAdded, dispatch, jaccardCourses, jaccardFaculty])
 
     useEffect(() => {
         if(institute_id > 0){
@@ -287,7 +290,6 @@ function AddLeave(props) {
                
                 console.log(availableFaculty)
                 let facultyListJaccard = []
-                let jaccardCourses = []
                 for(let i in availableFaculty){
                     if(availableFaculty[i].length > 1){
                         facultyListJaccard.push(availableFaculty[i])
