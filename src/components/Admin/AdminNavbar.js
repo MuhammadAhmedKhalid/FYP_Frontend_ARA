@@ -11,7 +11,11 @@ import NotificationsIcon from '@mui/icons-material/Notifications';
 import CheckUnCheckIcon from '../Root/CheckUnCheckIcon';
 import { getNotificationsRequest } from '../../redux/GetNotifications/getNotificationsActions'
 import { getWeightageRequest } from '../../redux/GetWeightages/getWeightageActions'
- 
+import { getFacultyRequest } from '../../redux/GetFaculty/getFacultyActions'
+import { getCourseRequest } from '../../redux/GetCourse/getCourseActions' 
+import { getBatchesRequest } from '../../redux/GetBatches/getBatchesActions'
+import { getDepartmentsRequest } from '../../redux/GetDepartments/getDepartmentsActions'
+
 const logo = {
     fontSize: '20px',
     fontFamily: 'Segoe UI'
@@ -34,23 +38,89 @@ const AdminNavBar = () => {
     const notificationsAdded = useSelector((state) => state.notificationsReqReducer.added)
     const weightages = useSelector((state) => state.weightageReducer.weightages.data)
     const weightagesAdded = useSelector((state) => state.weightageReducer.added)
+    const faculty = useSelector((state) => state.getFaculty.faculty)
+    const facultyAdded = useSelector((state) => state.getFaculty.added)
+    const courses = useSelector((state) => state.getCourseReducer.courses)
+    const coursessAdded = useSelector((state) => state.getCourseReducer.added)
+    const departments = useSelector((state) => state.getDepartments.departments.data)
+    const departmentsAdded = useSelector((state) => state.getDepartments.added)
+    const batches = useSelector((state) => state.getBatchesReducer.batches.data)
+    const batchesAdded = useSelector((state) => state.getBatchesReducer.added)
 
     useEffect(() => {
-        if(weightagesAdded){
-            console.log(weightages)
-        }
-    }, [weightagesAdded])
+        if(weightagesAdded && facultyAdded && coursessAdded && departmentsAdded && batchesAdded){
 
+            let facultyDict = {}
+            let courseName;
+            let batchYear;
+            let department;
+            let facultyWeightages = []
+            let date;
+            
+            for(let i of weightages){
+    
+                facultyDict[i.assignedCourse.faculty_id] = "";
+                for(let j of i.jaccardResults){
+                    facultyDict[j.faculty_id] = "";
+                    facultyWeightages.push(j.jaccardSimilarity)
+                }
+                
+                date = i.assignedCourse.date
+
+                for(let k of courses){
+                    if(i.assignedCourse.course_id === k.course_id){
+                        courseName = k.course_name
+                    }
+                }
+                
+                for(let l of batches){
+                    for(let m of departments){
+                        if(l.batchId === i.assignedCourse.batchId && i.assignedCourse.department_id === l.department_id
+                            && i.assignedCourse.department_id === m.department_id){
+                            batchYear = l.batchYear
+                            department = m.department_name
+                        }
+                    }
+                }
+
+            }
+
+            for(let j of faculty){
+                for(let k in facultyDict){
+                    if(k == j.faculty_id){
+                        facultyDict[k] = j.name
+                    }
+                }
+            }
+
+            createWeightageNotification(facultyDict, courseName, batchYear, department, facultyWeightages, date)
+
+        }
+    }, [weightagesAdded, facultyAdded, faculty, weightages, coursessAdded, courses, batches, departments, batchesAdded, departmentsAdded])
+
+    const createWeightageNotification = (facultyDict, courseName, batchYear, department, facultyWeightages, date) => {
+        console.log(Object.keys(facultyDict).length)
+        console.log(facultyDict)
+        console.log(courseName)
+        console.log(batchYear)
+        console.log(department)
+        console.log(facultyWeightages)
+        console.log(date)
+    }
+    
     useEffect(() => {
         if(notificationsAdded){
             setNotificationNum(notifications.length)
         }
     }, [notificationsAdded])
-
+    
     useEffect(() => {
         if(institute_id > 0){
             dispatch(getNotificationsRequest(institute_id))
             dispatch(getWeightageRequest(institute_id))
+            dispatch(getFacultyRequest(institute_id))
+            dispatch(getDepartmentsRequest(institute_id))
+            dispatch(getBatchesRequest(institute_id))
         }
     }, [institute_id])
 
@@ -147,7 +217,7 @@ const AdminNavBar = () => {
                         {
                             notificationNum !== 0 ? 
                             <ul>
-                                {/* <li>
+                                <li>
                                     <h3 style={{fontWeight: 'bold', fontSize: '15px'}}>Kinza's Replacement for ISE (2019-SE).</h3>
                                     <h3>Date: 04/Apr/2023</h3>
                                     <div>
@@ -156,17 +226,9 @@ const AdminNavBar = () => {
                                             <p style={{fontWeight: 'lighter'}}> (Weightage: 0.3 out of 1)</p>
                                             <CheckUnCheckIcon/>
                                         </p>
-                                        <p style={{display: 'block'}}>Khalid Hussain 
-                                            <p style={{fontWeight: 'lighter'}}> (Weightage: 0.7 out of 1)</p>
-                                            <CheckUnCheckIcon/>
-                                        </p>
-                                        <p style={{display: 'block'}}>Manal Ali 
-                                            <p style={{fontWeight: 'lighter'}}> (Weightage: 0.2 out of 1)</p>
-                                            <CheckUnCheckIcon/>
-                                        </p>
                                     </div>
-                                </li> */}
-                                {
+                                </li>
+                                {/* {
                                     notifications.slice(0).reverse().map((notification, index) =>
                                     <li key={index}>
                                         <h3 style={{fontWeight: 'bold', fontSize: '15px'}}>{notification.title}</h3>
@@ -183,7 +245,7 @@ const AdminNavBar = () => {
                                         }
                                     </li>
                                     )
-                                }
+                                } */}
                             </ul> : <h4 style={{color: 'gray', fontWeight: 'normal', marginTop: '15px'}}>No notifications found.</h4>
                         }
                     </div>
