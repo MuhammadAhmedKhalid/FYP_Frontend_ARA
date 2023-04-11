@@ -29,7 +29,7 @@ const AdminNavBar = () => {
     const [color, setColor] = useState(false)
     const [isNotificationPanelOpen, setIsNotificationPanelOpen] = useState(false);
     const [notificationNum, setNotificationNum] = useState(0)
-
+    const [weightageNotificationDetails, setWeightageNotificationDetails] = useState([])
     const dispatch = useDispatch()
     
     const isLoggedIn = useSelector((state) => state.login.isLoggedIn)
@@ -48,24 +48,21 @@ const AdminNavBar = () => {
     const batchesAdded = useSelector((state) => state.getBatchesReducer.added)
 
     useEffect(() => {
-        if(weightagesAdded && facultyAdded && coursessAdded && departmentsAdded && batchesAdded){
-
-            let facultyDict = {}
-            let courseName;
-            let batchYear;
-            let department;
-            let facultyWeightages = []
-            let date;
-            
+        
+        if(weightagesAdded && facultyAdded && coursessAdded && departmentsAdded && batchesAdded){  
             for(let i of weightages){
+                let facultyDict = {}
+                let courseName;
+                let batchYear;
+                let department;
+                let facultyWeightages = []
+                let date = i.assignedCourse.date
     
                 facultyDict[i.assignedCourse.faculty_id] = "";
                 for(let j of i.jaccardResults){
                     facultyDict[j.faculty_id] = "";
                     facultyWeightages.push(j.jaccardSimilarity)
                 }
-                
-                date = i.assignedCourse.date
 
                 for(let k of courses){
                     if(i.assignedCourse.course_id === k.course_id){
@@ -82,32 +79,29 @@ const AdminNavBar = () => {
                         }
                     }
                 }
-
-            }
-
-            for(let j of faculty){
-                for(let k in facultyDict){
-                    if(k == j.faculty_id){
-                        facultyDict[k] = j.name
+    
+                for(let j of faculty){
+                    for(let k in facultyDict){
+                        if(k == j.faculty_id){
+                            facultyDict[k] = j.name
+                        }
                     }
                 }
+    
+                let details = {
+                    facultyNames: facultyDict,
+                    courseName,
+                    batchYear, 
+                    department,
+                    facultyWeightages,
+                    date
+                }
+                weightageNotificationDetails.push(details)
             }
 
-            createWeightageNotification(facultyDict, courseName, batchYear, department, facultyWeightages, date)
-
         }
-    }, [weightagesAdded, facultyAdded, faculty, weightages, coursessAdded, courses, batches, departments, batchesAdded, departmentsAdded])
+    }, [weightagesAdded])
 
-    const createWeightageNotification = (facultyDict, courseName, batchYear, department, facultyWeightages, date) => {
-        console.log(Object.keys(facultyDict).length)
-        console.log(facultyDict)
-        console.log(courseName)
-        console.log(batchYear)
-        console.log(department)
-        console.log(facultyWeightages)
-        console.log(date)
-    }
-    
     useEffect(() => {
         if(notificationsAdded){
             setNotificationNum(notifications.length)
