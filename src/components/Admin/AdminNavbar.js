@@ -87,20 +87,23 @@ const AdminNavBar = () => {
                         }
                     }
                 }
-    
+
                 let details = {
-                    facultyNames: facultyDict,
+                    faculty: Object.values(facultyDict)[0],
+                    
                     courseName,
                     batchYear, 
                     department,
                     facultyWeightages,
                     date
                 }
+
                 weightageNotificationDetails.push(details)
             }
 
         }
     }, [weightagesAdded])
+    console.log(weightageNotificationDetails)
 
     useEffect(() => {
         if(notificationsAdded){
@@ -198,7 +201,7 @@ const AdminNavBar = () => {
                     }]} />
                     <li>
                         <NavLink onClick={handleNotificationIconClick}>
-                            <Badge badgeContent={notificationNum} color="info">
+                            <Badge badgeContent={notificationNum + weightageNotificationDetails.length} color="info">
                                 <NotificationsIcon style={{color: '#fff', height: '20px'}} />
                             </Badge>
                         </NavLink>
@@ -209,19 +212,33 @@ const AdminNavBar = () => {
                     <div className="notification-panel" onMouseLeave={handleNotificationPanelClose}>
                         <h2>NOTIFICATIONS</h2>
                         {
+                            weightageNotificationDetails.length !== 0 ?
+                            <ul>
+                                {
+                                    weightageNotificationDetails.slice(0).reverse().map((notification, index) => 
+                                    <li key={index}>
+                                        <h3 style={{fontWeight: 'bold', fontSize: '15px'}}>{notification.facultyNames[0]}'s Replacement for ISE ({notification.batchYear}-{notification.department}).</h3>
+                                        <h3>Date: {notification.date}</h3>
+                                        <div>
+                                            <p className="space-line"></p> 
+                                            {
+                                                notification.facultyNames.slice(1).map((faculty, index) =>
+                                                <p style={{display: 'block'}}>{faculty} 
+                                                {
+                                                    notification.facultyWeightages.map((weight, index) =>
+                                                    <p style={{fontWeight: 'lighter'}}> (Weightage: {weight.toFixed(2)} out of 1)</p>)
+                                                }
+                                                <CheckUnCheckIcon/>
+                                                </p>)
+                                            }
+                                        </div>
+                                    </li>)
+                                }
+                            </ul> : null
+                        }
+                        {
                             notificationNum !== 0 ? 
                             <ul>
-                                <li>
-                                    <h3 style={{fontWeight: 'bold', fontSize: '15px'}}>Kinza's Replacement for ISE (2019-SE).</h3>
-                                    <h3>Date: 04/Apr/2023</h3>
-                                    <div>
-                                        <p className="space-line"></p> 
-                                        <p style={{display: 'block'}}>Muhammad Ahmed 
-                                            <p style={{fontWeight: 'lighter'}}> (Weightage: 0.3 out of 1)</p>
-                                            <CheckUnCheckIcon/>
-                                        </p>
-                                    </div>
-                                </li>
                                 {/* {
                                     notifications.slice(0).reverse().map((notification, index) =>
                                     <li key={index}>
