@@ -51,70 +51,72 @@ const AdminNavBar = () => {
         
         if(weightagesAdded && facultyAdded && coursessAdded && departmentsAdded && batchesAdded){  
             for(let i of weightages){
-                let facultyDict = {}
-                let courseName;
-                let batchYear;
-                let department;
-                let facultyWeightages = []
-                let date = i.assignedCourse.date
+                if(i.isSelected !== true){
+                    let facultyDict = {}
+                    let courseName;
+                    let batchYear;
+                    let department;
+                    let facultyWeightages = []
+                    let date = i.assignedCourse.date
+        
+                    facultyDict[i.assignedCourse.faculty_id] = "";
+                    for(let j of i.jaccardResults){
+                        facultyDict[j.faculty_id] = "";
+                        facultyWeightages.push(j.jaccardSimilarity)
+                    }
     
-                facultyDict[i.assignedCourse.faculty_id] = "";
-                for(let j of i.jaccardResults){
-                    facultyDict[j.faculty_id] = "";
-                    facultyWeightages.push(j.jaccardSimilarity)
-                }
-
-                for(let k of courses){
-                    if(i.assignedCourse.course_id === k.course_id){
-                        courseName = k.course_name
-                    }
-                }
-                
-                for(let l of batches){
-                    for(let m of departments){
-                        if(l.batchId === i.assignedCourse.batchId && i.assignedCourse.department_id === l.department_id
-                            && i.assignedCourse.department_id === m.department_id){
-                            batchYear = l.batchYear
-                            department = m.department_name
+                    for(let k of courses){
+                        if(i.assignedCourse.course_id === k.course_id){
+                            courseName = k.course_name
                         }
                     }
-                }
+                    
+                    for(let l of batches){
+                        for(let m of departments){
+                            if(l.batchId === i.assignedCourse.batchId && i.assignedCourse.department_id === l.department_id
+                                && i.assignedCourse.department_id === m.department_id){
+                                batchYear = l.batchYear
+                                department = m.department_name
+                            }
+                        }
+                    }
+        
+                    for(let j of faculty){
+                        for(let k in facultyDict){
+                            if(k == j.faculty_id){
+                                facultyDict[k] = j.name
+                            }
+                        }
+                    }
+                    
+                    const valuesArray = Object.values(facultyDict);
+                    const facultyName = valuesArray.shift();
+                    const replacingFaculty = valuesArray.slice();
     
-                for(let j of faculty){
-                    for(let k in facultyDict){
-                        if(k == j.faculty_id){
-                            facultyDict[k] = j.name
+                    let replacingFacultyDetails = []
+    
+                    for(let i in replacingFaculty){
+                        for(let j in facultyWeightages){
+                           for(let k in facultyDict){
+                            if(i === j && facultyDict[k] === replacingFaculty[i]){
+                                replacingFacultyDetails.push({id: k, name: replacingFaculty[i], weightage: facultyWeightages[j]})
+                            }
+                           }
                         }
                     }
-                }
-                
-                const valuesArray = Object.values(facultyDict);
-                const facultyName = valuesArray.shift();
-                const replacingFaculty = valuesArray.slice();
-
-                let replacingFacultyDetails = []
-
-                for(let i in replacingFaculty){
-                    for(let j in facultyWeightages){
-                       for(let k in facultyDict){
-                        if(i === j && facultyDict[k] === replacingFaculty[i]){
-                            replacingFacultyDetails.push({id: k, name: replacingFaculty[i], weightage: facultyWeightages[j]})
-                        }
-                       }
+    
+                    let details = {
+                        faculty: facultyName,
+                        replacingFacultyDetails,
+                        courseName,
+                        batchYear, 
+                        department,
+                        date,
+                        assignedCourse: i.assignedCourse,
                     }
+    
+                    weightageNotificationDetails.push(details)
                 }
-
-                let details = {
-                    faculty: facultyName,
-                    replacingFacultyDetails,
-                    courseName,
-                    batchYear, 
-                    department,
-                    date,
-                    assignedCourse: i.assignedCourse,
-                }
-
-                weightageNotificationDetails.push(details)
             }
 
         }
@@ -166,6 +168,10 @@ const AdminNavBar = () => {
         setIsNotificationPanelOpen(false);
     }
 
+    const check = () => {
+        console.log('Change text')
+    }
+    
     return (
         <div>
             <div className={color ? 'header header-bg' : 'header'}>
@@ -241,7 +247,7 @@ const AdminNavBar = () => {
                                                 notification.replacingFacultyDetails.map((faculty, index) =>
                                                 <p style={{display: 'block'}}>{faculty.name} 
                                                 <p style={{fontWeight: 'lighter'}}> (Weightage: {faculty.weightage.toFixed(2)} out of 1)</p>
-                                                <CheckUnCheckIcon facultyId={faculty.id} assignedCourse={notification.assignedCourse}/>
+                                                <p onClick={check}><CheckUnCheckIcon facultyId={faculty.id} assignedCourse={notification.assignedCourse}/></p>
                                                 </p>)
                                             }
                                         </div>

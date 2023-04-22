@@ -13,6 +13,7 @@ function CheckUnCheckIcon(props) {
   
   const selectFaculty = () => {
     // update weightage model isSelected to true
+    // if isSelected is true then dont show notification
     // dispatch(updateAssignedCourse(assignedCourse, facultyId))
   }
 
