@@ -1,14 +1,19 @@
 import React from 'react'
 import '../Styling/NavbarStyles.css'
 import { BsCheckCircle } from "react-icons/bs";
+import { updateAssignedCourse } from '../../redux/UpdateAssignedCourse/updateAssignedCourseActions'
+import { useSelector, useDispatch } from 'react-redux'
 // import { BsXCircle } from "react-icons/bs";
 
 function CheckUnCheckIcon(props) {
 
-  const {facultyId} = props
+  const {facultyId, assignedCourse} = props
+
+  const dispatch = useDispatch()
   
   const selectFaculty = () => {
-    console.log(facultyId)
+    // update weightage model isSelected to true
+    // dispatch(updateAssignedCourse(assignedCourse, facultyId))
   }
 
   return (

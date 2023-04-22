@@ -110,7 +110,8 @@ const AdminNavBar = () => {
                     courseName,
                     batchYear, 
                     department,
-                    date
+                    date,
+                    assignedCourse: i.assignedCourse,
                 }
 
                 weightageNotificationDetails.push(details)
@@ -118,7 +119,7 @@ const AdminNavBar = () => {
 
         }
     }, [weightagesAdded])
-    console.log(weightageNotificationDetails)
+    //console.log(weightageNotificationDetails)
 
     useEffect(() => {
         if(notificationsAdded){
@@ -240,7 +241,7 @@ const AdminNavBar = () => {
                                                 notification.replacingFacultyDetails.map((faculty, index) =>
                                                 <p style={{display: 'block'}}>{faculty.name} 
                                                 <p style={{fontWeight: 'lighter'}}> (Weightage: {faculty.weightage.toFixed(2)} out of 1)</p>
-                                                <CheckUnCheckIcon facultyId={faculty.id}/>
+                                                <CheckUnCheckIcon facultyId={faculty.id} assignedCourse={notification.assignedCourse}/>
                                                 </p>)
                                             }
                                         </div>
