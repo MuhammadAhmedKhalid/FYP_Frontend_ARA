@@ -88,13 +88,26 @@ const AdminNavBar = () => {
                     }
                 }
 
+                const valuesArray = Object.values(facultyDict);
+                const facultyName = valuesArray.shift();
+                const replacingFaculty = valuesArray.slice();
+
+                let replacingFacultyDetails = []
+
+                for(let i in replacingFaculty){
+                    for(let j in facultyWeightages){
+                        if(i === j){
+                            replacingFacultyDetails.push({name: replacingFaculty[i], weightage: facultyWeightages[j]})
+                        }
+                    }
+                }
+
                 let details = {
-                    faculty: Object.values(facultyDict)[0],
-                    
+                    faculty: facultyName,
+                    replacingFacultyDetails,
                     courseName,
                     batchYear, 
                     department,
-                    facultyWeightages,
                     date
                 }
 
@@ -217,17 +230,14 @@ const AdminNavBar = () => {
                                 {
                                     weightageNotificationDetails.slice(0).reverse().map((notification, index) => 
                                     <li key={index}>
-                                        <h3 style={{fontWeight: 'bold', fontSize: '15px'}}>{notification.facultyNames[0]}'s Replacement for ISE ({notification.batchYear}-{notification.department}).</h3>
+                                        <h3 style={{fontWeight: 'bold', fontSize: '15px'}}>{notification.faculty}'s Replacement for ISE ({notification.batchYear}-{notification.department}).</h3>
                                         <h3>Date: {notification.date}</h3>
                                         <div>
                                             <p className="space-line"></p> 
                                             {
-                                                notification.facultyNames.slice(1).map((faculty, index) =>
-                                                <p style={{display: 'block'}}>{faculty} 
-                                                {
-                                                    notification.facultyWeightages.map((weight, index) =>
-                                                    <p style={{fontWeight: 'lighter'}}> (Weightage: {weight.toFixed(2)} out of 1)</p>)
-                                                }
+                                                notification.replacingFacultyDetails.map((faculty, index) =>
+                                                <p style={{display: 'block'}}>{faculty.name} 
+                                                <p style={{fontWeight: 'lighter'}}> (Weightage: {faculty.weightage.toFixed(2)} out of 1)</p>
                                                 <CheckUnCheckIcon/>
                                                 </p>)
                                             }
