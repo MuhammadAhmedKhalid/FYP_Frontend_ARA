@@ -87,7 +87,7 @@ const AdminNavBar = () => {
                         }
                     }
                 }
-
+                
                 const valuesArray = Object.values(facultyDict);
                 const facultyName = valuesArray.shift();
                 const replacingFaculty = valuesArray.slice();
@@ -96,9 +96,11 @@ const AdminNavBar = () => {
 
                 for(let i in replacingFaculty){
                     for(let j in facultyWeightages){
-                        if(i === j){
-                            replacingFacultyDetails.push({name: replacingFaculty[i], weightage: facultyWeightages[j]})
+                       for(let k in facultyDict){
+                        if(i === j && facultyDict[k] === replacingFaculty[i]){
+                            replacingFacultyDetails.push({id: k, name: replacingFaculty[i], weightage: facultyWeightages[j]})
                         }
+                       }
                     }
                 }
 
@@ -238,7 +240,7 @@ const AdminNavBar = () => {
                                                 notification.replacingFacultyDetails.map((faculty, index) =>
                                                 <p style={{display: 'block'}}>{faculty.name} 
                                                 <p style={{fontWeight: 'lighter'}}> (Weightage: {faculty.weightage.toFixed(2)} out of 1)</p>
-                                                <CheckUnCheckIcon/>
+                                                <CheckUnCheckIcon facultyId={faculty.id}/>
                                                 </p>)
                                             }
                                         </div>

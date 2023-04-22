@@ -102,9 +102,9 @@
     color: green;
   }
 
-  .unchecked-icon-container:hover > svg {
+  /* .unchecked-icon-container:hover > svg {
     color: red;
-  }
+  } */
 
 @media screen and (max-width: 1040px) {
     .nav-menu {
