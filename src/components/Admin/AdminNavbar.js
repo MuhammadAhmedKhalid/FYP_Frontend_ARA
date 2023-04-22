@@ -113,6 +113,7 @@ const AdminNavBar = () => {
                         department,
                         date,
                         assignedCourse: i.assignedCourse,
+                        weightageId: i.weightageId
                     }
     
                     weightageNotificationDetails.push(details)
@@ -168,8 +169,8 @@ const AdminNavBar = () => {
         setIsNotificationPanelOpen(false);
     }
 
-    const check = () => {
-        console.log('Change text')
+    const response = () => {
+        alert('Operation performed successfully!')
     }
     
     return (
@@ -247,7 +248,8 @@ const AdminNavBar = () => {
                                                 notification.replacingFacultyDetails.map((faculty, index) =>
                                                 <p style={{display: 'block'}}>{faculty.name} 
                                                 <p style={{fontWeight: 'lighter'}}> (Weightage: {faculty.weightage.toFixed(2)} out of 1)</p>
-                                                <p onClick={check}><CheckUnCheckIcon facultyId={faculty.id} assignedCourse={notification.assignedCourse}/></p>
+                                                <p onClick={response}><CheckUnCheckIcon facultyId={faculty.id} assignedCourse={notification.assignedCourse} 
+                                                    weightageId={notification.weightageId}/></p>
                                                 </p>)
                                             }
                                         </div>
