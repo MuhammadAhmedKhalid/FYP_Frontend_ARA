@@ -71,15 +71,14 @@ function AddLeave(props) {
     useEffect(() => {
         if(jaccardFacultyAdded && jaccardCourses.length > 0 && jaccardFaculty.length > 0){
             dispatch(addWeightageRequest({institute_id, jaccardResults: jaccardFaculty, assignedCourse: jaccardCourses}))
-            // dispatch(deletassignedCourseRequest(jaccardCourses[0].assignedCourseId))
-            // for(let l in requestedRooms){
-            //     if(requestedRooms[l].room_id === jaccardCourses[0].room_id && requestedRooms[l].startTime === jaccardCourses[0].startTime
-            //         && requestedRooms[l].endTime === jaccardCourses[0].endTime 
-            //         && requestedRooms[l].date === format(new Date(jaccardCourses[0].date), 'MM/dd/yyyy')){
-            //             console.log(requestedRooms[l].room_req_id)
-            //             dispatch(deleteRequestedRoom(requestedRooms[l].room_req_id))
-            //     }   
-            // }
+            dispatch(deletassignedCourseRequest(jaccardCourses[0].assignedCourseId))
+            for(let l in requestedRooms){
+                if(requestedRooms[l].room_id === jaccardCourses[0].room_id && requestedRooms[l].startTime === jaccardCourses[0].startTime
+                    && requestedRooms[l].endTime === jaccardCourses[0].endTime 
+                    && requestedRooms[l].date === format(new Date(jaccardCourses[0].date), 'MM/dd/yyyy')){
+                        dispatch(deleteRequestedRoom(requestedRooms[l].room_req_id))
+                }   
+            }
         }
     }, [jaccardFaculty, jaccardFacultyAdded, dispatch, jaccardCourses, jaccardFaculty])
 

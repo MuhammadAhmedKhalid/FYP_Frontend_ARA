@@ -24,13 +24,15 @@ const logo = {
 const AdminNavBar = () => {
 
     const navigate = useNavigate()
+
+    const dispatch = useDispatch()
     
     const [click, setClick] = useState(false)
     const [color, setColor] = useState(false)
     const [isNotificationPanelOpen, setIsNotificationPanelOpen] = useState(false);
     const [notificationNum, setNotificationNum] = useState(0)
     const [weightageNotificationDetails, setWeightageNotificationDetails] = useState([])
-    const dispatch = useDispatch()
+    const [weightageNotificationsNum, setWeightageNotificationsNum] = useState(0)
     
     const isLoggedIn = useSelector((state) => state.login.isLoggedIn)
     const institute_id = useSelector((state) => state.login.user.institute_id)
@@ -51,7 +53,8 @@ const AdminNavBar = () => {
         
         if(weightagesAdded && facultyAdded && coursessAdded && departmentsAdded && batchesAdded){  
             for(let i of weightages){
-                if(i.isSelected !== true){
+                if(i.selected !== true){
+                    setWeightageNotificationsNum(weightageNotificationsNum+1)
                     let facultyDict = {}
                     let courseName;
                     let batchYear;
@@ -122,7 +125,6 @@ const AdminNavBar = () => {
 
         }
     }, [weightagesAdded])
-    //console.log(weightageNotificationDetails)
 
     useEffect(() => {
         if(notificationsAdded){
@@ -224,7 +226,7 @@ const AdminNavBar = () => {
                     }]} />
                     <li>
                         <NavLink onClick={handleNotificationIconClick}>
-                            <Badge badgeContent={notificationNum + weightageNotificationDetails.length} color="info">
+                            <Badge badgeContent={notificationNum + weightageNotificationsNum} color="info">
                                 <NotificationsIcon style={{color: '#fff', height: '20px'}} />
                             </Badge>
                         </NavLink>
@@ -260,7 +262,7 @@ const AdminNavBar = () => {
                         {
                             notificationNum !== 0 ? 
                             <ul>
-                                {/* {
+                                {
                                     notifications.slice(0).reverse().map((notification, index) =>
                                     <li key={index}>
                                         <h3 style={{fontWeight: 'bold', fontSize: '15px'}}>{notification.title}</h3>
@@ -277,7 +279,7 @@ const AdminNavBar = () => {
                                         }
                                     </li>
                                     )
-                                } */}
+                                }
                             </ul> : <h4 style={{color: 'gray', fontWeight: 'normal', marginTop: '15px'}}>No notifications found.</h4>
                         }
                     </div>
