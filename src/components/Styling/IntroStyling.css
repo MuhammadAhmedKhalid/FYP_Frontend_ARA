@@ -1,0 +1,23 @@
+.image {
+    width: 500px;
+}
+
+.heading {
+    font-size: 60px;
+}
+
+@media screen and (max-width: 1040px) {
+    .img {
+        width: 220px;
+    }
+    .heading {
+        font-size: 22px;
+    }
+    .btn {
+        width: 150px;
+        font-size: 0.6rem;
+    }
+    p {
+        font-size: 11px;
+    }
+}
