@@ -27,9 +27,13 @@ const LandingPage = () => {
                 hosp_ref={hosp_ref} off_ref={off_ref} />
             }
             <Education edu_ref={edu_ref} />
-            {/* <Factory fac_ref={fac_ref} />
-            <Hospital hosp_ref={hosp_ref} />
-            <Office off_ref={off_ref} /> */}
+            
+            {
+                isMobile ? null : <>
+                <Factory fac_ref={fac_ref} />
+                <Hospital hosp_ref={hosp_ref} />
+                <Office off_ref={off_ref} /></>
+            }
             <Footer />
         </div>
     )
