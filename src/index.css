@@ -145,3 +145,10 @@ a {
   color: #fff;
   transition: 0.3s;
 }
+
+@media screen and (max-width: 1040px) {
+  .btn-w {
+    width: 150px;
+    font-size: 0.6rem;
+  }
+}

@@ -8,7 +8,6 @@ function Intro() {
 
     return (
         <div
-            // className="flexbox-container"
             style={{
                 display: 'flex',
                 alignItems: 'center',
@@ -22,11 +21,11 @@ function Intro() {
                 <br /><br />
                 {isMobile ? <img className="img" src={Img1} alt='Into-img' /> : null}
                 <br/>
-                <p>With Auto Resource Allocator, you can focus on what matters most</p>
-                <p>delivering quality education, products, or services</p>
-                <p>while we take care of the rest. Sign up today to see</p>
-                <p>how Auto Resource Allocator can revolutionize the way you</p>
-                <p>manage your staff.</p>
+                <p className='para1'>With Auto Resource Allocator, you can focus on what matters most</p>
+                <p className='para1'>delivering quality education, products, or services</p>
+                <p className='para1'>while we take care of the rest. Sign up today to see</p>
+                <p className='para1'>how Auto Resource Allocator can revolutionize the way you</p>
+                <p className='para1'>manage your staff.</p>
                 <br /><br />
                 <button className='btn'>Watch Tutorial</button>
                 <br />
