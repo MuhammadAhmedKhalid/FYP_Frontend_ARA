@@ -4,7 +4,6 @@ import Img3 from '../../assets/img3.png'
 import Img4 from '../../assets/img4.png'
 import Img5 from '../../assets/img5.png'
 import AdminQuestionnaire from '../Admin/AdminQuestionnaire'
-import AdminSimpleNavbar from '../Admin/AdminSimpleNavbar'
 import Footer from './Footer'
 import { useDispatch, useSelector } from 'react-redux'
 import { getInstituteTypeRequest } from '../../redux/InstituteTypes/instituteTypesActions'
@@ -50,7 +49,6 @@ function Domains(props) {
     }
     return (
         <div>
-            <AdminSimpleNavbar />
             <div
                 className="flexbox-container-y"
                 style={{
@@ -63,7 +61,7 @@ function Domains(props) {
             >
                 <h1 style={{ color: 'black', fontSize: '22px' }}>A Platform Build For A New</h1>
                 <h1 style={{ color: '#0E5E6F', fontSize: '22px' }}>Way Of Allocation</h1>
-                <p style={{ color: 'black', fontSize: 18 }}>Lorem ipsum dolor sit amet. Ut doloribus enim et nostrud ui quihfhhsh</p>
+                <p style={{ color: 'black', fontSize: 18 }}>Get back to what you do best and let Auto Resource Allocator handle the rest.</p>
                 <br /><br /><br />
                 <div className="flexbox-container" >
                     <div className="flexbox-container-y">

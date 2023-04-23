@@ -27,14 +27,18 @@ function Office(props) {
                 <div className="flexbox-container-y">
                     <h2 style={{ color: '#0E5E6F', fontSize: 22 }}>4. Office</h2>
                     <br />
-                    <p style={pStyle}>Lorem ipsum dolor sit amet.</p>
-                    <p style={pStyle}>Ut doloribus enim et nostrud ui quia velit est repellat rerum sit.</p>
-                    <p style={pStyle}>Lorem ipsum dolor sit amet.</p>
-                    <p style={pStyle}>Ut doloribus enim et nostrud ui quia loribus enim et nostrud ui quia velit est repellat rerum sit.</p>
-                    <p style={pStyle}>Lorem ipsum dolor sit amet.</p>
-                    <p style={pStyle}>Ut doloribus enim et nostrud ui quia velit est repellat rerum sit.</p>
-                    <p style={pStyle}>Lorem ipsum dolor sit amet.</p>
-                    <p style={pStyle}>Ut doloribus enim et nostrud ui quia velit est repellat rerum</p>
+                    <p style={pStyle}>Resource management: Use Auto Resource Allocator to manage</p>
+                    <p style={pStyle}>office resources such as meeting rooms, office</p>
+                    <p style={pStyle}>equipment, and supplies, to ensure that they are</p>
+                    <p style={pStyle}>available when needed.</p>
+                    <br/>
+                    <p style={pStyle}>Scheduling and time management: Auto Resource Allocator offers</p>
+                    <p style={pStyle}>powerful scheduling tools that allow managers to manage worker</p>
+                    <p style={pStyle}>schedules and make changes easily, from one central location.</p>
+                    <br/>
+                    <p style={pStyle}>Staff replacement management: With [Your System Name], offices</p>
+                    <p style={pStyle}>can quickly find replacement staff to fill in for absent workers,</p>
+                    <p style={pStyle}>ensuring that business operations continue without interruption.</p>
                 </div>
                 <img src={Img9a} style={{ height: 350, width: 200, marginLeft: 25, marginTop: 250 }} alt='Office_a-img' />
                 <img src={Img9b} style={{ height: 350, width: 200 }} alt='Office_b-img' />

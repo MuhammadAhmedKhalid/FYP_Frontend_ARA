@@ -27,14 +27,15 @@ function Hospital(props) {
                 <div className="flexbox-container-y">
                     <h2 style={{ color: '#0E5E6F', fontSize: 22 }}>3. Hospital</h2>
                     <br />
-                    <p style={pStyle}>Lorem ipsum dolor sit amet.</p>
-                    <p style={pStyle}>Ut doloribus enim et nostrud ui quia velit est repellat rerum sit.</p>
-                    <p style={pStyle}>Lorem ipsum dolor sit amet.</p>
-                    <p style={pStyle}>Ut doloribus enim et nostrud ui quia loribus enim et nostrud ui quia velit est repellat rerum sit.</p>
-                    <p style={pStyle}>Lorem ipsum dolor sit amet.</p>
-                    <p style={pStyle}>Ut doloribus enim et nostrud ui quia velit est repellat rerum sit.</p>
-                    <p style={pStyle}>Lorem ipsum dolor sit amet.</p>
-                    <p style={pStyle}>Ut doloribus enim et nostrud ui quia velit est repellat rerum</p>
+                    <p style={pStyle}>Staff replacement management: With Auto Resource Allocator,</p>
+                    <p style={pStyle}>hospitals can quickly find replacement staff to fill in</p>
+                    <p style={pStyle}>for absent healthcare workers, ensuring that patient</p>
+                    <p style={pStyle}>care continues without interruption.</p>
+                    <br/>
+                    <p style={pStyle}>Scheduling and time management: Auto Resource Allocator offers</p>
+                    <p style={pStyle}>powerful scheduling tools that allow administrators to manage</p>
+                    <p style={pStyle}>healthcare worker schedules and make changes easily, from</p>
+                    <p style={pStyle}>one central location.</p>
                 </div>
                 <img src={Img8a} style={{ height: 350, width: 200, marginLeft: 25 }} alt='Hospital_a-img' />
                 <img src={Img8b} style={{ height: 350, width: 200, marginTop: 250 }} alt='Hospital_b-img' />
