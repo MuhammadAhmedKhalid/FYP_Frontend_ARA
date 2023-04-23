@@ -128,7 +128,7 @@ const AdminNavBar = () => {
                                     notifications.slice(0).reverse().map((notification, index) =>
                                         notification.user_id === user_id ?
                                         <li key={index}>
-                                            <h3 style={{fontWeight: 'bold', fontSize: '15px'}}>{notification.title}</h3>
+                                            <h3 style={{fontWeight: 'normal', fontSize: '15px'}}>{notification.title}</h3>
                                             <h3>Date: {notification.date}</h3>
                                             {
                                                 notification.details.length > 0 ? 

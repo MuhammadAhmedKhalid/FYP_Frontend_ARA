@@ -80,7 +80,7 @@ function AddLeave(props) {
                 }   
             }
         }
-    }, [jaccardFaculty, jaccardFacultyAdded, dispatch, jaccardCourses, jaccardFaculty])
+    }, [jaccardFaculty, jaccardFacultyAdded, jaccardCourses])
 
     useEffect(() => {
         if(institute_id > 0){
@@ -89,7 +89,7 @@ function AddLeave(props) {
             dispatch(assignedCoursesRequest(institute_id))
             dispatch(getCourseRequest(institute_id))
             dispatch(getStaffRequest(institute_id))
-            dispatch(dispatch(getRoomRequest(institute_id)))
+            dispatch(getRoomRequest(institute_id))
             dispatch(getBatchesRequest(institute_id))
         }
     },[institute_id, dispatch])
@@ -316,7 +316,7 @@ function AddLeave(props) {
 
                         for(let k in coursesList){
                             if(k === i){
-                                // dispatch(updateAssignedCourse(coursesList[k], availableFaculty[i][0].faculty_id))
+                                dispatch(updateAssignedCourse(coursesList[k], availableFaculty[i][0].faculty_id))
                                 for(let m of coursesLst){
                                     if(coursesList[k].course_id === m.course_id){
                                         courseName = m.course_name
@@ -362,8 +362,8 @@ function AddLeave(props) {
                                     if(requestedRooms[l].room_id === coursesList[k].room_id && requestedRooms[l].startTime === coursesList[k].startTime
                                         && requestedRooms[l].endTime === coursesList[k].endTime 
                                         && requestedRooms[l].date === format(new Date(coursesList[k].date), 'MM/dd/yyyy')){
-                                            // dispatch(deletassignedCourseRequest(coursesList[k].assignedCourseId))
-                                            // dispatch(deleteRequestedRoom(requestedRooms[l].room_req_id))
+                                            dispatch(deletassignedCourseRequest(coursesList[k].assignedCourseId))
+                                            dispatch(deleteRequestedRoom(requestedRooms[l].room_req_id))
 
                                             for(let m of coursesLst){
                                                 if(coursesList[k].course_id === m.course_id){
@@ -398,7 +398,7 @@ function AddLeave(props) {
                     showBestFaculty(facultyListJaccard)
                 }
             }
-            // dispatch(addLeave(request))
+            dispatch(addLeave(request))
             setLeaveModal(false)
             alert("Operation performed successfully!")
             if(notifications.length > 0){

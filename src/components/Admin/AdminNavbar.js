@@ -8,13 +8,13 @@ import { useNavigate } from "react-router-dom";
 import { logoutRequest } from '../.././redux/Login/loginActions'
 import Badge from '@mui/material/Badge';
 import NotificationsIcon from '@mui/icons-material/Notifications';
-import CheckUnCheckIcon from '../Root/CheckUnCheckIcon';
 import { getNotificationsRequest } from '../../redux/GetNotifications/getNotificationsActions'
 import { getWeightageRequest } from '../../redux/GetWeightages/getWeightageActions'
 import { getFacultyRequest } from '../../redux/GetFaculty/getFacultyActions'
 import { getCourseRequest } from '../../redux/GetCourse/getCourseActions' 
 import { getBatchesRequest } from '../../redux/GetBatches/getBatchesActions'
 import { getDepartmentsRequest } from '../../redux/GetDepartments/getDepartmentsActions'
+import CheckIcon from '../Root/CheckIcon';
 
 const logo = {
     fontSize: '20px',
@@ -139,6 +139,7 @@ const AdminNavBar = () => {
             dispatch(getFacultyRequest(institute_id))
             dispatch(getDepartmentsRequest(institute_id))
             dispatch(getBatchesRequest(institute_id))
+            dispatch(getCourseRequest(institute_id))
         }
     }, [institute_id])
 
@@ -242,7 +243,7 @@ const AdminNavBar = () => {
                                 {
                                     weightageNotificationDetails.slice(0).reverse().map((notification, index) => 
                                     <li key={index}>
-                                        <h3 style={{fontWeight: 'bold', fontSize: '15px'}}>{notification.faculty}'s Replacement for ISE ({notification.batchYear}-{notification.department}).</h3>
+                                        <h3 style={{fontWeight: 'normal', fontSize: '15px'}}>{notification.faculty}'s Replacement for {notification.courseName} ({notification.batchYear}-{notification.department}).</h3>
                                         <h3>Date: {notification.date}</h3>
                                         <div>
                                             <p className="space-line"></p> 
@@ -250,7 +251,7 @@ const AdminNavBar = () => {
                                                 notification.replacingFacultyDetails.map((faculty, index) =>
                                                 <p style={{display: 'block'}}>{faculty.name} 
                                                 <p style={{fontWeight: 'lighter'}}> (Weightage: {faculty.weightage.toFixed(2)} out of 1)</p>
-                                                <p onClick={response}><CheckUnCheckIcon facultyId={faculty.id} assignedCourse={notification.assignedCourse} 
+                                                <p onClick={response}><CheckIcon facultyId={faculty.id} assignedCourse={notification.assignedCourse} 
                                                     weightageId={notification.weightageId}/></p>
                                                 </p>)
                                             }
@@ -265,7 +266,7 @@ const AdminNavBar = () => {
                                 {
                                     notifications.slice(0).reverse().map((notification, index) =>
                                     <li key={index}>
-                                        <h3 style={{fontWeight: 'bold', fontSize: '15px'}}>{notification.title}</h3>
+                                        <h3 style={{fontWeight: 'normal', fontSize: '15px'}}>{notification.title}</h3>
                                         <h3>Date: {notification.date}</h3>
                                         {
                                             notification.details.length > 0 ? 

@@ -120,22 +120,22 @@ function AssignCourse(props) {
       }
     }, [assignCourse.day, assignCourse.semesterType])
 
-      useEffect(() => {
-        if(assignCourse.faculty_id > 0){
-          setCoursesData([])
-          for(let i in faculty){
-            if(assignCourse.faculty_id === faculty[i].faculty_id){
-              for(let j of faculty[i].specialization){
-                for(let k of courses){
-                  if(j === k.course_name){
-                    setCoursesData(coursesData => [...coursesData, {id: k.course_id, name: k.course_name}])
-                  }
-                }
-              }
-            }
-          }
-        }
-      }, [assignCourse.faculty_id])
+      // useEffect(() => {
+      //   if(assignCourse.faculty_id > 0){
+      //     setCoursesData([])
+      //     for(let i in faculty){
+      //       if(assignCourse.faculty_id === faculty[i].faculty_id){
+      //         for(let j of faculty[i].specialization){
+      //           for(let k of courses){
+      //             if(j === k.course_name){
+      //               setCoursesData(coursesData => [...coursesData, {id: k.course_id, name: k.course_name}])
+      //             }
+      //           }
+      //         }
+      //       }
+      //     }
+      //   }
+      // }, [assignCourse.faculty_id])
 
       useEffect(() => {
         
@@ -143,12 +143,13 @@ function AssignCourse(props) {
           
           setFacultyData([])
           setRoomsData([])
+          setCoursesData([])
 
-          // for(let i in courses){
-          //   if(assignCourse.department_id === courses[i].department_id){
-          //     setCoursesData(coursesData => [...coursesData, {id: courses[i].course_id, name: courses[i].course_name}])
-          //   }
-          // }
+          for(let i in courses){
+            if(assignCourse.department_id === courses[i].department_id){
+              setCoursesData(coursesData => [...coursesData, {id: courses[i].course_id, name: courses[i].course_name}])
+            }
+          }
           
           let department_name = "";
           for(let i in departments){
@@ -404,8 +405,8 @@ function AssignCourse(props) {
                           }}>Semester type</h3>
                           <select required className='dropdown' onChange={(e) => setAssignCourse({...assignCourse, semesterType: e.target.value})}>
                             <option></option>
-                            <option value="Fall">FALL</option>
                             <option value="Spring">SPRING</option>
+                            <option value="Fall">FALL</option>
                           </select>
                           <h3 style={{
                               fontWeight: 'normal', color: 'gray', marginRight: '3px'

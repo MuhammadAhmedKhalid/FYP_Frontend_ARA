@@ -1,6 +1,5 @@
 import { UPDATE_WEIGHTAGE_FAILURE, UPDATE_WEIGHTAGE_REQUEST, UPDATE_WEIGHTAGE_SUCCESS } from './updateWeightageTypes'
 import { put, takeEvery, call, select } from 'redux-saga/effects'
-import axios from 'axios';
 
 function* updateWeightageRequest(payload) {
     try {
