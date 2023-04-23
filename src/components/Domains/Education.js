@@ -27,9 +27,9 @@ function Education(props) {
                     <h2 style={{ color: '#0E5E6F' }} className="heading1">1. Education</h2>
                     <br />
                     <p className='para'>Automated replacement of teachers and staff: With Auto Resource</p>
-                    <p className='para'>Allocator, schools can easily find substitute teachers and</p>
-                    <p className='para'>staff in real-time to ensure that classes continue to run</p>
-                    <p className='para'>smoothly, without interruption.</p>
+                    <p className='para'>Allocator, educational institutes can easily find substitute</p>
+                    <p className='para'>teachers and staff in real-time to ensure that classes</p>
+                    <p className='para'>continue to run smoothly, without interruption.</p>
                     <br />
                     <p className='para'>Scheduling and time management: Auto Resource Allocator</p>
                     <p className='para'>offers powerful scheduling tools that allow</p>
@@ -74,7 +74,7 @@ function Education(props) {
                             <p className='para'>powerful scheduling tools that allow managers to manage worker</p>
                             <p className='para'>schedules and make changes easily, from one central location.</p>
                             <br/>
-                            <p className='para'>Staff replacement management: With [Your System Name], offices</p>
+                            <p className='para'>Staff replacement management: With Auto Resource Allocator, offices</p>
                             <p className='para'>can quickly find replacement staff to fill in for absent workers,</p>
                             <p className='para'>ensuring that business operations continue without interruption.</p>
                         </div>

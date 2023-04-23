@@ -36,7 +36,7 @@ function Office(props) {
                     <p style={pStyle}>powerful scheduling tools that allow managers to manage worker</p>
                     <p style={pStyle}>schedules and make changes easily, from one central location.</p>
                     <br/>
-                    <p style={pStyle}>Staff replacement management: With [Your System Name], offices</p>
+                    <p style={pStyle}>Staff replacement management: With Auto Resource Allocator, offices</p>
                     <p style={pStyle}>can quickly find replacement staff to fill in for absent workers,</p>
                     <p style={pStyle}>ensuring that business operations continue without interruption.</p>
                 </div>
