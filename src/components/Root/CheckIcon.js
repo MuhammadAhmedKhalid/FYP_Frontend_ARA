@@ -43,6 +43,7 @@ function CheckIcon(props) {
     let replacedFacultyDepartment;
     let replacedFacultyName;
     let facultyName;
+    let userId;
 
     for(let i of courses){
       if(i.course_id === assignedCourse.course_id){
@@ -75,6 +76,7 @@ function CheckIcon(props) {
           }
           if(p.department == o.department_name && p.faculty_id == facultyId){
               replacedFacultyDepartment = p.department
+              userId = p.user.user_id
           }
       }
       
@@ -86,7 +88,7 @@ function CheckIcon(props) {
         details: "", 
         department_id: assignedCourse.department_id,
         institute_id,
-        user_id: facultyId    
+        user_id: userId    
     })
 
     dispatch(addNotificationRequest(notifications))
