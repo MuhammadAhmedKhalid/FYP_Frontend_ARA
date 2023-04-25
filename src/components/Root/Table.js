@@ -6,9 +6,7 @@ import RefreshIcon from '@mui/icons-material/Refresh';
 
 function Table(props) {
 
-    const { columns, rows } = props
-
-    const [isLoading, setIsLoading] = useState(false);
+    const { columns, rows, refresh, setRefresh } = props
 
     const handleDelete = () => {
         console.log('Delete')
@@ -19,15 +17,15 @@ function Table(props) {
     }
 
     const handleRefresh = () => {
-        setIsLoading(true);
+        setRefresh(true);
         setTimeout(() => {
-            setIsLoading(false);
+            setRefresh(false);
           }, 1000);
     }
 
     return (
         <div>
-            {isLoading && (
+            {refresh && (
                 <div className="loading-overlay">
                 <div className="loading-icon"></div>
                 </div>

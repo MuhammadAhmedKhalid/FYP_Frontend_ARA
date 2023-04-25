@@ -22,17 +22,22 @@ function Departments() {
    
     useEffect(()=>{
         if(departmentsAdded && rowData.length !== departments.length){
+            console.log('heree')
             for(let i=0; i<departments.length; i++){
                 rowData.push([departments[i].department_name, institute_name])
             }
         }
-    },[departmentsAdded])
+    },[departmentsAdded, refresh])
 
     const openModal = () => {
         setOpenDepartmentModal(true)
     }
     useEffect(() => {
         if(institute_id > 0){
+            console.log('heree1')
+            if(refresh){
+                setRowData([])
+            }
             dispatch(getDepartmentsRequest(institute_id))
         }
     }, [refresh, institute_id])
@@ -51,7 +56,7 @@ function Departments() {
                     </div>
                     <center>
                         {
-                            departmentsAdded && <Table columns={['No.', 'Department Name', 'Institute']} rows={rowData}/>
+                            departmentsAdded && <Table columns={['No.', 'Department Name', 'Institute']} rows={rowData} refresh={refresh} setRefresh={setRefresh}/>
                         }
                     </center>
                 </div>

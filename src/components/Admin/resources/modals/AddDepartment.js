@@ -9,7 +9,7 @@ import { Alert } from '@mui/material';
 
 function AddDepartment(props) {
 
-    const { openDepartmentModal, setOpenDepartmentModal, setRefresh } = props
+    const { openDepartmentModal, setOpenDepartmentModal } = props
 
     const dispatch = useDispatch()
 
@@ -21,13 +21,8 @@ function AddDepartment(props) {
     const [errorMsg, setErrorMsg] = useState('')
 
     useEffect(() => {
-        setRefresh(false)
-    })
-
-    useEffect(() => {
         if(requestSuccessfull){
             setOpenDepartmentModal(false)
-            setRefresh(true)
             setErrorMsg('')
             setShowError(false)
             alert("Operation performed successfully!")
