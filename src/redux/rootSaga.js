@@ -46,6 +46,7 @@ import { addWeightageSaga } from './AddWeightage/addWeightageSaga'
 import { getWeightagesSaga } from './GetWeightages/getWeightageSaga'
 import { updateWeightageSaga } from './UpdateWeightage/updateWeightageSaga'
 import { updateDepartmentSaga } from './UpdateDepartment/updateDeptSaga'
+import { updateBatchSaga } from './UpdateBatch/updateBatchSaga'
 
 export function* rootSaga() {
     yield fork(signupSaga)
@@ -95,4 +96,5 @@ export function* rootSaga() {
     yield fork(getWeightagesSaga)
     yield fork(updateWeightageSaga)
     yield fork(updateDepartmentSaga)
+    yield fork(updateBatchSaga)
 }
