@@ -72,13 +72,21 @@ tr {
 }
 
 .refreshButton {
-  margin: 10px;
-  margin-right: 20px;
-  height: 30px;
-  width: 30px;
+  margin-right: 25px;
 }
 
 .refreshButton:hover{
+  cursor: pointer;
+}
+
+.checkButton {
+  position: absolute;
+  top: 14px;
+  right: 50px;
+  color: green;
+}
+
+.checkButton:hover{
   cursor: pointer;
 }
 

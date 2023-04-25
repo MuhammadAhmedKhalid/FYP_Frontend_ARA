@@ -22,7 +22,6 @@ function Departments() {
    
     useEffect(()=>{
         if(departmentsAdded && rowData.length !== departments.length){
-            console.log('heree')
             for(let i=0; i<departments.length; i++){
                 rowData.push([departments[i].department_name, institute_name])
             }
@@ -34,7 +33,6 @@ function Departments() {
     }
     useEffect(() => {
         if(institute_id > 0){
-            console.log('heree1')
             if(refresh){
                 setRowData([])
             }
