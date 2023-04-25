@@ -44,6 +44,7 @@ import { notificationsReqReducer } from './GetNotifications/getNotificationsRedu
 import { addWeightageReducer } from './AddWeightage/addWeightageReducer'
 import { weightageReducer } from './GetWeightages/getWeightageReducer'
 import { updateWeightageReducer } from './UpdateWeightage/updateWeightageReducer'
+import { updateDepartmentReducer } from './UpdateDepartment/updateDeptReducer'
 
 export const rootReducer = combineReducers({
     signup: signupReducer,
@@ -91,4 +92,5 @@ export const rootReducer = combineReducers({
     addWeightageReducer,
     weightageReducer,
     updateWeightageReducer,
+    updateDepartmentReducer,
 })

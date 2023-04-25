@@ -45,6 +45,7 @@ import { getNotificationsReqSaga } from './GetNotifications/getNotificationsSaga
 import { addWeightageSaga } from './AddWeightage/addWeightageSaga'
 import { getWeightagesSaga } from './GetWeightages/getWeightageSaga'
 import { updateWeightageSaga } from './UpdateWeightage/updateWeightageSaga'
+import { updateDepartmentSaga } from './UpdateDepartment/updateDeptSaga'
 
 export function* rootSaga() {
     yield fork(signupSaga)
@@ -93,4 +94,5 @@ export function* rootSaga() {
     yield fork(addWeightageSaga)
     yield fork(getWeightagesSaga)
     yield fork(updateWeightageSaga)
+    yield fork(updateDepartmentSaga)
 }
