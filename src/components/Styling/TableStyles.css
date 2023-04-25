@@ -1,43 +1,83 @@
 .table-container {
-    height: 480px;
-    overflow-y: scroll;
-  }
+  height: 480px;
+  overflow-y: scroll;
+}
 
-  .table {
-    width: 100%;
-    border-collapse: collapse;
-    font-family: sans-serif;
-    border-radius: 10px;
-    box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
-  }
-  
-  .table th,
-  .table td {
-    border: 1px solid lightgray;
-    padding: 15px;
-    text-align: center;
-    vertical-align: middle;
-    font-size: 15px;
-  }
-  
-  .table th {
-    border-color: #0E5E6F;
-    border-width: 2.5px;
-    font-size: 16px;
-    background-color: white;
-    font-weight: normal;
-  }
-  
-  .fixed-header {
-    position: sticky;
-    top: 0;
-    background-color: white;
-  }
-  
-  .table tr:nth-child(even) {
-    background-color: #f9f9f9;
-  }
-  
-  .table tr:hover {
-    background-color: #ddd;
-  }
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: sans-serif;
+  border-radius: 10px;
+  box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+}
+
+.table th,
+.table td {
+  border: 1px solid lightgray;
+  padding: 15px;
+  text-align: center;
+  vertical-align: middle;
+  font-size: 15px;
+}
+
+.table th {
+  border-color: #0E5E6F;
+  border-width: 2.5px;
+  font-size: 16px;
+  background-color: white;
+  font-weight: normal;
+}
+
+.fixed-header {
+  position: sticky;
+  top: 0;
+  background-color: white;
+}
+
+.table tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+.table tr:hover {
+  background-color: #ddd;
+}
+
+tr {
+  position: relative;
+}
+
+.deleteButton {
+  position: absolute;
+  top: 14px;
+  right: 12px;
+}
+
+.deleteButton:hover{
+  cursor: pointer;
+}
+
+.editButton {
+  position: absolute;
+  top: 14px;
+  right: 50px;
+}
+
+.editButton:hover{
+  cursor: pointer;
+}
+
+.refreshContainer {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.refreshButton {
+  margin: 10px;
+  margin-right: 20px;
+  height: 30px;
+  width: 30px;
+}
+
+.refreshButton:hover{
+  cursor: pointer;
+}
