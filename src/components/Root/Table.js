@@ -11,24 +11,26 @@ function Table(props) {
     const { columns, rows, refresh, setRefresh } = props
 
     const [editableRow, setEditableRow] = useState(null);
+    const [updVal, setUpdVal] = useState('')
 
     const handleEdit = (index) => {
-        console.log(editableRow)
         setEditableRow(index);
     }
 
-    const handleInputChange = (event, rowIndex, cellIndex) => {
-        // handle input change here, e.g. update state or send to server
+    const handleInputChange = (text, rowIndex, cellIndex) => {
+        setUpdVal(text)
       };
 
-    const handleDelete = () => {
-        console.log('Delete')
+    const handleDelete = (index) => {
+        console.log(rows[index][0])
+        alert('Deleted successfully.')
+        handleRefresh()
     }
 
     const handleCheck = () => {
-        console.log('check')
         setEditableRow(null);
         alert('Updated successfully.')
+        handleRefresh()
     }
 
     const handleRefresh = () => {
@@ -62,12 +64,12 @@ function Table(props) {
                                         cellData.map((data, dataIndex)=>(
                                             <td key={dataIndex}>
                                                 {
-                                                    editableRow === index ? 
-                                                        <TextField value={data} onChange={(event) => handleInputChange(event, index, 1)} 
+                                                    editableRow === index && dataIndex === 0 ? 
+                                                        <TextField value={updVal} placeholder={data} onChange={(event) => handleInputChange(event.target.value, index, 1)} 
                                                             size='small' variant="outlined" type='text'/>: 
                                                             data
                                                 }                                                
-                                                <DeleteIcon onClick={handleDelete} className='deleteButton'/>
+                                                <DeleteIcon onClick={() => handleDelete(index)} className='deleteButton'/>
                                                 {
                                                     editableRow !== null && editableRow === index  ? 
                                                         <CheckIcon onClick={handleCheck} className='checkButton'/> : 

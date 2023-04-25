@@ -12,13 +12,13 @@ function Departments() {
 
     const [openDepartmentModal, setOpenDepartmentModal] = useState(false)
     const [refresh, setRefresh] = useState(false)
+    const [rowData, setRowData] = useState([])
+    // const [updVal, setUpdVal] = useState('')
 
     const departments = useSelector((state) => state.getDepartments.departments.data)
     const departmentsAdded = useSelector((state) => state.getDepartments.added)
     const institute_name = useSelector((state) => state.login.user.institute_name)
     const institute_id = useSelector((state) => state.login.user.institute_id)
-
-    const [rowData, setRowData] = useState([])
    
     useEffect(()=>{
         if(departmentsAdded && rowData.length !== departments.length){
@@ -60,7 +60,9 @@ function Departments() {
                 </div>
             </div>
             <div>
-                <AddDepartment openDepartmentModal={openDepartmentModal} setOpenDepartmentModal={setOpenDepartmentModal} setRefresh={setRefresh} />
+                <AddDepartment openDepartmentModal={openDepartmentModal} setOpenDepartmentModal={setOpenDepartmentModal} setRefresh={setRefresh}
+                    // onValChange={setUpdVal} updVal={updVal}
+                    />
             </div>
         </div>
     )
