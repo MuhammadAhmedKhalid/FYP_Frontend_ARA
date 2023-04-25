@@ -52,6 +52,7 @@ function AddLeave(props) {
 
     const [value, setValue] = useState(dayjs(new Date()));
     const [value1, setValue1] = useState(dayjs(new Date()));
+    const [dispatchJaccard, setDispatchJaccard] = useState(false)
 
     const [request, setRequest] = useState({
         reason: "",
@@ -69,18 +70,26 @@ function AddLeave(props) {
     const [jaccardCourses, setJaccardCourses] = useState([]);
 
     useEffect(() => {
-        if(jaccardFacultyAdded && jaccardCourses.length > 0 && jaccardFaculty.length > 0){
-            dispatch(addWeightageRequest({institute_id, jaccardResults: jaccardFaculty, assignedCourse: jaccardCourses}))
-            dispatch(deletassignedCourseRequest(jaccardCourses[0].assignedCourseId))
-            for(let l in requestedRooms){
-                if(requestedRooms[l].room_id === jaccardCourses[0].room_id && requestedRooms[l].startTime === jaccardCourses[0].startTime
-                    && requestedRooms[l].endTime === jaccardCourses[0].endTime 
-                    && requestedRooms[l].date === format(new Date(jaccardCourses[0].date), 'MM/dd/yyyy')){
-                        dispatch(deleteRequestedRoom(requestedRooms[l].room_req_id))
-                }   
+        if(dispatchJaccard){
+            if(jaccardFacultyAdded && jaccardCourses.length > 0 && jaccardFaculty.length > 0){
+                dispatch(addWeightageRequest({institute_id, jaccardResults: jaccardFaculty, assignedCourse: jaccardCourses}))
+                for(let i of jaccardCourses){
+                    dispatch(deletassignedCourseRequest(i.assignedCourseId))
+                }
+                
+                for(let l in requestedRooms){
+                    if(requestedRooms[l].room_id === jaccardCourses[0].room_id && requestedRooms[l].startTime === jaccardCourses[0].startTime
+                        && requestedRooms[l].endTime === jaccardCourses[0].endTime 
+                        && requestedRooms[l].date === format(new Date(jaccardCourses[0].date), 'MM/dd/yyyy')){
+                            dispatch(deleteRequestedRoom(requestedRooms[l].room_req_id))
+                    }   
+                }
             }
+            setDispatchJaccard(false)
         }
-    }, [jaccardFaculty, jaccardFacultyAdded, jaccardCourses])
+        
+    // }, [jaccardFaculty, jaccardFacultyAdded, jaccardCourses])
+}, [dispatchJaccard])
 
     useEffect(() => {
         if(institute_id > 0){
@@ -294,7 +303,8 @@ function AddLeave(props) {
                         }
                     }
                 }
-
+// [[1], [2, 4],[2,3,1]] = availableFaculty
+// facultyListJaccard = [[2, 4],[2,3,1]]
                 let facultyListJaccard = []
                 for(let i in availableFaculty){
                     if(availableFaculty[i].length > 1){
@@ -404,6 +414,9 @@ function AddLeave(props) {
             if(notifications.length > 0){
                 dispatch(addNotificationRequest(notifications))
             }
+        }
+        if(jaccardCourses.length > 0){
+            setDispatchJaccard(true)
         }
     }
     
