@@ -48,6 +48,7 @@ import { updateWeightageSaga } from './UpdateWeightage/updateWeightageSaga'
 import { updateDepartmentSaga } from './UpdateDepartment/updateDeptSaga'
 import { updateBatchSaga } from './UpdateBatch/updateBatchSaga'
 import { updateRoomSaga } from './UpdateRoom/updateRoomSaga'
+import { updatePositionSaga } from './UpdatePosition/updatePositionSaga'
 
 export function* rootSaga() {
     yield fork(signupSaga)
@@ -99,4 +100,5 @@ export function* rootSaga() {
     yield fork(updateDepartmentSaga)
     yield fork(updateBatchSaga)
     yield fork(updateRoomSaga)
+    yield fork(updatePositionSaga)
 }

@@ -47,6 +47,7 @@ import { updateWeightageReducer } from './UpdateWeightage/updateWeightageReducer
 import { updateDepartmentReducer } from './UpdateDepartment/updateDeptReducer'
 import { updateBatchReducer } from './UpdateBatch/updateBatchReducer'
 import { updateRoomReducer } from './UpdateRoom/updateRoomReducer'
+import { updatePositionReducer } from './UpdatePosition/updatePositionReducer'
 
 export const rootReducer = combineReducers({
     signup: signupReducer,
@@ -97,4 +98,5 @@ export const rootReducer = combineReducers({
     updateDepartmentReducer,
     updateBatchReducer,
     updateRoomReducer,
+    updatePositionReducer,
 })

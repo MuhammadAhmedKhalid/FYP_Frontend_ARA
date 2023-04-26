@@ -4,9 +4,6 @@ import { put, takeEvery, call, select } from 'redux-saga/effects'
 function* updateBatchRequest(payload) {
     try {
         const token = yield select(state => state.login.user.jwt);
-        const headers = {
-            'Authorization': `Bearer ${token}`
-        };
         let result = yield call(fetch, `http://localhost:8080/updateBatch/${payload.batch_id}/${payload.department_id}`, {
             method: "PUT",
             body: payload.batchYear,
