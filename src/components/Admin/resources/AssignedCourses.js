@@ -83,14 +83,13 @@ function AssignedCourses() {
                     <center>
                         {
                             <Table columns={['No.', 'Course', 'Department', 'Faculty', 'Batch', 'Semester Type']} rows={rowData} 
-                              refresh={refresh} setRefresh={setRefresh}/>
+                              refresh={refresh} setRefresh={setRefresh} uneditable={true}/>
                         }
                     </center>
                 </div>
             </div>
             <div>
-                <AssignCourse openAssignCourseModal={openAssignCourseModal} setOpenAssignCourseModal={setOpenAssignCourseModal} 
-                refresh={refresh} setRefresh={setRefresh}/>
+                <AssignCourse openAssignCourseModal={openAssignCourseModal} setOpenAssignCourseModal={setOpenAssignCourseModal}/>
             </div>
     </div>
   )

@@ -61,7 +61,7 @@ function Positions() {
             </div>
         </div>
         <div>
-            <AddPosition openPositionModal={openPositionModal} setOpenPositionModal={setOpenPositionModal} setRefresh={setRefresh} />
+            <AddPosition openPositionModal={openPositionModal} setOpenPositionModal={setOpenPositionModal}/>
         </div>
     </div>
   )

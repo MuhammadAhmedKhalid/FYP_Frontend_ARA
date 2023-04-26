@@ -68,7 +68,7 @@ function Batches() {
                 </div>
             </div>
             <div>
-                <AddBatches openBatchModal={openBatchModal} setOpenBatchModal={setOpenBatchModal} setRefresh={setRefresh}/>
+                <AddBatches openBatchModal={openBatchModal} setOpenBatchModal={setOpenBatchModal}/>
             </div>
         </div>
     )

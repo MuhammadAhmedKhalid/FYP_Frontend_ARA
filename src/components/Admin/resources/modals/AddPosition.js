@@ -9,7 +9,7 @@ import { Alert } from '@mui/material';
 
 function AddPosition(props) {
 
-    const { openPositionModal, setOpenPositionModal, setRefresh } = props
+    const { openPositionModal, setOpenPositionModal } = props
 
     const dispatch = useDispatch()
 
@@ -28,7 +28,6 @@ function AddPosition(props) {
     useEffect(() => {
         if(requestSuccessfull){
             setOpenPositionModal(false)
-            setRefresh(true)
             setErrorMsg('')
             setShowError(false)
             alert("Operation performed successfully!")

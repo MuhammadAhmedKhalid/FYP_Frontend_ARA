@@ -68,7 +68,7 @@ function Courses() {
             </div>
         </div>
         <div>
-            <AddCourse openCourseModal={openCourseModal} setOpenCourseModal={setOpenCourseModal} setRefresh={setRefresh} />
+            <AddCourse openCourseModal={openCourseModal} setOpenCourseModal={setOpenCourseModal}/>
         </div>
     </div>
   )

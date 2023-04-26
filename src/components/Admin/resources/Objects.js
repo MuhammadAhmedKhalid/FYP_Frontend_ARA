@@ -78,7 +78,7 @@ function Objects() {
                         <div>
                             {
                                 objectsAdded && <Table columns={['No.', 'Name', 'Quantity', 'Room Name', 'Department']} rows={objectData} 
-                                    refresh={refresh} setRefresh={setRefresh}/>
+                                    refresh={refresh} setRefresh={setRefresh} uneditable={true}/>
                             }
                         </div>
                     </center>

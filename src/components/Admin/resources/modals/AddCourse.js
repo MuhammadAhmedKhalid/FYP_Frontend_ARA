@@ -10,7 +10,7 @@ import { Alert } from '@mui/material';
 
 function AddCourse(props) {
 
-    const { openCourseModal, setOpenCourseModal, setRefresh } = props
+    const { openCourseModal, setOpenCourseModal } = props
 
     const dispatch = useDispatch()
 
@@ -38,7 +38,6 @@ function AddCourse(props) {
     useEffect(() => {
         if(requestSuccessfull){
             setOpenCourseModal(false)
-            setRefresh(true)
             setErrorMsg('')
             setShowError(false)
             alert("Operation performed successfully!")

@@ -60,7 +60,7 @@ function Departments() {
                 </div>
             </div>
             <div>
-                <AddDepartment openDepartmentModal={openDepartmentModal} setOpenDepartmentModal={setOpenDepartmentModal} setRefresh={setRefresh}
+                <AddDepartment openDepartmentModal={openDepartmentModal} setOpenDepartmentModal={setOpenDepartmentModal}
                     // onValChange={setUpdVal} updVal={updVal}
                     />
             </div>

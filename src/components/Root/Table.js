@@ -8,8 +8,8 @@ import CheckIcon from '@mui/icons-material/Check';
 
 function Table(props) {
 
-    const { columns, rows, refresh, setRefresh } = props
-
+    const { columns, rows, refresh, setRefresh, uneditable, multiEdit } = props
+    
     const [editableRow, setEditableRow] = useState(null);
     const [updVal, setUpdVal] = useState('')
 
@@ -64,7 +64,11 @@ function Table(props) {
                                         cellData.map((data, dataIndex)=>(
                                             <td key={dataIndex}>
                                                 {
-                                                    editableRow === index && dataIndex === 0 ? 
+                                                    multiEdit === true ?( (editableRow === index) && (dataIndex === 0 || dataIndex === 1 || dataIndex === 5) ?  
+                                                    <TextField value={updVal} placeholder={data} onChange={(event) => handleInputChange(event.target.value, index, 1)} 
+                                                            size='small' variant="outlined" type='text'/>: 
+                                                            data)
+                                                        : editableRow === index && dataIndex === 0 ? 
                                                         <TextField value={updVal} placeholder={data} onChange={(event) => handleInputChange(event.target.value, index, 1)} 
                                                             size='small' variant="outlined" type='text'/>: 
                                                             data
@@ -73,7 +77,7 @@ function Table(props) {
                                                 {
                                                     editableRow !== null && editableRow === index  ? 
                                                         <CheckIcon onClick={handleCheck} className='checkButton'/> : 
-                                                        <EditIcon onClick={() => handleEdit(index)} className='editButton'/>
+                                                        uneditable === true ? null : <EditIcon onClick={() => handleEdit(index)} className='editButton'/>
                                                 }
                                             </td>
                                         ))

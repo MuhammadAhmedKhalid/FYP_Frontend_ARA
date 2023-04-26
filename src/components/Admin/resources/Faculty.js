@@ -58,7 +58,7 @@ function Faculty() {
                     <div>
                         {
                             facultyAdded&& <Table columns={['No.', 'Name', 'Phone Number', 'E-mail', 'Department', 'Specialization', 
-                            'Designation', 'Years of Experience']} rows={rowData} refresh={refresh} setRefresh={setRefresh}/>
+                            'Designation', 'Years of Experience']} rows={rowData} refresh={refresh} setRefresh={setRefresh} multiEdit={true}/>
                         }
                     </div>
                 </center>
