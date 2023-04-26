@@ -121,6 +121,17 @@ a {
   border-radius: 5px;
 }
 
+.editableDropdown{
+  padding: 5px 5px;
+  width: 190px;
+  font-size: 12px;
+  text-transform: uppercase;
+  color: #000;
+  border: 1px solid rgb(201, 200, 200);
+  font-weight: initial;
+  cursor: pointer;
+  border-radius: 5px;
+}
 
 .btn:hover {
   background: #fff;

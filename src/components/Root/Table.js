@@ -1,15 +1,29 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import '../Styling/TableStyles.css'
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import RefreshIcon from '@mui/icons-material/Refresh';
 import TextField from '@material-ui/core/TextField'
 import CheckIcon from '@mui/icons-material/Check';
+import { useSelector, useDispatch } from 'react-redux'
+import { getPositionRequest } from '../../redux/GetPosition/getPositionActions'
 
 function Table(props) {
 
+    const dispatch = useDispatch()
+
     const { columns, rows, refresh, setRefresh, uneditable, multiEdit } = props
+
+    const positions = useSelector((state) => state.getPositionReducer.positions)
+    const positionsAdded = useSelector((state) => state.getPositionReducer.added)
+    const institute_id = useSelector((state) => state.login.user.institute_id)
     
+    useEffect(() => {
+        if(institute_id > 0 && multiEdit){
+            dispatch(getPositionRequest(institute_id))
+        }
+    }, [institute_id, multiEdit])
+
     const [editableRow, setEditableRow] = useState(null);
     const [updVal, setUpdVal] = useState('')
 
@@ -64,7 +78,15 @@ function Table(props) {
                                         cellData.map((data, dataIndex)=>(
                                             <td key={dataIndex}>
                                                 {
-                                                    multiEdit === true ?( (editableRow === index) && (dataIndex === 0 || dataIndex === 1 || dataIndex === 5) ?  
+                                                    multiEdit === true ?( (editableRow === index) && (dataIndex === 0 || dataIndex === 1 || dataIndex === 5) ? 
+                                                    (editableRow === index && dataIndex === 5) ? 
+                                                    <select className='editableDropdown'>
+                                                        <option></option>
+                                                        {
+                                                            positionsAdded && positions.length !== 0 ? positions.map(position =>
+                                                                <option key={position.position_id}>{position.position_name}</option>) : null
+                                                        }
+                                                    </select> :
                                                     <TextField value={updVal} placeholder={data} onChange={(event) => handleInputChange(event.target.value, index, 1)} 
                                                             size='small' variant="outlined" type='text'/>: 
                                                             data)
