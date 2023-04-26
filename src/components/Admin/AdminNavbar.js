@@ -52,9 +52,10 @@ const AdminNavBar = () => {
     useEffect(() => {
         
         if(weightagesAdded && facultyAdded && coursessAdded && departmentsAdded && batchesAdded){  
+            let num = 0
             for(let i of weightages){
                 if(i.selected !== true){
-                    setWeightageNotificationsNum(weightageNotificationsNum+1)
+                    num += 1
                     let facultyDict = {}
                     let courseName;
                     let batchYear;
@@ -122,7 +123,7 @@ const AdminNavBar = () => {
                     weightageNotificationDetails.push(details)
                 }
             }
-
+            setWeightageNotificationsNum(num)
         }
     }, [weightagesAdded])
 
