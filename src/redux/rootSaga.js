@@ -49,6 +49,7 @@ import { updateDepartmentSaga } from './UpdateDepartment/updateDeptSaga'
 import { updateBatchSaga } from './UpdateBatch/updateBatchSaga'
 import { updateRoomSaga } from './UpdateRoom/updateRoomSaga'
 import { updatePositionSaga } from './UpdatePosition/updatePositionSaga'
+import { updateCourseSaga } from './UpdateCourse/updateCourseSaga'
 
 export function* rootSaga() {
     yield fork(signupSaga)
@@ -101,4 +102,5 @@ export function* rootSaga() {
     yield fork(updateBatchSaga)
     yield fork(updateRoomSaga)
     yield fork(updatePositionSaga)
+    yield fork(updateCourseSaga)
 }

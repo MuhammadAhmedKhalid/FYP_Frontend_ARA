@@ -48,6 +48,7 @@ import { updateDepartmentReducer } from './UpdateDepartment/updateDeptReducer'
 import { updateBatchReducer } from './UpdateBatch/updateBatchReducer'
 import { updateRoomReducer } from './UpdateRoom/updateRoomReducer'
 import { updatePositionReducer } from './UpdatePosition/updatePositionReducer'
+import { updateCourseReducer } from './UpdateCourse/updateCourseReducer'
 
 export const rootReducer = combineReducers({
     signup: signupReducer,
@@ -99,4 +100,5 @@ export const rootReducer = combineReducers({
     updateBatchReducer,
     updateRoomReducer,
     updatePositionReducer,
+    updateCourseReducer,
 })
