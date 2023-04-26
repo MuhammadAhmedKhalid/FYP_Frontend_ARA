@@ -33,6 +33,7 @@ const AdminNavBar = () => {
     const [notificationNum, setNotificationNum] = useState(0)
     const [weightageNotificationDetails, setWeightageNotificationDetails] = useState([])
     const [weightageNotificationsNum, setWeightageNotificationsNum] = useState(0)
+    const [refresh, setRefresh] = useState(false)
     
     const isLoggedIn = useSelector((state) => state.login.isLoggedIn)
     const institute_id = useSelector((state) => state.login.user.institute_id)
@@ -50,7 +51,6 @@ const AdminNavBar = () => {
     const batchesAdded = useSelector((state) => state.getBatchesReducer.added)
 
     useEffect(() => {
-        
         if(weightagesAdded && facultyAdded && coursessAdded && departmentsAdded && batchesAdded){  
             let num = 0
             for(let i of weightages){
@@ -125,16 +125,19 @@ const AdminNavBar = () => {
             }
             setWeightageNotificationsNum(num)
         }
-    }, [weightagesAdded])
+    }, [weightagesAdded, refresh])
 
     useEffect(() => {
         if(notificationsAdded){
             setNotificationNum(notifications.length)
         }
-    }, [notificationsAdded])
+    }, [notificationsAdded, refresh])
     
     useEffect(() => {
         if(institute_id > 0){
+            if(refresh){
+                setWeightageNotificationDetails([])
+            }
             dispatch(getNotificationsRequest(institute_id))
             dispatch(getWeightageRequest(institute_id))
             dispatch(getFacultyRequest(institute_id))
@@ -142,7 +145,7 @@ const AdminNavBar = () => {
             dispatch(getBatchesRequest(institute_id))
             dispatch(getCourseRequest(institute_id))
         }
-    }, [institute_id])
+    }, [institute_id, refresh])
 
     useEffect(() => {
         if (!isLoggedIn) {
@@ -253,7 +256,7 @@ const AdminNavBar = () => {
                                                 <p style={{display: 'block'}}>{faculty.name} 
                                                 <p style={{fontWeight: 'lighter'}}> (Weightage: {faculty.weightage.toFixed(2)} out of 1)</p>
                                                 <p onClick={response}><CheckIcon facultyId={faculty.id} assignedCourse={notification.assignedCourse} 
-                                                    weightageId={notification.weightageId}/></p>
+                                                    weightageId={notification.weightageId} setRefresh={setRefresh}/></p>
                                                 </p>)
                                             }
                                         </div>

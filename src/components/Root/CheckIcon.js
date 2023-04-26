@@ -12,7 +12,7 @@ import { getCourseRequest } from '../../redux/GetCourse/getCourseActions'
 
 function CheckIcon(props) {
 
-  const {facultyId, assignedCourse, weightageId} = props
+  const {facultyId, assignedCourse, weightageId, setRefresh} = props
 
   const dispatch = useDispatch()
 
@@ -34,6 +34,7 @@ function CheckIcon(props) {
   },[institute_id, dispatch])
   
   const selectFaculty = () => {
+    setRefresh(true)
     dispatch(updateWeightage(weightageId))
     dispatch(updateAssignedCourse(assignedCourse, facultyId))
 

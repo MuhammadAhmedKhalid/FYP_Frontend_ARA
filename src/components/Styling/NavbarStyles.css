@@ -100,11 +100,7 @@
 
   .checked-icon-container:hover > svg {
     color: green;
-  }
-
-  /* .unchecked-icon-container:hover > svg {
-    color: red;
-  } */
+  } 
 
 @media screen and (max-width: 1040px) {
     .nav-menu {
