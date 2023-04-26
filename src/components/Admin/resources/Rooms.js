@@ -13,6 +13,7 @@ function Rooms() {
 
     const [openRoomModal, setOpenRoomModal] = useState(false)
     const [roomData, setRoomData] = useState([])
+    const [refresh, setRefresh] = useState(false)
 
     const rooms = useSelector((state) => state.getRooms.rooms.data)
     const roomsAdded = useSelector((state) => state.getRooms.added)
@@ -36,14 +37,17 @@ function Rooms() {
                 }
             }
         }
-    }, [rooms, departments])
+    }, [rooms, departments, refresh])
 
     useEffect(() => {
         if(institute_id > 0){
+            if(refresh){
+                setRoomData([])
+            }
             dispatch(getRoomsRequest(institute_id))
             dispatch(getDepartmentsRequest(institute_id))
         }
-    }, [institute_id])
+    }, [institute_id, refresh])
 
     return (
         <div>
@@ -59,7 +63,7 @@ function Rooms() {
                     </div>
                     <center>
                         {
-                            roomsAdded && <Table columns={['No.', 'Room Name', 'Department']} rows={roomData}/>
+                            roomsAdded && <Table columns={['No.', 'Room Name', 'Department']} rows={roomData} refresh={refresh} setRefresh={setRefresh}/>
                         }
                     </center>
                 </div>

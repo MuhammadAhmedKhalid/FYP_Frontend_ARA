@@ -15,6 +15,7 @@ function Objects() {
 
     const [openObjectModal, setOpenObjectModal] = useState(false)
     const [objectData, setObjectData] = useState([])
+    const [refresh, setRefresh] = useState(false)
 
     const departments = useSelector((state) => state.getDepartments.departments.data)
     const departmentsAdded = useSelector((state) => state.getDepartments.added)
@@ -47,16 +48,19 @@ function Objects() {
                 }
             }
         }
-    }, [objects, objectTypes, departmentsAdded])
+    }, [objects, objectTypes, departmentsAdded, refresh])
 
     useEffect(() => {
         if(institute_id > 0){
+            if(refresh){
+                setObjectData([])
+            }
             dispatch(getResources(institute_id))
             dispatch(getResourceTypesRequest(institute_id))
             dispatch(getRoomsRequest(institute_id))
             dispatch(getDepartmentsRequest(institute_id))
         }
-    }, [institute_id])
+    }, [institute_id, refresh])
 
     return (
         <div>
@@ -73,7 +77,8 @@ function Objects() {
                     <center>
                         <div>
                             {
-                                objectsAdded && <Table columns={['No.', 'Name', 'Quantity', 'Room Name', 'Department']} rows={objectData}/>
+                                objectsAdded && <Table columns={['No.', 'Name', 'Quantity', 'Room Name', 'Department']} rows={objectData} 
+                                    refresh={refresh} setRefresh={setRefresh}/>
                             }
                         </div>
                     </center>

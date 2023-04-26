@@ -26,10 +26,13 @@ function Positions() {
                 rowData.push([positions[i].position_name, institute_name])
             }
         }
-    }, [positionsAdded])
+    }, [positionsAdded, refresh])
 
     useEffect(()=>{
         if(institute_id > 0){
+            if(refresh){
+                setRowData([])
+            }
             dispatch(getPositionRequest(institute_id))
         }
     },[refresh, institute_id])
@@ -52,7 +55,7 @@ function Positions() {
                 </div>
                 <center>
                     {
-                        positionsAdded && <Table columns={['No.', 'Position', 'Institute']} rows={rowData}/>
+                        positionsAdded && <Table columns={['No.', 'Position', 'Institute']} rows={rowData} refresh={refresh} setRefresh={setRefresh}/>
                     }
                 </center>
             </div>

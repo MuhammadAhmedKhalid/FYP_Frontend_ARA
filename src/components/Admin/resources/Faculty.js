@@ -9,8 +9,8 @@ import Table from '../../Root/Table'
 function Faculty() {
 
     const [openFacultyModal, setOpenFacultyModal] = useState(false)
-    const [instituteId, setInstituteId] = useState(0)
     const [refresh, setRefresh] = useState(false)
+    const [rowData, setRowData] = useState([])
 
     const dispatch = useDispatch()
 
@@ -19,25 +19,16 @@ function Faculty() {
     const institutes = useSelector((state) => state.getInstitutes.institutes.data)
     const isInstitutesAdded = useSelector((state) => state.getInstitutes.added)
     const admin_id = useSelector((state) => state.login.user.user_id)
+    const institute_id = useSelector((state) => state.login.user.institute_id)
 
     useEffect(() => {
-        if (isInstitutesAdded && institutes.length !== 0) {
-            for (let i = 0; i < institutes.length; i++) {
-                if (institutes[i].user_id === admin_id) {
-                    setInstituteId(institutes[i].institute_id)
-                }
+        if(institute_id>0){
+            if(refresh){
+                setRowData([])
             }
+            dispatch(getFacultyRequest(institute_id))
         }
-    }, [isInstitutesAdded])
-
-    useEffect(() => {
-        dispatch(getFacultyRequest(instituteId))
-    }, [instituteId, refresh])
-
-    const openModal = () => {
-        setOpenFacultyModal(true)
-    }
-    const [rowData, setRowData] = useState([])
+    }, [institute_id, refresh])
 
     useEffect(()=>{
         if(facultyAdded && rowData.length === 0){
@@ -46,8 +37,12 @@ function Faculty() {
                     faculty[i].specialization.join(', '), faculty[i].designation, faculty[i].yearsOfExperience])
             }
         }
-    }, [facultyAdded])
+    }, [facultyAdded, refresh])
     
+    const openModal = () => {
+        setOpenFacultyModal(true)
+    }
+
     return (
         <div className="flexbox-container-y white-bg-y">
             <div>
@@ -63,12 +58,12 @@ function Faculty() {
                     <div>
                         {
                             facultyAdded&& <Table columns={['No.', 'Name', 'Phone Number', 'E-mail', 'Department', 'Specialization', 
-                            'Designation', 'Years of Experience']} rows={rowData}/>
+                            'Designation', 'Years of Experience']} rows={rowData} refresh={refresh} setRefresh={setRefresh}/>
                         }
                     </div>
                 </center>
                 <div>
-                    <AddFaculty openFacultyModal={openFacultyModal} setOpenFacultyModal={setOpenFacultyModal} setRefresh={setRefresh} />
+                    <AddFaculty openFacultyModal={openFacultyModal} setOpenFacultyModal={setOpenFacultyModal}/>
                 </div>
             </div>
         </div>

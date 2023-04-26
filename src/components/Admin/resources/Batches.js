@@ -32,14 +32,17 @@ function Batches() {
                 }
             }
         }
-    },[batchesAdded, batches, institute_name, rowData, departments, departmentsAdded])
+    },[batchesAdded, batches, institute_name, rowData, departments, departmentsAdded, refresh])
 
     useEffect(() => {
         if(institute_id > 0){
+            if(refresh){
+                setRowData([])
+            }
             dispatch(getBatchesRequest(institute_id))
             dispatch(getDepartmentsRequest(institute_id))
         }
-    }, [refresh, institute_id, dispatch])
+    }, [refresh, institute_id])
 
     const openModal = () => {
         setOpenBatchModal(true)
@@ -59,7 +62,7 @@ function Batches() {
                     </div>
                     <center>
                         {
-                            <Table columns={['No.', 'Batch Year', 'Department']} rows={rowData}/>
+                            <Table columns={['No.', 'Batch Year', 'Department']} rows={rowData} refresh={refresh} setRefresh={setRefresh}/>
                         }
                     </center>
                 </div>

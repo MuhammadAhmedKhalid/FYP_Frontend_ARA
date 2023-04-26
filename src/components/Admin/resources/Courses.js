@@ -32,10 +32,13 @@ function Courses() {
                 }
             }
         }
-    }, [coursessAdded, departmentsAdded])
+    }, [coursessAdded, departmentsAdded, refresh])
 
     useEffect(()=>{
         if(institute_id > 0){
+            if(refresh){
+                setRowData([])
+            }
             dispatch(getDepartmentsRequest(institute_id))
             dispatch(getCourseRequest(institute_id))
         }
@@ -59,7 +62,7 @@ function Courses() {
                 </div>
                 <center>
                     {
-                        coursessAdded && <Table columns={['No.', 'Courses', 'Department']} rows={rowData}/>
+                        coursessAdded && <Table columns={['No.', 'Courses', 'Department']} rows={rowData} refresh={refresh} setRefresh={setRefresh}/>
                     }
                 </center>
             </div>

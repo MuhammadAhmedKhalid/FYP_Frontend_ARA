@@ -16,7 +16,7 @@ import GradeIcon from '@mui/icons-material/Grade';
 
 function AddFaculty(props) {
 
-    const { openFacultyModal, setOpenFacultyModal, setRefresh } = props
+    const { openFacultyModal, setOpenFacultyModal } = props
     const dispatch = useDispatch()
 
     const admin_id = useSelector((state) => state.login.user.user_id)
@@ -71,13 +71,8 @@ function AddFaculty(props) {
     }, [isInstitutesAdded])
 
     useEffect(() => {
-        setRefresh(false)
-    })
-
-    useEffect(() => {
         if(requestSuccessfull){
             setOpenFacultyModal(false)
-            setRefresh(true)
             setErrorMsg('')
             setShowError(false)
             alert("Operation performed successfully!")

@@ -48,17 +48,20 @@ function AssignedCourses() {
           }
         }
     }
-  },[assignedCoursesAdded, assignedCourses, rowData])
+  },[assignedCoursesAdded, assignedCourses, rowData, refresh])
 
   useEffect(() => {
-    if(institute_id){
+    if(institute_id > 0){
+      if(refresh){
+        setRowData([])
+      }
       dispatch(assignedCoursesForTableRequest(institute_id))
       dispatch(getDepartmentsRequest(institute_id))
       dispatch(getCourseRequest(institute_id))
       dispatch(getFacultyRequest(institute_id))
       dispatch(getBatchesRequest(institute_id))
     }
-  }, [])
+  }, [refresh, institute_id])
   
 
   const openModal = () => {
@@ -79,13 +82,15 @@ function AssignedCourses() {
                     </div>
                     <center>
                         {
-                            <Table columns={['No.', 'Course', 'Department', 'Faculty', 'Batch', 'Semester Type']} rows={rowData}/>
+                            <Table columns={['No.', 'Course', 'Department', 'Faculty', 'Batch', 'Semester Type']} rows={rowData} 
+                              refresh={refresh} setRefresh={setRefresh}/>
                         }
                     </center>
                 </div>
             </div>
             <div>
-                <AssignCourse openAssignCourseModal={openAssignCourseModal} setOpenAssignCourseModal={setOpenAssignCourseModal} setRefresh={setRefresh}/>
+                <AssignCourse openAssignCourseModal={openAssignCourseModal} setOpenAssignCourseModal={setOpenAssignCourseModal} 
+                refresh={refresh} setRefresh={setRefresh}/>
             </div>
     </div>
   )
