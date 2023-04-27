@@ -6,6 +6,7 @@ import Table from '../../Root/Table'
 import { useSelector, useDispatch } from 'react-redux'
 import { getBatchesRequest } from '../../../redux/GetBatches/getBatchesActions'
 import { getDepartmentsRequest } from '../../../redux/GetDepartments/getDepartmentsActions'
+import { resetState, updateBatch } from '../../../redux/UpdateBatch/updateBatchActions'
 
 function Batches() {
 
@@ -17,11 +18,38 @@ function Batches() {
     const departmentsAdded = useSelector((state) => state.getDepartments.added)
     const institute_name = useSelector((state) => state.login.user.institute_name)
     const institute_id = useSelector((state) => state.login.user.institute_id)
+    const updateError = useSelector((state) => state.updateBatchReducer.error)
+    const updatedSuccessfully = useSelector((state) => state.updateBatchReducer.updated)
 
     const [openBatchModal, setOpenBatchModal] = useState(false)
     const [rowData, setRowData] = useState([])
     const [refresh, setRefresh] = useState(false)
     const [updVal, setUpdVal] = useState('')
+    const [oldVal, setOldVal] = useState('')
+    const [update, setUpdate] = useState(false)
+
+    useEffect(()=>{
+        if(updateError.length > 0){
+            alert(updateError)
+            dispatch(resetState())
+        }else if(updatedSuccessfully){
+            alert('Updated successfully.')
+            dispatch(resetState())
+        }
+    }, [updateError, updatedSuccessfully])
+
+    // useEffect(() => {
+    //     if(update){
+    //         for(let i of batches){
+    //             if(i.department_name === oldVal){
+    //                 dispatch(updateBatch(i.department_id, updVal))
+    //             }
+    //         }
+    //         setUpdVal('')
+    //         setOldVal('')
+    //         setUpdate(false)
+    //     }
+    // }, [update])
 
     useEffect(()=>{
         if(batchesAdded && rowData.length !== batches.length && departmentsAdded){
@@ -64,7 +92,7 @@ function Batches() {
                     <center>
                         {
                             <Table columns={['No.', 'Batch Year', 'Department']} rows={rowData} refresh={refresh} setRefresh={setRefresh}
-                                updVal={updVal} setUpdVal={setUpdVal}/>
+                                updVal={updVal} setUpdVal={setUpdVal} setUpdate={setUpdate} setOldVal={setOldVal}/>
                         }
                     </center>
                 </div>

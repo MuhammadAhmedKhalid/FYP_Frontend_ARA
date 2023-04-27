@@ -14,6 +14,13 @@ function Table(props) {
 
     const { columns, rows, refresh, setRefresh, uneditable, multiEdit, updVal, setUpdVal, setUpdate, setOldVal } = props
 
+    let rowData = []
+
+    for(let i of rows){
+        const [first, ...rest] = i;
+        rowData.push(rest)
+    }
+
     const positions = useSelector((state) => state.getPositionReducer.positions)
     const positionsAdded = useSelector((state) => state.getPositionReducer.added)
     const institute_id = useSelector((state) => state.login.user.institute_id)
@@ -36,7 +43,7 @@ function Table(props) {
       };
 
     const handleDelete = (index) => {
-        console.log(rows[index][0])
+        console.log(rowData[index][0])
         alert('Deleted successfully.')
         handleRefresh()
     }
@@ -71,7 +78,7 @@ function Table(props) {
                     </thead>
                     <tbody>
                         {
-                            rows.map((cellData, index) => (
+                            rowData.map((cellData, index) => (
                                 <tr key={index}>
                                     <td>{index+1}</td>
                                     {
@@ -87,11 +94,11 @@ function Table(props) {
                                                                 <option key={position.position_id}>{position.position_name}</option>) : null
                                                         }
                                                     </select> :
-                                                    <TextField autoFocus value={updVal} placeholder={data} onChange={(event) => handleInputChange(event.target.value, index, 1, data)} 
+                                                    <TextField autoFocus value={updVal} placeholder={data} onChange={(event) => handleInputChange(event.target.value, index, 1, rows[index])} 
                                                             size='small' variant="outlined" type='text'/>: 
                                                             data)
                                                         : editableRow === index && dataIndex === 0 ? 
-                                                        <TextField autoFocus value={updVal} placeholder={data} onChange={(event) => handleInputChange(event.target.value, index, 1, data)} 
+                                                        <TextField autoFocus value={updVal} placeholder={data} onChange={(event) => handleInputChange(event.target.value, index, 1, rows[index])} 
                                                             size='small' variant="outlined" type='text'/>: 
                                                             data
                                                 }                                                

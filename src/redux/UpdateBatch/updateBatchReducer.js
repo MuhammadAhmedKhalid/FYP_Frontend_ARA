@@ -1,4 +1,4 @@
-import { UPDATE_BATCH_FAILURE, UPDATE_BATCH_REQUEST, UPDATE_BATCH_SUCCESS } from './updateBatchTypes'
+import { UPDATE_BATCH_FAILURE, UPDATE_BATCH_REQUEST, UPDATE_BATCH_SUCCESS, RESET_STATE } from './updateBatchTypes'
 
 const updateBatchInitialState = {
     loading: false,
@@ -25,6 +25,11 @@ export const updateBatchReducer = (state = updateBatchInitialState, action) => {
             loading: false,
             result: '',
             error: action.message,
+            updated: false
+        }
+        case RESET_STATE: return {
+            ...state,
+            error: '',
             updated: false
         }
         default: return state

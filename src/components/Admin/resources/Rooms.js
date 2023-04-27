@@ -16,7 +16,7 @@ function Rooms() {
     const [roomData, setRoomData] = useState([])
     const [refresh, setRefresh] = useState(false)
     const [updVal, setUpdVal] = useState('')
-    const [oldVal, setOldVal] = useState('')
+    const [oldVal, setOldVal] = useState(null)
     const [update, setUpdate] = useState(false)
 
     const rooms = useSelector((state) => state.getRooms.rooms.data)
@@ -40,12 +40,12 @@ function Rooms() {
     useEffect(() => {
         if(update){
             for(let i of rooms){
-                if(i.room_name === oldVal){
+                if(i.room_id === oldVal[0]){
                     dispatch(updateRoom(i.room_id, i.department_id, updVal))
                 }
             }
             setUpdVal('')
-            setOldVal('')
+            setOldVal(null)
             setUpdate(false)
         }
     }, [update])
@@ -60,7 +60,7 @@ function Rooms() {
                 for (let i = 0; i < departments.length; i++) {
                     for (let j = 0; j < rooms.length; j++) {
                         if (rooms[j].department_id === departments[i].department_id) {
-                            roomData.push([rooms[j].room_name, departments[i].department_name])
+                            roomData.push([rooms[j].room_id , rooms[j].room_name, departments[i].department_name])
                         }
                     }
                 }
