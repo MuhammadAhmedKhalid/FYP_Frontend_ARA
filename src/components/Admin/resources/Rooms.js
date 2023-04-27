@@ -14,6 +14,7 @@ function Rooms() {
     const [openRoomModal, setOpenRoomModal] = useState(false)
     const [roomData, setRoomData] = useState([])
     const [refresh, setRefresh] = useState(false)
+    const [updVal, setUpdVal] = useState('')
 
     const rooms = useSelector((state) => state.getRooms.rooms.data)
     const roomsAdded = useSelector((state) => state.getRooms.added)
@@ -63,7 +64,8 @@ function Rooms() {
                     </div>
                     <center>
                         {
-                            roomsAdded && <Table columns={['No.', 'Room Name', 'Department']} rows={roomData} refresh={refresh} setRefresh={setRefresh}/>
+                            roomsAdded && <Table columns={['No.', 'Room Name', 'Department']} rows={roomData} refresh={refresh} setRefresh={setRefresh}
+                                            updVal={updVal} setUpdVal={setUpdVal}/>
                         }
                     </center>
                 </div>

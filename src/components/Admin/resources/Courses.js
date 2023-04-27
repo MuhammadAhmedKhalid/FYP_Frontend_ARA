@@ -13,6 +13,9 @@ function Courses() {
 
     const [openCourseModal, setOpenCourseModal] = useState(false)
     const [refresh, setRefresh] = useState(false)
+    const [updVal, setUpdVal] = useState('')
+    const [rowData, setRowData] = useState([])
+    
     
     const departments = useSelector((state) => state.getDepartments.departments.data)
     const departmentsAdded = useSelector((state) => state.getDepartments.added)
@@ -20,8 +23,6 @@ function Courses() {
     const coursessAdded = useSelector((state) => state.getCourseReducer.added)
     const institute_id = useSelector((state) => state.login.user.institute_id)
     
-    const [rowData, setRowData] = useState([])
-
     useEffect(()=>{
         if(coursessAdded && departmentsAdded && rowData.length !== courses.length){
             for(let i=0; i<courses.length; i++){
@@ -62,7 +63,8 @@ function Courses() {
                 </div>
                 <center>
                     {
-                        coursessAdded && <Table columns={['No.', 'Courses', 'Department']} rows={rowData} refresh={refresh} setRefresh={setRefresh}/>
+                        coursessAdded && <Table columns={['No.', 'Courses', 'Department']} rows={rowData} refresh={refresh} setRefresh={setRefresh}
+                                            updVal={updVal} setUpdVal={setUpdVal}/>
                     }
                 </center>
             </div>

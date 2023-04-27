@@ -13,7 +13,7 @@ function Departments() {
     const [openDepartmentModal, setOpenDepartmentModal] = useState(false)
     const [refresh, setRefresh] = useState(false)
     const [rowData, setRowData] = useState([])
-    // const [updVal, setUpdVal] = useState('')
+    const [updVal, setUpdVal] = useState('')
 
     const departments = useSelector((state) => state.getDepartments.departments.data)
     const departmentsAdded = useSelector((state) => state.getDepartments.added)
@@ -54,15 +54,14 @@ function Departments() {
                     </div>
                     <center>
                         {
-                            departmentsAdded && <Table columns={['No.', 'Department Name', 'Institute']} rows={rowData} refresh={refresh} setRefresh={setRefresh}/>
+                            departmentsAdded && <Table columns={['No.', 'Department Name', 'Institute']} rows={rowData} refresh={refresh} setRefresh={setRefresh}
+                            updVal={updVal} setUpdVal={setUpdVal}/>
                         }
                     </center>
                 </div>
             </div>
             <div>
-                <AddDepartment openDepartmentModal={openDepartmentModal} setOpenDepartmentModal={setOpenDepartmentModal}
-                    // onValChange={setUpdVal} updVal={updVal}
-                    />
+                <AddDepartment openDepartmentModal={openDepartmentModal} setOpenDepartmentModal={setOpenDepartmentModal}/>
             </div>
         </div>
     )

@@ -21,6 +21,7 @@ function Batches() {
     const [openBatchModal, setOpenBatchModal] = useState(false)
     const [rowData, setRowData] = useState([])
     const [refresh, setRefresh] = useState(false)
+    const [updVal, setUpdVal] = useState('')
 
     useEffect(()=>{
         if(batchesAdded && rowData.length !== batches.length && departmentsAdded){
@@ -62,7 +63,8 @@ function Batches() {
                     </div>
                     <center>
                         {
-                            <Table columns={['No.', 'Batch Year', 'Department']} rows={rowData} refresh={refresh} setRefresh={setRefresh}/>
+                            <Table columns={['No.', 'Batch Year', 'Department']} rows={rowData} refresh={refresh} setRefresh={setRefresh}
+                                updVal={updVal} setUpdVal={setUpdVal}/>
                         }
                     </center>
                 </div>

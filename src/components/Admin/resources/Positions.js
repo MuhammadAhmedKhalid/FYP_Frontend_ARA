@@ -12,13 +12,13 @@ function Positions() {
 
     const [openPositionModal, setOpenPositionModal] = useState(false)
     const [refresh, setRefresh] = useState(false)
+    const [updVal, setUpdVal] = useState('')
+    const [rowData, setRowData] = useState([])
    
     const positions = useSelector((state) => state.getPositionReducer.positions)
     const positionsAdded = useSelector((state) => state.getPositionReducer.added)
     const institute_name = useSelector((state) => state.login.user.institute_name)
     const institute_id = useSelector((state) => state.login.user.institute_id)
-
-    const [rowData, setRowData] = useState([])
 
     useEffect(()=>{
         if(positionsAdded && rowData.length !== positions.length){
@@ -55,7 +55,8 @@ function Positions() {
                 </div>
                 <center>
                     {
-                        positionsAdded && <Table columns={['No.', 'Position', 'Institute']} rows={rowData} refresh={refresh} setRefresh={setRefresh}/>
+                        positionsAdded && <Table columns={['No.', 'Position', 'Institute']} rows={rowData} refresh={refresh} setRefresh={setRefresh}
+                                            updVal={updVal} setUpdVal={setUpdVal}/>
                     }
                 </center>
             </div>

@@ -12,7 +12,7 @@ function Table(props) {
 
     const dispatch = useDispatch()
 
-    const { columns, rows, refresh, setRefresh, uneditable, multiEdit } = props
+    const { columns, rows, refresh, setRefresh, uneditable, multiEdit, updVal, setUpdVal } = props
 
     const positions = useSelector((state) => state.getPositionReducer.positions)
     const positionsAdded = useSelector((state) => state.getPositionReducer.added)
@@ -25,7 +25,7 @@ function Table(props) {
     }, [institute_id, multiEdit])
 
     const [editableRow, setEditableRow] = useState(null);
-    const [updVal, setUpdVal] = useState('')
+    // const [updVal, setUpdVal] = useState('')
 
     const handleEdit = (index) => {
         setEditableRow(index);
