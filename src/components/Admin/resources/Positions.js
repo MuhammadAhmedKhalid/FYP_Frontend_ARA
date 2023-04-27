@@ -15,7 +15,7 @@ function Positions() {
     const [refresh, setRefresh] = useState(false)
     const [updVal, setUpdVal] = useState('')
     const [rowData, setRowData] = useState([])
-    const [oldVal, setOldVal] = useState('')
+    const [oldVal, setOldVal] = useState(null)
     const [update, setUpdate] = useState(false)
    
     const positions = useSelector((state) => state.getPositionReducer.positions)
@@ -38,12 +38,12 @@ function Positions() {
     useEffect(() => {
         if(update){
             for(let i of positions){
-                if(i.position_name === oldVal){
+                if(i.position_id === oldVal[0]){
                     dispatch(updatePosition(i.position_id, updVal))
                 }
             }
             setUpdVal('')
-            setOldVal('')
+            setOldVal(null)
             setUpdate(false)
         }
     }, [update])
@@ -51,7 +51,7 @@ function Positions() {
     useEffect(()=>{
         if(positionsAdded && rowData.length !== positions.length){
             for(let i=0; i<positions.length; i++){
-                rowData.push([positions[i].position_name, institute_name])
+                rowData.push([positions[i].position_id , positions[i].position_name, institute_name])
             }
         }
     }, [positionsAdded, refresh])
