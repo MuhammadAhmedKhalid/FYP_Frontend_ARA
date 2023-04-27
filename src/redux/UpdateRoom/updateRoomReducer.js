@@ -1,4 +1,4 @@
-import { UPDATE_ROOM_FAILURE, UPDATE_ROOM_REQUEST, UPDATE_ROOM_SUCCESS } from './updateRoomTypes'
+import { UPDATE_ROOM_FAILURE, UPDATE_ROOM_REQUEST, UPDATE_ROOM_SUCCESS, RESET_STATE } from './updateRoomTypes'
 
 const updateRoomInitialState = {
     loading: false,
@@ -25,6 +25,11 @@ export const updateRoomReducer = (state = updateRoomInitialState, action) => {
             loading: false,
             result: '',
             error: action.message,
+            updated: false
+        }
+        case RESET_STATE: return {
+            ...state,
+            error: '',
             updated: false
         }
         default: return state

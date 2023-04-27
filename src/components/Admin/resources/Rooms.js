@@ -6,7 +6,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import { getDepartmentsRequest } from '../../../redux/GetDepartments/getDepartmentsActions'
 import { getRoomsRequest } from '../../../redux/GetRooms/getRoomsActions'
 import Table from '../../Root/Table'
-import { updateRoom } from '../../../redux/UpdateRoom/updateRoomActions' 
+import { updateRoom, resetState } from '../../../redux/UpdateRoom/updateRoomActions' 
 
 function Rooms() {
 
@@ -24,30 +24,31 @@ function Rooms() {
     const departments = useSelector((state) => state.getDepartments.departments.data)
     const departmentsAdded = useSelector((state) => state.getDepartments.added)
     const institute_id = useSelector((state) => state.login.user.institute_id)
-    // const updateError = useSelector((state) => state.updateRoomReducer.error)
-    // const updatedSuccessfully = useSelector((state) => state.updateRoomReducer.updated)
+    const updateError = useSelector((state) => state.updateRoomReducer.error)
+    const updatedSuccessfully = useSelector((state) => state.updateRoomReducer.updated)
 
-    // useEffect(()=>{
-    //     if(updateError.length > 0){
-    //         alert(updateError)
-    //         dispatch(resetState())
-    //     }else if(updatedSuccessfully){
-    //         alert('Updated successfully.')
-    //     }
-    // }, [updateError])
+    useEffect(()=>{
+        if(updateError.length > 0){
+            alert(updateError)
+            dispatch(resetState())
+        }else if(updatedSuccessfully){
+            alert('Updated successfully.')
+            dispatch(resetState())
+        }
+    }, [updateError, updatedSuccessfully])
 
-    // useEffect(() => {
-    //     if(update){
-    //         for(let i of departments){
-    //             if(i.department_name === oldVal){
-    //                 dispatch(updateDepartment(i.department_id, updVal))
-    //             }
-    //         }
-    //         setUpdVal('')
-    //         setOldVal('')
-    //         setUpdate(false)
-    //     }
-    // }, [update])
+    useEffect(() => {
+        if(update){
+            for(let i of rooms){
+                if(i.room_name === oldVal){
+                    dispatch(updateRoom(i.room_id, i.department_id, updVal))
+                }
+            }
+            setUpdVal('')
+            setOldVal('')
+            setUpdate(false)
+        }
+    }, [update])
 
     const openModal = () => {
         setOpenRoomModal(true)
@@ -59,7 +60,7 @@ function Rooms() {
                 for (let i = 0; i < departments.length; i++) {
                     for (let j = 0; j < rooms.length; j++) {
                         if (rooms[j].department_id === departments[i].department_id) {
-                            setRoomData(roomData => [...roomData, [rooms[j].room_name, departments[i].department_name]])
+                            roomData.push([rooms[j].room_name, departments[i].department_name])
                         }
                     }
                 }

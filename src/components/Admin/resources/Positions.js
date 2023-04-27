@@ -24,7 +24,7 @@ function Positions() {
     const institute_id = useSelector((state) => state.login.user.institute_id)
     const updateError = useSelector((state) => state.updatePositionReducer.error)
     const updatedSuccessfully = useSelector((state) => state.updatePositionReducer.updated)
-console.log(updateError)
+
     useEffect(()=>{
         if(updateError.length > 0){
             alert(updateError)
