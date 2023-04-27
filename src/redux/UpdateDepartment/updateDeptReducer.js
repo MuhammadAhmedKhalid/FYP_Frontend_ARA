@@ -1,4 +1,4 @@
-import { UPDATE_DEPARTMENT_FAILURE, UPDATE_DEPARTMENT_REQUEST, UPDATE_DEPARTMENT_SUCCESS } from './updateDeptTypes'
+import { UPDATE_DEPARTMENT_FAILURE, UPDATE_DEPARTMENT_REQUEST, UPDATE_DEPARTMENT_SUCCESS, RESET_STATE } from './updateDeptTypes'
 
 const updateDepartmentInitialState = {
     loading: false,
@@ -26,6 +26,10 @@ export const updateDepartmentReducer = (state = updateDepartmentInitialState, ac
             result: '',
             error: action.message,
             updated: false
+        }
+        case RESET_STATE: return {
+            ...state,
+            error: ''
         }
         default: return state
     }

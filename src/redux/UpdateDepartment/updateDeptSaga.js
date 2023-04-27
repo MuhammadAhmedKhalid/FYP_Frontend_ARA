@@ -2,8 +2,7 @@ import { UPDATE_DEPARTMENT_FAILURE, UPDATE_DEPARTMENT_REQUEST, UPDATE_DEPARTMENT
 import { put, takeEvery, call, select } from 'redux-saga/effects'
 
 function* updateDepartmentRequest(payload) {
-    try {
-        const token = yield select(state => state.login.user.jwt);
+    const token = yield select(state => state.login.user.jwt);
         let result = yield call(fetch, `http://localhost:8080/updateDepartment/${payload.department_id}`, {
             method: "PUT",
             body: payload.department_name,
@@ -11,10 +10,11 @@ function* updateDepartmentRequest(payload) {
                 "Authorization": `Bearer ${token}`
             },
         });
-        yield put({ type: UPDATE_DEPARTMENT_SUCCESS, result })
-    } catch (e) {
-        yield put({ type: UPDATE_DEPARTMENT_FAILURE, message: e.message })
-    }
+        if(result.status === 200){
+            yield put({ type: UPDATE_DEPARTMENT_SUCCESS, result })
+        }else{
+            yield put({ type: UPDATE_DEPARTMENT_FAILURE, message: "Department already exists with this name." })
+        }
 }
 
 export function* updateDepartmentSaga() {

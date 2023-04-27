@@ -12,12 +12,12 @@ function Table(props) {
 
     const dispatch = useDispatch()
 
-    const { columns, rows, refresh, setRefresh, uneditable, multiEdit, updVal, setUpdVal, setUpdate } = props
+    const { columns, rows, refresh, setRefresh, uneditable, multiEdit, updVal, setUpdVal, setUpdate, setOldVal } = props
 
     const positions = useSelector((state) => state.getPositionReducer.positions)
     const positionsAdded = useSelector((state) => state.getPositionReducer.added)
     const institute_id = useSelector((state) => state.login.user.institute_id)
-    
+
     useEffect(() => {
         if(institute_id > 0 && multiEdit){
             dispatch(getPositionRequest(institute_id))
@@ -25,14 +25,14 @@ function Table(props) {
     }, [institute_id, multiEdit])
 
     const [editableRow, setEditableRow] = useState(null);
-    // const [updVal, setUpdVal] = useState('')
 
     const handleEdit = (index) => {
         setEditableRow(index);
     }
 
-    const handleInputChange = (text, rowIndex, cellIndex) => {
+    const handleInputChange = (text, rowIndex, cellIndex, oldData) => {
         setUpdVal(text)
+        setOldVal(oldData)
       };
 
     const handleDelete = (index) => {
@@ -43,7 +43,6 @@ function Table(props) {
 
     const handleCheck = () => {
         setEditableRow(null);
-        alert('Updated successfully.')
         handleRefresh()
         setUpdate(true)
     }
@@ -88,11 +87,11 @@ function Table(props) {
                                                                 <option key={position.position_id}>{position.position_name}</option>) : null
                                                         }
                                                     </select> :
-                                                    <TextField value={updVal} placeholder={data} onChange={(event) => handleInputChange(event.target.value, index, 1)} 
+                                                    <TextField autoFocus value={updVal} placeholder={data} onChange={(event) => handleInputChange(event.target.value, index, 1, data)} 
                                                             size='small' variant="outlined" type='text'/>: 
                                                             data)
                                                         : editableRow === index && dataIndex === 0 ? 
-                                                        <TextField value={updVal} placeholder={data} onChange={(event) => handleInputChange(event.target.value, index, 1)} 
+                                                        <TextField autoFocus value={updVal} placeholder={data} onChange={(event) => handleInputChange(event.target.value, index, 1, data)} 
                                                             size='small' variant="outlined" type='text'/>: 
                                                             data
                                                 }                                                

@@ -5,7 +5,7 @@ import AddDepartment from './modals/AddDepartment'
 import { useSelector, useDispatch } from 'react-redux'
 import { getDepartmentsRequest } from '../../../redux/GetDepartments/getDepartmentsActions'
 import Table from '../../Root/Table'
-import { updateDepartment } from '../../../redux/UpdateDepartment/updateDeptActions'
+import { updateDepartment, resetState } from '../../../redux/UpdateDepartment/updateDeptActions'
 
 function Departments() {
 
@@ -15,17 +15,34 @@ function Departments() {
     const [refresh, setRefresh] = useState(false)
     const [rowData, setRowData] = useState([])
     const [updVal, setUpdVal] = useState('')
+    const [oldVal, setOldVal] = useState('')
     const [update, setUpdate] = useState(false)
 
     const departments = useSelector((state) => state.getDepartments.departments.data)
     const departmentsAdded = useSelector((state) => state.getDepartments.added)
     const institute_name = useSelector((state) => state.login.user.institute_name)
     const institute_id = useSelector((state) => state.login.user.institute_id)
-   
+    const updateError = useSelector((state) => state.updateDepartmentReducer.error)
+    const updatedSuccessfully = useSelector((state) => state.updateDepartmentReducer.updated)
+
+    useEffect(()=>{
+        if(updateError.length > 0){
+            alert(updateError)
+            dispatch(resetState())
+        }else if(updatedSuccessfully){
+            alert('Updated successfully.')
+        }
+    }, [updateError])
+
     useEffect(() => {
         if(update){
-            console.log(updVal) // dispatch here
+            for(let i of departments){
+                if(i.department_name === oldVal){
+                    dispatch(updateDepartment(i.department_id, updVal))
+                }
+            }
             setUpdVal('')
+            setOldVal('')
             setUpdate(false)
         }
     }, [update])
@@ -65,7 +82,7 @@ function Departments() {
                     <center>
                         {
                             departmentsAdded && <Table columns={['No.', 'Department Name', 'Institute']} rows={rowData} refresh={refresh} setRefresh={setRefresh}
-                            updVal={updVal} setUpdVal={setUpdVal} setUpdate={setUpdate}/>
+                            updVal={updVal} setUpdVal={setUpdVal} setUpdate={setUpdate} setOldVal={setOldVal}/>
                         }
                     </center>
                 </div>
