@@ -15,7 +15,7 @@ function Departments() {
     const [refresh, setRefresh] = useState(false)
     const [rowData, setRowData] = useState([])
     const [updVal, setUpdVal] = useState('')
-    const [oldVal, setOldVal] = useState('')
+    const [oldVal, setOldVal] = useState(null)
     const [update, setUpdate] = useState(false)
 
     const departments = useSelector((state) => state.getDepartments.departments.data)
@@ -38,12 +38,12 @@ function Departments() {
     useEffect(() => {
         if(update){
             for(let i of departments){
-                if(i.department_name === oldVal){
+                if(i.department_id === oldVal[0]){
                     dispatch(updateDepartment(i.department_id, updVal))
                 }
             }
             setUpdVal('')
-            setOldVal('')
+            setOldVal(null)
             setUpdate(false)
         }
     }, [update])
@@ -51,7 +51,7 @@ function Departments() {
     useEffect(()=>{
         if(departmentsAdded && rowData.length !== departments.length){
             for(let i=0; i<departments.length; i++){
-                rowData.push([departments[i].department_name, institute_name])
+                rowData.push([departments[i].department_id , departments[i].department_name, institute_name])
             }
         }
     },[departmentsAdded, refresh])
