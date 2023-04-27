@@ -31,8 +31,9 @@ function Departments() {
             dispatch(resetState())
         }else if(updatedSuccessfully){
             alert('Updated successfully.')
+            dispatch(resetState())
         }
-    }, [updateError])
+    }, [updateError, updatedSuccessfully])
 
     useEffect(() => {
         if(update){

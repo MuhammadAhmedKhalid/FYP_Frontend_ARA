@@ -6,6 +6,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import { getDepartmentsRequest } from '../../../redux/GetDepartments/getDepartmentsActions'
 import { getRoomsRequest } from '../../../redux/GetRooms/getRoomsActions'
 import Table from '../../Root/Table'
+import { updateRoom } from '../../../redux/UpdateRoom/updateRoomActions' 
 
 function Rooms() {
 
@@ -15,12 +16,38 @@ function Rooms() {
     const [roomData, setRoomData] = useState([])
     const [refresh, setRefresh] = useState(false)
     const [updVal, setUpdVal] = useState('')
+    const [oldVal, setOldVal] = useState('')
+    const [update, setUpdate] = useState(false)
 
     const rooms = useSelector((state) => state.getRooms.rooms.data)
     const roomsAdded = useSelector((state) => state.getRooms.added)
     const departments = useSelector((state) => state.getDepartments.departments.data)
     const departmentsAdded = useSelector((state) => state.getDepartments.added)
     const institute_id = useSelector((state) => state.login.user.institute_id)
+    // const updateError = useSelector((state) => state.updateRoomReducer.error)
+    // const updatedSuccessfully = useSelector((state) => state.updateRoomReducer.updated)
+
+    // useEffect(()=>{
+    //     if(updateError.length > 0){
+    //         alert(updateError)
+    //         dispatch(resetState())
+    //     }else if(updatedSuccessfully){
+    //         alert('Updated successfully.')
+    //     }
+    // }, [updateError])
+
+    // useEffect(() => {
+    //     if(update){
+    //         for(let i of departments){
+    //             if(i.department_name === oldVal){
+    //                 dispatch(updateDepartment(i.department_id, updVal))
+    //             }
+    //         }
+    //         setUpdVal('')
+    //         setOldVal('')
+    //         setUpdate(false)
+    //     }
+    // }, [update])
 
     const openModal = () => {
         setOpenRoomModal(true)
@@ -65,7 +92,7 @@ function Rooms() {
                     <center>
                         {
                             roomsAdded && <Table columns={['No.', 'Room Name', 'Department']} rows={roomData} refresh={refresh} setRefresh={setRefresh}
-                                            updVal={updVal} setUpdVal={setUpdVal}/>
+                                            updVal={updVal} setUpdVal={setUpdVal} setUpdate={setUpdate} setOldVal={setOldVal}/>
                         }
                     </center>
                 </div>

@@ -29,7 +29,8 @@ export const updateDepartmentReducer = (state = updateDepartmentInitialState, ac
         }
         case RESET_STATE: return {
             ...state,
-            error: ''
+            error: '',
+            updated: false
         }
         default: return state
     }

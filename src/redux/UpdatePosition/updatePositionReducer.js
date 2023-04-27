@@ -1,4 +1,4 @@
-import { UPDATE_POSITION_FAILURE, UPDATE_POSITION_REQUEST, UPDATE_POSITION_SUCCESS } from './updatePositionTypes'
+import { UPDATE_POSITION_FAILURE, UPDATE_POSITION_REQUEST, UPDATE_POSITION_SUCCESS, RESET_STATE } from './updatePositionTypes'
 
 const updatePositionInitialState = {
     loading: false,
@@ -25,6 +25,11 @@ export const updatePositionReducer = (state = updatePositionInitialState, action
             loading: false,
             result: '',
             error: action.message,
+            updated: false
+        }
+        case RESET_STATE: return {
+            ...state,
+            error: '',
             updated: false
         }
         default: return state
