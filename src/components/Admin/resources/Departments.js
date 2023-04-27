@@ -5,6 +5,7 @@ import AddDepartment from './modals/AddDepartment'
 import { useSelector, useDispatch } from 'react-redux'
 import { getDepartmentsRequest } from '../../../redux/GetDepartments/getDepartmentsActions'
 import Table from '../../Root/Table'
+import { updateDepartment } from '../../../redux/UpdateDepartment/updateDeptActions'
 
 function Departments() {
 
@@ -14,12 +15,21 @@ function Departments() {
     const [refresh, setRefresh] = useState(false)
     const [rowData, setRowData] = useState([])
     const [updVal, setUpdVal] = useState('')
+    const [update, setUpdate] = useState(false)
 
     const departments = useSelector((state) => state.getDepartments.departments.data)
     const departmentsAdded = useSelector((state) => state.getDepartments.added)
     const institute_name = useSelector((state) => state.login.user.institute_name)
     const institute_id = useSelector((state) => state.login.user.institute_id)
    
+    useEffect(() => {
+        if(update){
+            console.log(updVal) // dispatch here
+            setUpdVal('')
+            setUpdate(false)
+        }
+    }, [update])
+
     useEffect(()=>{
         if(departmentsAdded && rowData.length !== departments.length){
             for(let i=0; i<departments.length; i++){
@@ -55,7 +65,7 @@ function Departments() {
                     <center>
                         {
                             departmentsAdded && <Table columns={['No.', 'Department Name', 'Institute']} rows={rowData} refresh={refresh} setRefresh={setRefresh}
-                            updVal={updVal} setUpdVal={setUpdVal}/>
+                            updVal={updVal} setUpdVal={setUpdVal} setUpdate={setUpdate}/>
                         }
                     </center>
                 </div>

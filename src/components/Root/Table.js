@@ -12,7 +12,7 @@ function Table(props) {
 
     const dispatch = useDispatch()
 
-    const { columns, rows, refresh, setRefresh, uneditable, multiEdit, updVal, setUpdVal } = props
+    const { columns, rows, refresh, setRefresh, uneditable, multiEdit, updVal, setUpdVal, setUpdate } = props
 
     const positions = useSelector((state) => state.getPositionReducer.positions)
     const positionsAdded = useSelector((state) => state.getPositionReducer.added)
@@ -45,6 +45,7 @@ function Table(props) {
         setEditableRow(null);
         alert('Updated successfully.')
         handleRefresh()
+        setUpdate(true)
     }
 
     const handleRefresh = () => {
