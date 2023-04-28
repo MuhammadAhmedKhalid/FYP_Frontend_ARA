@@ -9,11 +9,16 @@ import { getDepartmentsRequest } from '../../../redux/GetDepartments/getDepartme
 
 function Faculty() {
 
+    const dispatch = useDispatch()
+
     const [openFacultyModal, setOpenFacultyModal] = useState(false)
     const [refresh, setRefresh] = useState(false)
     const [rowData, setRowData] = useState([])
-
-    const dispatch = useDispatch()
+    const [updNumber, setUpdNumber] = useState('')
+    const [updName, setUpdName] = useState('')
+    const [updDesignation, setUpdDesignation] = useState('')
+    const [oldVal, setOldVal] = useState(null)
+    const [update, setUpdate] = useState(false)
 
     const faculty = useSelector((state) => state.getFaculty.faculty)
     const facultyAdded = useSelector((state) => state.getFaculty.added)
@@ -64,7 +69,10 @@ function Faculty() {
                         {
                             facultyAdded&& <Table columns={['No.', 'Name', 'Phone Number', 'E-mail', 'Department', 'Specialization', 
                             'Designation', 'Years of Experience']} rows={rowData} refresh={refresh} setRefresh={setRefresh} multiEdit={true}
-                            isFaculty={true}/>
+                            isFaculty={true} setUpdate={setUpdate} setOldVal={setOldVal} 
+                            updDesignation={updDesignation} setUpdDesignation={setUpdDesignation}
+                            updName={updName} setUpdName={setUpdName}
+                            updNumber={updNumber} setUpdNumber={setUpdNumber} />
                         }
                     </div>
                 </center>

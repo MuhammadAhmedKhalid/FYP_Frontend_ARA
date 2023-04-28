@@ -12,7 +12,8 @@ function Table(props) {
 
     const dispatch = useDispatch()
 
-    const { columns, rows, refresh, setRefresh, uneditable, multiEdit, updVal, setUpdVal, setUpdate, setOldVal } = props
+    const { columns, rows, refresh, setRefresh, uneditable, multiEdit, setUpdate, setOldVal, isFaculty, updVal, setUpdVal,
+        updNumber, setUpdNumber, updName, setUpdName, updDesignation, setUpdDesignation } = props
 
     let rowData = []
 
@@ -38,7 +39,17 @@ function Table(props) {
     }
 
     const handleInputChange = (text, rowIndex, cellIndex, oldData) => {
-        setUpdVal(text)
+        if(!isFaculty){
+            setUpdVal(text)
+        }else{
+            if(cellIndex === 0){
+                setUpdName(text)
+            } else if(cellIndex === 1){
+                setUpdNumber(text)
+            } else {
+                setUpdDesignation(text)
+            }
+        }
         setOldVal(oldData)
       };
 
@@ -87,16 +98,18 @@ function Table(props) {
                                                 {
                                                     multiEdit === true ?( (editableRow === index) && (dataIndex === 0 || dataIndex === 1 || dataIndex === 5) ? 
                                                     (editableRow === index && dataIndex === 5) ? 
-                                                    <select className='editableDropdown'>
+                                                    <select className='editableDropdown' onChange={(event) => handleInputChange(event.target.value, index, dataIndex, rows[index])}>
                                                         <option></option>
                                                         {
                                                             positionsAdded && positions.length !== 0 ? positions.map(position =>
                                                                 <option key={position.position_id}>{position.position_name}</option>) : null
                                                         }
                                                     </select> :
-                                                    <TextField autoFocus value={updVal} placeholder={data} onChange={(event) => handleInputChange(event.target.value, index, 1, rows[index])} 
+                                                    
+                                                    <TextField value={updVal} autoFocus={dataIndex === 0 ? true : false} placeholder={data} onChange={(event) => handleInputChange(event.target.value, index, dataIndex, rows[index])} 
                                                             size='small' variant="outlined" type='text'/>: 
-                                                            data)
+                                                            data
+                                                            )
                                                         : editableRow === index && dataIndex === 0 ? 
                                                         <TextField autoFocus value={updVal} placeholder={data} onChange={(event) => handleInputChange(event.target.value, index, 1, rows[index])} 
                                                             size='small' variant="outlined" type='text'/>: 
