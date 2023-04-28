@@ -1,4 +1,4 @@
-import { UPDATE_COURSE_REQUEST } from './updateCourseTypes'
+import { UPDATE_COURSE_REQUEST, RESET_STATE } from './updateCourseTypes'
 
 export const updateCourse = (department_id, course_id, course_name) => {
     return {
@@ -6,5 +6,11 @@ export const updateCourse = (department_id, course_id, course_name) => {
         department_id,
         course_id,
         course_name
+    }
+}
+
+export const resetState = () => {
+    return {
+        type: RESET_STATE
     }
 }

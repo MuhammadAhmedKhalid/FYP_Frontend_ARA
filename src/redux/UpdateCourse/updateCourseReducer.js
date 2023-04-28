@@ -1,4 +1,4 @@
-import { UPDATE_COURSE_FAILURE, UPDATE_COURSE_REQUEST, UPDATE_COURSE_SUCCESS } from './updateCourseTypes'
+import { UPDATE_COURSE_FAILURE, UPDATE_COURSE_REQUEST, UPDATE_COURSE_SUCCESS, RESET_STATE } from './updateCourseTypes'
 
 const updateCourseInitialState = {
     loading: false,
@@ -25,6 +25,11 @@ export const updateCourseReducer = (state = updateCourseInitialState, action) =>
             loading: false,
             result: '',
             error: action.message,
+            updated: false
+        }
+        case RESET_STATE: return {
+            ...state,
+            error: '',
             updated: false
         }
         default: return state

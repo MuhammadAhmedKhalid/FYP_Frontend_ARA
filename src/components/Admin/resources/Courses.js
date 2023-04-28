@@ -6,6 +6,7 @@ import Table from '../../Root/Table'
 import { useSelector, useDispatch } from 'react-redux'
 import { getDepartmentsRequest } from '../../../redux/GetDepartments/getDepartmentsActions'
 import { getCourseRequest } from '../../../redux/GetCourse/getCourseActions'
+import { updateCourse, resetState } from '../../../redux/UpdateCourse/updateCourseActions'
 
 function Courses() {
 
@@ -15,20 +16,46 @@ function Courses() {
     const [refresh, setRefresh] = useState(false)
     const [updVal, setUpdVal] = useState('')
     const [rowData, setRowData] = useState([])
-    
+    const [oldVal, setOldVal] = useState(null)
+    const [update, setUpdate] = useState(false)
     
     const departments = useSelector((state) => state.getDepartments.departments.data)
     const departmentsAdded = useSelector((state) => state.getDepartments.added)
     const courses = useSelector((state) => state.getCourseReducer.courses)
     const coursessAdded = useSelector((state) => state.getCourseReducer.added)
     const institute_id = useSelector((state) => state.login.user.institute_id)
+    const updateError = useSelector((state) => state.updateCourseReducer.error)
+    const updatedSuccessfully = useSelector((state) => state.updateCourseReducer.updated)
+
+    useEffect(()=>{
+        if(updateError.length > 0){
+            alert(updateError)
+            dispatch(resetState())
+        }else if(updatedSuccessfully){
+            alert('Updated successfully.')
+            dispatch(resetState())
+        }
+    }, [updateError, updatedSuccessfully])
+
+    useEffect(() => {
+        if(update){
+            for(let i of courses){
+                if(i.course_id === oldVal[0]){
+                    dispatch(updateCourse(i.department_id, i.course_id, updVal))
+                }
+            }
+            setUpdVal('')
+            setOldVal(null)
+            setUpdate(false)
+        }
+    }, [update])
     
     useEffect(()=>{
         if(coursessAdded && departmentsAdded && rowData.length !== courses.length){
             for(let i=0; i<courses.length; i++){
                 for(let j=0; j<departments.length; j++){
                     if(departments[j].department_id === courses[i].department_id){
-                        rowData.push([courses[i].course_name, departments[j].department_name])
+                        rowData.push([courses[i].course_id , courses[i].course_name, departments[j].department_name])
                     }
                 }
             }
@@ -64,7 +91,7 @@ function Courses() {
                 <center>
                     {
                         coursessAdded && <Table columns={['No.', 'Courses', 'Department']} rows={rowData} refresh={refresh} setRefresh={setRefresh}
-                                            updVal={updVal} setUpdVal={setUpdVal}/>
+                                            updVal={updVal} setUpdVal={setUpdVal} setUpdate={setUpdate} setOldVal={setOldVal}/>
                     }
                 </center>
             </div>
