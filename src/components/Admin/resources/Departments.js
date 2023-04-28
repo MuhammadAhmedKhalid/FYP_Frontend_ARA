@@ -6,6 +6,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import { getDepartmentsRequest } from '../../../redux/GetDepartments/getDepartmentsActions'
 import Table from '../../Root/Table'
 import { updateDepartment, resetState } from '../../../redux/UpdateDepartment/updateDeptActions'
+import { deleteDepartmentRequest } from '../../../redux/DeleteDepartment/deleteDeptActions'
 
 function Departments() {
 
@@ -17,6 +18,7 @@ function Departments() {
     const [updVal, setUpdVal] = useState('')
     const [oldVal, setOldVal] = useState(null)
     const [update, setUpdate] = useState(false)
+    const [deleteId, setDeleteId] = useState(null)
 
     const departments = useSelector((state) => state.getDepartments.departments.data)
     const departmentsAdded = useSelector((state) => state.getDepartments.added)
@@ -24,6 +26,14 @@ function Departments() {
     const institute_id = useSelector((state) => state.login.user.institute_id)
     const updateError = useSelector((state) => state.updateDepartmentReducer.error)
     const updatedSuccessfully = useSelector((state) => state.updateDepartmentReducer.updated)
+
+    useEffect(() => {
+        if(deleteId !== null){
+            dispatch(deleteDepartmentRequest(deleteId))
+            setUpdate(false)
+            setDeleteId(null)
+        }
+    }, [deleteId])
 
     useEffect(()=>{
         if(updateError.length > 0){
@@ -83,7 +93,7 @@ function Departments() {
                     <center>
                         {
                             departmentsAdded && <Table columns={['No.', 'Department Name', 'Institute']} rows={rowData} refresh={refresh} setRefresh={setRefresh}
-                            updVal={updVal} setUpdVal={setUpdVal} setUpdate={setUpdate} setOldVal={setOldVal}/>
+                            updVal={updVal} setUpdVal={setUpdVal} setUpdate={setUpdate} setOldVal={setOldVal} setDeleteId={setDeleteId}/>
                         }
                     </center>
                 </div>

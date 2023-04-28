@@ -13,7 +13,7 @@ function Table(props) {
     const dispatch = useDispatch()
 
     const { columns, rows, refresh, setRefresh, uneditable, multiEdit, setUpdate, setOldVal, isFaculty, updVal, setUpdVal,
-        updNumber, setUpdNumber, updName, setUpdName, updDesignation, setUpdDesignation } = props
+        updNumber, setUpdNumber, updName, setUpdName, updDesignation, setUpdDesignation, setDeleteId } = props
 
     let rowData = []
 
@@ -54,7 +54,7 @@ function Table(props) {
       };
 
     const handleDelete = (index) => {
-        console.log(rows[index][0])
+        setDeleteId(rows[index][0])
         alert('Deleted successfully.')
         handleRefresh()
     }
