@@ -39,7 +39,7 @@ function AddFaculty(props) {
         name: "",
         phone_number: "",
         officialEmailAddress: "",
-        department: "",
+        department_id: "",
         specialization: [],
         designation: "",
         institute_id: "",
@@ -90,7 +90,7 @@ function AddFaculty(props) {
                 setSpecializationData([])
                 for (let i = 0; i < courses.length; i++) {
                     for (let j = 0; j < departments.length; j++) {
-                        if (courses[i].department_id === departments[j].department_id && departments[j].department_name === faculty.department) {
+                        if (courses[i].department_id === departments[j].department_id && departments[j].department_id === faculty.department_id) {
                             setSpecializationData(specializationData => 
                                 [...specializationData, { label: courses[i].course_name, value: courses[i].course_name }])
                         }
@@ -98,7 +98,7 @@ function AddFaculty(props) {
                 }
             }
         }
-    }, [faculty.department])
+    }, [faculty.department_id])
 
     const customStyles = {
         overlay: {
@@ -111,12 +111,6 @@ function AddFaculty(props) {
             zIndex: 1000,
         },
     };
-
-    const closeModal = () => {
-        setOpenFacultyModal(false)
-        setShowError(false)
-        setErrorMsg('')
-    }
 
     const submitHandler = (event) => {
         event.preventDefault()
@@ -132,6 +126,14 @@ function AddFaculty(props) {
     
     function handleSelect(data) {
         setFaculty({ ...faculty, specialization: data.map(obj => obj.value) })
+    }
+
+    const handleDeptChange = (department_name) => {
+        for(let i of departments){
+            if(i.department_name === department_name){
+                setFaculty({ ...faculty, department_id: i.department_id })
+            }
+        }
     }
 
     return (
@@ -195,7 +197,7 @@ function AddFaculty(props) {
                         <h3 style={{
                             fontWeight: 'normal', color: 'gray', marginRight: '3px'
                         }}>Department</h3>
-                        <select required value={faculty.department} onChange={(e) => setFaculty({ ...faculty, department: e.target.value })} className='dropdown'>
+                        <select required onChange={(e) => handleDeptChange(e.target.value)} className='dropdown'>
                             <option></option>
                             {
                                 departmentsAdded && departments.length !== 0 ? departments.map(department =>

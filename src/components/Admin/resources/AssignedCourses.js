@@ -40,7 +40,7 @@ function AssignedCourses() {
                 for(let m=0; m<batches.length; m++){
                   if(assignedCourses[i].departmentId == departments[j].department_id && assignedCourses[i].courseId == courses[k].course_id
                     && assignedCourses[i].facultyId == faculty[l].faculty_id && assignedCourses[i].batchId == batches[m].batchId){
-                      rowData.push([assignedCourses[i].assignedCourseId , courses[k].course_name, departments[j].department_name, faculty[l].name,
+                      rowData.push([assignedCourses[i].assignedCoursesId , courses[k].course_name, departments[j].department_name, faculty[l].name,
                          batches[m].batchYear, assignedCourses[i].semesterType])
                     }
                 }

@@ -5,6 +5,7 @@ import AddFaculty from './modals/AddFaculty'
 import { getFacultyRequest } from '../../../redux/GetFaculty/getFacultyActions'
 import { useSelector, useDispatch } from 'react-redux'
 import Table from '../../Root/Table'
+import { getDepartmentsRequest } from '../../../redux/GetDepartments/getDepartmentsActions'
 
 function Faculty() {
 
@@ -16,10 +17,9 @@ function Faculty() {
 
     const faculty = useSelector((state) => state.getFaculty.faculty)
     const facultyAdded = useSelector((state) => state.getFaculty.added)
-    const institutes = useSelector((state) => state.getInstitutes.institutes.data)
-    const isInstitutesAdded = useSelector((state) => state.getInstitutes.added)
-    const admin_id = useSelector((state) => state.login.user.user_id)
     const institute_id = useSelector((state) => state.login.user.institute_id)
+    const departments = useSelector((state) => state.getDepartments.departments.data)
+    const departmentsAdded = useSelector((state) => state.getDepartments.added)
 
     useEffect(() => {
         if(institute_id>0){
@@ -27,14 +27,19 @@ function Faculty() {
                 setRowData([])
             }
             dispatch(getFacultyRequest(institute_id))
+            dispatch(getDepartmentsRequest(institute_id))
         }
     }, [institute_id, refresh])
 
     useEffect(()=>{
         if(facultyAdded && rowData.length === 0){
             for(let i=0; i<faculty.length; i++){
-                rowData.push([faculty[i].name, faculty[i].phone_number, faculty[i].officialEmailAddress, faculty[i].department, 
-                    faculty[i].specialization.join(', '), faculty[i].designation, faculty[i].yearsOfExperience])
+                for(let j of departments){
+                    if(j.department_id == faculty[i].department_id){
+                        rowData.push([faculty[i].faculty_id, faculty[i].name, faculty[i].phone_number, faculty[i].officialEmailAddress, j.department_name, 
+                            faculty[i].specialization.join(', '), faculty[i].designation, faculty[i].yearsOfExperience])
+                    }
+                }
             }
         }
     }, [facultyAdded, refresh])
@@ -58,7 +63,8 @@ function Faculty() {
                     <div>
                         {
                             facultyAdded&& <Table columns={['No.', 'Name', 'Phone Number', 'E-mail', 'Department', 'Specialization', 
-                            'Designation', 'Years of Experience']} rows={rowData} refresh={refresh} setRefresh={setRefresh} multiEdit={true}/>
+                            'Designation', 'Years of Experience']} rows={rowData} refresh={refresh} setRefresh={setRefresh} multiEdit={true}
+                            isFaculty={true}/>
                         }
                     </div>
                 </center>
