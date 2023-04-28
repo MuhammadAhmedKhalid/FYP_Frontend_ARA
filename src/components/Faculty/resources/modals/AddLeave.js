@@ -107,7 +107,7 @@ function AddLeave(props) {
         if(faculty_id > 0 && departmentsAdded && facultyAdded){
             for(let i of departments){
                 for(let j of faculty){
-                    if(i.department_name === j.department){
+                    if(i.department_id === j.department_id){
                         setRequest({...request, department_id: i.department_id})
                     }
                 }
@@ -340,8 +340,8 @@ function AddLeave(props) {
                                                 facultyUserId = p.user.user_id
                                                 replacedFacultyName = p.name
                                             }
-                                            if(p.department === o.department_name && p.faculty_id === availableFaculty[i][0].faculty_id){
-                                                replacedFacultyDepartment = p.department
+                                            if(p.department_id === o.department_id && p.faculty_id === availableFaculty[i][0].faculty_id){
+                                                replacedFacultyDepartment = o.department_name
                                             }
                                         }
 

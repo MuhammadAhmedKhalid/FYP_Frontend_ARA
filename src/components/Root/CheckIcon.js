@@ -75,8 +75,8 @@ function CheckIcon(props) {
           if(p.faculty_id == facultyId){
               replacedFacultyName = p.name
           }
-          if(p.department == o.department_name && p.faculty_id == facultyId){
-              replacedFacultyDepartment = p.department
+          if(p.department_id == o.department_id && p.faculty_id == facultyId){
+              replacedFacultyDepartment = o.department_name
               userId = p.user.user_id
           }
       }

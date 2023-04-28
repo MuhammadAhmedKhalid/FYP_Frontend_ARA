@@ -6,6 +6,7 @@ import { getFacultyRequest } from '../../../redux/GetFaculty/getFacultyActions'
 import { useSelector, useDispatch } from 'react-redux'
 import Table from '../../Root/Table'
 import { getDepartmentsRequest } from '../../../redux/GetDepartments/getDepartmentsActions'
+import { updateFaculty, resetState } from '../../../redux/UpdateFaculty/updateFacultyActions'
 
 function Faculty() {
 
@@ -24,7 +25,38 @@ function Faculty() {
     const facultyAdded = useSelector((state) => state.getFaculty.added)
     const institute_id = useSelector((state) => state.login.user.institute_id)
     const departments = useSelector((state) => state.getDepartments.departments.data)
-    const departmentsAdded = useSelector((state) => state.getDepartments.added)
+    const updateError = useSelector((state) => state.updateFacultyReducer.error)
+    const updatedSuccessfully = useSelector((state) => state.updateFacultyReducer.updated)
+
+    useEffect(()=>{
+        if(updateError.length > 0){
+            alert(updateError)
+            dispatch(resetState())
+        }else if(updatedSuccessfully){
+            alert('Updated successfully.')
+            dispatch(resetState())
+        }
+    }, [updateError, updatedSuccessfully])
+
+    useEffect(() => {
+        if(update){
+            for(let i of faculty){
+                if(i.faculty_id === oldVal[0]){
+                    const faculty = {
+                        name: updName,
+                        phone_number: updNumber, 
+                        designation: updDesignation
+                    }
+                    dispatch(updateFaculty(i.faculty_id, faculty))
+                }
+            }
+            setUpdDesignation('')
+            setUpdName('')
+            setUpdNumber('')
+            setOldVal(null)
+            setUpdate(false)
+        }
+    }, [update])
 
     useEffect(() => {
         if(institute_id>0){

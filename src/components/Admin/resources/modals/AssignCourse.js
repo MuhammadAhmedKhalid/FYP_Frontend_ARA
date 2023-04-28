@@ -135,15 +135,17 @@ function AssignCourse(props) {
           }
           
           let department_name = "";
+          let department_id = null;
           for(let i in departments){
             if(assignCourse.department_id === departments[i].department_id){
               department_name = departments[i].department_name
+              department_id = departments[i].department_id
             }
           }
 
-          for(let i in faculty){
-            if(department_name === faculty[i].department){
-              setFacultyData(facultyData => [...facultyData, { id: faculty[i].faculty_id, name: faculty[i].name }])
+          for(let i of faculty){
+            if(i.department_id === department_id){
+              setFacultyData(facultyData => [...facultyData, { id: i.faculty_id, name: i.name }])
             }
           }
 

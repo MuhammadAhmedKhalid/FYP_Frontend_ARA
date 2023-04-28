@@ -1,4 +1,4 @@
-import { UPDATE_FACULTY_FAILURE, UPDATE_FACULTY_REQUEST, UPDATE_FACULTY_SUCCESS } from './updateFacultyTypes'
+import { UPDATE_FACULTY_FAILURE, UPDATE_FACULTY_REQUEST, UPDATE_FACULTY_SUCCESS, RESET_STATE } from './updateFacultyTypes'
 
 const updateFacultyInitialState = {
     loading: false,
@@ -25,6 +25,11 @@ export const updateFacultyReducer = (state = updateFacultyInitialState, action) 
             loading: false,
             result: '',
             error: action.message,
+            updated: false
+        }
+        case RESET_STATE: return {
+            ...state,
+            error: '',
             updated: false
         }
         default: return state

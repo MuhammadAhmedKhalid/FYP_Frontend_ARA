@@ -85,7 +85,7 @@ function StaffRequest(props) {
                 }
                 for (let i = 0; i < faculty.length; i++) {
                     for (let j = 0; j < departments.length; j++) {
-                        if (faculty[i].department === departments[j].department_name && departments[j].department_id === request.department_id 
+                        if (faculty[i].department_id === departments[j].department_id && departments[j].department_id === request.department_id 
                             && faculty[i].user.user_id !== user_id) {
                             setFacultyData(facultyData => [...facultyData, { id: faculty[i].faculty_id, name: faculty[i].name }])
                         }

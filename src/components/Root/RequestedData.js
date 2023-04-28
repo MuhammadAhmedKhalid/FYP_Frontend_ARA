@@ -107,7 +107,7 @@ function RequestedData() {
                                         for(let j = 0; j < departments.length; j++){
                                             if(faculty[i].faculty_id === leave.faculty_id
                                                 && ((name === faculty[i].name)||(isAdmin))
-                                                && departments[j].department_name === faculty[i].department){
+                                                && departments[j].department_id === faculty[i].department_id){
                                                 return <RequestedDataField index={index} 
                                                 name={faculty[i].name} 
                                                 details={"Department: " + departments[j].department_name}
