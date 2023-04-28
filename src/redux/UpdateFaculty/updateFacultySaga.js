@@ -11,8 +11,6 @@ function* updateFacultyRequest(payload) {
             'Content-Type': 'application/json; charset=utf-8'
         },
     });
-    console.log(result)
-    console.log(payload)
     if(result.status === 200){
         yield put({ type: UPDATE_FACULTY_SUCCESS, result })
     }else{

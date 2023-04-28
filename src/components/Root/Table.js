@@ -54,7 +54,7 @@ function Table(props) {
       };
 
     const handleDelete = (index) => {
-        console.log(rowData[index][0])
+        console.log(rows[index][0])
         alert('Deleted successfully.')
         handleRefresh()
     }
