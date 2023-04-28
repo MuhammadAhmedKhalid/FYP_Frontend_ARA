@@ -25,7 +25,7 @@ function Batches() {
     const [rowData, setRowData] = useState([])
     const [refresh, setRefresh] = useState(false)
     const [updVal, setUpdVal] = useState('')
-    const [oldVal, setOldVal] = useState('')
+    const [oldVal, setOldVal] = useState(null)
     const [update, setUpdate] = useState(false)
 
     useEffect(()=>{
@@ -38,25 +38,25 @@ function Batches() {
         }
     }, [updateError, updatedSuccessfully])
 
-    // useEffect(() => {
-    //     if(update){
-    //         for(let i of batches){
-    //             if(i.department_name === oldVal){
-    //                 dispatch(updateBatch(i.department_id, updVal))
-    //             }
-    //         }
-    //         setUpdVal('')
-    //         setOldVal('')
-    //         setUpdate(false)
-    //     }
-    // }, [update])
+    useEffect(() => {
+        if(update){
+            for(let i of batches){
+                if(i.batchId === oldVal[0]){
+                    dispatch(updateBatch(i.department_id, i.batchId, updVal))
+                }
+            }
+            setUpdVal('')
+            setOldVal(null)
+            setUpdate(false)
+        }
+    }, [update])
 
     useEffect(()=>{
         if(batchesAdded && rowData.length !== batches.length && departmentsAdded){
             for(let i=0; i<batches.length; i++){
                 for(let j in departments){
                     if(departments[j].department_id == batches[i].department_id){
-                        rowData.push([batches[i].batchYear, departments[j].department_name])
+                        rowData.push([batches[i].batchId , (batches[i].batchYear).toString(), departments[j].department_name])
                     }
                 }
             }

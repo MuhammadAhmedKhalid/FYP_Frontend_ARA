@@ -39,7 +39,7 @@ function Objects() {
                             for (let l = 0; l < departments.length; l++){
                                 if (objects[i].resource_type_id === objectTypes[j].resource_type_id && objects[i].room_id === rooms[k].room_id 
                                     && rooms[k].department_id === departments[l].department_id ) {
-                                    setObjectData(objectData => [...objectData, [objectTypes[j].object_name,  objects[i].quantity, 
+                                    setObjectData(objectData => [...objectData, [objectTypes[j].resource_type_id , objectTypes[j].object_name,  objects[i].quantity, 
                                             rooms[k].room_name, departments[l].department_name]])
                                 }
                             }
