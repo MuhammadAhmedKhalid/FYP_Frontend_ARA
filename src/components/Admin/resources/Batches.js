@@ -7,6 +7,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import { getBatchesRequest } from '../../../redux/GetBatches/getBatchesActions'
 import { getDepartmentsRequest } from '../../../redux/GetDepartments/getDepartmentsActions'
 import { resetState, updateBatch } from '../../../redux/UpdateBatch/updateBatchActions'
+import { deleteBatchRequest } from '../../../redux/DeleteBatch/deleteBatchActions'
 
 function Batches() {
 
@@ -27,6 +28,15 @@ function Batches() {
     const [updVal, setUpdVal] = useState('')
     const [oldVal, setOldVal] = useState(null)
     const [update, setUpdate] = useState(false)
+    const [deleteId, setDeleteId] = useState(null)
+
+    useEffect(() => {
+        if(deleteId !== null){
+            dispatch(deleteBatchRequest(deleteId))
+            setUpdate(false)
+            setDeleteId(null)
+        }
+    }, [deleteId])
 
     useEffect(()=>{
         if(updateError.length > 0){
@@ -92,7 +102,7 @@ function Batches() {
                     <center>
                         {
                             <Table columns={['No.', 'Batch Year', 'Department']} rows={rowData} refresh={refresh} setRefresh={setRefresh}
-                                updVal={updVal} setUpdVal={setUpdVal} setUpdate={setUpdate} setOldVal={setOldVal}/>
+                                updVal={updVal} setUpdVal={setUpdVal} setUpdate={setUpdate} setOldVal={setOldVal} setDeleteId={setDeleteId}/>
                         }
                     </center>
                 </div>
