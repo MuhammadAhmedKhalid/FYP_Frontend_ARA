@@ -49,7 +49,7 @@ function AddObject(props) {
 
     useEffect(() => {
         if (departmentsAdded) {
-            if (rooms.length !== 0 && departments.length !== 0) {
+            if (rooms !== undefined && departments !== undefined) {
                 setRoomsData([])
                 for (let i = 0; i < rooms.length; i++) {
                     for (let j = 0; j < departments.length; j++) {
