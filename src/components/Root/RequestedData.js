@@ -194,17 +194,20 @@ function RequestedData() {
                                 {
                                     if(facultyAdded && departmentsAdded){
                                         let from;
+                                        let forFaculty;
                                         for(let i = 0; i < faculty.length; i++){
                                             if(faculty[i].user.user_id === staff.user_id){
                                                 from = faculty[i].user.name
                                             }
-                                            if (from !== undefined && from !== faculty[i].name){
+                                            if(faculty[i].faculty_id === staff.requested_faculty_id){
+                                                forFaculty = faculty[i].user.name
+                                            }
+                                            if (from !== undefined && from === faculty[i].name){
                                                 for(let j = 0; j < departments.length; j++){
-                                                    if(faculty[i].faculty_id === staff.requested_faculty_id 
-                                                        && departments[j].department_id === staff.department_id
+                                                    if(departments[j].department_id === staff.department_id
                                                         && (user_id === staff.user_id || isAdmin)){
                                                         return <RequestedDataField index={index} 
-                                                        name={faculty[i].name} 
+                                                        name={forFaculty} 
                                                         details={"Department: " + departments[j].department_name}
                                                         from={"By: " + from}
                                                         date={staff.date} startTime={staff.startTime} endTime={staff.endTime}
