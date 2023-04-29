@@ -87,8 +87,6 @@ function AddLeave(props) {
             }
             setDispatchJaccard(false)
         }
-        
-    // }, [jaccardFaculty, jaccardFacultyAdded, jaccardCourses])
 }, [dispatchJaccard])
 
     useEffect(() => {
@@ -161,6 +159,37 @@ function AddLeave(props) {
         e.preventDefault();
      };
 
+    const checkMeetings = (id, startTime, endTime, date) => {
+        
+        let conflict = false
+        let meetingsList = []
+        
+        for(let i of requestedStaff){
+            if(i.requested_faculty_id === id && i.requestedByStaff && i.date === date){
+                console.log(i)
+                // var startTime = new Date();
+                // var endTime = new Date();
+                // var assignedStartTime = new Date();
+                // var assignedEndTime = new Date();
+                
+                // startTime.setHours(request.startTime.substring(0, 2), request.startTime.substring(3), 0, 0);
+                // endTime.setHours(request.endTime.substring(0, 2), request.endTime.substring(3), 0, 0);
+                // assignedStartTime.setHours(i.startTime.substring(0, 2), i.startTime.substring(3), 0, 0);
+                // assignedEndTime.setHours(i.endTime.substring(0, 2), i.endTime.substring(3), 0, 0);
+
+                // conflict = checkConflict(startTime, assignedStartTime, endTime, assignedEndTime,
+                //     startTime.getTime(), assignedStartTime.getTime(), endTime.getTime(), assignedEndTime.getTime());
+
+                // if(conflict){
+                //     meetingsList.push(i)
+                //     conflict = false
+                // }
+
+            }
+        }
+        return meetingsList
+    }
+
     const checkCourse = (id, startTime, endTime, date) => {
         
         if(assignedCoursesAdded){
@@ -217,6 +246,7 @@ function AddLeave(props) {
             alert('Invalid time. Start time should always be less than End time.')
         }else{
             let coursesList = checkCourse(faculty_id, request.startTime, request.endTime, request.date)
+            let meetingsList = checkMeetings(faculty_id, request.startTime, request.endTime, request.date)
             
             let coursesLst = []
             let availableFaculty = []
@@ -303,8 +333,7 @@ function AddLeave(props) {
                         }
                     }
                 }
-// [[1], [2, 4],[2,3,1]] = availableFaculty
-// facultyListJaccard = [[2, 4],[2,3,1]]
+
                 let facultyListJaccard = []
                 for(let i in availableFaculty){
                     if(availableFaculty[i].length > 1){

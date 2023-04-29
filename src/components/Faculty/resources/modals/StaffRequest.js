@@ -17,6 +17,7 @@ import { addRequestedStaff } from '../../../../redux/AddStaffRequest/staffReques
 import { getStaffRequest } from '../../../../redux/GetStaffRequest/getStaffReqActions'
 import { checkConflict } from '../../utils'
 import { getRoomRequest } from '../../../../redux/GetRoomRequests/getRoomReqActions'
+import { addNotificationRequest } from '../../../../redux/AddNotification/addNotificationActions'
 
 function StaffRequest(props) {
 
@@ -26,6 +27,7 @@ function StaffRequest(props) {
 
     const institute_id = useSelector((state) => state.login.user.institute_id)
     const user_id = useSelector((state) => state.login.user.user_id)
+    const faculty_id = useSelector((state) => state.login.user.faculty_id)
     const departments = useSelector((state) => state.getDepartments.departments.data)
     const departmentsAdded = useSelector((state) => state.getDepartments.added)
     const rooms = useSelector((state) => state.getRooms.rooms.data)
@@ -35,6 +37,7 @@ function StaffRequest(props) {
     const requestedStaff = useSelector((state) => state.staffReqReducer.staff_req.data)
     const requestSuccessfull = useSelector((state) => state.addStaffReqeReducer.added)
     const requestedRoom = useSelector((state) => state.getRoomRequest.room_req.data)
+    const facultyName = useSelector((state) => state.login.user.name)
 
     const [value, setValue] = useState(dayjs(new Date()));
     const [value1, setValue1] = useState(dayjs(new Date()));
@@ -42,6 +45,7 @@ function StaffRequest(props) {
     const [roomsData, setRoomsData] = useState([])
     const [facultyData, setFacultyData] = useState([])
     const [requestAdded, setRequestAdded] = useState(true);
+    const [notifications, setNotifications] = useState([]);
 
     const [request, setRequest] = useState({
         department_id: '',
@@ -51,7 +55,8 @@ function StaffRequest(props) {
         requested_faculty_id: '',
         date: format(new Date(), 'MM/dd/yyyy'),
         startTime: format(new Date(), 'HH:mm'),
-        endTime: format(new Date(), 'HH:mm')
+        endTime: format(new Date(), 'HH:mm'),
+        requestedByStaff: true
     })
 
     useEffect(()=>{
@@ -175,9 +180,47 @@ function StaffRequest(props) {
     };
 
     const addStaffRequest = () => {
+
+        let facultyDepartment;
+        let roomName;
+        let roomDept;
+        let requestedFaculty;
+
+        for(let k of faculty){
+            if(k.faculty_id === request.requested_faculty_id){
+                requestedFaculty = k.user.user_id
+            }
+            if(k.faculty_id === faculty_id){
+                facultyDepartment = k.department_id
+            }
+        }
+
+        for(let i of rooms){
+            for(let j of departments){
+                if(i.room_id === request.room_id && j.department_id === i.department_id){
+                    roomName = i.room_name
+                    roomDept = j.department_name
+                }
+                if(j.department_id === facultyDepartment){
+                    facultyDepartment = j.department_name
+                }
+            }
+        }
+
+        notifications.push({title: facultyName + " (" + facultyDepartment + ")" + " invited you in " + roomName + " (" + roomDept + ").", 
+                                    date: request.date, 
+                                    details: "", 
+                                    department_id: request.department_id,
+                                    institute_id,
+                                    user_id: requestedFaculty   
+                                })
+
         setStaffModal(false)
         alert("Operation performed successfully!")
         dispatch(addRequestedStaff(request))
+        if(notifications.length > 0){
+            dispatch(addNotificationRequest(notifications))
+        }
         if (requestSuccessfull) {
             setRequestAdded(true)
             setShowError(false)
@@ -212,6 +255,7 @@ function StaffRequest(props) {
                     requestStartTime.getTime(), startTime.getTime(), requestEndTime.getTime(), endTime.getTime())
 
                 if (faculty_conflict) {
+                    console.log(i)
                     setShowError(true)
                     break
                 }
@@ -231,6 +275,7 @@ function StaffRequest(props) {
                     requestStartTime.getTime(), startTime.getTime(), requestEndTime.getTime(), endTime.getTime())
 
                 if (room_conflict) {
+                    console.log(requestedRoom[j])
                     setShowError(true)
                     break
                 }
