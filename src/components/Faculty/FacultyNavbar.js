@@ -34,8 +34,9 @@ const AdminNavBar = () => {
     const [notificationsList, setNotificationsList] = useState([])
 
     useEffect(() => {
+        setNotificationNum(0)
         if(notificationsAdded){
-            setNotificationNum(0)
+            // setNotificationNum(0)
             for(let i of notifications){
                 if(i.user_id === user_id){
                     notificationsList.push(i)

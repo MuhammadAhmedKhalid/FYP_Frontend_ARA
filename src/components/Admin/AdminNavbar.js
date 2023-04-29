@@ -128,6 +128,7 @@ const AdminNavBar = () => {
     }, [weightagesAdded, refresh])
 
     useEffect(() => {
+        setNotificationNum(0)
         if(notificationsAdded){
             setNotificationNum(notifications.length)
         }

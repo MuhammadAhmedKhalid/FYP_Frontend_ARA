@@ -185,10 +185,12 @@ function StaffRequest(props) {
         let roomName;
         let roomDept;
         let requestedFaculty;
+        let requestedFacultyName;
 
         for(let k of faculty){
             if(k.faculty_id === request.requested_faculty_id){
                 requestedFaculty = k.user.user_id
+                requestedFacultyName = k.user.name
             }
             if(k.faculty_id === faculty_id){
                 facultyDepartment = k.department_id
@@ -207,7 +209,7 @@ function StaffRequest(props) {
             }
         }
 
-        notifications.push({title: facultyName + " (" + facultyDepartment + ")" + " invited you in " + roomName + " (" + roomDept + ").", 
+        notifications.push({title: facultyName + " (" + facultyDepartment + ")" + " invited " + requestedFacultyName + " in " + roomName + " (" + roomDept + ").", 
                                     date: request.date + " Time: " + request.startTime + "-" + request.endTime, 
                                     details: "", 
                                     department_id: request.department_id,
