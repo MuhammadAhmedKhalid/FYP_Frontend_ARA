@@ -17,7 +17,6 @@ function Batches() {
     const batchesAdded = useSelector((state) => state.getBatchesReducer.added)
     const departments = useSelector((state) => state.getDepartments.departments.data)
     const departmentsAdded = useSelector((state) => state.getDepartments.added)
-    const institute_name = useSelector((state) => state.login.user.institute_name)
     const institute_id = useSelector((state) => state.login.user.institute_id)
     const updateError = useSelector((state) => state.updateBatchReducer.error)
     const updatedSuccessfully = useSelector((state) => state.updateBatchReducer.updated)

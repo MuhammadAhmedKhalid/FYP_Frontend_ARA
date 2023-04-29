@@ -7,6 +7,7 @@ import { getDepartmentsRequest } from '../../../redux/GetDepartments/getDepartme
 import { getRoomsRequest } from '../../../redux/GetRooms/getRoomsActions'
 import Table from '../../Root/Table'
 import { updateRoom, resetState } from '../../../redux/UpdateRoom/updateRoomActions' 
+import { deleteRoomRequest } from '../../../redux/DeleteRoom/deleteRoomActions'
 
 function Rooms() {
 
@@ -18,6 +19,7 @@ function Rooms() {
     const [updVal, setUpdVal] = useState('')
     const [oldVal, setOldVal] = useState(null)
     const [update, setUpdate] = useState(false)
+    const [deleteId, setDeleteId] = useState(null)
 
     const rooms = useSelector((state) => state.getRooms.rooms.data)
     const roomsAdded = useSelector((state) => state.getRooms.added)
@@ -26,6 +28,14 @@ function Rooms() {
     const institute_id = useSelector((state) => state.login.user.institute_id)
     const updateError = useSelector((state) => state.updateRoomReducer.error)
     const updatedSuccessfully = useSelector((state) => state.updateRoomReducer.updated)
+
+    useEffect(() => {
+        if(deleteId !== null){
+            dispatch(deleteRoomRequest(deleteId))
+            setUpdate(false)
+            setDeleteId(null)
+        }
+    }, [deleteId])
 
     useEffect(()=>{
         if(updateError.length > 0){
@@ -93,7 +103,7 @@ function Rooms() {
                     <center>
                         {
                             roomsAdded && <Table columns={['No.', 'Room Name', 'Department']} rows={roomData} refresh={refresh} setRefresh={setRefresh}
-                                            updVal={updVal} setUpdVal={setUpdVal} setUpdate={setUpdate} setOldVal={setOldVal}/>
+                                            updVal={updVal} setUpdVal={setUpdVal} setUpdate={setUpdate} setOldVal={setOldVal} setDeleteId={setDeleteId}/>
                         }
                     </center>
                 </div>
