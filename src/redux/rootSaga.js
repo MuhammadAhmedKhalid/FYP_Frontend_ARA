@@ -56,6 +56,7 @@ import { deleteBatchSaga } from './DeleteBatch/deleteBatchSaga'
 import { deleteRoomSaga } from './DeleteRoom/deleteRoomSaga'
 import { deletePositionSaga } from './DeletePosition/deletePositionSaga'
 import { deleteCourseSaga } from './DeleteCourse/deleteCourseSaga'
+import { deleteObjSaga } from './DeleteObject/deleteObjSaga'
 
 export function* rootSaga() {
     yield fork(signupSaga)
@@ -115,4 +116,5 @@ export function* rootSaga() {
     yield fork(deleteRoomSaga)
     yield fork(deletePositionSaga)
     yield fork(deleteCourseSaga)
+    yield fork(deleteObjSaga)
 }

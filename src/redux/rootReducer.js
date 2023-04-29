@@ -55,6 +55,7 @@ import { deleteBatchReducer }from './DeleteBatch/deleteBatchReducer'
 import { deleteRoomReducer } from './DeleteRoom/deleteRoomReducer'
 import { deletePositionReducer } from './DeletePosition/deletePositionReducer'
 import { deleteCourseReducer } from './DeleteCourse/deleteCourseReducer'
+import { deleteObjReducer } from './DeleteObject/deleteObjReducer'
 
 export const rootReducer = combineReducers({
     signup: signupReducer,
@@ -113,4 +114,5 @@ export const rootReducer = combineReducers({
     deleteRoomReducer,
     deletePositionReducer,
     deleteCourseReducer,
+    deleteObjReducer,
 })
