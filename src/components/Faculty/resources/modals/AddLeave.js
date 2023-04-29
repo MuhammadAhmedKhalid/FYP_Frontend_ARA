@@ -166,24 +166,24 @@ function AddLeave(props) {
         
         for(let i of requestedStaff){
             if(i.requested_faculty_id === id && i.requestedByStaff && i.date === date){
-                console.log(i)
-                // var startTime = new Date();
-                // var endTime = new Date();
-                // var assignedStartTime = new Date();
-                // var assignedEndTime = new Date();
+
+                var startTime = new Date();
+                var endTime = new Date();
+                var assignedStartTime = new Date();
+                var assignedEndTime = new Date();
                 
-                // startTime.setHours(request.startTime.substring(0, 2), request.startTime.substring(3), 0, 0);
-                // endTime.setHours(request.endTime.substring(0, 2), request.endTime.substring(3), 0, 0);
-                // assignedStartTime.setHours(i.startTime.substring(0, 2), i.startTime.substring(3), 0, 0);
-                // assignedEndTime.setHours(i.endTime.substring(0, 2), i.endTime.substring(3), 0, 0);
+                startTime.setHours(request.startTime.substring(0, 2), request.startTime.substring(3), 0, 0);
+                endTime.setHours(request.endTime.substring(0, 2), request.endTime.substring(3), 0, 0);
+                assignedStartTime.setHours(i.startTime.substring(0, 2), i.startTime.substring(3), 0, 0);
+                assignedEndTime.setHours(i.endTime.substring(0, 2), i.endTime.substring(3), 0, 0);
 
-                // conflict = checkConflict(startTime, assignedStartTime, endTime, assignedEndTime,
-                //     startTime.getTime(), assignedStartTime.getTime(), endTime.getTime(), assignedEndTime.getTime());
+                conflict = checkConflict(startTime, assignedStartTime, endTime, assignedEndTime,
+                    startTime.getTime(), assignedStartTime.getTime(), endTime.getTime(), assignedEndTime.getTime());
 
-                // if(conflict){
-                //     meetingsList.push(i)
-                //     conflict = false
-                // }
+                if(conflict){
+                    meetingsList.push(i)
+                    conflict = false
+                }
 
             }
         }
@@ -248,6 +248,29 @@ function AddLeave(props) {
             let coursesList = checkCourse(faculty_id, request.startTime, request.endTime, request.date)
             let meetingsList = checkMeetings(faculty_id, request.startTime, request.endTime, request.date)
             
+            if(meetingsList.length > 0 ){
+                for(let i of meetingsList){
+
+                    let facultyDepartment;
+
+                    for(let j of faculty){
+                        for(let k of departments){
+                            if(faculty_id === j.faculty_id && j.department_id === k.department_id){
+                                facultyDepartment = k.department_name
+                            }
+                        }
+                    }
+
+                    notifications.push({title: facultyName + " (" + facultyDepartment + ")" + " is not available.", 
+                                    date: request.date + " Time: " + request.startTime + "-" + request.endTime, 
+                                    details: "", 
+                                    department_id: request.department_id,
+                                    institute_id,
+                                    user_id: i.user_id   
+                                })
+                }
+            }
+
             let coursesLst = []
             let availableFaculty = []
 

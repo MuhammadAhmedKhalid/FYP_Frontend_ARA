@@ -208,7 +208,7 @@ function StaffRequest(props) {
         }
 
         notifications.push({title: facultyName + " (" + facultyDepartment + ")" + " invited you in " + roomName + " (" + roomDept + ").", 
-                                    date: request.date, 
+                                    date: request.date + " Time: " + request.startTime + "-" + request.endTime, 
                                     details: "", 
                                     department_id: request.department_id,
                                     institute_id,
