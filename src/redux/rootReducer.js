@@ -57,6 +57,7 @@ import { deletePositionReducer } from './DeletePosition/deletePositionReducer'
 import { deleteCourseReducer } from './DeleteCourse/deleteCourseReducer'
 import { deleteObjReducer } from './DeleteObject/deleteObjReducer'
 import { deleteFacultyReducer } from './DeleteFaculty/deleteFacultyReducer'
+import { deleteAssignedCoursesReducer } from './DeleteAssignedCourses/deleteAssignedCoursesReducer'
 
 export const rootReducer = combineReducers({
     signup: signupReducer,
@@ -117,4 +118,5 @@ export const rootReducer = combineReducers({
     deleteCourseReducer,
     deleteObjReducer,
     deleteFacultyReducer,
+    deleteAssignedCoursesReducer,
 })
