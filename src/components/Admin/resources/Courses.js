@@ -7,6 +7,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import { getDepartmentsRequest } from '../../../redux/GetDepartments/getDepartmentsActions'
 import { getCourseRequest } from '../../../redux/GetCourse/getCourseActions'
 import { updateCourse, resetState } from '../../../redux/UpdateCourse/updateCourseActions'
+import { deleteCourseRequest } from '../../../redux/DeleteCourse/deleteCourseActions'
 
 function Courses() {
 
@@ -18,6 +19,7 @@ function Courses() {
     const [rowData, setRowData] = useState([])
     const [oldVal, setOldVal] = useState(null)
     const [update, setUpdate] = useState(false)
+    const [deleteId, setDeleteId] = useState(null)
     
     const departments = useSelector((state) => state.getDepartments.departments.data)
     const departmentsAdded = useSelector((state) => state.getDepartments.added)
@@ -26,6 +28,14 @@ function Courses() {
     const institute_id = useSelector((state) => state.login.user.institute_id)
     const updateError = useSelector((state) => state.updateCourseReducer.error)
     const updatedSuccessfully = useSelector((state) => state.updateCourseReducer.updated)
+
+    useEffect(() => {
+        if(deleteId !== null){
+            dispatch(deleteCourseRequest(deleteId))
+            setUpdate(false)
+            setDeleteId(null)
+        }
+    }, [deleteId])
 
     useEffect(()=>{
         if(updateError.length > 0){
@@ -91,7 +101,7 @@ function Courses() {
                 <center>
                     {
                         coursessAdded && <Table columns={['No.', 'Courses', 'Department']} rows={rowData} refresh={refresh} setRefresh={setRefresh}
-                                            updVal={updVal} setUpdVal={setUpdVal} setUpdate={setUpdate} setOldVal={setOldVal}/>
+                                            updVal={updVal} setUpdVal={setUpdVal} setUpdate={setUpdate} setOldVal={setOldVal} setDeleteId={setDeleteId} />
                     }
                 </center>
             </div>
