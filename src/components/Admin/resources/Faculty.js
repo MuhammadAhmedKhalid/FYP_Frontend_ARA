@@ -7,6 +7,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import Table from '../../Root/Table'
 import { getDepartmentsRequest } from '../../../redux/GetDepartments/getDepartmentsActions'
 import { updateFaculty, resetState } from '../../../redux/UpdateFaculty/updateFacultyActions'
+import { deleteFacultyRequest } from '../../../redux/DeleteFaculty/deleteFacultyActions'
 
 function Faculty() {
 
@@ -20,6 +21,7 @@ function Faculty() {
     const [updDesignation, setUpdDesignation] = useState('')
     const [oldVal, setOldVal] = useState(null)
     const [update, setUpdate] = useState(false)
+    const [deleteId, setDeleteId] = useState(null)
 
     const faculty = useSelector((state) => state.getFaculty.faculty)
     const facultyAdded = useSelector((state) => state.getFaculty.added)
@@ -27,6 +29,15 @@ function Faculty() {
     const departments = useSelector((state) => state.getDepartments.departments.data)
     const updateError = useSelector((state) => state.updateFacultyReducer.error)
     const updatedSuccessfully = useSelector((state) => state.updateFacultyReducer.updated)
+
+    useEffect(() => {
+        if(deleteId !== null){
+            dispatch(deleteFacultyRequest(deleteId))
+            setUpdate(false)
+            setDeleteId(null)
+        }
+    }, [deleteId])
+
 
     useEffect(()=>{
         if(updateError.length > 0){
@@ -101,7 +112,7 @@ function Faculty() {
                         {
                             facultyAdded&& <Table columns={['No.', 'Name', 'Phone Number', 'E-mail', 'Department', 'Specialization', 
                             'Designation', 'Years of Experience']} rows={rowData} refresh={refresh} setRefresh={setRefresh} multiEdit={true}
-                            isFaculty={true} setUpdate={setUpdate} setOldVal={setOldVal} 
+                            isFaculty={true} setUpdate={setUpdate} setOldVal={setOldVal} setDeleteId={setDeleteId}
                             updDesignation={updDesignation} setUpdDesignation={setUpdDesignation}
                             updName={updName} setUpdName={setUpdName}
                             updNumber={updNumber} setUpdNumber={setUpdNumber} />
