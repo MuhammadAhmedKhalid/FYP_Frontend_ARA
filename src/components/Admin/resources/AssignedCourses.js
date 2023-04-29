@@ -9,6 +9,7 @@ import { getDepartmentsRequest } from '../../../redux/GetDepartments/getDepartme
 import { getCourseRequest } from '../../../redux/GetCourse/getCourseActions'
 import { getFacultyRequest } from '../../../redux/GetFaculty/getFacultyActions'
 import { getBatchesRequest } from '../../../redux/GetBatches/getBatchesActions'
+import { deleteAssignedCoursesRequest } from '../../../redux/DeleteAssignedCourses/deleteAssignedCoursesActions'
 
 function AssignedCourses() {
 
@@ -29,6 +30,14 @@ function AssignedCourses() {
   const [openAssignCourseModal, setOpenAssignCourseModal] = useState(false)
   const [rowData, setRowData] = useState([])
   const [refresh, setRefresh] = useState(false)
+  const [deleteId, setDeleteId] = useState(null)
+
+    useEffect(() => {
+        if(deleteId !== null){
+            dispatch(deleteAssignedCoursesRequest(deleteId))
+            setDeleteId(null)
+        }
+    }, [deleteId])
 
   useEffect(()=>{
     if(assignedCoursesAdded && rowData.length !== assignedCourses.length
@@ -84,7 +93,7 @@ function AssignedCourses() {
                     <center>
                         {
                             <Table columns={['No.', 'Course', 'Department', 'Faculty', 'Batch', 'Semester Type']} rows={rowData} 
-                              refresh={refresh} setRefresh={setRefresh} uneditable={true}/>
+                              refresh={refresh} setRefresh={setRefresh} uneditable={true} setDeleteId={setDeleteId}/>
                         }
                     </center>
                 </div>
