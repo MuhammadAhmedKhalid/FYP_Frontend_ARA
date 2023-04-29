@@ -6,6 +6,7 @@ import Table from '../../Root/Table'
 import { useSelector, useDispatch } from 'react-redux'
 import { getPositionRequest } from '../../../redux/GetPosition/getPositionActions'
 import { resetState, updatePosition } from '../../../redux/UpdatePosition/updatePositionActions'
+import { deletePositionRequest } from '../../../redux/DeletePosition/deletePositionActions'
 
 function Positions() {
 
@@ -17,6 +18,7 @@ function Positions() {
     const [rowData, setRowData] = useState([])
     const [oldVal, setOldVal] = useState(null)
     const [update, setUpdate] = useState(false)
+    const [deleteId, setDeleteId] = useState(null)
    
     const positions = useSelector((state) => state.getPositionReducer.positions)
     const positionsAdded = useSelector((state) => state.getPositionReducer.added)
@@ -24,6 +26,14 @@ function Positions() {
     const institute_id = useSelector((state) => state.login.user.institute_id)
     const updateError = useSelector((state) => state.updatePositionReducer.error)
     const updatedSuccessfully = useSelector((state) => state.updatePositionReducer.updated)
+
+    useEffect(() => {
+        if(deleteId !== null){
+            dispatch(deletePositionRequest(deleteId))
+            setUpdate(false)
+            setDeleteId(null)
+        }
+    }, [deleteId])
 
     useEffect(()=>{
         if(updateError.length > 0){
@@ -84,7 +94,7 @@ function Positions() {
                 <center>
                     {
                         positionsAdded && <Table columns={['No.', 'Position', 'Institute']} rows={rowData} refresh={refresh} setRefresh={setRefresh}
-                                            updVal={updVal} setUpdVal={setUpdVal}  setUpdate={setUpdate} setOldVal={setOldVal}/>
+                                            updVal={updVal} setUpdVal={setUpdVal}  setUpdate={setUpdate} setOldVal={setOldVal} setDeleteId={setDeleteId}/>
                     }
                 </center>
             </div>
