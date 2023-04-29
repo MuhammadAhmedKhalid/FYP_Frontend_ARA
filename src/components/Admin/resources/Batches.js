@@ -62,16 +62,16 @@ function Batches() {
     }, [update])
 
     useEffect(()=>{
-        if(batchesAdded && rowData.length !== batches.length && departmentsAdded){
+        if(batchesAdded && rowData.length === 0 && departmentsAdded){
             for(let i=0; i<batches.length; i++){
                 for(let j in departments){
-                    if(departments[j].department_id == batches[i].department_id){
+                    if(departments[j].department_id === batches[i].department_id){
                         rowData.push([batches[i].batchId , (batches[i].batchYear).toString(), departments[j].department_name])
                     }
                 }
             }
         }
-    },[batchesAdded, batches, institute_name, rowData, departments, departmentsAdded, refresh])
+    },[batches, departments, refresh])
 
     useEffect(() => {
         if(institute_id > 0){
