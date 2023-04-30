@@ -34,7 +34,7 @@ function AddLeave(props) {
 
     const institute_id = localStorage.getItem('institute_id')
     const faculty_id = localStorage.getItem('faculty_id')
-    const user_id = localStorage.getItem('user_id')
+    const user_id = Number(localStorage.getItem('user_id'))
     const departments = useSelector((state) => state.getDepartments.departments.data)
     const departmentsAdded = useSelector((state) => state.getDepartments.added)
     const faculty = useSelector((state) => state.getFaculty.faculty)

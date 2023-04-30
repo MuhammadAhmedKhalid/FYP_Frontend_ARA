@@ -19,7 +19,7 @@ function AdminHomeScreen() {
     const institute_name = useSelector((state) => state.institute.institute.institute_name)
     const institutes = useSelector((state) => state.getInstitutes.institutes.data)
     const isInstitutesAdded = useSelector((state) => state.getInstitutes.added)
-    const admin_id = localStorage.getItem('user_id')
+    const admin_id = Number(localStorage.getItem('user_id'))
 
     useEffect(() => {
         if (isInstitutesAdded && institutes.length !== 0) {

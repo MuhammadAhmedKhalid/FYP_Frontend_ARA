@@ -46,7 +46,7 @@ function AssignCourse(props) {
       const springEnd = localStorage.getItem('springEndMonth')
       const fallStart = localStorage.getItem('fallStartMonth')
       const fallEnd = localStorage.getItem('fallEndMonth')
-      const user_id = localStorage.getItem('user_id')
+      const user_id = Number(localStorage.getItem('user_id'))
 
       const [batchesData, setBatchesData] = useState([])
       const [facultyData, setFacultyData] = useState([])

@@ -38,7 +38,7 @@ function ObjectRequest(props) {
     const objectss = [...new Set(objects)]
     const objectsAdded = useSelector((state) => state.getObjects.added)
     const institute_id = localStorage.getItem('institute_id')
-    const user_id = localStorage.getItem('user_id')
+    const user_id = Number(localStorage.getItem('user_id'))
     const objectsPerResType = useSelector((state) => state.objectsPerResReducer.objects.data)
     
     const [value, setValue] = useState(dayjs(new Date()));

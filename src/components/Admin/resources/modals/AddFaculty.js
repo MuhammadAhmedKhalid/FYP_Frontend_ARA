@@ -19,7 +19,7 @@ function AddFaculty(props) {
     const { openFacultyModal, setOpenFacultyModal } = props
     const dispatch = useDispatch()
 
-    const admin_id = localStorage.getItem('user_id')
+    const admin_id = Number(localStorage.getItem('user_id'))
     const institutes = useSelector((state) => state.getInstitutes.institutes.data)
     const isInstitutesAdded = useSelector((state) => state.getInstitutes.added)
     const departments = useSelector((state) => state.getDepartments.departments.data)
