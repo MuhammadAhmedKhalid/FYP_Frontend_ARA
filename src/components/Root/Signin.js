@@ -20,7 +20,7 @@ function Signin(props) {
     const navigate = useNavigate()
     const dispatch = useDispatch()
     const isLoggedIn = useSelector((state) => state.login.isLoggedIn)
-    const user_id = localStorage.getItem('user_id')
+    const user_id = Number(localStorage.getItem('user_id'))
     const isAdmin = localStorage.getItem('is_admin')
     const institutes = useSelector((state) => state.getInstitutes.institutes.data)
     const isInstitutesAdded = useSelector((state) => state.getInstitutes.added)

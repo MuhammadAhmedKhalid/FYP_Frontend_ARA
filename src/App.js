@@ -28,20 +28,17 @@ function App() {
           <Route path='/' element={<LandingPage />} />
           <Route path='/admin' element={<AuthRoute><AdminHomeScreen /></AuthRoute>} />
           <Route path='/departments' element={<AuthRoute><Departments /></AuthRoute>} />
-          
-          
-          <Route path='/faculty-home' element={<FacultyHomeScreen />} />
-          
-          <Route path='/batches' element={<Batches />} />
-          <Route path='/objects' element={<Objects />} />
-          <Route path='/rooms' element={<Rooms />} />
-          <Route path='/domains' element={<Domains />} />
-          <Route path='/faculty' element={<Faculty />} />
-          <Route path='/schedule' element={<Schedule />} />
-          <Route path='/positions' element={<Positions/>} />
-          <Route path='/courses' element={<Courses/>} />
-          <Route path='/assignedCourses' element={<AssignedCourses/>}/>
-          <Route path='/instituteSchedule' element={<InstituteSchedule/>}/>
+          <Route path='/faculty-home' element={<AuthRoute><FacultyHomeScreen /></AuthRoute>} />
+          <Route path='/batches' element={<AuthRoute><Batches /></AuthRoute>} />
+          <Route path='/objects' element={<AuthRoute><Objects /></AuthRoute>} />
+          <Route path='/rooms' element={<AuthRoute><Rooms /></AuthRoute>} />
+          <Route path='/domains' element={<AuthRoute><Domains /></AuthRoute>} />
+          <Route path='/faculty' element={<AuthRoute><Faculty /></AuthRoute>} />
+          <Route path='/schedule' element={<AuthRoute><Schedule /></AuthRoute>} />
+          <Route path='/positions' element={<AuthRoute><Positions/></AuthRoute>} />
+          <Route path='/courses' element={<AuthRoute><Courses/></AuthRoute>} />
+          <Route path='/assignedCourses' element={<AuthRoute><AssignedCourses/></AuthRoute>}/>
+          <Route path='/instituteSchedule' element={<AuthRoute><InstituteSchedule/></AuthRoute>}/>
           <Route path='*' element={<NoMatch />} />
         </Routes>
       </Provider>

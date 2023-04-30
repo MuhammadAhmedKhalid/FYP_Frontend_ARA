@@ -16,7 +16,7 @@ function* login(user) {
     localStorage.setItem('institute_name', response.data.institute_name);
     localStorage.setItem('institute_id', response.data.institute_id);
     localStorage.setItem('faculty_id', response.data.faculty_id);
-    localStorage.setItem('is_admin', response.data.is_admin);
+    localStorage.setItem('is_admin', response.data._admin);
     localStorage.setItem('springStartMonth', response.data.springStartMonth);
     localStorage.setItem('springEndMonth', response.data.springEndMonth);
     localStorage.setItem('fallStartMonth', response.data.fallStartMonth);
