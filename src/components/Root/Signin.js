@@ -21,7 +21,7 @@ function Signin(props) {
     const dispatch = useDispatch()
     const isLoggedIn = useSelector((state) => state.login.isLoggedIn)
     const user_id = Number(localStorage.getItem('user_id'))
-    const isAdmin = localStorage.getItem('is_admin')
+    const isAdmin = Boolean(localStorage.getItem('is_admin'))
     const institutes = useSelector((state) => state.getInstitutes.institutes.data)
     const isInstitutesAdded = useSelector((state) => state.getInstitutes.added)
     const [loginErrText, setLoginErrText] = useState('')
@@ -44,7 +44,7 @@ function Signin(props) {
                     if (institutes[i].user_id === user_id && isAdmin) {
                         navigate('/admin')
                         break;
-                    } else if (!isAdmin) {
+                    } else if (isAdmin) {
                         navigate('/faculty-home')
                     }
                     else {
