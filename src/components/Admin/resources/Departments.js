@@ -22,8 +22,8 @@ function Departments() {
 
     const departments = useSelector((state) => state.getDepartments.departments.data)
     const departmentsAdded = useSelector((state) => state.getDepartments.added)
-    const institute_name = useSelector((state) => state.login.user.institute_name)
-    const institute_id = useSelector((state) => state.login.user.institute_id)
+    const institute_name = localStorage.getItem('institute_name')
+    const institute_id = localStorage.getItem('institute_id')
     const updateError = useSelector((state) => state.updateDepartmentReducer.error)
     const updatedSuccessfully = useSelector((state) => state.updateDepartmentReducer.updated)
 

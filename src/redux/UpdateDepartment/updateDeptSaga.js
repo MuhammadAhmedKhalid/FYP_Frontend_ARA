@@ -2,7 +2,7 @@ import { UPDATE_DEPARTMENT_FAILURE, UPDATE_DEPARTMENT_REQUEST, UPDATE_DEPARTMENT
 import { put, takeEvery, call, select } from 'redux-saga/effects'
 
 function* updateDepartmentRequest(payload) {
-    const token = yield select(state => state.login.user.jwt);
+    const token = localStorage.getItem('token');
     let result = yield call(fetch, `http://localhost:8080/updateDepartment/${payload.department_id}`, {
         method: "PUT",
         body: payload.department_name,

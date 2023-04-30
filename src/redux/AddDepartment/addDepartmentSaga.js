@@ -1,11 +1,10 @@
 import { ADD_DEPARTMENT_FAILURE, ADD_DEPARTMENT_REQUEST, ADD_DEPARTMENT_SUCCESS } from './addDepartmentTypes'
 import { call, put, takeEvery } from 'redux-saga/effects'
 import axios from 'axios'
-import { select } from 'redux-saga/effects';
 
 function* addDepartment(department) {
     try {
-        const token = yield select(state => state.login.user.jwt);
+        const token = localStorage.getItem('token');
         const headers = {
             'Authorization': `Bearer ${token}`
         };

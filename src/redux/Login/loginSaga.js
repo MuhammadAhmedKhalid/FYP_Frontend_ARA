@@ -3,20 +3,6 @@ import { LOGIN_FAILURE, LOGIN_SUCCESS, LOGIN_REQUEST } from './loginTypes'
 import axios from 'axios'
 
 function* login(user) {
-
-    axios.interceptors.request.use(
-        (config) => {
-          const token = localStorage.getItem('token');
-          if (token) {
-            config.headers.Authorization = `Bearer ${token}`;
-          }
-          return config;
-        },
-        (error) => {
-          return Promise.reject(error);
-        }
-      );
-      
     try {
         const response = yield axios.post('http://localhost:8080/login', user.user)
         yield put({ type: LOGIN_SUCCESS, message: "Logged in successfully.", user: response.data })
@@ -35,8 +21,6 @@ function* login(user) {
     localStorage.setItem('springEndMonth', response.data.springEndMonth);
     localStorage.setItem('fallStartMonth', response.data.fallStartMonth);
     localStorage.setItem('fallEndMonth', response.data.fallEndMonth);
-
-    axios.defaults.headers.common['Authorization'] = `Bearer ${token}`; 
 
     } catch (e) {
         yield put({ type: LOGIN_FAILURE, message: "Login operation failed" })

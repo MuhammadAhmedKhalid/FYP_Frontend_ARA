@@ -13,7 +13,7 @@ function AddDepartment(props) {
 
     const dispatch = useDispatch()
 
-    const institute_id = useSelector((state) => state.login.user.institute_id)
+    const institute_id = localStorage.getItem('institute_id')
     const requestSuccessfull = useSelector((state) => state.addDepartmentReducer.added)
     const requestUnsuccessfullMsg = useSelector((state) => state.addDepartmentReducer.error)
 
