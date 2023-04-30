@@ -9,7 +9,7 @@ function FacultyHomeScreen() {
 
     const [greetings, setGreetings] = useState("")
 
-    const facultyName = useSelector((state) => state.login.user.name)
+    const facultyName = localStorage.getItem('name')
 
     useEffect(() => {
         let date = new Date();

@@ -22,7 +22,7 @@ function Positions() {
    
     const positions = useSelector((state) => state.getPositionReducer.positions)
     const positionsAdded = useSelector((state) => state.getPositionReducer.added)
-    const institute_name = useSelector((state) => state.login.user.institute_name)
+    const institute_name = localStorage.getItem('institute_name')
     const institute_id = localStorage.getItem('institute_id')
     const updateError = useSelector((state) => state.updatePositionReducer.error)
     const updatedSuccessfully = useSelector((state) => state.updatePositionReducer.updated)

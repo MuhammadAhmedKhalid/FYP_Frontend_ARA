@@ -24,7 +24,7 @@ function AdminQuestionnaire(props) {
     const instituteAdded = useSelector((state) => state.institute.added)
     const institute_id = useSelector((state) => state.institute.institute.institute_id)
     const institute_name = useSelector((state) => state.institute.institute.institute_name)
-    const admin_id = useSelector((state) => state.login.user.user_id)
+    const admin_id = localStorage.getItem('user_id')
 
     useEffect(() => {
         if (instituteAdded) {

@@ -30,7 +30,7 @@ const AdminNavBar = () => {
     const institute_id = localStorage.getItem('institute_id')
     const notifications = useSelector((state) => state.notificationsReqReducer.notifications.data)
     const notificationsAdded = useSelector((state) => state.notificationsReqReducer.added)
-    const user_id = useSelector((state) => state.login.user.user_id)
+    const user_id = localStorage.getItem('user_id')
     const [notificationsList, setNotificationsList] = useState([])
 
     useEffect(() => {

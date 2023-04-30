@@ -26,8 +26,8 @@ function StaffRequest(props) {
     const dispatch = useDispatch()
 
     const institute_id = localStorage.getItem('institute_id')
-    const user_id = useSelector((state) => state.login.user.user_id)
-    const faculty_id = useSelector((state) => state.login.user.faculty_id)
+    const user_id = localStorage.getItem('user_id')
+    const faculty_id = localStorage.getItem('faculty_id')
     const departments = useSelector((state) => state.getDepartments.departments.data)
     const departmentsAdded = useSelector((state) => state.getDepartments.added)
     const rooms = useSelector((state) => state.getRooms.rooms.data)
@@ -37,7 +37,7 @@ function StaffRequest(props) {
     const requestedStaff = useSelector((state) => state.staffReqReducer.staff_req.data)
     const requestSuccessfull = useSelector((state) => state.addStaffReqeReducer.added)
     const requestedRoom = useSelector((state) => state.getRoomRequest.room_req.data)
-    const facultyName = useSelector((state) => state.login.user.name)
+    const facultyName = localStorage.getItem('name')
 
     const [value, setValue] = useState(dayjs(new Date()));
     const [value1, setValue1] = useState(dayjs(new Date()));

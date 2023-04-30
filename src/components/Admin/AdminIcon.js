@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux'
 
 function AdminIcon() {
 
-    const adminName = useSelector((state) => state.login.user.name)
+    const adminName = localStorage.getItem('name')
 
     return (
         <div style={{ marginTop: '60px', padding: '15px' }}>

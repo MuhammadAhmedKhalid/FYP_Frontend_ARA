@@ -35,7 +35,7 @@ function RequestRoom(props) {
     const roomsAdded = useSelector((state) => state.getRooms.added)
     const roomsRequest = useSelector((state) => state.getRoomRequest.room_req.data)
     const institute_id = localStorage.getItem('institute_id')
-    const user_id = useSelector((state) => state.login.user.user_id)
+    const user_id = localStorage.getItem('user_id')
 
     const [request, setRequest] = useState({
         department_id: '',

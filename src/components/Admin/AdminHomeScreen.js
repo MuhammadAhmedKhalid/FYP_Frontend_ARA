@@ -14,12 +14,12 @@ function AdminHomeScreen() {
     const faculty = useSelector((state) => state.getFaculty.faculty)
     const [instituteId, setInstituteId] = useState(0)
     const [greetings, setGreetings] = useState("")
-    const adminName = useSelector((state) => state.login.user.name)
-    const instituteName = useSelector((state) => state.login.user.institute_name)
+    const adminName = localStorage.getItem('name')
+    const instituteName = localStorage.getItem('institute_name')
     const institute_name = useSelector((state) => state.institute.institute.institute_name)
     const institutes = useSelector((state) => state.getInstitutes.institutes.data)
     const isInstitutesAdded = useSelector((state) => state.getInstitutes.added)
-    const admin_id = useSelector((state) => state.login.user.user_id)
+    const admin_id = localStorage.getItem('user_id')
 
     useEffect(() => {
         if (isInstitutesAdded && institutes.length !== 0) {

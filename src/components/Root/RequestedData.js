@@ -38,9 +38,9 @@ function RequestedData() {
     const departmentsAdded = useSelector((state) => state.getDepartments.added)
     const faculty = useSelector((state) => state.getFaculty.faculty)
     const facultyAdded = useSelector((state) => state.getFaculty.added)
-    const user_id = useSelector((state) => state.login.user.user_id)
-    const name = useSelector((state) => state.login.user.name)
-    const isAdmin = useSelector((state) => state.login.user._admin)
+    const user_id = localStorage.getItem('user_id')
+    const name = localStorage.getItem('name')
+    const isAdmin = localStorage.getItem('is_admin')
     const requestedLeaves = useSelector((state) => state.leaveReqReducer.requestedLeaves.data)
     const requestedLeavesAdded = useSelector((state) => state.leaveReqReducer.added)
 

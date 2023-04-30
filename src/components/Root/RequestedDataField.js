@@ -19,7 +19,7 @@ function RequestedDataField(props) {
           }
     }
 
-    const isAdmin = useSelector((state) => state.login.user._admin)
+    const isAdmin = localStorage.getItem('is_admin')
 
     return (
         <div key={index} className="col-data container" style={{marginTop: '10px'}}>
