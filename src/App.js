@@ -17,6 +17,7 @@ import Positions from './components/Admin/resources/Positions';
 import Courses from './components/Admin/resources/Courses';
 import AssignedCourses from './components/Admin/resources/AssignedCourses';
 import InstituteSchedule from './components/Admin/InstituteSchedule'
+import AuthRoute from './components/Root/AuthRoute'
 
 Modal.setAppElement('#root')
 function App() {
@@ -25,9 +26,12 @@ function App() {
       <Provider store={store}>
         <Routes>
           <Route path='/' element={<LandingPage />} />
-          <Route path='/admin' element={<AdminHomeScreen />} />
+          <Route path='/admin' element={<AuthRoute><AdminHomeScreen /></AuthRoute>} />
+          <Route path='/departments' element={<AuthRoute><Departments /></AuthRoute>} />
+          
+          
           <Route path='/faculty-home' element={<FacultyHomeScreen />} />
-          <Route path='/departments' element={<Departments />} />
+          
           <Route path='/batches' element={<Batches />} />
           <Route path='/objects' element={<Objects />} />
           <Route path='/rooms' element={<Rooms />} />

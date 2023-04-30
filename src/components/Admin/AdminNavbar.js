@@ -148,11 +148,11 @@ const AdminNavBar = () => {
         }
     }, [institute_id, refresh])
 
-    useEffect(() => {
-        if (!isLoggedIn) {
-            navigate('/')
-        }
-    }, [isLoggedIn])
+    // useEffect(() => {
+    //     if (!isLoggedIn) {
+    //         navigate('/')
+    //     }
+    // }, [isLoggedIn])
 
     const handleLogout = () => {
         dispatch(logoutRequest)
