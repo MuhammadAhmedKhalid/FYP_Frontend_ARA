@@ -32,7 +32,7 @@ function AddLeave(props) {
 
     const dispatch = useDispatch()
 
-    const institute_id = useSelector((state) => state.login.user.institute_id)
+    const institute_id = localStorage.getItem('institute_id')
     const faculty_id = useSelector((state) => state.login.user.faculty_id)
     const user_id = useSelector((state) => state.login.user.user_id)
     const departments = useSelector((state) => state.getDepartments.departments.data)

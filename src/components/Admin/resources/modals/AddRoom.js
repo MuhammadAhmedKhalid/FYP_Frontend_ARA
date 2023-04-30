@@ -15,7 +15,7 @@ function AddRoom(props) {
 
     const departments = useSelector((state) => state.getDepartments.departments.data)
     const departmentsAdded = useSelector((state) => state.getDepartments.added)
-    const institute_id = useSelector((state) => state.login.user.institute_id)
+    const institute_id = localStorage.getItem('institute_id')
     const requestSuccessfull = useSelector((state) => state.addRoomReducer.added)
     const requestUnsuccessfullMsg = useSelector((state) => state.addRoomReducer.error)
 

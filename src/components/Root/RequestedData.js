@@ -23,7 +23,7 @@ function RequestedData() {
     const [req_id, setReq_id] = useState(0)
     const [resource, setResource] = useState('')
 
-    const institute_id = useSelector((state) => state.login.user.institute_id)
+    const institute_id = localStorage.getItem('institute_id')
     const requestedObjects = useSelector((state) => state.getObjRequests.obj_requests.data)
     const requestedObjectsAdded = useSelector((state) => state.getObjRequests.added)
     const requestedRooms = useSelector((state) => state.getRoomRequest.room_req.data)

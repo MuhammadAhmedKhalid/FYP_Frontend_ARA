@@ -37,7 +37,7 @@ function ObjectRequest(props) {
     const objects = useSelector((state) => state.getObjects.objects.data)
     const objectss = [...new Set(objects)]
     const objectsAdded = useSelector((state) => state.getObjects.added)
-    const institute_id = useSelector((state) => state.login.user.institute_id)
+    const institute_id = localStorage.getItem('institute_id')
     const user_id = useSelector((state) => state.login.user.user_id)
     const objectsPerResType = useSelector((state) => state.objectsPerResReducer.objects.data)
     

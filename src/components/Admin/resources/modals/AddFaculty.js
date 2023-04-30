@@ -27,7 +27,7 @@ function AddFaculty(props) {
     const positions = useSelector((state) => state.getPositionReducer.positions)
     const positionsAdded = useSelector((state) => state.getPositionReducer.added)
     const courses = useSelector((state) => state.getCourseReducer.courses)
-    const institute_id = useSelector((state) => state.login.user.institute_id)
+    const institute_id = localStorage.getItem('institute_id')
     const [specializationData, setSpecializationData] = useState([])
     const requestSuccessfull = useSelector((state) => state.addFaculty.added)
     const requestUnsuccessfullMsg = useSelector((state) => state.addFaculty.error)

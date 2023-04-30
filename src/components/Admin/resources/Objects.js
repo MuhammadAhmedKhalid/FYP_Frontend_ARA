@@ -26,7 +26,7 @@ function Objects() {
     const objectTypes = useSelector((state) => state.getResourceTypes.resource_types.data)
     const objectTypesAdded = useSelector((state) => state.getResourceTypes.added)
     const rooms = useSelector((state) => state.getRooms.rooms.data)
-    const institute_id = useSelector((state) => state.login.user.institute_id)
+    const institute_id = localStorage.getItem('institute_id')
 
     useEffect(() => {
         if(deleteId !== null){

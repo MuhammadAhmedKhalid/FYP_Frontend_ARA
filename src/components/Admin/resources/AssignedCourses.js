@@ -15,7 +15,7 @@ function AssignedCourses() {
 
   const dispatch = useDispatch()
 
-  const institute_id = useSelector((state) => state.login.user.institute_id)
+  const institute_id = localStorage.getItem('institute_id')
   const assignedCourses = useSelector((state) => state.assignedCoursesForTableReducer.assignedCourses.data)
   const assignedCoursesAdded = useSelector((state) => state.assignedCoursesForTableReducer.added)
   const faculty = useSelector((state) => state.getFaculty.faculty)
