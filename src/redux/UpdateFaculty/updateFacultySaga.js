@@ -2,7 +2,7 @@ import { UPDATE_FACULTY_FAILURE, UPDATE_FACULTY_REQUEST, UPDATE_FACULTY_SUCCESS 
 import { put, takeEvery, call, select } from 'redux-saga/effects'
 
 function* updateFacultyRequest(payload) {
-    const token = yield select(state => state.login.user.jwt);
+    const token = localStorage.getItem('token');
     let result = yield call(fetch, `http://localhost:8080/updateFaculty/${payload.faculty_id}`, {
         method: "PUT",
         body: JSON.stringify(payload.faculty),

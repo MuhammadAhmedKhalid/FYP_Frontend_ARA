@@ -2,7 +2,7 @@ import { UPDATE_POSITION_FAILURE, UPDATE_POSITION_REQUEST, UPDATE_POSITION_SUCCE
 import { put, takeEvery, call, select } from 'redux-saga/effects'
 
 function* updatePositionRequest(payload) {
-    const token = yield select(state => state.login.user.jwt);
+    const token = localStorage.getItem('token');
     let result = yield call(fetch, `http://localhost:8080/updatePosition/${payload.position_id}`, {
         method: "PUT",
         body: payload.position_name,

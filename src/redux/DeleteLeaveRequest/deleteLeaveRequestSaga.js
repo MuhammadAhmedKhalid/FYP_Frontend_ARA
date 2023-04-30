@@ -4,7 +4,7 @@ import axios from 'axios'
 
 function* deleteLeaveRequest(data) {
     try {
-        const token = yield select(state => state.login.user.jwt);
+        const token = localStorage.getItem('token');
         const headers = {
             'Authorization': `Bearer ${token}`
         };

@@ -2,7 +2,7 @@ import { UPDATE_COURSE_FAILURE, UPDATE_COURSE_REQUEST, UPDATE_COURSE_SUCCESS } f
 import { put, takeEvery, call, select } from 'redux-saga/effects'
 
 function* updateCourseRequest(payload) {
-    const token = yield select(state => state.login.user.jwt);
+    const token = localStorage.getItem('token');
     let result = yield call(fetch, `http://localhost:8080/updateCourse/${payload.course_id}/${payload.department_id}`, {
         method: "PUT",
         body: payload.course_name,

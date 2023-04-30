@@ -3,7 +3,7 @@ import { put, takeEvery, call, select } from 'redux-saga/effects'
 
 function* updateWeightageRequest(payload) {
     try {
-        const token = yield select(state => state.login.user.jwt);
+        const token = localStorage.getItem('token');
         let result = yield call(fetch, `http://localhost:8080/updateWeightage/${payload.weightageId}`, {
             method: "PUT",
             headers: {

@@ -1,11 +1,10 @@
 import { ADD_COURSE_FAILURE, ADD_COURSE_REQUEST, ADD_COURSE_SUCCESS } from './addCourseTypes'
 import { call, put, takeEvery } from 'redux-saga/effects'
 import axios from 'axios'
-import { select } from 'redux-saga/effects';
 
 function* addCourse(course) {
     try {
-        const token = yield select(state => state.login.user.jwt);
+        const token = localStorage.getItem('token');
         const headers = {
             'Authorization': `Bearer ${token}`
         };

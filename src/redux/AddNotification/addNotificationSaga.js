@@ -5,7 +5,7 @@ import { select } from 'redux-saga/effects';
 
 function* addNotification(notification) {
     try {
-        const token = yield select(state => state.login.user.jwt);
+        const token = localStorage.getItem('token');
         const headers = {
             'Authorization': `Bearer ${token}`
         };
