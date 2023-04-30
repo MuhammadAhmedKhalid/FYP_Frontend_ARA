@@ -202,7 +202,7 @@ function RequestedData() {
                                             if(faculty[i].faculty_id === staff.requested_faculty_id){
                                                 forFaculty = faculty[i].user.name
                                             }
-                                            if (from !== undefined && from === faculty[i].name){
+                                            if (from !== undefined && forFaculty !== undefined){
                                                 for(let j = 0; j < departments.length; j++){
                                                     if(departments[j].department_id === staff.department_id
                                                         && (user_id === staff.user_id || isAdmin)){
