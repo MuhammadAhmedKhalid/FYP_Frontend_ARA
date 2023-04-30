@@ -1,8 +1,7 @@
 import { CHECK_VALIDITY_REQUEST } from './checkValidityTypes'
 
-export const checkTokenRequest = (token) => {
+export const checkTokenRequest = () => {
     return {
-        type: CHECK_VALIDITY_REQUEST,
-        token
+        type: CHECK_VALIDITY_REQUEST
     }
 }
