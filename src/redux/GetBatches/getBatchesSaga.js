@@ -1,6 +1,5 @@
 import { GET_BATCHES_FAILURE, GET_BATCHES_REQUEST, GET_BATCHES_SUCCESS } from './getBatchesTypes'
 import { put, takeEvery, call } from 'redux-saga/effects'
-import { select } from 'redux-saga/effects';
 import axios from 'axios';
 
 function* getBatchesRequest(data) {
