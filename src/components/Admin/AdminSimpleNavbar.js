@@ -16,14 +16,6 @@ const AdminSimpleNavbar = () => {
     const navigate = useNavigate()
     const dispatch = useDispatch()
 
-    const isLoggedIn = useSelector((state) => state.login.isLoggedIn)
-
-    useEffect(() => {
-        if (!isLoggedIn) {
-            navigate('/')
-        }
-    }, [isLoggedIn])
-
     const [click, setClick] = useState(false)
     const handleClick = () => setClick(!click)
 
@@ -44,6 +36,8 @@ const AdminSimpleNavbar = () => {
 
     window.addEventListener("scroll", changeColor);
     const handleLogout = () => {
+        navigate('/')
+        localStorage.clear();
         dispatch(logoutRequest)
     }
     return (

@@ -35,7 +35,6 @@ const AdminNavBar = () => {
     const [weightageNotificationsNum, setWeightageNotificationsNum] = useState(0)
     const [refresh, setRefresh] = useState(false)
     
-    const isLoggedIn = useSelector((state) => state.login.isLoggedIn)
     const institute_id = localStorage.getItem('institute_id')
     const notifications = useSelector((state) => state.notificationsReqReducer.notifications.data)
     const notificationsAdded = useSelector((state) => state.notificationsReqReducer.added)
@@ -148,13 +147,9 @@ const AdminNavBar = () => {
         }
     }, [institute_id, refresh])
 
-    // useEffect(() => {
-    //     if (!isLoggedIn) {
-    //         navigate('/')
-    //     }
-    // }, [isLoggedIn])
-
     const handleLogout = () => {
+        navigate('/')
+        localStorage.clear();
         dispatch(logoutRequest)
     }
 
