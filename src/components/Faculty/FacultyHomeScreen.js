@@ -11,6 +11,8 @@ function FacultyHomeScreen() {
 
     const facultyName = localStorage.getItem('name')
 
+    const instituteName = localStorage.getItem('institute_name')
+
     useEffect(() => {
         let date = new Date();
         let time = date.toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: false }).split(":")
@@ -41,6 +43,11 @@ function FacultyHomeScreen() {
                 <div style={{ marginTop: '60px', padding: '15px' }}>
                     <div style={{ display: 'flex', justifyContent: 'space-between' }}>
                         <h2 style={{ fontWeight: 'normal' }}>Good {greetings}</h2>
+                        <div className='flexbox-container'>
+                            {
+                                <h2 style={{ color: '#0E5E6F' }}>{instituteName}!</h2>
+                            }
+                        </div>
                     </div><h1 style={{ color: '#0E5E6F' }}>{facultyName}!</h1>
                 </div>
                 <div className='flexbox-container' style={{ justifyContent: 'space-between' }}>
