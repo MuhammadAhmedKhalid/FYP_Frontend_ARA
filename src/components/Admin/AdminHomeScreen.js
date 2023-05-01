@@ -6,11 +6,10 @@ import '../Styling/HomeScreen.css'
 import { useSelector, useDispatch } from 'react-redux'
 import { getFacultyRequest } from '../../redux/GetFaculty/getFacultyActions'
 import RequestedData from '../Root/RequestedData'
-import 'chart.js/auto';
-import { Pie } from 'react-chartjs-2';
 import { getDepartmentsRequest } from '../../redux/GetDepartments/getDepartmentsActions'
 import { getBatchesRequest } from '../../redux/GetBatches/getBatchesActions'
 import { getRoomsRequest } from '../../redux/GetRooms/getRoomsActions'
+import PieChart from '../Root/PieChart'
 
 function AdminHomeScreen() {
 
@@ -83,50 +82,11 @@ function AdminHomeScreen() {
         }
     }, [departmentsAdded, facultyAdded, batchesAdded, roomsAdded])
 
-    const facultyData = {
-        labels: labels,
-        datasets: [
-            {
-                data: facultyNum,
-                backgroundColor: backgroundColor,
-                hoverBackgroundColor: hoverBackgroundColor,
-            },
-        ],
-    };
-      
-    const batchesData = {
-        labels: labels,
-        datasets: [
-            {
-                data: batchesNum,
-                backgroundColor: backgroundColor,
-                hoverBackgroundColor: hoverBackgroundColor,
-            },
-        ],
-    }
-    
-    const roomsData = {
-        labels: labels,
-        datasets: [
-            {
-                data: roomsNum,
-                backgroundColor: backgroundColor,
-                hoverBackgroundColor: hoverBackgroundColor,
-            },
-        ],
-    };
-    
-    const options = {
-        responsive: true,
-        plugins: { egend: { labels: { font: { family: 'Arial', size: 14 }}}},
-        elements: { arc: { borderWidth: 1, borderColor: '#FFFFFF' }},
-        layout: { padding: { left: 10, right: 10, top: 10, bottom: 10 }}
-    };
-
     useEffect(() => {
         if(institute_id > 0){
             dispatch(getDepartmentsRequest(institute_id))
             dispatch(getBatchesRequest(instituteId))
+            dispatch(getRoomsRequest(instituteId))
         }
     }, [institute_id])
 
@@ -192,18 +152,9 @@ function AdminHomeScreen() {
                     </div><h1 style={{ color: '#0E5E6F' }}>{instituteName || institute_name}!</h1>
                 </div>
                 <div className='flexbox-container' style={{ justifyContent: 'space-between' }}>
-                <div className="chart-container flexbox-container-y">
-                    <Pie type='line' data={facultyData} options={options}/>
-                    <p style={{color: 'black', fontSize: '15px'}}>Faculty Meter</p>
-                </div>
-                <div className="chart-container flexbox-container-y">
-                    <Pie type='line' data={batchesData} options={options} />
-                    <p style={{color: 'black', fontSize: '15px'}}>Batches Meter</p>
-                </div>
-                <div className="chart-container flexbox-container-y">
-                    <Pie type='line' data={roomsData} options={options} />
-                    <p style={{color: 'black', fontSize: '15px'}}>Rooms Meter</p>
-                </div>
+                    <PieChart num={facultyNum} labels={labels} title="Faculty Meter" backgroundColor={backgroundColor} hoverBackgroundColor={hoverBackgroundColor}/>
+                    <PieChart num={batchesNum} labels={labels} title="Batches Meter" backgroundColor={backgroundColor} hoverBackgroundColor={hoverBackgroundColor}/>
+                    <PieChart num={roomsNum} labels={labels} title="Rooms Meter" backgroundColor={backgroundColor} hoverBackgroundColor={hoverBackgroundColor}/>
                     <div style={{ justifyContent: 'flex-end' }}>
                         <FullCalendar
                             messages={{ next: '>', previous: '<', today: 'Current' }}
