@@ -1,7 +1,7 @@
 import { CHECK_VALIDITY_FAILURE, CHECK_VALIDITY_REQUEST, CHECK_VALIDITY_SUCCESS } from './checkValidityTypes'
 
 const checkTokenInitialState = {
-    loading: false,
+    loading: true,
     valid: false,
 }
 

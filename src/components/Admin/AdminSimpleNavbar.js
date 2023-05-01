@@ -36,9 +36,9 @@ const AdminSimpleNavbar = () => {
 
     window.addEventListener("scroll", changeColor);
     const handleLogout = () => {
-        navigate('/')
         localStorage.clear();
         dispatch(logoutRequest)
+        navigate('/')
     }
     return (
         <div>

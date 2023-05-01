@@ -1,21 +1,11 @@
-import { useEffect } from 'react'
 import { Navigate } from 'react-router-dom';
-import { useSelector, useDispatch } from 'react-redux'
-import { checkTokenRequest } from '../../redux/CheckTokenValidity/checkValidityActions'
+import '../Styling/TableStyles.css'
 
-const AuthRoute = ({ children }) => {
+function AuthRoute({ children }){
 
-  const dispatch = useDispatch()
+  const token = localStorage.getItem('token');
   
-  const isValid = useSelector((state) => state.checkTokenReducer.valid)
-  console.log(isValid)
-
-  useEffect(() => {
-    const token = localStorage.getItem('token');
-    dispatch(checkTokenRequest(token))
-  }, [])
-  
-  if(isValid){
+  if(token){
     return children
   }else{
     return <Navigate to={"/"} />

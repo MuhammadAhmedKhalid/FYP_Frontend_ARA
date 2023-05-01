@@ -148,9 +148,9 @@ const AdminNavBar = () => {
     }, [institute_id, refresh])
 
     const handleLogout = () => {
-        navigate('/')
         localStorage.clear();
         dispatch(logoutRequest)
+        navigate('/')
     }
 
     const handleClick = () => setClick(!click)
