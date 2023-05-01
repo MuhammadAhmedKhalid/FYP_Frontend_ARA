@@ -2,10 +2,48 @@ import React, { useState, useEffect } from 'react'
 import FacultyNavbar from './FacultyNavbar'
 import FullCalendar from '../Root/FullCalendar'
 import '../Styling/HomeScreen.css'
-import { useSelector } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
 import RequestedData from '../Root/RequestedData'
+import { assignedCoursesForTableRequest } from '../../redux/AssignedCoursesForTable/assignedCoursesForTableActions'
+import { getCourseRequest } from '../../redux/GetCourse/getCourseActions'
 
 function FacultyHomeScreen() {
+
+    const dispatch = useDispatch()
+
+    const institute_id = localStorage.getItem('institute_id')
+    const faculty_id = Number(localStorage.getItem('faculty_id'))
+    const assignedCourses = useSelector((state) => state.assignedCoursesForTableReducer.assignedCourses.data)
+    const assignedCoursesAdded = useSelector((state) => state.assignedCoursesForTableReducer.added)
+    const courses = useSelector((state) => state.getCourseReducer.courses)
+    const coursesAdded = useSelector((state) => state.getCourseReducer.added)
+    const [coursesList, setCoursesList] = useState([])
+
+    useEffect(() => {
+        if(institute_id > 0){
+          dispatch(assignedCoursesForTableRequest(institute_id))
+          dispatch(getCourseRequest(institute_id))
+        }
+      }, [institute_id])
+
+    useEffect(() => {
+        if(assignedCoursesAdded && coursesAdded){
+            for(let i of assignedCourses){
+                for(let j of courses){
+                    if(i.facultyId === faculty_id && j.course_id === i.courseId){
+                        if(coursesList.length !== 0){
+                            for(let k of coursesList){
+                                if(k === j.course_name){
+                                    coursesList.splice(coursesList.indexOf(k) , 1)
+                                }
+                            }
+                        }
+                        coursesList.push(j.course_name)
+                    }
+                }
+            }
+        }
+    }, [assignedCoursesAdded, coursesAdded])
 
     const [greetings, setGreetings] = useState("")
 
@@ -52,21 +90,20 @@ function FacultyHomeScreen() {
                 </div>
                 <div className='flexbox-container' style={{ justifyContent: 'space-between' }}>
                     <div className="gradient" style={{
-                        width: 450,
-                        height: 235,
+                        width: coursesList.length === 0 ? 325 : 450,  
+                        height: coursesList.length === 0 ? 85 : 232,  
                         backgroundColor: '#0E5E6F',
                         borderRadius: 15,
-                        margin: '15px'
+                        margin: '15px',
+                        overflow: coursesList.length > 4 ? 'auto' : 'hidden',
                     }}>
                         <div style={{ margin: '25px' }}>
-                            <h2 style={{ fontWeight: 'normal' }}>Total Assigned Courses: <b>7</b></h2><br />
-                            <h3 style={{ fontWeight: 'normal', color: 'black' }}>Cloud Computing</h3>
-                            <h3 style={{ fontWeight: 'normal', color: 'black' }}>Software Project Management</h3>
-                            <h3 style={{ fontWeight: 'normal', color: 'black' }}>Human Computer Interaction</h3>
-                            <h3 style={{ fontWeight: 'normal', color: 'black' }}>E-Commerce</h3>
-                            <h3 style={{ fontWeight: 'normal', color: 'black' }}>Marketing</h3>
-                            <h3 style={{ fontWeight: 'normal', color: 'black' }}>Programming Fundamentals</h3>
-                            <h3 style={{ fontWeight: 'normal', color: 'black' }}>Introduction to Software Engineering</h3>
+                            <h2 style={{ fontWeight: 'normal' }}>Total Assigned Courses: <b>{coursesList.length}</b></h2><br />
+                            {
+                                coursesList.map((course, index) => 
+                                <p key={index} style={{ fontWeight: 'normal', color: 'black', fontSize: '17px' }}>{index+1}. {course}</p>
+                                )
+                            }
                         </div>
                     </div>
                     <div style={{ justifyContent: 'flex-end' }}>

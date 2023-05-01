@@ -10,6 +10,7 @@ import { getDepartmentsRequest } from '../../redux/GetDepartments/getDepartments
 import { getBatchesRequest } from '../../redux/GetBatches/getBatchesActions'
 import { getRoomsRequest } from '../../redux/GetRooms/getRoomsActions'
 import PieChart from '../Root/PieChart'
+import tinycolor from 'tinycolor2';
 
 function AdminHomeScreen() {
 
@@ -40,7 +41,7 @@ function AdminHomeScreen() {
     const [backgroundColor, setBackgroundColor] = useState([])
     const [hoverBackgroundColor, setHoverBackgroundColor] = useState([])
 
-    const colorShades = ['#000000', '#333333', '#666666', '#999999', '#cccccc', '#4B0082', '#000080', '#000000', '#8B4513', '#A9A9A9'];
+    const colorShades = ['#2C2C2C', '#464646', '#5F5F5F', '#797979', '#939393', '#ADADAD', '#C7C7C7', '#E1E1E1'];
 
     useEffect(() => {
         if(departmentsAdded && facultyAdded && labels.length !== departments.length && batchesAdded && roomsAdded){
@@ -49,8 +50,8 @@ function AdminHomeScreen() {
                 facultyNum.push(0)
                 batchesNum.push(0)
                 roomsNum.push(0)
-                backgroundColor.push(colorShades[Math.floor(Math.random() * colorShades.length)])
-                hoverBackgroundColor.push(colorShades[Math.floor(Math.random() * colorShades.length)])
+                backgroundColor.push(tinycolor(colorShades[Math.floor(Math.random() * colorShades.length)]).darken(15).toString())
+                hoverBackgroundColor.push(tinycolor(colorShades[Math.floor(Math.random() * colorShades.length)]).darken(15).toString())
             }
             for(let j of faculty){
                 for(let k in labels){
