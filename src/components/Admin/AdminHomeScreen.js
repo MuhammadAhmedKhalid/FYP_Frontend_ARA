@@ -37,15 +37,13 @@ function AdminHomeScreen() {
     const colorShades = ['#000000', '#333333', '#666666', '#999999', '#cccccc', '#4B0082', '#000080', '#000000', '#8B4513', '#A9A9A9'];
 
     useEffect(() => {
-        if(departmentsAdded){
+        if(departmentsAdded && facultyAdded && labels.length !== departments.length){
             for(let i of departments){
                 labels.push(i.department_name)
                 facultyNum.push(0)
                 backgroundColor.push(colorShades[Math.floor(Math.random() * colorShades.length)])
                 hoverBackgroundColor.push(colorShades[Math.floor(Math.random() * colorShades.length)])
             }
-        }
-        if(facultyAdded){
             for(let j of faculty){
                 for(let k in labels){
                     for(let l of departments){
@@ -56,7 +54,7 @@ function AdminHomeScreen() {
                 }
             }
         }
-    }, [])
+    }, [departmentsAdded, facultyAdded])
 
     const data = {
         labels: labels,
