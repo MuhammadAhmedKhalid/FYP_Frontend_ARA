@@ -69,6 +69,7 @@ function Departments() {
     const openModal = () => {
         setOpenDepartmentModal(true)
     }
+    
     useEffect(() => {
         if(institute_id > 0){
             if(refresh){

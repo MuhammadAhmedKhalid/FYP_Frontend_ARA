@@ -6,20 +6,82 @@ import '../Styling/HomeScreen.css'
 import { useSelector, useDispatch } from 'react-redux'
 import { getFacultyRequest } from '../../redux/GetFaculty/getFacultyActions'
 import RequestedData from '../Root/RequestedData'
+import 'chart.js/auto';
+import { Pie } from 'react-chartjs-2';
+import tinycolor from 'tinycolor2';
+import { getDepartmentsRequest } from '../../redux/GetDepartments/getDepartmentsActions'
 
 function AdminHomeScreen() {
 
     const dispatch = useDispatch()
 
     const faculty = useSelector((state) => state.getFaculty.faculty)
-    const [instituteId, setInstituteId] = useState(0)
-    const [greetings, setGreetings] = useState("")
+    const facultyAdded = useSelector((state) => state.getFaculty.added)
     const adminName = localStorage.getItem('name')
     const instituteName = localStorage.getItem('institute_name')
     const institute_name = useSelector((state) => state.institute.institute.institute_name)
     const institutes = useSelector((state) => state.getInstitutes.institutes.data)
     const isInstitutesAdded = useSelector((state) => state.getInstitutes.added)
     const admin_id = Number(localStorage.getItem('user_id'))
+    const institute_id = localStorage.getItem('institute_id')
+    const departments = useSelector((state) => state.getDepartments.departments.data)
+    const departmentsAdded = useSelector((state) => state.getDepartments.added)
+
+    const [instituteId, setInstituteId] = useState(0)
+    const [greetings, setGreetings] = useState("")
+    const [labels, setLabels] = useState([])
+    const [facultyNum, setFacultyNum] = useState([])
+    const [backgroundColor, setBackgroundColor] = useState([])
+    const [hoverBackgroundColor, setHoverBackgroundColor] = useState([])
+
+    const colorShades = ['#000000', '#333333', '#666666', '#999999', '#cccccc', '#4B0082', '#000080', '#000000', '#8B4513', '#A9A9A9'];
+
+    useEffect(() => {
+        if(departmentsAdded){
+            for(let i of departments){
+                labels.push(i.department_name)
+                facultyNum.push(0)
+                backgroundColor.push(colorShades[Math.floor(Math.random() * colorShades.length)])
+                hoverBackgroundColor.push(colorShades[Math.floor(Math.random() * colorShades.length)])
+            }
+        }
+        if(facultyAdded){
+            for(let j of faculty){
+                for(let k in labels){
+                    for(let l of departments){
+                        if(labels[k] === l.department_name && j.department_id === l.department_id){
+                            facultyNum[k] += 1
+                        }
+                    }
+                }
+            }
+        }
+    }, [])
+
+    const data = {
+        labels: labels,
+        datasets: [
+            {
+                data: facultyNum,
+                backgroundColor: backgroundColor,
+                hoverBackgroundColor: hoverBackgroundColor,
+            },
+        ],
+    };
+      
+    const options = {
+        responsive: true,
+        plugins: { egend: { labels: { font: { family: 'Arial', size: 14 }}}},
+        elements: { arc: { borderWidth: 1, borderColor: '#FFFFFF' }},
+        layout: { padding: { left: 10, right: 10, top: 10, bottom: 10 }}
+    };
+      
+
+    useEffect(() => {
+        if(institute_id > 0){
+            dispatch(getDepartmentsRequest(institute_id))
+        }
+    }, [institute_id])
 
     useEffect(() => {
         if (isInstitutesAdded && institutes.length !== 0) {
@@ -83,26 +145,11 @@ function AdminHomeScreen() {
                     </div><h1 style={{ color: '#0E5E6F' }}>{instituteName || institute_name}!</h1>
                 </div>
                 <div className='flexbox-container' style={{ justifyContent: 'space-between' }}>
-                    <div className="gradient" style={{
-                        width: 450,
-                        height: 235,
-                        backgroundColor: '#0E5E6F',
-                        borderRadius: 15,
-                        margin: '15px'
-                    }}>
-                        <div style={{ margin: '25px' }}>
-                            <h2 style={{ fontWeight: 'normal' }}>Total Faculty Members: <b>{faculty.length}</b></h2><br />
-                            <h3 style={{ fontWeight: 'normal', color: 'black' }}>Software Engineering: <b>0</b></h3>
-                            <h3 style={{ fontWeight: 'normal', color: 'black' }}>Civil Engineering: <b>0</b></h3>
-                            <h3 style={{ fontWeight: 'normal', color: 'black' }}>Urban and Infrastructure Engineering: <b>0</b></h3>
-                            <h3 style={{ fontWeight: 'normal', color: 'black' }}>Petroleum Engineering: <b>0</b></h3>
-                            <h3 style={{ fontWeight: 'normal', color: 'black' }}>Mechanical Engineering: <b>0</b></h3>
-                            <h3 style={{ fontWeight: 'normal', color: 'black' }}>Textile Engineering <b>0</b></h3>
-                            <h3 style={{ fontWeight: 'normal', color: 'black' }}>Electrical Engineering: <b>0</b></h3>
-                            <h3 style={{ fontWeight: 'normal', color: 'black' }}>Telecommunication Engineering: <b>0</b></h3>
-                            <h3 style={{ fontWeight: 'normal', color: 'black' }}>Chemical Engineering: <b>0</b></h3>
-                        </div>
-                    </div>
+                <div className="chart-container flexbox-container-y">
+                    
+                    <Pie type='line' data={data} />
+                    <p style={{color: 'black', fontSize: '15px'}}>Faculty Meter</p>
+                </div>
                     <div style={{ justifyContent: 'flex-end' }}>
                         <FullCalendar
                             messages={{ next: '>', previous: '<', today: 'Current' }}

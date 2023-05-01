@@ -79,3 +79,16 @@
 .right-div {
   float: right;
 }
+
+.chart-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-right: 150px;
+  border: black;
+}
+
+.chart-container canvas {
+  width: 270px;
+  height: 270px;
+}
