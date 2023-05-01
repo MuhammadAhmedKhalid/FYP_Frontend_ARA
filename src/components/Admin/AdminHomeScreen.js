@@ -10,6 +10,7 @@ import 'chart.js/auto';
 import { Pie } from 'react-chartjs-2';
 import { getDepartmentsRequest } from '../../redux/GetDepartments/getDepartmentsActions'
 import { getBatchesRequest } from '../../redux/GetBatches/getBatchesActions'
+import { getRoomsRequest } from '../../redux/GetRooms/getRoomsActions'
 
 function AdminHomeScreen() {
 
@@ -28,23 +29,27 @@ function AdminHomeScreen() {
     const departmentsAdded = useSelector((state) => state.getDepartments.added)
     const batches = useSelector((state) => state.getBatchesReducer.batches.data)
     const batchesAdded = useSelector((state) => state.getBatchesReducer.added)
+    const rooms = useSelector((state) => state.getRooms.rooms.data)
+    const roomsAdded = useSelector((state) => state.getRooms.added)
 
     const [instituteId, setInstituteId] = useState(0)
     const [greetings, setGreetings] = useState("")
     const [labels, setLabels] = useState([])
     const [facultyNum, setFacultyNum] = useState([])
     const [batchesNum, setBatchesNum] = useState([])
+    const [roomsNum, setRoomsNum] = useState([])
     const [backgroundColor, setBackgroundColor] = useState([])
     const [hoverBackgroundColor, setHoverBackgroundColor] = useState([])
 
     const colorShades = ['#000000', '#333333', '#666666', '#999999', '#cccccc', '#4B0082', '#000080', '#000000', '#8B4513', '#A9A9A9'];
 
     useEffect(() => {
-        if(departmentsAdded && facultyAdded && labels.length !== departments.length && batchesAdded){
+        if(departmentsAdded && facultyAdded && labels.length !== departments.length && batchesAdded && roomsAdded){
             for(let i of departments){
                 labels.push(i.department_name)
                 facultyNum.push(0)
                 batchesNum.push(0)
+                roomsNum.push(0)
                 backgroundColor.push(colorShades[Math.floor(Math.random() * colorShades.length)])
                 hoverBackgroundColor.push(colorShades[Math.floor(Math.random() * colorShades.length)])
             }
@@ -66,10 +71,19 @@ function AdminHomeScreen() {
                     }
                 }
             }
+            for(let i of rooms){
+                for(let j in labels){
+                    for(let k of departments){
+                        if(labels[j] === k.department_name && i.department_id === k.department_id){
+                            roomsNum[j] +=1
+                        }
+                    }
+                }
+            }
         }
-    }, [departmentsAdded, facultyAdded, batchesAdded])
+    }, [departmentsAdded, facultyAdded, batchesAdded, roomsAdded])
 
-    const data = {
+    const facultyData = {
         labels: labels,
         datasets: [
             {
@@ -90,6 +104,17 @@ function AdminHomeScreen() {
             },
         ],
     }
+    
+    const roomsData = {
+        labels: labels,
+        datasets: [
+            {
+                data: roomsNum,
+                backgroundColor: backgroundColor,
+                hoverBackgroundColor: hoverBackgroundColor,
+            },
+        ],
+    };
     
     const options = {
         responsive: true,
@@ -168,17 +193,17 @@ function AdminHomeScreen() {
                 </div>
                 <div className='flexbox-container' style={{ justifyContent: 'space-between' }}>
                 <div className="chart-container flexbox-container-y">
-                    <Pie type='line' data={data} options={options}/>
+                    <Pie type='line' data={facultyData} options={options}/>
                     <p style={{color: 'black', fontSize: '15px'}}>Faculty Meter</p>
                 </div>
                 <div className="chart-container flexbox-container-y">
                     <Pie type='line' data={batchesData} options={options} />
                     <p style={{color: 'black', fontSize: '15px'}}>Batches Meter</p>
                 </div>
-                {/* <div className="chart-container flexbox-container-y">
-                    <Pie type='line' data={data} />
+                <div className="chart-container flexbox-container-y">
+                    <Pie type='line' data={roomsData} options={options} />
                     <p style={{color: 'black', fontSize: '15px'}}>Rooms Meter</p>
-                </div> */}
+                </div>
                     <div style={{ justifyContent: 'flex-end' }}>
                         <FullCalendar
                             messages={{ next: '>', previous: '<', today: 'Current' }}
