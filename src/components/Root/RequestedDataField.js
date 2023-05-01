@@ -1,6 +1,5 @@
 import React from 'react'
 import '../Styling/HomeScreen.css'
-import { useSelector } from 'react-redux'
 import DeleteIcon from '@mui/icons-material/Delete';
 
 function RequestedDataField(props) {
