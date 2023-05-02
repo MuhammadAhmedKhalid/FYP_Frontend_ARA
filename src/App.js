@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import { Route, Routes } from 'react-router-dom';
 import LandingPage from './components/Root/LandingPage';
 import Modal from 'react-modal'
@@ -21,25 +22,42 @@ import AuthRoute from './components/Root/AuthRoute'
 
 Modal.setAppElement('#root')
 function App() {
+
+  // const [isAdmin, setIsAdmin] = useState(null);
+
+  // useEffect(() => {
+  //   const isAdminValue = JSON.parse(localStorage.getItem('is_admin'));
+  //   setIsAdmin(isAdminValue);
+  // }, []);
+
+  // if (isAdmin !== null) {
+  //   {(isAdmin || !isAdmin) && (<div className="loading-overlay"><div className="loading-icon"></div></div>)}
+  // }
+  
   return (
     <div>
       <Provider store={store}>
         <Routes>
           <Route path='/' element={<LandingPage />} />
-          <Route path='/admin' element={<AuthRoute><AdminHomeScreen /></AuthRoute>} />
-          <Route path='/departments' element={<AuthRoute><Departments /></AuthRoute>} />
-          <Route path='/faculty-home' element={<AuthRoute><FacultyHomeScreen /></AuthRoute>} />
-          <Route path='/batches' element={<AuthRoute><Batches /></AuthRoute>} />
-          <Route path='/objects' element={<AuthRoute><Objects /></AuthRoute>} />
-          <Route path='/rooms' element={<AuthRoute><Rooms /></AuthRoute>} />
+          
+          {/* {isAdmin ? <Route path='/admin' element={<AuthRoute><AdminHomeScreen /></AuthRoute>} />  : <Route path='*' element={<NoMatch />} />}       */}
+          <Route path='/admin' element={<AuthRoute><AdminHomeScreen /></AuthRoute>} />    
           <Route path='/domains' element={<AuthRoute><Domains /></AuthRoute>} />
-          <Route path='/faculty' element={<AuthRoute><Faculty /></AuthRoute>} />
-          <Route path='/schedule' element={<AuthRoute><Schedule /></AuthRoute>} />
+          <Route path='/instituteSchedule' element={<AuthRoute><InstituteSchedule/></AuthRoute>}/>
+          <Route path='/departments' element={<AuthRoute><Departments /></AuthRoute>} />
+          <Route path='/batches' element={<AuthRoute><Batches /></AuthRoute>} />
+          <Route path='/rooms' element={<AuthRoute><Rooms /></AuthRoute>} />
+          <Route path='/objects' element={<AuthRoute><Objects /></AuthRoute>} />
           <Route path='/positions' element={<AuthRoute><Positions/></AuthRoute>} />
           <Route path='/courses' element={<AuthRoute><Courses/></AuthRoute>} />
+          <Route path='/faculty' element={<AuthRoute><Faculty /></AuthRoute>} />
           <Route path='/assignedCourses' element={<AuthRoute><AssignedCourses/></AuthRoute>}/>
-          <Route path='/instituteSchedule' element={<AuthRoute><InstituteSchedule/></AuthRoute>}/>
+          
+          <Route path='/faculty-home' element={<AuthRoute><FacultyHomeScreen /></AuthRoute>} />
+          <Route path='/schedule' element={<AuthRoute><Schedule /></AuthRoute>} />
+
           <Route path='*' element={<NoMatch />} />
+
         </Routes>
       </Provider>
     </div>

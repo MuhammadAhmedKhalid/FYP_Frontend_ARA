@@ -21,7 +21,6 @@ function Signin(props) {
     const dispatch = useDispatch()
     const isLoggedIn = useSelector((state) => state.login.isLoggedIn)
     const user_id = Number(localStorage.getItem('user_id'))
-    const isAdmin = Boolean(localStorage.getItem('is_admin'))
     const institutes = useSelector((state) => state.getInstitutes.institutes.data)
     const isInstitutesAdded = useSelector((state) => state.getInstitutes.added)
     const [loginErrText, setLoginErrText] = useState('')
@@ -41,14 +40,14 @@ function Signin(props) {
                 navigate('/domains')
             } else {
                 for (let i = 0; i < institutes.length; i++) {
-                    if (institutes[i].user_id === user_id && isAdmin) {
+                    if (institutes[i].user_id === user_id && Boolean(localStorage.getItem('is_admin'))) {
                         navigate('/admin')
                         break;
-                    } else if (isAdmin) {
-                        navigate('/faculty-home')
+                    } else if (localStorage.getItem('is_admin') === 'true') {
+                        navigate('/domains')
                     }
                     else {
-                        navigate('/domains')
+                        navigate('/faculty-home')
                     }
                 }
             }

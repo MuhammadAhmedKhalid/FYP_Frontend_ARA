@@ -41,7 +41,9 @@ function AdminHomeScreen() {
     const [backgroundColor, setBackgroundColor] = useState([])
     const [hoverBackgroundColor, setHoverBackgroundColor] = useState([])
 
-    const colorShades = ['#2C2C2C', '#464646', '#5F5F5F', '#797979', '#939393', '#ADADAD', '#C7C7C7', '#E1E1E1'];
+    const colorShades = ['#808080', '#999999', '#B3B3B3', '#CCCCCC', '#E6E6E6', '#F2F2F2',
+                            '#0077be', '#2c8ccf', '#4da7e6', '#7fbfe9', '#b3d6f2', '#e6f3fb'];
+
 
     useEffect(() => {
         if(departmentsAdded && facultyAdded && labels.length !== departments.length && batchesAdded && roomsAdded){
