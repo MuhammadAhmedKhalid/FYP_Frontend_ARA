@@ -155,9 +155,15 @@ function AdminHomeScreen() {
                     </div><h1 style={{ color: '#0E5E6F' }}>{instituteName || institute_name}!</h1>
                 </div>
                 <div className='flexbox-container' style={{ justifyContent: 'space-between' }}>
-                    <PieChart num={facultyNum} labels={labels} title="Faculty Meter" backgroundColor={backgroundColor} hoverBackgroundColor={hoverBackgroundColor}/>
-                    <PieChart num={batchesNum} labels={labels} title="Batches Meter" backgroundColor={backgroundColor} hoverBackgroundColor={hoverBackgroundColor}/>
-                    <PieChart num={roomsNum} labels={labels} title="Rooms Meter" backgroundColor={backgroundColor} hoverBackgroundColor={hoverBackgroundColor}/>
+                    {
+                        labels.length > 0 ? 
+                        <>
+                            <PieChart num={facultyNum} labels={labels} title="Faculty Meter" backgroundColor={backgroundColor} hoverBackgroundColor={hoverBackgroundColor}/>
+                            <PieChart num={batchesNum} labels={labels} title="Batches Meter" backgroundColor={backgroundColor} hoverBackgroundColor={hoverBackgroundColor}/>
+                            <PieChart num={roomsNum} labels={labels} title="Rooms Meter" backgroundColor={backgroundColor} hoverBackgroundColor={hoverBackgroundColor}/> 
+                        </>
+                    : null
+                    }
                     <div style={{ justifyContent: 'flex-end' }}>
                         <FullCalendar
                             messages={{ next: '>', previous: '<', today: 'Current' }}

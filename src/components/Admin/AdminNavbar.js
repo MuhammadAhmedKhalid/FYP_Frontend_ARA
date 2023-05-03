@@ -15,6 +15,8 @@ import { getCourseRequest } from '../../redux/GetCourse/getCourseActions'
 import { getBatchesRequest } from '../../redux/GetBatches/getBatchesActions'
 import { getDepartmentsRequest } from '../../redux/GetDepartments/getDepartmentsActions'
 import CheckIcon from '../Root/CheckIcon';
+import { AiFillHome } from "react-icons/ai";
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 
 const logo = {
     fontSize: '20px',
@@ -183,7 +185,11 @@ const AdminNavBar = () => {
                     <h1 style={logo}>ALLOCATOR.</h1>
                 </Link>
                 <ul style={{ listStyle: 'none' }} className={click ? 'nav-menu active' : 'nav-menu'}>
-                    <li><NavLink to='/admin'>Home</NavLink></li>
+                    <li>
+                        <NavLink to='/admin'>
+                            <AiFillHome style={{color: '#fff' }} size={20} />
+                        </NavLink>
+                    </li>
                     <li><NavLink to='/instituteSchedule'>Schedule</NavLink></li>
                     <CustomDropdown items={[{
                         name: 'Departments',
@@ -230,6 +236,11 @@ const AdminNavBar = () => {
                             <Badge badgeContent={notificationNum + weightageNotificationsNum} color="info">
                                 <NotificationsIcon style={{color: '#fff', height: '20px'}} />
                             </Badge>
+                        </NavLink>
+                    </li>
+                    <li>
+                        <NavLink to={'/adminProfile'}>
+                            <AccountCircleIcon style={{color: '#fff' }} size={20} />
                         </NavLink>
                     </li>
                     <li> <NavLink onClick={handleLogout}>Logout</NavLink></li>
