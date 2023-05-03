@@ -1,0 +1,86 @@
+.profile {
+    margin: 2rem;
+    margin-top: 5rem;
+    padding: 2rem;
+    background-color: #f7fafc;
+    border-radius: 0.5rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  .profile__title {
+    margin-top: 0;
+    margin-bottom: 1rem;
+    font-size: 1.5rem;
+    font-weight: bold;
+  }
+  
+  .profile__details {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .profile__detail {
+    display: flex;
+    margin-bottom: 1rem;
+  }
+  
+  .profile__label {
+    width: 8rem;
+    margin-right: 1rem;
+    font-weight: bold;
+    text-align: right;
+  }
+  
+  .profile__value {
+    font-weight: normal;
+  }
+  
+  .profile__input {
+    flex: 1;
+    padding: 0.5rem;
+    border-radius: 0.25rem;
+    border: 1px solid #d2d6dc;
+  }
+
+  .profile__dropdown {
+    flex: 1;
+    border-radius: 0.25rem;
+    border: 1px solid #d2d6dc;
+  }
+  
+  .profile__password {
+    width: 15%;
+    border-radius: 0.25rem;
+    border: 1px solid #d2d6dc;
+    padding: 0.5rem;
+  }
+  
+
+  .profile__input--textarea {
+    height: 5rem;
+  }
+  
+  .profile__actions {
+    display: flex;
+    justify-content: flex-end;
+  }
+  
+  .profile__edit-button {
+    padding: 0.5rem 1rem;
+    background-color: #ffffff;
+    border: 1px solid #d2d6dc;
+    border-radius: 0.25rem;
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+  }
+  
+  .profile__edit-button:hover {
+    background-color: #d2d6dc;
+  }
+  
+  .profile__edit-button:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.5);
+  }
+  
