@@ -21,6 +21,7 @@ import InstituteSchedule from './components/Admin/InstituteSchedule'
 import AuthRoute from './components/Root/AuthRoute'
 import { useLocation } from 'react-router-dom';
 import AdminProfile from './components/Admin/AdminProfile'
+import FacultyProfile from './components/Faculty/FacultyProfile'
  
 Modal.setAppElement('#root')
 function App() {
@@ -54,6 +55,7 @@ function App() {
       
           {isAdmin === 'false' ? <Route path='/faculty-home' element={<AuthRoute><FacultyHomeScreen /></AuthRoute>} /> : <Route path='*' element={<NoMatch />}/>}
           {isAdmin === 'false' ? <Route path='/schedule' element={<AuthRoute><Schedule /></AuthRoute>} /> : <Route path='*' element={<NoMatch />}/>}
+          {isAdmin === 'false' ? <Route path='/facultyProfile' element={<AuthRoute><FacultyProfile /></AuthRoute>} /> : <Route path='*' element={<NoMatch />}/>}
 
           <Route path='*' element={<NoMatch />} />
 

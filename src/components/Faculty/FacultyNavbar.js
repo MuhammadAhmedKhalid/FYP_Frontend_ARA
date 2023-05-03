@@ -9,6 +9,8 @@ import { useNavigate } from "react-router-dom";
 import Badge from '@mui/material/Badge';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import { getNotificationsRequest } from '../../redux/GetNotifications/getNotificationsActions'
+import { AiFillHome } from "react-icons/ai";
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 
 const logo = {
     fontSize: '20px',
@@ -82,7 +84,11 @@ const AdminNavBar = () => {
                     <h1 style={logo}>ALLOCATOR.</h1>
                 </Link>
                 <ul style={{ listStyle: 'none' }} className={click ? 'nav-menu active' : 'nav-menu'}>
-                    <li><NavLink to='/faculty-home'>Home</NavLink></li>
+                    <li>
+                        <NavLink to='/faculty-home'>
+                            <AiFillHome style={{color: '#fff' }} size={20} />
+                        </NavLink>
+                    </li>
                     <CustomDropdown items={[{
                         name: 'Add Leave',
                         value: 'add leave',
@@ -109,6 +115,11 @@ const AdminNavBar = () => {
                             <Badge badgeContent={notificationNum} color="info">
                                 <NotificationsIcon style={{color: '#fff', height: '20px'}} />
                             </Badge>
+                        </NavLink>
+                    </li>
+                    <li>
+                        <NavLink to={'/facultyProfile'}>
+                            <AccountCircleIcon style={{color: '#fff' }} size={20} />
                         </NavLink>
                     </li>
                     <li> <NavLink onClick={handleLogout}>Logout</NavLink></li>
