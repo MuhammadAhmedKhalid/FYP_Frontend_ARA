@@ -9,6 +9,7 @@ import VisibilityOff from "@material-ui/icons/VisibilityOff";
 import TextField from '@material-ui/core/TextField'
 import InputAdornment from '@material-ui/core/InputAdornment'
 import IconButton from "@material-ui/core/IconButton";
+import { updateAdminRequest } from '../../redux/UpdateAdmin/updateAdminActions'
 
 function AdminProfile() {
 
@@ -30,6 +31,7 @@ function AdminProfile() {
   const [isInstEditMode, setIsInstEditMode] = useState(false);
   const institute_id = localStorage.getItem('institute_id')
   const [passwordVisible, setPasswordVisible] = useState(false);
+  const user_id = Number(localStorage.getItem('user_id'))
 
   useEffect(() => {
     dispatch(getInstitutesRequest())
@@ -54,7 +56,8 @@ function AdminProfile() {
   const handleEditClick = () => {
     if(isEditMode){
       setIsEditMode(false)
-      console.log({name, email, password})
+      dispatch(updateAdminRequest(user_id, {name, password}))
+      alert('Updated successfully.')
     }else{
       setIsEditMode(true)
     }
