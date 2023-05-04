@@ -1,5 +1,5 @@
 import { UPDATE_ASSIGNED_COURSE_FAILURE, UPDATE_ASSIGNED_COURSE_REQUEST, UPDATE_ASSIGNED_COURSE_SUCCESS } from './updateAssignedCourseTypes'
-import { put, takeEvery, call, select } from 'redux-saga/effects'
+import { put, takeEvery, call } from 'redux-saga/effects'
 import axios from 'axios';
 
 function* updateAssignedCourseRequest(payload) {

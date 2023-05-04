@@ -60,6 +60,7 @@ import { deleteObjSaga } from './DeleteObject/deleteObjSaga'
 import { deleteFacultySaga } from './DeleteFaculty/deleteFacultySaga'
 import { deleteAssignedCoursesSaga } from './DeleteAssignedCourses/deleteAssignedCoursesSaga'
 import { checkTokenSaga } from './CheckTokenValidity/checkValiditySaga'
+import { updateAdminSaga } from './UpdateAdmin/updateAdminSaga'
 
 export function* rootSaga() {
     yield fork(signupSaga)
@@ -123,4 +124,5 @@ export function* rootSaga() {
     yield fork(deleteFacultySaga)
     yield fork(deleteAssignedCoursesSaga)
     yield fork(checkTokenSaga)
+    yield fork(updateAdminSaga)
 }
