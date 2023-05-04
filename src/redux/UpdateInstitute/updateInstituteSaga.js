@@ -10,6 +10,9 @@ function* updateInstituteRequest(payload) {
         };
         let result = yield call(axios.put, `http://localhost:8080/updateInstitute/${payload.institute_id}`, payload.institute, { headers });
         yield put({ type: UPDATE_INSTITUTE_SUCCESS, result })
+
+        localStorage.setItem('institute_name', payload.institute.institute_name);
+
     } catch (e) {
         yield put({ type: UPDATE_INSTITUTE_FAILURE, message: e.message })
     }

@@ -10,6 +10,9 @@ function* updateAdminRequest(payload) {
         };
         let result = yield call(axios.put, `http://localhost:8080/updateAdmin/${payload.user_id}`, payload.user, { headers });
         yield put({ type: UPDATE_ADMIN_SUCCESS, result })
+
+        localStorage.setItem('name', payload.user.name);
+
     } catch (e) {
         yield put({ type: UPDATE_ADMIN_FAILURE, message: e.message })
     }
