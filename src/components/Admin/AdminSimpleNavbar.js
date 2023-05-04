@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import { NavLink, Link } from "react-router-dom"
 import { FaBars, FaTimes } from 'react-icons/fa';
 import "../Styling/NavbarStyles.css"
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
 import { useNavigate } from "react-router-dom";
 import { logoutRequest } from '../.././redux/Login/loginActions'
 

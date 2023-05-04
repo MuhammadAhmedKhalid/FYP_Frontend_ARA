@@ -7,6 +7,7 @@ import AdminQuestionnaire from '../Admin/AdminQuestionnaire'
 import Footer from './Footer'
 import { useDispatch, useSelector } from 'react-redux'
 import { getInstituteTypeRequest } from '../../redux/InstituteTypes/instituteTypesActions'
+import AdminSimpleNavbar from '../Admin/AdminSimpleNavbar'
 
 
 function Domains(props) {
@@ -49,6 +50,7 @@ function Domains(props) {
     }
     return (
         <div>
+            <AdminSimpleNavbar/>
             <div
                 className="flexbox-container-y"
                 style={{
