@@ -143,7 +143,7 @@ function FacultyProfile() {
         <div>
             <FacultyNavbar />
             <div className="profile">
-            <h2 className="profile__title">Profile</h2>
+            <h2 className="profile__title">My Profile</h2>
             <div className="profile__details">
               <div className="profile__detail">
                 <span className="profile__label">Name:</span>

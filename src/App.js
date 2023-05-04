@@ -1,4 +1,3 @@
-import { useEffect } from "react";
 import { Route, Routes } from 'react-router-dom';
 import LandingPage from './components/Root/LandingPage';
 import Modal from 'react-modal'
@@ -19,19 +18,12 @@ import Courses from './components/Admin/resources/Courses';
 import AssignedCourses from './components/Admin/resources/AssignedCourses';
 import InstituteSchedule from './components/Admin/InstituteSchedule'
 import AuthRoute from './components/Root/AuthRoute'
-import { useLocation } from 'react-router-dom';
 import AdminProfile from './components/Admin/AdminProfile'
 import FacultyProfile from './components/Faculty/FacultyProfile'
  
 Modal.setAppElement('#root')
 function App() {
-  const location = useLocation();
-  const path = location.pathname;
   const isAdmin = localStorage.getItem('is_admin');
-
-  useEffect(() => {
-    console.log(isAdmin)
-  }, [isAdmin])
   
   return (
     <div>
@@ -40,22 +32,22 @@ function App() {
 
           <Route path='/' element={<LandingPage />} />
           
-          {isAdmin === 'true' ? <Route path='/admin' element={<AuthRoute><AdminHomeScreen /></AuthRoute>} />  : <Route path='*' element={<NoMatch />} />}
-          {isAdmin === 'true' ? <Route path='/domains' element={<AuthRoute><Domains /></AuthRoute>} /> : <Route path='*' element={<NoMatch />}/>}
-          {isAdmin === 'true' ? <Route path='/instituteSchedule' element={<AuthRoute><InstituteSchedule/></AuthRoute>}/> : <Route path='*' element={<NoMatch />}/>}
-          {isAdmin === 'true' ? <Route path='/departments' element={<AuthRoute><Departments /></AuthRoute>} /> : <Route path='*' element={<NoMatch />}/>}
-          {isAdmin === 'true' ? <Route path='/batches' element={<AuthRoute><Batches /></AuthRoute>} /> : <Route path='*' element={<NoMatch />}/>}
-          {isAdmin === 'true' ? <Route path='/rooms' element={<AuthRoute><Rooms /></AuthRoute>} /> : <Route path='*' element={<NoMatch />}/>}
-          {isAdmin === 'true' ? <Route path='/objects' element={<AuthRoute><Objects /></AuthRoute>} /> : <Route path='*' element={<NoMatch />}/>}
-          {isAdmin === 'true' ? <Route path='/positions' element={<AuthRoute><Positions/></AuthRoute>} /> : <Route path='*' element={<NoMatch />}/>}
-          {isAdmin === 'true' ? <Route path='/courses' element={<AuthRoute><Courses/></AuthRoute>} /> : <Route path='*' element={<NoMatch />}/>}
-          {isAdmin === 'true' ? <Route path='/faculty' element={<AuthRoute><Faculty /></AuthRoute>} /> : <Route path='*' element={<NoMatch />}/>}
-          {isAdmin === 'true' ? <Route path='/assignedCourses' element={<AuthRoute><AssignedCourses/></AuthRoute>}/> : <Route path='*' element={<NoMatch />}/>}
-          {isAdmin === 'true' ? <Route path='/adminProfile' element={<AuthRoute><AdminProfile/></AuthRoute>}/> : <Route path='*' element={<NoMatch />}/>}
+          {isAdmin === 'false' ? <Route path='*' element={<NoMatch />}/> : <Route path='/admin' element={<AuthRoute><AdminHomeScreen /></AuthRoute>} />}
+          {isAdmin === 'false' ? <Route path='*' element={<NoMatch />}/> : <Route path='/domains' element={<AuthRoute><Domains /></AuthRoute>} /> }
+          {isAdmin === 'false' ? <Route path='*' element={<NoMatch />}/> : <Route path='/instituteSchedule' element={<AuthRoute><InstituteSchedule/></AuthRoute>}/>}
+          {isAdmin === 'false' ? <Route path='*' element={<NoMatch />}/> : <Route path='/departments' element={<AuthRoute><Departments /></AuthRoute>} />}
+          {isAdmin === 'false' ? <Route path='*' element={<NoMatch />}/> : <Route path='/batches' element={<AuthRoute><Batches /></AuthRoute>} />}
+          {isAdmin === 'false' ? <Route path='*' element={<NoMatch />}/> : <Route path='/rooms' element={<AuthRoute><Rooms /></AuthRoute>} /> }
+          {isAdmin === 'false' ? <Route path='*' element={<NoMatch />}/> : <Route path='/objects' element={<AuthRoute><Objects /></AuthRoute>} />}
+          {isAdmin === 'false' ? <Route path='*' element={<NoMatch />}/> : <Route path='/positions' element={<AuthRoute><Positions/></AuthRoute>} />}
+          {isAdmin === 'false' ? <Route path='*' element={<NoMatch />}/> : <Route path='/courses' element={<AuthRoute><Courses/></AuthRoute>} />}
+          {isAdmin === 'false' ? <Route path='*' element={<NoMatch />}/> : <Route path='/faculty' element={<AuthRoute><Faculty /></AuthRoute>} />}
+          {isAdmin === 'false' ? <Route path='*' element={<NoMatch />}/> : <Route path='/assignedCourses' element={<AuthRoute><AssignedCourses/></AuthRoute>}/>}
+          {isAdmin === 'false' ? <Route path='*' element={<NoMatch />}/> : <Route path='/adminProfile' element={<AuthRoute><AdminProfile/></AuthRoute>}/>}
       
-          {isAdmin === 'false' ? <Route path='/faculty-home' element={<AuthRoute><FacultyHomeScreen /></AuthRoute>} /> : <Route path='*' element={<NoMatch />}/>}
-          {isAdmin === 'false' ? <Route path='/schedule' element={<AuthRoute><Schedule /></AuthRoute>} /> : <Route path='*' element={<NoMatch />}/>}
-          {isAdmin === 'false' ? <Route path='/facultyProfile' element={<AuthRoute><FacultyProfile /></AuthRoute>} /> : <Route path='*' element={<NoMatch />}/>}
+          {isAdmin === 'true' ? <Route path='*' element={<NoMatch />}/> : <Route path='/faculty-home' element={<AuthRoute><FacultyHomeScreen /></AuthRoute>}/>}
+          {isAdmin === 'true' ? <Route path='*' element={<NoMatch />}/> : <Route path='/schedule' element={<AuthRoute><Schedule /></AuthRoute>} />}
+          {isAdmin === 'true' ? <Route path='*' element={<NoMatch />}/> : <Route path='/facultyProfile' element={<AuthRoute><FacultyProfile /></AuthRoute>} />}
 
           <Route path='*' element={<NoMatch />} />
 

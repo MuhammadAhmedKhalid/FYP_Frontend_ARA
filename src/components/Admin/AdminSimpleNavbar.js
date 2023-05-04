@@ -38,7 +38,6 @@ const AdminSimpleNavbar = () => {
     const handleLogout = () => {
         localStorage.clear();
         dispatch(logoutRequest)
-        navigate('/')
     }
     return (
         <div>

@@ -152,7 +152,6 @@ const AdminNavBar = () => {
     const handleLogout = () => {
         localStorage.clear();
         dispatch(logoutRequest)
-        navigate('/')
     }
 
     const handleClick = () => setClick(!click)
