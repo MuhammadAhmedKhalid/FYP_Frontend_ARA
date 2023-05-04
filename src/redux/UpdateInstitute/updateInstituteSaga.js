@@ -1,5 +1,6 @@
 import { UPDATE_INSTITUTE_FAILURE, UPDATE_INSTITUTE_REQUEST, UPDATE_INSTITUTE_SUCCESS } from './updateInstituteTypes'
 import { put, takeEvery, call } from 'redux-saga/effects'
+import axios from 'axios';
 
 function* updateInstituteRequest(payload) {
     try {

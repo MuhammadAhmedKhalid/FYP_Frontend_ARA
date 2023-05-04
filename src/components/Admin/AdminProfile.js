@@ -10,6 +10,7 @@ import TextField from '@material-ui/core/TextField'
 import InputAdornment from '@material-ui/core/InputAdornment'
 import IconButton from "@material-ui/core/IconButton";
 import { updateAdminRequest } from '../../redux/UpdateAdmin/updateAdminActions'
+import { updateInstitute } from '../../redux/UpdateInstitute/updateInstituteActions'
 
 function AdminProfile() {
 
@@ -67,7 +68,8 @@ function AdminProfile() {
     setIsInstEditMode(!isInstEditMode);
     if(isInstEditMode){
       setIsInstEditMode(false)
-      console.log(institute_id, {institute_name, branch, address, contact})
+      dispatch(updateInstitute(institute_id, {institute_name, branch, address, contact}))
+      alert('Updated successfully.')
     }else {
       setIsInstEditMode(true)
     }
