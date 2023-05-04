@@ -12,7 +12,6 @@ import { getFacultyRequest } from '../../redux/GetFaculty/getFacultyActions'
 import { getDepartmentsRequest } from '../../redux/GetDepartments/getDepartmentsActions'
 import { getPositionRequest } from '../../redux/GetPosition/getPositionActions'
 import { getCourseRequest } from '../../redux/GetCourse/getCourseActions'
-import { updateFaculty, resetState } from '../../redux/UpdateFaculty/updateFacultyActions'
 
 function FacultyProfile() {
 
