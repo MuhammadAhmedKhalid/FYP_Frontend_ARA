@@ -105,16 +105,24 @@ function FacultyProfile() {
         for(let i of faculty){
           if(i.faculty_id === faculty_id){
             dispatch(updateFaculty(faculty_id, {name, phone_number: phone, designation, yearsOfExperience: i.yearsOfExperience, specialization}))
-            dispatch(updateAdminRequest(user_id, {name, password}))
             alert('Updated successfully.')
+            setPassword("")
           }
         }
       }
       else{
         dispatch(updateFaculty(faculty_id, {name, phone_number: phone, designation, yearsOfExperience: experience, specialization}))
-        dispatch(updateAdminRequest(user_id, {name, password}))
         alert('Updated successfully.')
+        setPassword("")
       }
+
+      if(password.length > 0 && password.length >= 8){
+        dispatch(updateAdminRequest(user_id, {name, password}))
+      }else if(password.length > 0 && password.length < 8){
+        alert('Your password must be at least 8 characters.')
+        setPassword("")
+      }
+      
     }else {
       setIsEditMode(true)
     }
