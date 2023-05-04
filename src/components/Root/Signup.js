@@ -102,7 +102,11 @@ function Signup(props) {
 
     const handleSignup = (e) => {
         e.preventDefault();
-        dispatch(signupRequest(user))
+        if(user.password.length >= 8){
+            dispatch(signupRequest(user))
+        }else{
+            alert('Your password must be at least 8 characters.')
+        }
     }
     return (
         <div>
