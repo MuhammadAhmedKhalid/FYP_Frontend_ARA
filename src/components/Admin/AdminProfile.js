@@ -57,8 +57,13 @@ function AdminProfile() {
   const handleEditClick = () => {
     if(isEditMode){
       setIsEditMode(false)
-      dispatch(updateAdminRequest(user_id, {name, password}))
-      alert('Updated successfully.')
+      if(password.length > 0 && password.length >= 8){
+        dispatch(updateAdminRequest(user_id, {name, password}))
+        alert('Updated successfully.')
+      }else if(password.length > 0 && password.length < 8){
+        alert('Your password must be at least 8 characters.')
+      }
+      setPassword("")
     }else{
       setIsEditMode(true)
     }
