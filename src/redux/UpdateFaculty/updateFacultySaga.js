@@ -1,5 +1,5 @@
 import { UPDATE_FACULTY_FAILURE, UPDATE_FACULTY_REQUEST, UPDATE_FACULTY_SUCCESS } from './updateFacultyTypes'
-import { put, takeEvery, call, select } from 'redux-saga/effects'
+import { put, takeEvery, call } from 'redux-saga/effects'
 
 function* updateFacultyRequest(payload) {
     const token = localStorage.getItem('token');

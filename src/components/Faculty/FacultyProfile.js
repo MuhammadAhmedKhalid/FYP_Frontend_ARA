@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import FacultyNavbar from './FacultyNavbar'
 import '../Styling/Profile.css'
 import Select from "react-select";
@@ -7,23 +7,90 @@ import VisibilityOff from "@material-ui/icons/VisibilityOff";
 import TextField from '@material-ui/core/TextField'
 import InputAdornment from '@material-ui/core/InputAdornment'
 import IconButton from "@material-ui/core/IconButton";
+import { useSelector, useDispatch } from 'react-redux'
+import { getFacultyRequest } from '../../redux/GetFaculty/getFacultyActions'
+import { getDepartmentsRequest } from '../../redux/GetDepartments/getDepartmentsActions'
+import { getPositionRequest } from '../../redux/GetPosition/getPositionActions'
+import { getCourseRequest } from '../../redux/GetCourse/getCourseActions'
+import { updateFaculty, resetState } from '../../redux/UpdateFaculty/updateFacultyActions'
 
 function FacultyProfile() {
 
-  const [name, setName] = useState("John Doe");
-  const [email, setEmail] = useState("johndoe@example.com");
-  const [phone, setPhone] = useState("+1-123-456-7890");
-  const [department, setDepartment] = useState("123 Main St, Anytown USA");
-  const [specialization, setSpecialization] = useState("I am a web developer.");
-  const [designation, setDesignation] = useState("I am a web developer.");
-  const [experience, setExperience] = useState(5);
-  const [password, setPassword] = useState("I am a web developer.");
+  const dispatch = useDispatch()
 
-  const [specializationData, setSpecializationData] = useState([{label: 'Male'}, {label: 'Female'}, {label: 'Other'}])
+  const institute_id = localStorage.getItem('institute_id')
+  const faculty_id = Number(localStorage.getItem('faculty_id'))
+  const faculty = useSelector((state) => state.getFaculty.faculty)
+  const facultyAdded = useSelector((state) => state.getFaculty.added)
+  const departments = useSelector((state) => state.getDepartments.departments.data)
+  const departmentsAdded = useSelector((state) => state.getDepartments.added)
+  const positions = useSelector((state) => state.getPositionReducer.positions)
+  const positionsAdded = useSelector((state) => state.getPositionReducer.added)
+  const courses = useSelector((state) => state.getCourseReducer.courses)
+  const coursesAdded = useSelector((state) => state.getCourseReducer.added)
 
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [phone, setPhone] = useState("");
+  const [department, setDepartment] = useState("");
+  const [specialization, setSpecialization] = useState(null);
+  const [designation, setDesignation] = useState("");
+  const [experience, setExperience] = useState(null);
+  const [password, setPassword] = useState("");
+  const [positionsData, setPositons] = useState([]);
+  const [specializationData, setSpecializationData] = useState([])
   const [isEditMode, setIsEditMode] = useState(false);
-
   const [passwordVisible, setPasswordVisible] = useState(false);
+  const [departmentId, setDepartmentId] = useState(0)
+
+  useEffect(() => {
+    if(institute_id > 0){
+      dispatch(getFacultyRequest(institute_id))
+      dispatch(getDepartmentsRequest(institute_id))
+      dispatch(getPositionRequest(institute_id))
+      dispatch(getCourseRequest(institute_id))
+    }
+  }, [institute_id])
+
+  useEffect(() => {
+    if(facultyAdded && departmentsAdded){
+      for(let i of faculty){
+        for(let j of departments){
+          if(i.faculty_id === faculty_id && i.department_id === j.department_id){
+            setName(i.name)
+            setDesignation(i.designation)
+            setSpecialization(i.specialization.join(', '))
+            setPhone(i.phone_number)
+            setEmail(i.officialEmailAddress)
+            setExperience(i.yearsOfExperience)
+            setDepartment(j.department_name)
+            setDepartmentId(j.department_id)
+          }
+        }
+      }
+    }
+  }, [faculty, departments])
+
+  useEffect(() => {
+    if(positionsAdded && positionsData.length === 0){
+      for(let i of positions){
+        setPositons(positionsData => 
+          [...positionsData, { value: i.position_name, label: i.position_name }])
+      }
+    }
+  }, [positions])
+
+  useEffect(() => {
+    if(coursesAdded){
+      setSpecializationData([])
+      for(let i of courses){
+        if(i.department_id === departmentId){
+          setSpecializationData(specializationData => 
+            [...specializationData, { label: i.course_name, value: i.course_name }])
+        }
+      }
+    }
+  }, [departmentId])
 
   const togglePasswordVisibility = () => {
     setPasswordVisible(!passwordVisible);
@@ -35,7 +102,15 @@ function FacultyProfile() {
 
   const handleMouseDownPassword = (event) => {
     event.preventDefault();
-};
+  };
+
+  function handleDesignationChange(data){
+    setDesignation(data.value)
+  }
+
+  function handleSpecializationChange(data){
+    setSpecialization(data.map(obj => obj.value))
+  }
 
   return (
     <div className="flexbox-container-y"
@@ -81,21 +156,20 @@ function FacultyProfile() {
                 )}
               </div>
               <div className="profile__detail">
-                <span className="profile__label">Department:</span>
-                <span className="profile__value">{department}</span>
-              </div>
-              <div className="profile__detail">
                 <span className="profile__label">Designation:</span>
                 {isEditMode ? (
                   <Select
                   className="profile__dropdown"
-                  value={specialization}
-                  options={specializationData}
-                  onChange={(e) => setSpecialization(e.target.value)}
+                  options={positionsData}
+                  onChange={handleDesignationChange}
                   isSearchable={true}/>
                 ) : (
                   <span className="profile__value">{designation}</span>
                 )}
+              </div>
+              <div className="profile__detail">
+                <span className="profile__label">Department:</span>
+                <span className="profile__value">{department}</span>
               </div>
             </div>
             <div className="profile__detail">
@@ -103,9 +177,8 @@ function FacultyProfile() {
                 {isEditMode ? (
                   <Select
                       className="profile__dropdown"
-                      value={specialization}
                       options={specializationData}
-                      onChange={(e) => setSpecialization(e.target.value)}
+                      onChange={handleSpecializationChange}
                       isSearchable={true}
                       isMulti/>
                 ) : (
