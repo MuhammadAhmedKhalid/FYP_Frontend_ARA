@@ -60,6 +60,7 @@ import { deleteFacultyReducer } from './DeleteFaculty/deleteFacultyReducer'
 import { deleteAssignedCoursesReducer } from './DeleteAssignedCourses/deleteAssignedCoursesReducer'
 import { checkTokenReducer } from './CheckTokenValidity/checkValidityReducer'
 import { updateAdminReducer } from './UpdateAdmin/updateAdminReducer'
+import { updateInstituteReducer } from './UpdateInstitute/updateInstituteReducer'
 
 export const rootReducer = combineReducers({
     signup: signupReducer,
@@ -123,4 +124,5 @@ export const rootReducer = combineReducers({
     deleteAssignedCoursesReducer,
     checkTokenReducer,
     updateAdminReducer,
+    updateInstituteReducer,
 })

@@ -65,6 +65,12 @@ function AdminProfile() {
   
   const handleInstEditClick = () => {
     setIsInstEditMode(!isInstEditMode);
+    if(isInstEditMode){
+      setIsInstEditMode(false)
+      console.log(institute_id, {institute_name, branch, address, contact})
+    }else {
+      setIsInstEditMode(true)
+    }
   };
 
   const togglePasswordVisibility = () => {
