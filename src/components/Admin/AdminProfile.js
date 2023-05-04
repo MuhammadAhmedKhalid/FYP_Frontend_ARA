@@ -4,6 +4,11 @@ import '../Styling/Profile.css'
 import { getInstitutesRequest } from '../../redux/GetInstitutes/getInstitutesActions'
 import { getInstituteTypeRequest } from '../../redux/InstituteTypes/instituteTypesActions'
 import { useSelector, useDispatch } from 'react-redux'
+import Visibility from "@material-ui/icons/Visibility";
+import VisibilityOff from "@material-ui/icons/VisibilityOff";
+import TextField from '@material-ui/core/TextField'
+import InputAdornment from '@material-ui/core/InputAdornment'
+import IconButton from "@material-ui/core/IconButton";
 
 function AdminProfile() {
 
@@ -16,6 +21,7 @@ function AdminProfile() {
   const [name, setName] = useState(localStorage.getItem('name'));
   const [institute_name, setInstituteName] = useState(localStorage.getItem('institute_name'))
   const [email, setEmail] = useState(localStorage.getItem('email'));
+  const [password, setPassword] = useState("");
   const [instituteType, setInstituteType] = useState("")
   const [branch, setBranch] = useState("");
   const [address, setAddress] = useState("");
@@ -23,6 +29,7 @@ function AdminProfile() {
   const [isEditMode, setIsEditMode] = useState(false);
   const [isInstEditMode, setIsInstEditMode] = useState(false);
   const institute_id = localStorage.getItem('institute_id')
+  const [passwordVisible, setPasswordVisible] = useState(false);
 
   useEffect(() => {
     dispatch(getInstitutesRequest())
@@ -45,11 +52,24 @@ function AdminProfile() {
   }, [institutes])
 
   const handleEditClick = () => {
-    setIsEditMode(!isEditMode);
+    if(isEditMode){
+      setIsEditMode(false)
+      console.log({name, email, password})
+    }else{
+      setIsEditMode(true)
+    }
   };
   
   const handleInstEditClick = () => {
     setIsInstEditMode(!isInstEditMode);
+  };
+
+  const togglePasswordVisibility = () => {
+    setPasswordVisible(!passwordVisible);
+  };
+
+  const handleMouseDownPassword = (event) => {
+    event.preventDefault();
   };
 
   return (
@@ -57,13 +77,13 @@ function AdminProfile() {
             style={{
                 display: 'flex',
                 justifyContent: 'flex-start',
-                height: '110vh',
+                height: '120vh',
                 background: '#fff'
             }}>
         <div>
             <AdminNavBar />
             <div className="profile">
-            <h2 className="profile__title">Profile</h2>
+            <h2 className="profile__title">Admin Details</h2>
             <div className="profile__details">
               <div className="profile__detail">
                 <span className="profile__label">Name:</span>
@@ -81,6 +101,36 @@ function AdminProfile() {
               <div className="profile__detail">
                 <span className="profile__label">Email:</span>
                 <span className="profile__value">{email}</span>
+              </div>
+              <div className="profile__detail">
+                <span className="profile__label">Password:</span>
+                {
+                  isEditMode ? 
+                  <TextField
+                    className="profile__dropdown"
+                    size='small'
+                    variant="outlined"
+                    type={passwordVisible ? "text" : "password"}
+                    placeholder='Password'
+                    onChange={(e) => setPassword(e.target.value)}
+                    InputProps={{
+                        endAdornment: (
+                            <InputAdornment position='end'>
+                                <IconButton
+                                    onClick={togglePasswordVisibility}
+                                    onMouseDown={handleMouseDownPassword}>
+                                    {passwordVisible ? <Visibility style={{ height: '20px' }} /> : <VisibilityOff style={{ height: '20px' }} />}
+                                </IconButton>
+                            </InputAdornment>
+                        )
+                    }} 
+                    />:
+                    <input
+                      disabled
+                      className="profile__password"
+                      placeholder='Edit password...'
+                    />
+                }
               </div>
             <div className="profile__actions">
               <button className="profile__edit-button" onClick={handleEditClick}>
