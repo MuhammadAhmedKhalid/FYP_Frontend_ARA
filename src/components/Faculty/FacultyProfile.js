@@ -12,6 +12,8 @@ import { getFacultyRequest } from '../../redux/GetFaculty/getFacultyActions'
 import { getDepartmentsRequest } from '../../redux/GetDepartments/getDepartmentsActions'
 import { getPositionRequest } from '../../redux/GetPosition/getPositionActions'
 import { getCourseRequest } from '../../redux/GetCourse/getCourseActions'
+import { updateFaculty } from '../../redux/UpdateFaculty/updateFacultyActions'
+import { updateAdminRequest } from '../../redux/UpdateAdmin/updateAdminActions'
 
 function FacultyProfile() {
 
@@ -32,7 +34,7 @@ function FacultyProfile() {
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
   const [department, setDepartment] = useState("");
-  const [specialization, setSpecialization] = useState(null);
+  const [specialization, setSpecialization] = useState([]);
   const [designation, setDesignation] = useState("");
   const [experience, setExperience] = useState(null);
   const [password, setPassword] = useState("");
@@ -41,6 +43,7 @@ function FacultyProfile() {
   const [isEditMode, setIsEditMode] = useState(false);
   const [passwordVisible, setPasswordVisible] = useState(false);
   const [departmentId, setDepartmentId] = useState(0)
+  const user_id = Number(localStorage.getItem('user_id'))
 
   useEffect(() => {
     if(institute_id > 0){
@@ -58,7 +61,7 @@ function FacultyProfile() {
           if(i.faculty_id === faculty_id && i.department_id === j.department_id){
             setName(i.name)
             setDesignation(i.designation)
-            setSpecialization(i.specialization.join(', '))
+            setSpecialization(i.specialization)
             setPhone(i.phone_number)
             setEmail(i.officialEmailAddress)
             setExperience(i.yearsOfExperience)
@@ -96,7 +99,25 @@ function FacultyProfile() {
   };
 
   const handleEditClick = () => {
-    setIsEditMode(!isEditMode);
+    if(isEditMode){
+      setIsEditMode(false)
+      if(experience === ''){
+        for(let i of faculty){
+          if(i.faculty_id === faculty_id){
+            dispatch(updateFaculty(faculty_id, {name, phone_number: phone, designation, yearsOfExperience: i.yearsOfExperience, specialization}))
+            dispatch(updateAdminRequest(user_id, {name, password}))
+            alert('Updated successfully.')
+          }
+        }
+      }
+      else{
+        dispatch(updateFaculty(faculty_id, {name, phone_number: phone, designation, yearsOfExperience: experience, specialization}))
+        dispatch(updateAdminRequest(user_id, {name, password}))
+        alert('Updated successfully.')
+      }
+    }else {
+      setIsEditMode(true)
+    }
   };
 
   const handleMouseDownPassword = (event) => {
@@ -181,7 +202,7 @@ function FacultyProfile() {
                       isSearchable={true}
                       isMulti/>
                 ) : (
-                  <div className="profile__value">{specialization}</div>
+                  <div className="profile__value">{specialization.join(', ')}</div>
                 )}
               </div>
               <div className="profile__detail">
