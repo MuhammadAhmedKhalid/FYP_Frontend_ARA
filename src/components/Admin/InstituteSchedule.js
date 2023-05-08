@@ -113,6 +113,8 @@ function InstituteSchedule() {
     setShowDetailModal(true)
 }
 
+const isMobile = window.innerWidth <= 1040;
+
   return (
     <div className="flexbox-container-y"
             style={{
@@ -149,7 +151,15 @@ function InstituteSchedule() {
               </div>
             </div>
             <Calendar
-                style={{ height: 500, margin: "100px", marginTop: "0px" }}
+                // style={{ height: 500, margin: "100px", marginTop: "0px" }}
+                style={{ height: isMobile ? 1000 : 500, 
+                  margin: "100px", 
+                  marginTop: "0px",
+                  marginRight: isMobile ? '0px' : '100px', 
+                  marginLeft: isMobile ? '0px' : '100px', 
+                  width : isMobile ? 360 : null,
+              }}
+                views={isMobile ? ['month'] : ['month', 'agenda', 'day', 'week']}
                 messages={{ today: 'Current' }}
                 localizer={localizer}
                 startAccessor="startDate"
