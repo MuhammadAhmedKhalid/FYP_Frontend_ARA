@@ -177,6 +177,8 @@ const AdminNavBar = () => {
         alert('Operation performed successfully!')
     }
     
+    const isMobile = window.innerWidth <= 1040;
+
     return (
         <div>
             <div className={color ? 'header header-bg' : 'header'}>
@@ -184,11 +186,14 @@ const AdminNavBar = () => {
                     <h1 style={logo}>ALLOCATOR.</h1>
                 </Link>
                 <ul style={{ listStyle: 'none' }} className={click ? 'nav-menu active' : 'nav-menu'}>
-                    <li>
-                        <NavLink to='/admin'>
-                            <AiFillHome style={{color: '#fff' }} size={20} />
-                        </NavLink>
-                    </li>
+                    {
+                        isMobile ? null : 
+                        <li>
+                            <NavLink to='/admin'>
+                                <AiFillHome style={{color: '#fff' }} size={20} />
+                            </NavLink>
+                        </li>
+                    }
                     <li><NavLink to='/instituteSchedule'>Schedule</NavLink></li>
                     <CustomDropdown items={[{
                         name: 'Departments',
@@ -230,18 +235,24 @@ const AdminNavBar = () => {
                         value: 'assigned courses',
                         path: '/assignedCourses'
                     }]} />
-                    <li>
-                        <NavLink onClick={handleNotificationIconClick}>
-                            <Badge badgeContent={notificationNum + weightageNotificationsNum} color="info">
-                                <NotificationsIcon style={{color: '#fff', height: '20px'}} />
-                            </Badge>
-                        </NavLink>
-                    </li>
-                    <li>
-                        <NavLink to={'/adminProfile'}>
-                            <AccountCircleIcon style={{color: '#fff' }} size={20} />
-                        </NavLink>
-                    </li>
+                    {
+                        isMobile ? null :
+                        <li>
+                            <NavLink onClick={handleNotificationIconClick}>
+                                <Badge badgeContent={notificationNum + weightageNotificationsNum} color="info">
+                                    <NotificationsIcon style={{color: '#fff', height: '20px'}} />
+                                </Badge>
+                            </NavLink>
+                        </li>
+                    }
+                    {
+                        isMobile ? null :
+                        <li>
+                            <NavLink to={'/adminProfile'}>
+                                <AccountCircleIcon style={{color: '#fff' }} size={20} />
+                            </NavLink>
+                        </li>
+                    }
                     <li> <NavLink onClick={handleLogout}>Logout</NavLink></li>
                 </ul >
                 {isNotificationPanelOpen && (
@@ -295,11 +306,29 @@ const AdminNavBar = () => {
                         }
                     </div>
                 )}
-                <div className="hamburger" onClick={handleClick}>
-                    {
-                        click ? <FaTimes size={20} style={{ color: '#fff' }} /> :
-                            <FaBars size={20} style={{ color: '#fff' }} />
+                <div className="hamburger">
+                {
+                        isMobile ?
+                        <>
+                            <NavLink to='/admin'>
+                                <AiFillHome style={{color: '#fff', marginRight: '15px' }} size={20} />
+                            </NavLink>
+                            <NavLink to={'/adminProfile'}>
+                                <AccountCircleIcon style={{color: '#fff', marginRight: '15px' }} size={20} />
+                            </NavLink>
+                            <NavLink onClick={handleNotificationIconClick}>
+                                    <NotificationsIcon style={{color: '#fff', marginRight: '15px', height: '20px'}} />
+                            </NavLink>
+                            
+                        </>
+                        : null
                     }
+                    <div className="hamburger" onClick={handleClick}>
+                        {
+                            click ? <FaTimes size={20} style={{ color: '#fff' }} /> :
+                                <FaBars size={20} style={{ color: '#fff' }} />
+                        }
+                    </div>
                 </div>
             </div >
         </div >
