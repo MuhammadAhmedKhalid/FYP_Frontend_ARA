@@ -124,6 +124,8 @@ function AdminHomeScreen() {
         setMessage()
     }, [])
 
+    const isMobile = window.innerWidth <= 1040;
+
     return (
         <div className="flexbox-container-y"
             style={{
@@ -149,30 +151,43 @@ function AdminHomeScreen() {
                                 <img src={Img10} alt='Admin' />
                             </div>
                             {
-                                <h2 style={{ color: '#0E5E6F' }}>{adminName}</h2>
+                                !isMobile && <h2 style={{ color: '#0E5E6F' }}>{adminName}</h2>
                             }
                         </div>
                     </div><h1 style={{ color: '#0E5E6F' }}>{instituteName || institute_name}!</h1>
                 </div>
-                <div className='flexbox-container' style={{ justifyContent: 'space-between' }}>
-                    {
-                        labels.length > 0 ? 
-                        <>
-                            <PieChart num={facultyNum} labels={labels} title="Faculty Meter" backgroundColor={backgroundColor} hoverBackgroundColor={hoverBackgroundColor}/>
-                            <PieChart num={batchesNum} labels={labels} title="Batches Meter" backgroundColor={backgroundColor} hoverBackgroundColor={hoverBackgroundColor}/>
-                            <PieChart num={roomsNum} labels={labels} title="Rooms Meter" backgroundColor={backgroundColor} hoverBackgroundColor={hoverBackgroundColor}/> 
-                        </>
-                    : null
-                    }
+                {
+                    isMobile ?
                     <div style={{ justifyContent: 'flex-end' }}>
                         <FullCalendar
                             messages={{ next: '>', previous: '<', today: 'Current' }}
                             views={['month']}
-                            style={{ height: 280, width: 450, padding: '15px' }}
+                            style={{ height: 280, width: 350, padding: '15px' }}
                         />
+                    </div> 
+                    :
+                    <>
+                    <div className='flexbox-container' style={{ justifyContent: 'space-between' }}>
+                        {
+                            labels.length > 0 ? 
+                            <>
+                                <PieChart num={facultyNum} labels={labels} title="Faculty Meter" backgroundColor={backgroundColor} hoverBackgroundColor={hoverBackgroundColor}/>
+                                <PieChart num={batchesNum} labels={labels} title="Batches Meter" backgroundColor={backgroundColor} hoverBackgroundColor={hoverBackgroundColor}/>
+                                <PieChart num={roomsNum} labels={labels} title="Rooms Meter" backgroundColor={backgroundColor} hoverBackgroundColor={hoverBackgroundColor}/> 
+                            </>
+                        : null
+                        }
+                        <div style={{ justifyContent: 'flex-end' }}>
+                            <FullCalendar
+                                messages={{ next: '>', previous: '<', today: 'Current' }}
+                                views={['month']}
+                                style={{ height: 280, width: 450, padding: '15px' }}
+                            />
+                        </div>
                     </div>
-                </div>
-                <RequestedData/>
+                    <RequestedData/>
+                    </>
+                }
             </div>
         </div>
     )

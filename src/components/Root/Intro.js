@@ -26,8 +26,6 @@ function Intro() {
                 <p className='para1'>while we take care of the rest. Sign up today to see</p>
                 <p className='para1'>how Auto Resource Allocator can revolutionize the way you</p>
                 <p className='para1'>manage your staff.</p>
-                <br /><br />
-                <button className='btn'>Watch Tutorial</button>
                 <br />
             </div>
             <div>
