@@ -24,7 +24,6 @@ const AdminNavBar = () => {
     const [isNotificationPanelOpen, setIsNotificationPanelOpen] = useState(false);
     const [notificationNum, setNotificationNum] = useState(0)
 
-    const navigate = useNavigate()
     const dispatch = useDispatch()
     
     const institute_id = localStorage.getItem('institute_id')
@@ -36,7 +35,6 @@ const AdminNavBar = () => {
     useEffect(() => {
         setNotificationNum(0)
         if(notificationsAdded){
-            // setNotificationNum(0)
             for(let i of notifications){
                 if(i.user_id === user_id){
                     notificationsList.push(i)
@@ -77,6 +75,8 @@ const AdminNavBar = () => {
     setIsNotificationPanelOpen(false);
     }
 
+    const isMobile = window.innerWidth <= 1040;
+
     return (
         <div>
             <div className={color ? 'header header-bg' : 'header'}>
@@ -84,44 +84,55 @@ const AdminNavBar = () => {
                     <h1 style={logo}>ALLOCATOR.</h1>
                 </Link>
                 <ul style={{ listStyle: 'none' }} className={click ? 'nav-menu active' : 'nav-menu'}>
+                    {
+                        isMobile ? null : 
+                        <li>
+                            <NavLink to='/faculty-home'>
+                                <AiFillHome style={{color: '#fff' }} size={20} />
+                            </NavLink>
+                        </li>
+                    }
                     <li>
-                        <NavLink to='/faculty-home'>
-                            <AiFillHome style={{color: '#fff' }} size={20} />
-                        </NavLink>
+                        <CustomDropdown items={[{
+                            name: 'Add Leave',
+                            value: 'add leave',
+                            onClick: true
+                        },
+                        {
+                            name: 'Object Request',
+                            value: 'object request',
+                            onClick: true
+                        },
+                        {
+                            name: 'Request Room',
+                            value: 'request room',
+                            onClick: true
+                        },
+                        {
+                            name: 'Staff Request',
+                            value: 'staff request',
+                            onClick: true
+                        }]} />
                     </li>
-                    <CustomDropdown items={[{
-                        name: 'Add Leave',
-                        value: 'add leave',
-                        onClick: true
-                    },
-                    {
-                        name: 'Object Request',
-                        value: 'object request',
-                        onClick: true
-                    },
-                    {
-                        name: 'Request Room',
-                        value: 'request room',
-                        onClick: true
-                    },
-                    {
-                        name: 'Staff Request',
-                        value: 'staff request',
-                        onClick: true
-                    }]} />
                     <li> <NavLink to='/schedule'>My Schedule</NavLink></li>
-                    <li>
-                        <NavLink onClick={handleNotificationIconClick}>
-                            <Badge badgeContent={notificationNum} color="info">
-                                <NotificationsIcon style={{color: '#fff', height: '20px'}} />
-                            </Badge>
-                        </NavLink>
-                    </li>
-                    <li>
-                        <NavLink to={'/facultyProfile'}>
-                            <AccountCircleIcon style={{color: '#fff' }} size={20} />
-                        </NavLink>
-                    </li>
+                    {
+                        isMobile ? null :
+                        <li>
+                            <NavLink onClick={handleNotificationIconClick}>
+                                <Badge badgeContent={notificationNum} color="info">
+                                    <NotificationsIcon style={{color: '#fff', height: '20px'}} />
+                                </Badge>
+                            </NavLink>
+                        </li>
+                    }
+                    {
+                        isMobile ? null :
+                        <li>
+                            <NavLink to={'/facultyProfile'}>
+                                <AccountCircleIcon style={{color: '#fff' }} size={20} />
+                            </NavLink>
+                        </li>
+                    }
                     <li> <NavLink onClick={handleLogout}>Logout</NavLink></li>
                 </ul >
                 {isNotificationPanelOpen && (
@@ -153,11 +164,29 @@ const AdminNavBar = () => {
                         }
                     </div>
                 )}
-                <div className="hamburger" onClick={handleClick}>
+                <div className="hamburger">
                     {
-                        click ? <FaTimes size={20} style={{ color: '#fff' }} /> :
-                            <FaBars size={20} style={{ color: '#fff' }} />
+                        isMobile ?
+                        <>
+                            <NavLink to={'/faculty-home'}>
+                                <AiFillHome style={{color: '#fff', marginRight: '15px' }} size={20} />
+                            </NavLink>
+                            <NavLink to={'/facultyProfile'}>
+                                <AccountCircleIcon style={{color: '#fff', marginRight: '15px' }} size={20} />
+                            </NavLink>
+                            <NavLink onClick={handleNotificationIconClick}>
+                                <NotificationsIcon style={{color: '#fff', height: '20px', marginRight: '15px'}} />
+                            </NavLink>
+                            
+                        </>
+                        : null
                     }
+                    <div className="hamburger" onClick={handleClick}>
+                        {
+                            click ? <FaTimes size={20} style={{ color: '#fff' }} /> :
+                            <FaBars size={20} style={{ color: '#fff' }} />
+                        }
+                    </div>
                 </div>
             </div >
         </div>

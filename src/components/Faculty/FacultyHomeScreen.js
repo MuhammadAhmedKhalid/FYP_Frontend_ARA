@@ -68,6 +68,8 @@ function FacultyHomeScreen() {
         setMessage()
     }, [])
 
+    const isMobile = window.innerWidth <= 1040;
+
     return (
         <div className="flexbox-container-y"
             style={{
@@ -91,7 +93,7 @@ function FacultyHomeScreen() {
                 <div className='flexbox-container' style={{ justifyContent: 'space-between' }}>
                     <div className="gradient" style={{
                         width: coursesList.length === 0 ? 325 : 450,  
-                        height: coursesList.length === 0 ? 85 : 232,  
+                        maxHeight: coursesList.length === 0 ? 85 : 232,  
                         backgroundColor: '#0E5E6F',
                         borderRadius: 15,
                         margin: '15px',
@@ -106,7 +108,8 @@ function FacultyHomeScreen() {
                             }
                         </div>
                     </div>
-                    <div style={{ justifyContent: 'flex-end' }}>
+                    {
+                        isMobile ? null : <div style={{ justifyContent: 'flex-end' }}>
                         <FullCalendar
                             messages={{ next: '>', previous: '<', today: 'Current' }}
                             views={['week', 'day']}
@@ -114,8 +117,9 @@ function FacultyHomeScreen() {
                             defaultView="week"
                         />
                     </div>
+                    }
                 </div>
-                <RequestedData/>
+                {isMobile ? null : <RequestedData/>}
             </div>
         </div>
     )
