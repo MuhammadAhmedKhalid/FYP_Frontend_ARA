@@ -119,7 +119,16 @@ function FacultyHomeScreen() {
                     </div>
                     }
                 </div>
-                {isMobile ? null : <RequestedData/>}
+                
+                {isMobile ? 
+                <div style={{ justifyContent: 'flex-end' }}>
+                    <FullCalendar
+                        messages={{ next: '>', previous: '<', today: 'Current' }}
+                        views={['month']}
+                        style={{ height: 280, width: 350, padding: '15px' }}
+                    />
+                </div> 
+                : <RequestedData/>}
             </div>
         </div>
     )

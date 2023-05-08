@@ -156,7 +156,7 @@ const isMobile = window.innerWidth <= 1040;
                   marginTop: "0px",
                   marginRight: isMobile ? '0px' : '100px', 
                   marginLeft: isMobile ? '0px' : '100px', 
-                  width : isMobile ? 360 : null,
+                  width : isMobile ? 375 : null,
               }}
                 views={isMobile ? ['month'] : ['month', 'agenda', 'day', 'week']}
                 messages={{ today: 'Current' }}
