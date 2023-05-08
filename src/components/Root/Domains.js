@@ -48,6 +48,9 @@ function Domains(props) {
             }
         }
     }
+
+    const isMobile = window.innerWidth <= 1040;
+
     return (
         <div>
             <AdminSimpleNavbar/>
@@ -63,11 +66,18 @@ function Domains(props) {
             >
                 <h1 style={{ color: 'black', fontSize: '22px' }}>A Platform Build For A New</h1>
                 <h1 style={{ color: '#0E5E6F', fontSize: '22px' }}>Way Of Allocation</h1>
-                <p style={{ color: 'black', fontSize: 18 }}>Get back to what you do best and let Auto Resource Allocator handle the rest.</p>
+                {
+                    isMobile ? 
+                    <>
+                        <p style={{ color: 'black', fontSize: 18 }}>Get back to what you do best and</p>
+                        <p style={{ color: 'black', fontSize: 18 }}>let Auto Resource Allocator handle the rest.</p>
+                    </> : 
+                    <p style={{ color: 'black', fontSize: 18 }}>Get back to what you do best and let Auto Resource Allocator handle the rest.</p>
+                }
                 <br /><br /><br />
-                <div className="flexbox-container" >
+                <div className={isMobile ? "flexbox-container-y" : "flexbox-container"} >
                     <div className="flexbox-container-y">
-                        <img style={{ width: 250 }} src={Img2} alt='Domain-1' /><br />
+                        {!isMobile && <><img style={{ width: 250 }} src={Img2} alt='Domain-1' /><br /></>}
                         {
                             landingPage ?
                                 <center><button className='btn-w' onClick={handleEduClick}>Education</button></center> :
@@ -81,7 +91,7 @@ function Domains(props) {
                                     <button className='domains-textField' style={{ color: '#fff', marginBottom: '15px' }}>Education</button>
                                     <select
                                         value={instituteTypes.name}
-                                        style={{width: '210px'}}
+                                        style={{width: '210px', marginBottom: isMobile && '15px'}}
                                         className='dropdown'
                                         onChange={(e) => handleSelect(e)}>
                                         <option>---Select---</option>
@@ -96,7 +106,7 @@ function Domains(props) {
 
                     </div>
                     <div className="flexbox-container-y">
-                        <img style={{ width: 250 }} src={Img3} alt='Domain-2' /><br />
+                        {!isMobile && <><img style={{ width: 250 }} src={Img3} alt='Domain-2' /><br /></>}
                         {
                             landingPage ?
                                 <center><button className='btn-w' onClick={handleFacClick}>Factory</button></center> :
@@ -107,7 +117,7 @@ function Domains(props) {
                                         justifyContent: 'center'
                                     }}>
                                     <button className='domains-textField' style={{ color: '#fff', marginBottom: '15px' }}>Factory</button>
-                                    <select style={{width: '210px'}} className='dropdown' defaultValue={"Food"}>
+                                    <select style={{width: '210px', marginBottom: isMobile && '15px'}} className='dropdown' defaultValue={"Food"}>
                                         <option>---Select---</option>
                                         {
                                             instituteTypes.map(instituteType =>
@@ -119,7 +129,7 @@ function Domains(props) {
                         }
                     </div>
                     <div className="flexbox-container-y">
-                        <img style={{ width: 250 }} src={Img4} alt='Domain-3' /><br />
+                        {!isMobile && <><img style={{ width: 250 }} src={Img4} alt='Domain-3' /><br /></>}
                         {
                             landingPage ?
                                 <center><button className='btn-w' onClick={handleHospClick}>Hospital</button></center> :
@@ -130,7 +140,7 @@ function Domains(props) {
                                         justifyContent: 'center'
                                     }}>
                                     <button className='domains-textField' style={{ color: '#fff', marginBottom: '15px' }}>Hospital</button>
-                                    <select style={{width: '210px'}} className='dropdown' defaultValue={"Women's hospitals"}>
+                                    <select style={{width: '210px', marginBottom: isMobile && '15px'}} className='dropdown' defaultValue={"Women's hospitals"}>
                                         <option>---Select---</option>
                                         {
                                             instituteTypes.map(instituteType =>
@@ -142,7 +152,7 @@ function Domains(props) {
                         }
                     </div>
                     <div className="flexbox-container-y">
-                        <img style={{ width: 250 }} src={Img5} alt='Domain-4' /><br />
+                        {!isMobile && <><img style={{ width: 250 }} src={Img5} alt='Domain-4' /><br /></>}
                         {
                             landingPage ?
                                 <center><button className='btn-w' onClick={handleOffClick}>Office</button></center> :
@@ -153,7 +163,7 @@ function Domains(props) {
                                         justifyContent: 'center'
                                     }}>
                                     <button className='domains-textField' style={{ color: '#fff', marginBottom: '15px' }}>Office</button>
-                                    <select style={{width: '210px'}} className='dropdown' defaultValue={"Private Office"}>
+                                    <select style={{width: '210px', marginBottom: isMobile && '15px'}} className='dropdown' defaultValue={"Private Office"}>
                                         <option>---Select---</option>
                                         {
                                             instituteTypes.map(instituteType =>
