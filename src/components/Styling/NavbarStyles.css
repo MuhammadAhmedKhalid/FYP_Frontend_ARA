@@ -103,6 +103,10 @@
   } 
 
 @media screen and (max-width: 1040px) {
+    .notification-panel {
+      right: 0.5em;
+      width: 20em;
+    }
     .nav-menu {
         flex-direction: column;
         justify-content: center;
