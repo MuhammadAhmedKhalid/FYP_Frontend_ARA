@@ -151,7 +151,6 @@ const isMobile = window.innerWidth <= 1040;
               </div>
             </div>
             <Calendar
-                // style={{ height: 500, margin: "100px", marginTop: "0px" }}
                 style={{ height: isMobile ? 1000 : 500, 
                   margin: "100px", 
                   marginTop: "0px",

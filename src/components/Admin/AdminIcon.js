@@ -6,6 +6,8 @@ function AdminIcon() {
 
     const adminName = localStorage.getItem('name')
 
+    const isMobile = window.innerWidth <= 1040;
+
     return (
         <div style={{ marginTop: '60px', padding: '15px' }}>
             <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
@@ -20,7 +22,7 @@ function AdminIcon() {
                         }}>
                         <img src={Img10} alt='Admin' />
                     </div>
-                    <h2 style={{ color: '#0E5E6F' }}>{ adminName }</h2>
+                    {isMobile ? null : <h2 style={{ color: '#0E5E6F' }}>{ adminName }</h2>}
                 </div>
             </div>
         </div>

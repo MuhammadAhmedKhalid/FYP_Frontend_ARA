@@ -75,6 +75,8 @@ function Table(props) {
           }, 1000);
     }
 
+    const isMobile = window.innerWidth <= 1040;
+    
     return (
         <div>
             {refresh && (<div className="loading-overlay"><div className="loading-icon"></div></div>)}
@@ -121,11 +123,16 @@ function Table(props) {
                                                             size='small' variant="outlined" type='text'/>: 
                                                             data
                                                 }                                                
-                                                <DeleteIcon onClick={() => handleDelete(index)} className='deleteButton'/>
                                                 {
-                                                    editableRow !== null && editableRow === index  ? 
-                                                        <CheckIcon onClick={handleCheck} className='checkButton'/> : 
-                                                        uneditable === true ? null : <EditIcon onClick={() => handleEdit(index)} className='editButton'/>
+                                                    isMobile ? null :
+                                                    <>
+                                                    <DeleteIcon onClick={() => handleDelete(index)} className='deleteButton'/>
+                                                    {
+                                                        editableRow !== null && editableRow === index  ? 
+                                                            <CheckIcon onClick={handleCheck} className='checkButton'/> : 
+                                                            uneditable === true ? null : <EditIcon onClick={() => handleEdit(index)} className='editButton'/>
+                                                    }
+                                                    </>
                                                 }
                                             </td>
                                         ))
