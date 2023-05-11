@@ -4,7 +4,6 @@ import axios from 'axios'
 import { select } from 'redux-saga/effects';
 
 function* assignCourse(payload) {
-    console.log(payload)
     try {
         const token = localStorage.getItem('token');
         const headers = {

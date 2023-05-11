@@ -58,6 +58,8 @@ function AssignCourse(props) {
       const requestedRoom = useSelector((state) => state.getRoomRequest.room_req.data) 
       const [dates, setDates] = useState([])
 
+      const daysOfWeek = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+
       const [assignCourse, setAssignCourse] = useState({
         batchId: "",
         department_id: "",
@@ -305,6 +307,7 @@ function AssignCourse(props) {
 
                   if(courseConflict){
                     setShowError(true)
+                    console.log('courseConflict')
                     setErrorMsg("Operation can't be performed during this time interval. Course is already assigned during this time.")
                     break
                   }
@@ -318,14 +321,16 @@ function AssignCourse(props) {
 
                 facultyStartTime.setHours(requestedStaff[j].startTime.substring(0, 2), requestedStaff[j].startTime.substring(3), 0, 0);
                 facultyEndTime.setHours(requestedStaff[j].endTime.substring(0, 2), requestedStaff[j].endTime.substring(3), 0, 0);
-                
-                if ((requestedStaff[j].requested_faculty_id === assignCourse.faculty_id)) {
+
+                if (requestedStaff[j].requested_faculty_id === assignCourse.faculty_id 
+                  && daysOfWeek[new Date(requestedStaff[j].date).getDay()] === assignCourse.day) {
 
                   facultyConflict = checkConflict(startTime, facultyStartTime, endTime, facultyEndTime,
                     startTime.getTime(), facultyStartTime.getTime(), endTime.getTime(), facultyEndTime.getTime());
 
                   if(facultyConflict){
                     setShowError(true)
+                    console.log('facultyConflict')
                     setErrorMsg("Operation can't be performed during this time interval. Faculty is not free.")
                     break
                   }
@@ -340,11 +345,12 @@ function AssignCourse(props) {
               roomStartTime.setHours(requestedRoom[k].startTime.substring(0, 2), requestedRoom[k].startTime.substring(3), 0, 0);
               roomEndTime.setHours(requestedRoom[k].endTime.substring(0, 2), requestedRoom[k].endTime.substring(3), 0, 0);
 
-              if(assignCourse.room_id === requestedRoom[k].room_id){
+              if(assignCourse.room_id === requestedRoom[k].room_id && daysOfWeek[new Date(requestedRoom[k].date).getDay()] === assignCourse.day){
                 roomConflict = checkConflict(startTime, roomStartTime, endTime, roomEndTime,
                   startTime.getTime(), roomStartTime.getTime(), endTime.getTime(), roomEndTime.getTime())
                 if (roomConflict) {
                     setShowError(true)
+                    console.log('roomConflict')
                     setErrorMsg("Operation can't be performed during this time interval. Room is not free.")
                     break
                 }
