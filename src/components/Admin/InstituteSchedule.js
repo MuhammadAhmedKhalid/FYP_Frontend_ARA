@@ -56,7 +56,8 @@ function InstituteSchedule() {
         for(let i of assignedCourses){
             for(let j of courses){
                 for(let k of faculty){
-                  if(j.course_id === i.course_id && i.batchId === batchId && i.department_id === departmentId && i.semesterType === selectedSemesterType && k.faculty_id === i.faculty_id){
+                  if(j.course_id === i.course_id && i.batchId === batchId && i.department_id === departmentId && i.semesterType === selectedSemesterType && 
+                    k.faculty_id === i.faculty_id && i.faculty_id !== 0){
                     setEvents(events => [...events, 
                         {id: i.assignedCourseId, title: j.course_name + " (" + k.name + ")", startDate: new Date(i.date + " " +i.startTime), endDate: new Date(i.date + " " +i.endTime)}])
                         break

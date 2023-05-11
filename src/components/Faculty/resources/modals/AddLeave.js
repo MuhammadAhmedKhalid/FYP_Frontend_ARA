@@ -70,24 +70,23 @@ function AddLeave(props) {
     const [jaccardCourses, setJaccardCourses] = useState([]);
 
     useEffect(() => {
-        if(dispatchJaccard){
-            if(jaccardFacultyAdded && jaccardCourses.length > 0 && jaccardFaculty.length > 0){
-                dispatch(addWeightageRequest({institute_id, jaccardResults: jaccardFaculty, assignedCourse: jaccardCourses}))
-                for(let i of jaccardCourses){
-                    dispatch(deletassignedCourseRequest(i.assignedCourseId))
-                }
-                
-                for(let l in requestedRooms){
-                    if(requestedRooms[l].room_id === jaccardCourses[0].room_id && requestedRooms[l].startTime === jaccardCourses[0].startTime
-                        && requestedRooms[l].endTime === jaccardCourses[0].endTime 
-                        && requestedRooms[l].date === format(new Date(jaccardCourses[0].date), 'MM/dd/yyyy')){
-                            dispatch(deleteRequestedRoom(requestedRooms[l].room_req_id))
-                    }   
-                }
+        if(dispatchJaccard && jaccardCourses.length === jaccardFaculty.length && jaccardFacultyAdded && jaccardCourses.length > 0 && jaccardFaculty.length > 0){
+            dispatch(addWeightageRequest({institute_id, jaccardResults: jaccardFaculty, assignedCourse: jaccardCourses}))
+            for(let i of jaccardCourses){
+                dispatch(updateAssignedCourse(i, 0))
+                // dispatch(deletassignedCourseRequest(i.assignedCourseId))
+            }
+            
+            for(let l in requestedRooms){
+                if(requestedRooms[l].room_id === jaccardCourses[0].room_id && requestedRooms[l].startTime === jaccardCourses[0].startTime
+                    && requestedRooms[l].endTime === jaccardCourses[0].endTime 
+                    && requestedRooms[l].date === format(new Date(jaccardCourses[0].date), 'MM/dd/yyyy')){
+                        dispatch(deleteRequestedRoom(requestedRooms[l].room_req_id))
+                }   
             }
             setDispatchJaccard(false)
         }
-}, [dispatchJaccard])
+    }, [dispatchJaccard, jaccardFacultyAdded, jaccardFaculty, jaccardCourses])
 
     useEffect(() => {
         if(institute_id > 0){
@@ -283,44 +282,21 @@ function AddLeave(props) {
                     }
                 }
                 
-                for(let k of coursesLst){
-                    for(let i of faculty){
-                        if(faculty_id !== i.faculty_id){
-                            for(let j of i.specialization){
-                             if(j === k.course_name){
-                                 availableFaculty.push({faculty_id: i.faculty_id, course_id: k.course_id, course_name: k.course_name, yearsOfExperience: i.yearsOfExperience})
+                for(let i in coursesList){
+                    availableFaculty.push([])
+                }
+
+                for(let k in coursesLst){
+                    for(let i in faculty){
+                        if(faculty_id !== faculty[i].faculty_id){
+                            for(let j of faculty[i].specialization){
+                             if(j === coursesLst[k].course_name){
+                                availableFaculty[k].push({faculty_id: faculty[i].faculty_id, course_id: coursesLst[k].course_id, 
+                                    course_name: coursesLst[k].course_name, yearsOfExperience: faculty[i].yearsOfExperience})
                              }
                             }
                          }
                     }
-                }
-
-                let groups = {};
-                for (let obj of availableFaculty) {
-                if (groups[obj.course_id]) {
-                    groups[obj.course_id].push(obj);
-                } else {
-                    groups[obj.course_id] = [obj];
-                }
-                }
-
-                let nestedList = Object.values(groups);
-
-                let list = []
-                for(let i of coursesLst){
-                    for(let j in nestedList){
-                        for(let k of nestedList[j]){
-                            if(k.course_id === i.course_id){
-                                list.push(nestedList[j])
-                            }
-                            break
-                        }
-                    }
-                }
-
-                availableFaculty = list
-                if(coursesLst.length > availableFaculty.length){
-                    availableFaculty.push([])
                 }
 
                 for(let i in availableFaculty){
@@ -356,19 +332,18 @@ function AddLeave(props) {
                         }
                     }
                 }
-
+                
                 let facultyListJaccard = []
                 for(let i in availableFaculty){
                     if(availableFaculty[i].length > 1){
                         facultyListJaccard.push(availableFaculty[i])
                         for(let j of coursesList){
-                            if(j.course_id === coursesLst[i].course_id){
+                            if(j.course_id === availableFaculty[i][0].course_id){
                                 jaccardCourses.push(j)
                             }
                         }
                     } 
                     else if (availableFaculty[i].length === 1){
-                        
                         let courseName;
                         let batch;
                         let department;

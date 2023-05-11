@@ -307,7 +307,6 @@ function AssignCourse(props) {
 
                   if(courseConflict){
                     setShowError(true)
-                    console.log('courseConflict')
                     setErrorMsg("Operation can't be performed during this time interval. Course is already assigned during this time.")
                     break
                   }
@@ -330,7 +329,6 @@ function AssignCourse(props) {
 
                   if(facultyConflict){
                     setShowError(true)
-                    console.log('facultyConflict')
                     setErrorMsg("Operation can't be performed during this time interval. Faculty is not free.")
                     break
                   }
@@ -350,7 +348,6 @@ function AssignCourse(props) {
                   startTime.getTime(), roomStartTime.getTime(), endTime.getTime(), roomEndTime.getTime())
                 if (roomConflict) {
                     setShowError(true)
-                    console.log('roomConflict')
                     setErrorMsg("Operation can't be performed during this time interval. Room is not free.")
                     break
                 }
