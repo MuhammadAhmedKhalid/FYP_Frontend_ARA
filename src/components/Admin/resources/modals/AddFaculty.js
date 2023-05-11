@@ -42,7 +42,7 @@ function AddFaculty(props) {
         department_id: "",
         specialization: [],
         designation: "",
-        institute_id: "",
+        institute_id,
         user: {
             "name": "",
             "password": "12345678",
