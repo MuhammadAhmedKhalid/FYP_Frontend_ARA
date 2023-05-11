@@ -16,7 +16,7 @@ function InstituteSchedule() {
 
   const dispatch = useDispatch()
 
-  const institute_id = localStorage.getItem('institute_id')
+  const institute_id = Number(localStorage.getItem('institute_id'))
   const batches = useSelector((state) => state.getBatchesReducer.batches.data)
   const batchesAdded = useSelector((state) => state.getBatchesReducer.added)
   const departments = useSelector((state) => state.getDepartments.departments.data)

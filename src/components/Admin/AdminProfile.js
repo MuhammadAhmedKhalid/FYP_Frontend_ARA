@@ -30,7 +30,7 @@ function AdminProfile() {
   const [contact, setContact] = useState("");
   const [isEditMode, setIsEditMode] = useState(false);
   const [isInstEditMode, setIsInstEditMode] = useState(false);
-  const institute_id = localStorage.getItem('institute_id')
+  const institute_id = Number(localStorage.getItem('institute_id'))
   const [passwordVisible, setPasswordVisible] = useState(false);
   const user_id = Number(localStorage.getItem('user_id'))
 

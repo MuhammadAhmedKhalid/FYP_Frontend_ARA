@@ -26,7 +26,7 @@ const AdminNavBar = () => {
 
     const dispatch = useDispatch()
     
-    const institute_id = localStorage.getItem('institute_id')
+    const institute_id = Number(localStorage.getItem('institute_id'))
     const notifications = useSelector((state) => state.notificationsReqReducer.notifications.data)
     const notificationsAdded = useSelector((state) => state.notificationsReqReducer.added)
     const user_id = Number(localStorage.getItem('user_id'))

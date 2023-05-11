@@ -16,7 +16,7 @@ function AddObject(props) {
     const rooms = useSelector((state) => state.getRooms.rooms.data)
     const departments = useSelector((state) => state.getDepartments.departments.data)
     const departmentsAdded = useSelector((state) => state.getDepartments.added)
-    const institute_id = localStorage.getItem('institute_id')
+    const institute_id = Number(localStorage.getItem('institute_id'))
     const requestSuccessfull = useSelector((state) => state.addObjectReducer.added)
     const requestUnsuccessfullMsg = useSelector((state) => state.addObjectReducer.error)
 

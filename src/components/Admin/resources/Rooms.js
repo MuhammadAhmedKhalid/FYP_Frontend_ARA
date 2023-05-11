@@ -25,7 +25,7 @@ function Rooms() {
     const roomsAdded = useSelector((state) => state.getRooms.added)
     const departments = useSelector((state) => state.getDepartments.departments.data)
     const departmentsAdded = useSelector((state) => state.getDepartments.added)
-    const institute_id = localStorage.getItem('institute_id')
+    const institute_id = Number(localStorage.getItem('institute_id'))
     const updateError = useSelector((state) => state.updateRoomReducer.error)
     const updatedSuccessfully = useSelector((state) => state.updateRoomReducer.updated)
 

@@ -24,7 +24,7 @@ function Table(props) {
 
     const positions = useSelector((state) => state.getPositionReducer.positions)
     const positionsAdded = useSelector((state) => state.getPositionReducer.added)
-    const institute_id = localStorage.getItem('institute_id')
+    const institute_id = Number(localStorage.getItem('institute_id'))
 
     useEffect(() => {
         if(institute_id > 0 && multiEdit){

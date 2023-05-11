@@ -16,7 +16,7 @@ function CheckIcon(props) {
 
   const dispatch = useDispatch()
 
-  const institute_id = localStorage.getItem('institute_id')
+  const institute_id = Number(localStorage.getItem('institute_id'))
   const departments = useSelector((state) => state.getDepartments.departments.data)
   const faculty = useSelector((state) => state.getFaculty.faculty)
   const batches = useSelector((state) => state.getBatchesReducer.batches.data)

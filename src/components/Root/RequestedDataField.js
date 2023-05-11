@@ -18,7 +18,7 @@ function RequestedDataField(props) {
           }
     }
 
-    const isAdmin = localStorage.getItem('is_admin')
+    const isAdmin = Boolean(localStorage.getItem('is_admin'))
 
     return (
         <div key={index} className="col-data container" style={{marginTop: '10px'}}>

@@ -23,7 +23,7 @@ function RequestedData() {
     const [req_id, setReq_id] = useState(0)
     const [resource, setResource] = useState('')
 
-    const institute_id = localStorage.getItem('institute_id')
+    const institute_id = Number(localStorage.getItem('institute_id'))
     const requestedObjects = useSelector((state) => state.getObjRequests.obj_requests.data)
     const requestedObjectsAdded = useSelector((state) => state.getObjRequests.added)
     const requestedRooms = useSelector((state) => state.getRoomRequest.room_req.data)
@@ -40,7 +40,7 @@ function RequestedData() {
     const facultyAdded = useSelector((state) => state.getFaculty.added)
     const user_id = Number(localStorage.getItem('user_id'))
     const name = localStorage.getItem('name')
-    const isAdmin = localStorage.getItem('is_admin')
+    const isAdmin = Boolean(localStorage.getItem('is_admin'))
     const requestedLeaves = useSelector((state) => state.leaveReqReducer.requestedLeaves.data)
     const requestedLeavesAdded = useSelector((state) => state.leaveReqReducer.added)
 

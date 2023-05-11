@@ -24,7 +24,7 @@ function AdminHomeScreen() {
     const institutes = useSelector((state) => state.getInstitutes.institutes.data)
     const isInstitutesAdded = useSelector((state) => state.getInstitutes.added)
     const admin_id = Number(localStorage.getItem('user_id'))
-    const institute_id = localStorage.getItem('institute_id')
+    const institute_id = Number(localStorage.getItem('institute_id'))
     const departments = useSelector((state) => state.getDepartments.departments.data)
     const departmentsAdded = useSelector((state) => state.getDepartments.added)
     const batches = useSelector((state) => state.getBatchesReducer.batches.data)

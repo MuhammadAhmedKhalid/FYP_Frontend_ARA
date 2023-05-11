@@ -17,7 +17,7 @@ function Schedule() {
     const [details, setDetails] = useState()
     const [showDetailModal, setShowDetailModal] = useState(false)
 
-    const institute_id = localStorage.getItem('institute_id')
+    const institute_id = Number(localStorage.getItem('institute_id'))
     const faculty_id = Number(localStorage.getItem('faculty_id'))
     const assignedCourses = useSelector((state) => state.assignedCoursesReducer.assignedCourses.data)
     const assignedCoursesAdded = useSelector((state) => state.assignedCoursesReducer.added)
