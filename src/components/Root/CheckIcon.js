@@ -36,7 +36,7 @@ function CheckIcon(props) {
   const selectFaculty = () => {
     setRefresh(true)
     dispatch(updateWeightage(weightageId))
-    dispatch(updateAssignedCourse(assignedCourse, facultyId))
+    dispatch(updateAssignedCourse(assignedCourse, true, facultyId))
 
     let courseName;
     let batch;

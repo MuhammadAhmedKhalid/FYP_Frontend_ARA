@@ -73,16 +73,17 @@ function AddLeave(props) {
         if(dispatchJaccard && jaccardCourses.length === jaccardFaculty.length && jaccardFacultyAdded && jaccardCourses.length > 0 && jaccardFaculty.length > 0){
             dispatch(addWeightageRequest({institute_id, jaccardResults: jaccardFaculty, assignedCourse: jaccardCourses}))
             for(let i of jaccardCourses){
-                dispatch(updateAssignedCourse(i, 0))
-                // dispatch(deletassignedCourseRequest(i.assignedCourseId))
+                dispatch(updateAssignedCourse(i, false, 0))
             }
             
             for(let l in requestedRooms){
-                if(requestedRooms[l].room_id === jaccardCourses[0].room_id && requestedRooms[l].startTime === jaccardCourses[0].startTime
-                    && requestedRooms[l].endTime === jaccardCourses[0].endTime 
-                    && requestedRooms[l].date === format(new Date(jaccardCourses[0].date), 'MM/dd/yyyy')){
-                        dispatch(deleteRequestedRoom(requestedRooms[l].room_req_id))
-                }   
+                for(let k in jaccardCourses){
+                    if(requestedRooms[l].room_id === jaccardCourses[k].room_id && requestedRooms[l].startTime === jaccardCourses[k].startTime
+                        && requestedRooms[l].endTime === jaccardCourses[k].endTime 
+                        && requestedRooms[l].date === format(new Date(jaccardCourses[k].date), 'MM/dd/yyyy')){
+                            dispatch(deleteRequestedRoom(requestedRooms[l].room_req_id))
+                    }   
+                }
             }
             setDispatchJaccard(false)
         }
@@ -353,7 +354,7 @@ function AddLeave(props) {
 
                         for(let k in coursesList){
                             if(k === i){
-                                dispatch(updateAssignedCourse(coursesList[k], availableFaculty[i][0].faculty_id))
+                                dispatch(updateAssignedCourse(coursesList[k], false, availableFaculty[i][0].faculty_id))
                                 for(let m of coursesLst){
                                     if(coursesList[k].course_id === m.course_id){
                                         courseName = m.course_name

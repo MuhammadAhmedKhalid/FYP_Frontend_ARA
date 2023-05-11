@@ -8,7 +8,7 @@ function* updateAssignedCourseRequest(payload) {
         const headers = {
             'Authorization': `Bearer ${token}`
         };
-        let result = yield call(axios.put, `http://localhost:8080/updateAssignedCourse/${payload.faculty_id}`, payload.assignedCourse, { headers });
+        let result = yield call(axios.put, `http://localhost:8080/updateAssignedCourse/${payload.faculty_id}`, payload, { headers });
         yield put({ type: UPDATE_ASSIGNED_COURSE_SUCCESS, result })
     } catch (e) {
         yield put({ type: UPDATE_ASSIGNED_COURSE_FAILURE, message: e.message })
