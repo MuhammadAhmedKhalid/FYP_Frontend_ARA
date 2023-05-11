@@ -33,7 +33,6 @@ import { getBatchesSaga } from './GetBatches/getBatchesSaga'
 import { assignCourseSaga } from './AssignCourse/assignCourseSaga'
 import { assignedCoursesSaga } from './AssignedCourses/assignedCoursesSaga'
 import { assignedCoursesForTableSaga } from './AssignedCoursesForTable/assignedCoursesForTableSaga'
-import { makeResBusySaga } from './MakeResourcesBusy/makeResBusySaga'
 import { addLeaveRequestSaga } from './AddLeaveRequest/addLeaveRequestSaga'
 import { getLeaveReqSaga } from './GetLeaveRequests/getLeaveRequestSaga'
 import { deleteLeaveRequestSaga } from './DeleteLeaveRequest/deleteLeaveRequestSaga'
@@ -98,7 +97,6 @@ export function* rootSaga() {
     yield fork(assignCourseSaga)
     yield fork(assignedCoursesSaga)
     yield fork(assignedCoursesForTableSaga)
-    yield fork(makeResBusySaga)
     yield fork(addLeaveRequestSaga)
     yield fork(getLeaveReqSaga)
     yield fork(deleteLeaveRequestSaga)

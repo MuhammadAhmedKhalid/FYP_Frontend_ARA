@@ -20,7 +20,6 @@ import { assignedCoursesRequest } from '../../../../redux/AssignedCourses/assign
 import { Alert } from '@mui/material';
 import { getStaffRequest } from '../../../../redux/GetStaffRequest/getStaffReqActions'
 import { getRoomRequest } from '../../../../redux/GetRoomRequests/getRoomReqActions'
-import { makeResBusy } from '../../../../redux/MakeResourcesBusy/makeResBusyActions'
 
 function AssignCourse(props) {
 
@@ -264,8 +263,7 @@ function AssignCourse(props) {
       }
 
       const assigningCourse = () => {
-        dispatch(assignCourseRequest(assignCourse))
-        dispatch(makeResBusy(request, dates))
+        dispatch(assignCourseRequest(assignCourse, request, dates))
         setOpenAssignCourseModal(false)
         setShowError(false)
         alert("Operation performed successfully!")
@@ -307,7 +305,7 @@ function AssignCourse(props) {
 
                   if(courseConflict){
                     setShowError(true)
-                    setErrorMsg("Operation can't be performed during this time interval.")
+                    setErrorMsg("Operation can't be performed during this time interval. Course is already assigned during this time.")
                     break
                   }
 
@@ -328,7 +326,7 @@ function AssignCourse(props) {
 
                   if(facultyConflict){
                     setShowError(true)
-                    setErrorMsg("Operation can't be performed during this time interval.")
+                    setErrorMsg("Operation can't be performed during this time interval. Faculty is not free.")
                     break
                   }
                 }
@@ -347,7 +345,7 @@ function AssignCourse(props) {
                   startTime.getTime(), roomStartTime.getTime(), endTime.getTime(), roomEndTime.getTime())
                 if (roomConflict) {
                     setShowError(true)
-                    setErrorMsg("Operation can't be performed during this time interval.")
+                    setErrorMsg("Operation can't be performed during this time interval. Room is not free.")
                     break
                 }
               }
@@ -457,7 +455,7 @@ function AssignCourse(props) {
                       </div>
                       <div>
                         {
-                            showError && <Alert style={{ marginTop: '12px' }} severity="error">{errorMsg}</Alert>
+                            showError && <Alert style={{ marginTop: '12px', width: '257px' }} severity="error">{errorMsg}</Alert>
                         }
                       </div>
                       <center><button className='modal-btn' style={{marginTop: '20px'}} type='submit'>Add</button></center>
