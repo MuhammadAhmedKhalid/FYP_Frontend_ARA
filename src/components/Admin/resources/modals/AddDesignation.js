@@ -7,7 +7,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import { addPositionRequest, resetState } from '../../../../redux/AddPosition/addPositionActions'
 import { Alert } from '@mui/material';
 
-function AddPosition(props) {
+function AddDesignation(props) {
 
     const { openPositionModal, setOpenPositionModal } = props
 
@@ -70,10 +70,10 @@ function AddPosition(props) {
                 isOpen={openPositionModal}
                 onRequestClose={() => closeModal()}>
                 <div className='center flexbox-container-y'>
-                    <h2 style={{ color: "#115868", fontSize: 20 }}>Add Position</h2>
+                    <h2 style={{ color: "#115868", fontSize: 20 }}>Add Designation</h2>
                     <form onSubmit={submitHandler}>
                     <TextField required autoFocus value={position.position_name} onChange={(e) => setPosition({ ...position, position_name: e.target.value })}
-                            style={{ margin: '3px' }} size='small' variant="outlined" type='text' placeholder='Position Name' InputProps={{
+                            style={{ margin: '3px' }} size='small' variant="outlined" type='text' placeholder='Designation Name' InputProps={{
                                 startAdornment: (
                                     <InputAdornment position='start'>
                                         <MilitaryTechIcon style={{ height: '20px' }} color="action" />
@@ -95,4 +95,4 @@ function AddPosition(props) {
     )
 }
 
-export default AddPosition
+export default AddDesignation

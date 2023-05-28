@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from 'react'
 import AdminNavBar from '../AdminNavbar'
 import AdminIcon from '../AdminIcon'
-import AddPosition from './modals/AddPosition'
+import AddPosition from './modals/AddDesignation'
 import Table from '../../Root/Table'
 import { useSelector, useDispatch } from 'react-redux'
 import { getPositionRequest } from '../../../redux/GetPosition/getPositionActions'
 import { resetState, updatePosition } from '../../../redux/UpdatePosition/updatePositionActions'
 import { deletePositionRequest } from '../../../redux/DeletePosition/deletePositionActions'
 
-function Positions() {
+function Designations() {
 
     const dispatch = useDispatch()
 
@@ -86,14 +86,14 @@ function Positions() {
                 <AdminNavBar />
                 <AdminIcon />
                 <div style={{ marginTop: '30px' }} className='center'>
-                    <button className='modal-btn-w' onClick={openModal}>ADD POSITION</button>
+                    <button className='modal-btn-w' onClick={openModal}>ADD DESIGNATION</button>
                 </div>
                 <div style={{ marginTop: '30px' }} className='center'>
-                    <h2 style={{ color: '#0E5E6F' }}>POSITIONS LIST</h2>
+                    <h2 style={{ color: '#0E5E6F' }}>DESIGNATIONS LIST</h2>
                 </div>
                 <center>
                     {
-                        positionsAdded && <Table columns={['No.', 'Position']} rows={rowData} refresh={refresh} setRefresh={setRefresh}
+                        positionsAdded && <Table columns={['No.', 'Designation']} rows={rowData} refresh={refresh} setRefresh={setRefresh}
                                             updVal={updVal} setUpdVal={setUpdVal}  setUpdate={setUpdate} setOldVal={setOldVal} setDeleteId={setDeleteId}/>
                     }
                 </center>
@@ -106,4 +106,4 @@ function Positions() {
   )
 }
 
-export default Positions
+export default Designations

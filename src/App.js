@@ -13,7 +13,7 @@ import { Provider } from 'react-redux'
 import Faculty from './components/Admin/resources/Faculty';
 import FacultyHomeScreen from './components/Faculty/FacultyHomeScreen';
 import Schedule from './components/Faculty/Schedule';
-import Positions from './components/Admin/resources/Positions';
+import Designations from './components/Admin/resources/Designations';
 import Courses from './components/Admin/resources/Courses';
 import AssignedCourses from './components/Admin/resources/AssignedCourses';
 import InstituteSchedule from './components/Admin/InstituteSchedule'
@@ -39,7 +39,7 @@ function App() {
           {isAdmin === 'false' ? <Route path='*' element={<NoMatch />}/> : <Route path='/batches' element={<AuthRoute><Batches /></AuthRoute>} />}
           {isAdmin === 'false' ? <Route path='*' element={<NoMatch />}/> : <Route path='/rooms' element={<AuthRoute><Rooms /></AuthRoute>} /> }
           {isAdmin === 'false' ? <Route path='*' element={<NoMatch />}/> : <Route path='/objects' element={<AuthRoute><Objects /></AuthRoute>} />}
-          {isAdmin === 'false' ? <Route path='*' element={<NoMatch />}/> : <Route path='/positions' element={<AuthRoute><Positions/></AuthRoute>} />}
+          {isAdmin === 'false' ? <Route path='*' element={<NoMatch />}/> : <Route path='/designations' element={<AuthRoute><Designations/></AuthRoute>} />}
           {isAdmin === 'false' ? <Route path='*' element={<NoMatch />}/> : <Route path='/courses' element={<AuthRoute><Courses/></AuthRoute>} />}
           {isAdmin === 'false' ? <Route path='*' element={<NoMatch />}/> : <Route path='/faculty' element={<AuthRoute><Faculty /></AuthRoute>} />}
           {isAdmin === 'false' ? <Route path='*' element={<NoMatch />}/> : <Route path='/assignedCourses' element={<AuthRoute><AssignedCourses/></AuthRoute>}/>}
