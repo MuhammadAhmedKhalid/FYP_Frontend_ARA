@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useRef } from 'react'
 import Modal from 'react-modal'
 import TextField from '@material-ui/core/TextField'
 import InputAdornment from '@material-ui/core/InputAdornment'
@@ -13,6 +13,7 @@ import { getPositionRequest } from '../../../../redux/GetPosition/getPositionAct
 import { Alert } from '@mui/material';
 import Select from "react-select";
 import GradeIcon from '@mui/icons-material/Grade';
+import emailjs from '@emailjs/browser';
 
 function AddFaculty(props) {
 
@@ -51,6 +52,8 @@ function AddFaculty(props) {
         yearsOfExperience: ""
     })
 
+    const form = useRef();
+
     useEffect(() => {
         if(institute_id > 0){
             dispatch(getDepartmentsRequest(institute_id))
@@ -72,6 +75,7 @@ function AddFaculty(props) {
 
     useEffect(() => {
         if(requestSuccessfull){
+            emailjs.sendForm('service_tjvggdm', 'template_wrlj0ov', form.current, 'nvzT6R7t3FB6c7LN0')
             setOpenFacultyModal(false)
             setErrorMsg('')
             setShowError(false)
@@ -145,8 +149,8 @@ function AddFaculty(props) {
                 onRequestClose={() => setOpenFacultyModal(false)}>
                 <div className='center flexbox-container-y'>
                     <h2 style={{ color: "#115868", fontSize: 20 }}>Add Faculty</h2>
-                    <form onSubmit={submitHandler}>
-                        <TextField autoFocus required value={faculty.first_name} 
+                    <form ref={form} onSubmit={submitHandler}>
+                        <TextField autoFocus required value={faculty.first_name} name='user_name'
                         onChange={(e) => setFaculty({ ...faculty, name: e.target.value, user: { ...faculty.user, name: e.target.value } })}
                             style={{ margin: '3px' }} size='small' variant="outlined" type='text' placeholder='Name' InputProps={{
                                 startAdornment: (
@@ -165,7 +169,7 @@ function AddFaculty(props) {
                             }} />
                         <TextField
                         required
-                            value={faculty.officialEmailAddress}
+                            value={faculty.officialEmailAddress} name='user_email'
                             onChange={(e) => setFaculty({ ...faculty, officialEmailAddress: e.target.value, user: { ...faculty.user, email: e.target.value } })}
                             style={{ margin: '3px' }} size='small' variant="outlined" type='text' placeholder='Email Address' InputProps={{
                                 startAdornment: (
