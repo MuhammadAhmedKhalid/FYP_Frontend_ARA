@@ -110,7 +110,7 @@ function Faculty() {
                 <center>
                     <div>
                         {
-                            facultyAdded&& <Table columns={['No.', 'Name', 'Phone Number', 'E-mail', 'Department', 'Specialization', 
+                            facultyAdded&& <Table columns={['No.', 'Name', 'Phone Number', 'E-mail', 'Department', 'Specialized Courses', 
                             'Designation', 'Years of Experience']} rows={rowData} refresh={refresh} setRefresh={setRefresh} multiEdit={true}
                             isFaculty={true} setUpdate={setUpdate} setOldVal={setOldVal} setDeleteId={setDeleteId}
                             updDesignation={updDesignation} setUpdDesignation={setUpdDesignation}

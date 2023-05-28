@@ -210,7 +210,7 @@ function AddFaculty(props) {
                         </select>
                         <h3 style={{
                             fontWeight: 'normal', color: 'gray', marginRight: '3px'
-                        }}>Specialization</h3>
+                        }}>Specialized Courses</h3>
                         <Select
                             options={specializationData}
                             onChange={handleSelect}
