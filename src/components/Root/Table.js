@@ -89,6 +89,7 @@ function Table(props) {
                             {
                                 columns.map((column, index) => (<th key={index}>{column}</th>))
                             }
+                            <th>Actions</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -123,20 +124,23 @@ function Table(props) {
                                                             size='small' variant="outlined" type='text'/>: 
                                                             data
                                                 }                                                
-                                                {
-                                                    isMobile ? null :
-                                                    <>
-                                                    <DeleteIcon onClick={() => handleDelete(index)} className='deleteButton'/>
-                                                    {
-                                                        editableRow !== null && editableRow === index  ? 
-                                                            <CheckIcon onClick={handleCheck} className='checkButton'/> : 
-                                                            uneditable === true ? null : <EditIcon onClick={() => handleEdit(index)} className='editButton'/>
-                                                    }
-                                                    </>
-                                                }
+                                               
                                             </td>
                                         ))
                                     }
+                                    <td>
+                                    {
+                                        isMobile ? null :
+                                        <>
+                                        <DeleteIcon onClick={() => handleDelete(index)} className='deleteButton'/>
+                                        {
+                                            editableRow !== null && editableRow === index  ? 
+                                                <CheckIcon onClick={handleCheck} /> : 
+                                                uneditable === true ? null : <EditIcon onClick={() => handleEdit(index)} className='editButton'/>
+                                        }
+                                        </>
+                                    }
+                                    </td>
                                 </tr>
                             ))
                         }
