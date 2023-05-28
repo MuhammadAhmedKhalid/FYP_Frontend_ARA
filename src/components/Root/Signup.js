@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useRef } from 'react'
 import Modal from 'react-modal'
 import { Link } from 'react-router-dom';
 import TextField from '@material-ui/core/TextField'
@@ -12,6 +12,7 @@ import VisibilityOff from "@material-ui/icons/VisibilityOff";
 import { useDispatch, useSelector } from 'react-redux'
 import { signupRequest } from '../../redux/Signup/signupActions'
 import { Alert } from '@mui/material';
+import emailjs from '@emailjs/browser';
 
 function Signup(props) {
 
@@ -34,6 +35,8 @@ function Signup(props) {
         password: "",
         showPassword: false,
     });
+
+    const form = useRef();
 
     const handleClickShowPassword = () => {
         setValues({ ...values, showPassword: !values.showPassword });
@@ -96,6 +99,7 @@ function Signup(props) {
         if(signupFailed === true){
             setSignupErrText('User already exists with this Email address.')
         }else if(signupFailed === false){
+            emailjs.sendForm('service_tjvggdm', 'template_wrlj0ov', form.current, 'nvzT6R7t3FB6c7LN0')
             openModal()
         }
     },[signupFailed])
@@ -125,8 +129,8 @@ function Signup(props) {
                 >
                     <h2 style={{ color: "#115868", fontSize: 20 }}>Welcome To Allocator</h2>
                     <p style={{ color: "#9098B1", fontSize: 14 }}>Sign up to continue</p>
-                    <form onSubmit={handleSignup}>
-                        <TextField autoFocus required value={user.name} onChange={(e) => setUser({ ...user, name: e.target.value })} size='small' variant="outlined" 
+                    <form ref={form} onSubmit={handleSignup}>
+                        <TextField autoFocus required value={user.name} name='user_name' onChange={(e) => setUser({ ...user, name: e.target.value })} size='small' variant="outlined" 
                         type='text' placeholder='Your Name' InputProps={{
                             startAdornment: (
                                 <InputAdornment position='start'>
@@ -134,7 +138,7 @@ function Signup(props) {
                                 </InputAdornment>
                             )
                         }} />
-                        <TextField required value={user.email} onChange={(e) => setUser({ ...user, email: e.target.value })} size='small' variant="outlined" type='email' placeholder='Your Email' InputProps={{
+                        <TextField required value={user.email} name='user_email' onChange={(e) => setUser({ ...user, email: e.target.value })} size='small' variant="outlined" type='email' placeholder='Your Email' InputProps={{
                             startAdornment: (
                                 <InputAdornment position='start'>
                                     <EmailOutlinedIcon style={{ height: '20px' }} color="action" />
