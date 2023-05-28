@@ -61,7 +61,7 @@ function Departments() {
     useEffect(()=>{
         if(departmentsAdded && rowData.length !== departments.length){
             for(let i=0; i<departments.length; i++){
-                rowData.push([departments[i].department_id , departments[i].department_name, institute_name])
+                rowData.push([departments[i].department_id , departments[i].department_name])
             }
         }
     },[departmentsAdded, refresh])
@@ -93,7 +93,7 @@ function Departments() {
                     </div>
                     <center>
                         {
-                            departmentsAdded && <Table columns={['No.', 'Department Name', 'Institute']} rows={rowData} refresh={refresh} setRefresh={setRefresh}
+                            departmentsAdded && <Table columns={['No.', 'Department Name']} rows={rowData} refresh={refresh} setRefresh={setRefresh}
                             updVal={updVal} setUpdVal={setUpdVal} setUpdate={setUpdate} setOldVal={setOldVal} setDeleteId={setDeleteId}/>
                         }
                     </center>

@@ -61,7 +61,7 @@ function Positions() {
     useEffect(()=>{
         if(positionsAdded && rowData.length !== positions.length){
             for(let i=0; i<positions.length; i++){
-                rowData.push([positions[i].position_id , positions[i].position_name, institute_name])
+                rowData.push([positions[i].position_id , positions[i].position_name])
             }
         }
     }, [positionsAdded, refresh])
@@ -93,7 +93,7 @@ function Positions() {
                 </div>
                 <center>
                     {
-                        positionsAdded && <Table columns={['No.', 'Position', 'Institute']} rows={rowData} refresh={refresh} setRefresh={setRefresh}
+                        positionsAdded && <Table columns={['No.', 'Position']} rows={rowData} refresh={refresh} setRefresh={setRefresh}
                                             updVal={updVal} setUpdVal={setUpdVal}  setUpdate={setUpdate} setOldVal={setOldVal} setDeleteId={setDeleteId}/>
                     }
                 </center>
