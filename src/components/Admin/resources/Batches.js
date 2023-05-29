@@ -28,6 +28,7 @@ function Batches() {
     const [oldVal, setOldVal] = useState(null)
     const [update, setUpdate] = useState(false)
     const [deleteId, setDeleteId] = useState(null)
+    const [deptName, setDeptName] = useState('')
 
     useEffect(() => {
         if(deleteId !== null){
@@ -51,7 +52,8 @@ function Batches() {
         if(update){
             for(let i of batches){
                 if(i.batchId === oldVal[0]){
-                    dispatch(updateBatch(i.department_id, i.batchId, updVal))
+                    console.log(i.department_id + " " + i.batchId + " " + updVal + " " + deptName)
+                    // dispatch(updateBatch(i.department_id, i.batchId, updVal, deptName))
                 }
             }
             setUpdVal('')
@@ -101,7 +103,8 @@ function Batches() {
                     <center>
                         {
                             <Table columns={['No.', 'Batch Year', 'Department']} rows={rowData} refresh={refresh} setRefresh={setRefresh}
-                                updVal={updVal} setUpdVal={setUpdVal} setUpdate={setUpdate} setOldVal={setOldVal} setDeleteId={setDeleteId}/>
+                                updVal={updVal} setUpdVal={setUpdVal} setUpdate={setUpdate} setOldVal={setOldVal} setDeleteId={setDeleteId}
+                                editDepartments={true} deptName={deptName} setDeptName={setDeptName}/>
                         }
                     </center>
                 </div>

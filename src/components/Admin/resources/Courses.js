@@ -101,7 +101,8 @@ function Courses() {
                 <center>
                     {
                         coursessAdded && <Table columns={['No.', 'Courses', 'Department']} rows={rowData} refresh={refresh} setRefresh={setRefresh}
-                                            updVal={updVal} setUpdVal={setUpdVal} setUpdate={setUpdate} setOldVal={setOldVal} setDeleteId={setDeleteId} />
+                                            updVal={updVal} setUpdVal={setUpdVal} setUpdate={setUpdate} setOldVal={setOldVal} setDeleteId={setDeleteId}
+                                            editDepartments={true} />
                     }
                 </center>
             </div>

@@ -7,13 +7,16 @@ import TextField from '@material-ui/core/TextField'
 import CheckIcon from '@mui/icons-material/Check';
 import { useSelector, useDispatch } from 'react-redux'
 import { getPositionRequest } from '../../redux/GetPosition/getPositionActions'
+import { getDepartmentsRequest } from '../../redux/GetDepartments/getDepartmentsActions'
+
 
 function Table(props) {
 
     const dispatch = useDispatch()
 
     const { columns, rows, refresh, setRefresh, uneditable, multiEdit, setUpdate, setOldVal, isFaculty, updVal, setUpdVal,
-        updNumber, setUpdNumber, updName, setUpdName, updDesignation, setUpdDesignation, setDeleteId } = props
+        updNumber, setUpdNumber, updName, setUpdName, updDesignation, setUpdDesignation, setDeleteId, editDepartments,
+        deptName, setDeptName } = props
 
     let rowData = []
 
@@ -25,6 +28,14 @@ function Table(props) {
     const positions = useSelector((state) => state.getPositionReducer.positions)
     const positionsAdded = useSelector((state) => state.getPositionReducer.added)
     const institute_id = Number(localStorage.getItem('institute_id'))
+    const departments = useSelector((state) => state.getDepartments.departments.data)
+    const departmentsAdded = useSelector((state) => state.getDepartments.added)
+
+    useEffect(() => {
+        if(editDepartments && institute_id > 0){
+            dispatch(getDepartmentsRequest(institute_id))
+        }
+    }, [editDepartments, institute_id])
 
     useEffect(() => {
         if(institute_id > 0 && multiEdit){
@@ -53,6 +64,11 @@ function Table(props) {
         setOldVal(oldData)
       };
 
+      const handleDeptChange = (text, rowIndex, cellIndex, oldData) => {
+        setDeptName(text)
+        setOldVal(oldData)
+      }
+
     const handleDelete = (index) => {
         setDeleteId(rows[index][0])
         alert('Deleted successfully.')
@@ -60,7 +76,10 @@ function Table(props) {
     }
 
     const handleCheck = () => {
-        if((!isFaculty && updVal.length > 0) || (isFaculty && (updDesignation.length > 0 || updName.length > 0 || updNumber.length > 0))){
+        if(
+                (!isFaculty && (updVal.length > 0 || deptName.length > 0))  || 
+                (isFaculty && (updDesignation.length > 0 || updName.length > 0 || updNumber.length > 0))
+            ){
             setEditableRow(null);
             setUpdate(true)
         }
@@ -76,7 +95,7 @@ function Table(props) {
     }
 
     const isMobile = window.innerWidth <= 1040;
-    
+
     return (
         <div>
             {refresh && (<div className="loading-overlay"><div className="loading-icon"></div></div>)}
@@ -101,7 +120,8 @@ function Table(props) {
                                         cellData.map((data, dataIndex)=>(
                                             <td key={dataIndex}>
                                                 {
-                                                    multiEdit === true ?( (editableRow === index) && (dataIndex === 0 || dataIndex === 1 || dataIndex === 5) ? 
+                                                    multiEdit === true ?( (editableRow === index) && 
+                                                    (dataIndex === 0 || dataIndex === 1 || dataIndex === 5) ? 
                                                     (editableRow === index && dataIndex === 5) ? 
                                                     <select className='editableDropdown' 
                                                         onChange={(event) => handleInputChange(event.target.value, index, dataIndex, rows[index])}>
@@ -111,7 +131,6 @@ function Table(props) {
                                                                 <option key={position.position_id}>{position.position_name}</option>) : null
                                                         }
                                                     </select> :
-                                                    
                                                     <TextField value={dataIndex === 0 ? updName : dataIndex === 1 ? updNumber : updDesignation} 
                                                         autoFocus={dataIndex === 0 ? true : false} placeholder={data} 
                                                         onChange={(event) => handleInputChange(event.target.value, index, dataIndex, rows[index])} 
@@ -122,9 +141,16 @@ function Table(props) {
                                                         <TextField autoFocus value={updVal} placeholder={data} 
                                                             onChange={(event) => handleInputChange(event.target.value, index, 1, rows[index])} 
                                                             size='small' variant="outlined" type='text'/>: 
-                                                            data
-                                                }                                                
-                                               
+                                                            editDepartments && dataIndex === 1 && editableRow === index ? 
+                                                            <select className='editableDropdown'
+                                                                onChange={(event) => handleDeptChange(event.target.value, index, dataIndex, rows[index])}>
+                                                                <option></option>
+                                                                {
+                                                                    departmentsAdded && departments.length !== 0 ? departments.map(department =>
+                                                                        <option key={department.department_id}>{department.department_name}</option>) : null
+                                                                }
+                                                            </select> : data
+                                                }  
                                             </td>
                                         ))
                                     }
@@ -135,7 +161,7 @@ function Table(props) {
                                         <DeleteIcon onClick={() => handleDelete(index)} className='deleteButton'/>
                                         {
                                             editableRow !== null && editableRow === index  ? 
-                                                <CheckIcon onClick={handleCheck} /> : 
+                                                <CheckIcon onClick={handleCheck} className='checkButton' /> : 
                                                 uneditable === true ? null : <EditIcon onClick={() => handleEdit(index)} className='editButton'/>
                                         }
                                         </>
