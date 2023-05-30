@@ -49,30 +49,38 @@ function Departments() {
             for(let i of departments){
                 if(i.department_id === oldVal[0]){
                     dispatch(updateDepartment(i.department_id, updVal))
+                    break
                 }
             }
+            console.log('update start')
+            setRowData([])
             setUpdVal('')
             setOldVal(null)
             setUpdate(false)
+            console.log('update end')
         }
     }, [update])
 
     useEffect(()=>{
         if(departmentsAdded && rowData.length !== departments.length){
+            console.log('useEffect')
+            console.log(departments)
             if(refresh){
+                console.log('refresh start')
                 setRowData([])
                 setRefresh(false)
+                console.log('refresh end')
             }
             for(let i=0; i<departments.length; i++){
                 rowData.push([departments[i].department_id , departments[i].department_name])
             }
         }
-    },[departmentsAdded, refresh, departments])
+    },[ departments])
 
     const openModal = () => {
         setOpenDepartmentModal(true)
     }
-    
+    console.log(departments)
     useEffect(() => {
         if(institute_id > 0){
             dispatch(getDepartmentsRequest(institute_id))
