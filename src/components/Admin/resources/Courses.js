@@ -20,6 +20,7 @@ function Courses() {
     const [oldVal, setOldVal] = useState(null)
     const [update, setUpdate] = useState(false)
     const [deleteId, setDeleteId] = useState(null)
+    const [deptName, setDeptName] = useState('')
     
     const departments = useSelector((state) => state.getDepartments.departments.data)
     const departmentsAdded = useSelector((state) => state.getDepartments.added)
@@ -49,9 +50,20 @@ function Courses() {
 
     useEffect(() => {
         if(update){
+            const course = {
+                course_name: updVal,
+                department_id: 0
+            }
             for(let i of courses){
                 if(i.course_id === oldVal[0]){
-                    dispatch(updateCourse(i.department_id, i.course_id, updVal))
+                    for(let j of departments){
+                        if(j.department_name == deptName){
+                            course.department_id = j.department_id
+                            break
+                        }
+                    }
+                    console.log(i.department_id+ " " +i.course_id+ " " +JSON.stringify(course))
+                    // dispatch(updateCourse(i.department_id, i.course_id, JSON.stringify(course)))
                 }
             }
             setUpdVal('')
@@ -102,7 +114,7 @@ function Courses() {
                     {
                         coursessAdded && <Table columns={['No.', 'Courses', 'Department']} rows={rowData} refresh={refresh} setRefresh={setRefresh}
                                             updVal={updVal} setUpdVal={setUpdVal} setUpdate={setUpdate} setOldVal={setOldVal} setDeleteId={setDeleteId}
-                                            editDepartments={true} />
+                                            editDepartments={true} deptName={deptName} setDeptName={setDeptName}/>
                     }
                 </center>
             </div>
