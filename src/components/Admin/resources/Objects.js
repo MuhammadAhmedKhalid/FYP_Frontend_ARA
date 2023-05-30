@@ -40,12 +40,20 @@ function Objects() {
     }
 
     useEffect(() => {
+        if(refresh){
+            setObjectData([])
+        }
         if (objectsAdded && objectTypesAdded && departmentsAdded) {
             if (objectData.length === 0) {
-                for (let i = 0; i < objects.length; i++) {
-                    for (let j = 0; j < objectTypes.length; j++) {
-                        for (let k = 0; k < rooms.length; k++) {
-                            for (let l = 0; l < departments.length; l++){
+                if(refresh){
+                    setObjectData([])
+                    setRefresh(false)
+                }
+                setObjectData([])
+                for (let i = 0; i < objects?.length; i++) {
+                    for (let j = 0; j < objectTypes?.length; j++) {
+                        for (let k = 0; k < rooms?.length; k++) {
+                            for (let l = 0; l < departments?.length; l++){
                                 if (objects[i].resource_type_id === objectTypes[j].resource_type_id && objects[i].room_id === rooms[k].room_id 
                                     && rooms[k].department_id === departments[l].department_id ) {
                                     setObjectData(objectData => [...objectData, [objects[i].resource_id , objectTypes[j].object_name,  objects[i].quantity, 
@@ -57,13 +65,10 @@ function Objects() {
                 }
             }
         }
-    }, [objects, refresh])
+    }, [objects, refresh, objectTypes, rooms])
 
     useEffect(() => {
         if(institute_id > 0){
-            if(refresh){
-                setObjectData([])
-            }
             dispatch(getResources(institute_id))
             dispatch(getResourceTypesRequest(institute_id))
             dispatch(getRoomsRequest(institute_id))
@@ -94,7 +99,7 @@ function Objects() {
                 </div>
             </div>
             <div>
-                <AddObject openObjectModal={openObjectModal} setOpenObjectModal={setOpenObjectModal} />
+                <AddObject openObjectModal={openObjectModal} setOpenObjectModal={setOpenObjectModal} setRefresh={setRefresh}/>
             </div>
         </div>
     )

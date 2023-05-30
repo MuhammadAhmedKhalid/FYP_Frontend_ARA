@@ -9,7 +9,7 @@ import { Alert } from '@mui/material';
 
 function AddObject(props) {
 
-    const { openObjectModal, setOpenObjectModal } = props
+    const { openObjectModal, setOpenObjectModal, setRefresh } = props
 
     const dispatch = useDispatch()
 
@@ -35,6 +35,7 @@ function AddObject(props) {
 
     useEffect(() => {
         if(requestSuccessfull){
+            setRefresh(true)
             setOpenObjectModal(false)
             setErrorMsg('')
             setShowError(false)
