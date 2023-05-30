@@ -72,7 +72,14 @@ function Courses() {
     }, [update])
     
     useEffect(()=>{
-        if(coursessAdded && departmentsAdded && rowData.length !== courses.length){
+        if(refresh){
+            setRowData([])
+        }
+        if(coursessAdded && departmentsAdded && rowData.length === 0){
+            if(refresh){
+                setRowData([])
+                setRefresh(false)
+            }
             for(let i=0; i<courses.length; i++){
                 for(let j=0; j<departments.length; j++){
                     if(departments[j].department_id === courses[i].department_id){
@@ -81,13 +88,10 @@ function Courses() {
                 }
             }
         }
-    }, [coursessAdded, departmentsAdded, refresh])
+    }, [courses, departments, refresh])
 
     useEffect(()=>{
         if(institute_id > 0){
-            if(refresh){
-                setRowData([])
-            }
             dispatch(getDepartmentsRequest(institute_id))
             dispatch(getCourseRequest(institute_id))
         }
@@ -119,7 +123,7 @@ function Courses() {
             </div>
         </div>
         <div>
-            <AddCourse openCourseModal={openCourseModal} setOpenCourseModal={setOpenCourseModal}/>
+            <AddCourse openCourseModal={openCourseModal} setOpenCourseModal={setOpenCourseModal} setRefresh={setRefresh}/>
         </div>
     </div>
   )
