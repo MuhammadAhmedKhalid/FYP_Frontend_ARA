@@ -60,11 +60,15 @@ function Departments() {
 
     useEffect(()=>{
         if(departmentsAdded && rowData.length !== departments.length){
+            if(refresh){
+                setRowData([])
+                setRefresh(false)
+            }
             for(let i=0; i<departments.length; i++){
                 rowData.push([departments[i].department_id , departments[i].department_name])
             }
         }
-    },[departmentsAdded, refresh])
+    },[departmentsAdded, refresh, departments])
 
     const openModal = () => {
         setOpenDepartmentModal(true)
@@ -72,9 +76,6 @@ function Departments() {
     
     useEffect(() => {
         if(institute_id > 0){
-            if(refresh){
-                setRowData([])
-            }
             dispatch(getDepartmentsRequest(institute_id))
         }
     }, [refresh, institute_id])
@@ -100,7 +101,7 @@ function Departments() {
                 </div>
             </div>
             <div>
-                <AddDepartment openDepartmentModal={openDepartmentModal} setOpenDepartmentModal={setOpenDepartmentModal}/>
+                <AddDepartment openDepartmentModal={openDepartmentModal} setOpenDepartmentModal={setOpenDepartmentModal} setRefresh={setRefresh}/>
             </div>
         </div>
     )

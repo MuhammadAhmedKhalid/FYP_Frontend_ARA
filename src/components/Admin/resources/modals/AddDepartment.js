@@ -9,7 +9,7 @@ import { Alert } from '@mui/material';
 
 function AddDepartment(props) {
 
-    const { openDepartmentModal, setOpenDepartmentModal } = props
+    const { openDepartmentModal, setOpenDepartmentModal, setRefresh } = props
 
     const dispatch = useDispatch()
 
@@ -22,6 +22,7 @@ function AddDepartment(props) {
 
     useEffect(() => {
         if(requestSuccessfull){
+            setRefresh(true)
             setOpenDepartmentModal(false)
             setErrorMsg('')
             setShowError(false)

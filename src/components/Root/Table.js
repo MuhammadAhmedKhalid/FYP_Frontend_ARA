@@ -126,8 +126,8 @@ function Table(props) {
 
     return (
         <div>
-            {refresh && (<div className="loading-overlay"><div className="loading-icon"></div></div>)}
-            <div className='refreshContainer'><RefreshIcon onClick={handleRefresh} className='refreshButton'/></div>
+            {/* {refresh && (<div className="loading-overlay"><div className="loading-icon"></div></div>)} */}
+            {/* <div className='refreshContainer'><RefreshIcon onClick={handleRefresh} className='refreshButton'/></div> */}
             <div className="table-container" style={{ marginTop: '7px' }}>
                 
                 <table className="table">
