@@ -52,7 +52,13 @@ function Table(props) {
     const handleEdit = (cellData, index) => {
         setEditableRow(index);
         setSpecializedCourses([])
-        setOldVal(cellData)
+
+        for(let i in rows){
+            if(i == index){
+                setOldVal(rows[i])
+                break
+            }
+        }
         
         let department_id = 0;
         
@@ -95,7 +101,8 @@ function Table(props) {
     const handleDelete = (index) => {
         setDeleteId(rows[index][0])
         alert('Deleted successfully.')
-        handleRefresh()
+        setRefresh(true)
+        // handleRefresh()
     }
 
     const handleCheck = () => {
@@ -106,17 +113,18 @@ function Table(props) {
             ){
             setEditableRow(null);
             setUpdate(true)
+            setRefresh(true)
         }
-        handleRefresh()
+        // handleRefresh()
     }
 
-    const handleRefresh = () => {
-        setRefresh(true);
-        setEditableRow(null);
-        setTimeout(() => {
-            setRefresh(false);
-          }, 1000);
-    }
+    // const handleRefresh = () => {
+    //     setRefresh(true);
+    //     setEditableRow(null);
+    //     setTimeout(() => {
+    //         setRefresh(false);
+    //       }, 1000);
+    // }
 
     function handleSelect(data) {
         setUpdSpecializedCourses(data.map(obj => obj.value))

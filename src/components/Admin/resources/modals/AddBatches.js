@@ -9,7 +9,7 @@ import { Alert } from '@mui/material';
 
 function AddBatches(props) {
 
-    const { openBatchModal, setOpenBatchModal } = props
+    const { openBatchModal, setOpenBatchModal, setRefresh } = props
 
     const dispatch = useDispatch()
 
@@ -30,6 +30,7 @@ function AddBatches(props) {
 
     useEffect(() => {
         if(requestSuccessfull){
+            setRefresh(true)
             setOpenBatchModal(false)
             setErrorMsg('')
             setShowError(false)

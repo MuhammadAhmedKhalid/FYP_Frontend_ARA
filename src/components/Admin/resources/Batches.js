@@ -72,7 +72,14 @@ function Batches() {
     }, [update])
 
     useEffect(()=>{
+        if(refresh){
+            setRowData([])
+        }
         if(batchesAdded && rowData.length === 0 && departmentsAdded){
+            if(refresh){
+                setRowData([])
+                setRefresh(false)
+            }
             for(let i=0; i<batches.length; i++){
                 for(let j in departments){
                     if(departments[j].department_id === batches[i].department_id){
@@ -85,9 +92,6 @@ function Batches() {
 
     useEffect(() => {
         if(institute_id > 0){
-            if(refresh){
-                setRowData([])
-            }
             dispatch(getBatchesRequest(institute_id))
             dispatch(getDepartmentsRequest(institute_id))
         }
@@ -119,7 +123,7 @@ function Batches() {
                 </div>
             </div>
             <div>
-                <AddBatches openBatchModal={openBatchModal} setOpenBatchModal={setOpenBatchModal}/>
+                <AddBatches openBatchModal={openBatchModal} setOpenBatchModal={setOpenBatchModal} setRefresh={setRefresh}/>
             </div>
         </div>
     )
