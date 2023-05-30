@@ -52,6 +52,7 @@ function Table(props) {
     const handleEdit = (cellData, index) => {
         setEditableRow(index);
         setSpecializedCourses([])
+        setOldVal(cellData)
         
         let department_id = 0;
         
@@ -80,17 +81,15 @@ function Table(props) {
             } else if(cellIndex === 1){
                 setUpdNumber(text)
             } else if(cellIndex === 6){
-                setUpdExperience(parseInt(text))
+                setUpdExperience(text)
             } else {
                 setUpdDesignation(text)
             }
         }
-        setOldVal(oldData)
       };
 
-      const handleDeptChange = (text, rowIndex, cellIndex, oldData) => {
+      const handleDeptChange = (text) => {
         setDeptName(text)
-        setOldVal(oldData)
       }
 
     const handleDelete = (index) => {
@@ -163,7 +162,7 @@ function Table(props) {
                                                         }
                                                     </select> : 
                                                     <select className='editableDropdown'
-                                                        onChange={(event) => handleDeptChange(event.target.value, index, dataIndex, rows[index])}>
+                                                        onChange={(event) => handleDeptChange(event.target.value)}>
                                                         <option></option>
                                                         {
                                                             departmentsAdded && departments.length !== 0 ? departments.map(department =>
@@ -191,7 +190,7 @@ function Table(props) {
                                                             size='small' variant="outlined" type='text'/>: 
                                                             editDepartments && dataIndex === 1 && editableRow === index ? 
                                                             <select className='editableDropdown'
-                                                                onChange={(event) => handleDeptChange(event.target.value, index, dataIndex, rows[index])}>
+                                                                onChange={(event) => handleDeptChange(event.target.value)}>
                                                                 <option></option>
                                                                 {
                                                                     departmentsAdded && departments.length !== 0 ? departments.map(department =>

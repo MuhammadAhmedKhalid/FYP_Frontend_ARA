@@ -59,18 +59,17 @@ function Faculty() {
                 phone_number: updNumber, 
                 designation: updDesignation,
                 department_id: 0,
-                yearsOfExperience: updExperience,
+                yearsOfExperience: Number(updExperience),
                 specialization: updSpecializedCourses
             }
             for(let i of facultyList){
-                if(i.faculty_id === oldVal[0]){
+                if(i.officialEmailAddress === oldVal[2]){
                     for(let j of departments){
                         if(j.department_name == deptName){
                             faculty.department_id = j.department_id
                         }
                     }
-                    console.log(i.faculty_id+ " " +JSON.stringify(faculty))
-                    //dispatch(updateFaculty(i.faculty_id, JSON.stringify(faculty)))
+                    dispatch(updateFaculty(i.faculty_id, JSON.stringify(faculty)))
                 }
             }
             setUpdDesignation('')

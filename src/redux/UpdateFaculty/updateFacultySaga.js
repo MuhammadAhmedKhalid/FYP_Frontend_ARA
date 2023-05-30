@@ -5,7 +5,7 @@ function* updateFacultyRequest(payload) {
     const token = localStorage.getItem('token');
     let result = yield call(fetch, `http://localhost:8080/updateFaculty/${payload.faculty_id}`, {
         method: "PUT",
-        body: JSON.stringify(payload.faculty),
+        body: payload.faculty,
         headers: {
             "Authorization": `Bearer ${token}`,
             'Content-Type': 'application/json; charset=utf-8'
