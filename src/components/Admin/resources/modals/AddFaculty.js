@@ -17,7 +17,7 @@ import emailjs from '@emailjs/browser';
 
 function AddFaculty(props) {
 
-    const { openFacultyModal, setOpenFacultyModal } = props
+    const { openFacultyModal, setOpenFacultyModal, setRefresh } = props
     const dispatch = useDispatch()
 
     const admin_id = Number(localStorage.getItem('user_id'))
@@ -75,6 +75,7 @@ function AddFaculty(props) {
 
     useEffect(() => {
         if(requestSuccessfull){
+            setRefresh(true)
             emailjs.sendForm('service_tjvggdm', 'template_wrlj0ov', form.current, 'nvzT6R7t3FB6c7LN0')
             setOpenFacultyModal(false)
             setErrorMsg('')

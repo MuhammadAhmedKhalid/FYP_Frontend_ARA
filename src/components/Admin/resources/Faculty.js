@@ -30,6 +30,7 @@ function Faculty() {
     const facultyAdded = useSelector((state) => state.getFaculty.added)
     const institute_id = Number(localStorage.getItem('institute_id'))
     const departments = useSelector((state) => state.getDepartments.departments.data)
+    const departmentsAdded = useSelector((state) => state.getDepartments.added)
     const updateError = useSelector((state) => state.updateFacultyReducer.error)
     const updatedSuccessfully = useSelector((state) => state.updateFacultyReducer.updated)
 
@@ -85,16 +86,20 @@ function Faculty() {
 
     useEffect(() => {
         if(institute_id>0){
-            if(refresh){
-                setRowData([])
-            }
             dispatch(getFacultyRequest(institute_id))
             dispatch(getDepartmentsRequest(institute_id))
         }
     }, [institute_id, refresh])
 
     useEffect(()=>{
-        if(facultyAdded && rowData.length === 0){
+        if(refresh){
+            setRowData([])
+        }
+        if(facultyAdded && departmentsAdded && rowData.length === 0){
+            if(refresh){
+                setRowData([])
+                setRefresh(false)
+            }
             for(let i=0; i<facultyList.length; i++){
                 for(let j of departments){
                     if(j.department_id == facultyList[i].department_id){
@@ -104,7 +109,7 @@ function Faculty() {
                 }
             }
         }
-    }, [facultyAdded, refresh])
+    }, [facultyList, refresh, departments])
     
     const openModal = () => {
         setOpenFacultyModal(true)
@@ -137,7 +142,7 @@ function Faculty() {
                     </div>
                 </center>
                 <div>
-                    <AddFaculty openFacultyModal={openFacultyModal} setOpenFacultyModal={setOpenFacultyModal}/>
+                    <AddFaculty openFacultyModal={openFacultyModal} setOpenFacultyModal={setOpenFacultyModal} setRefresh={setRefresh}/>
                 </div>
             </div>
         </div>
