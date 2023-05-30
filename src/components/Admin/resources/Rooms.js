@@ -20,6 +20,7 @@ function Rooms() {
     const [oldVal, setOldVal] = useState(null)
     const [update, setUpdate] = useState(false)
     const [deleteId, setDeleteId] = useState(null)
+    const [deptName, setDeptName] = useState('')
 
     const rooms = useSelector((state) => state.getRooms.rooms.data)
     const roomsAdded = useSelector((state) => state.getRooms.added)
@@ -49,9 +50,19 @@ function Rooms() {
 
     useEffect(() => {
         if(update){
+            const room = {
+                room_name: updVal, 
+                department_id: 0
+            }
             for(let i of rooms){
                 if(i.room_id === oldVal[0]){
-                    dispatch(updateRoom(i.room_id, i.department_id, updVal))
+                    for(let j of departments){
+                        if(j.department_name == deptName){
+                            room.department_id = j.department_id
+                            break
+                        }
+                    }
+                    dispatch(updateRoom(i.room_id, i.department_id, JSON.stringify(room)))
                 }
             }
             setUpdVal('')
@@ -104,7 +115,7 @@ function Rooms() {
                         {
                             roomsAdded && <Table columns={['No.', 'Room Name', 'Department']} rows={roomData} refresh={refresh} setRefresh={setRefresh}
                                             updVal={updVal} setUpdVal={setUpdVal} setUpdate={setUpdate} setOldVal={setOldVal} setDeleteId={setDeleteId}
-                                            editDepartments={true}/>
+                                            editDepartments={true} deptName={deptName} setDeptName={setDeptName}/>
                         }
                     </center>
                 </div>
