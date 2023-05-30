@@ -1,5 +1,5 @@
 import { UPDATE_BATCH_FAILURE, UPDATE_BATCH_REQUEST, UPDATE_BATCH_SUCCESS } from './updateBatchTypes'
-import { put, takeEvery, call, select } from 'redux-saga/effects'
+import { put, takeEvery, call } from 'redux-saga/effects'
 
 function* updateBatchRequest(payload) {
     const token = localStorage.getItem('token');

@@ -1,5 +1,5 @@
 import { UPDATE_ROOM_FAILURE, UPDATE_ROOM_REQUEST, UPDATE_ROOM_SUCCESS } from './updateRoomTypes'
-import { put, takeEvery, call, select } from 'redux-saga/effects'
+import { put, takeEvery, call } from 'redux-saga/effects'
 
 function* updateRoomRequest(payload) {
     const token = localStorage.getItem('token');
@@ -14,7 +14,7 @@ function* updateRoomRequest(payload) {
     if(result.status === 200){
         yield put({ type: UPDATE_ROOM_SUCCESS, result })
     }else{
-        yield put({ type: UPDATE_ROOM_FAILURE, message: "Room already exists with this name in same department." })
+        yield put({ type: UPDATE_ROOM_FAILURE, message: "Room already exists." })
     }
 }
 
