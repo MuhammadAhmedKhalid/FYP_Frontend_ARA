@@ -52,35 +52,29 @@ function Departments() {
                     break
                 }
             }
-            console.log('update start')
-            setRowData([])
             setUpdVal('')
             setOldVal(null)
             setUpdate(false)
-            console.log('update end')
         }
     }, [update])
 
     useEffect(()=>{
         if(departmentsAdded && rowData.length !== departments.length){
-            console.log('useEffect')
-            console.log(departments)
             if(refresh){
-                console.log('refresh start')
                 setRowData([])
                 setRefresh(false)
-                console.log('refresh end')
             }
             for(let i=0; i<departments.length; i++){
                 rowData.push([departments[i].department_id , departments[i].department_name])
             }
         }
-    },[ departments])
+    },[departmentsAdded, refresh, departments])
+
 
     const openModal = () => {
         setOpenDepartmentModal(true)
     }
-    console.log(departments)
+
     useEffect(() => {
         if(institute_id > 0){
             dispatch(getDepartmentsRequest(institute_id))
@@ -102,7 +96,8 @@ function Departments() {
                     <center>
                         {
                             departmentsAdded && <Table columns={['No.', 'Department Name']} rows={rowData} refresh={refresh} setRefresh={setRefresh}
-                            updVal={updVal} setUpdVal={setUpdVal} setUpdate={setUpdate} setOldVal={setOldVal} setDeleteId={setDeleteId}/>
+                            updVal={updVal} setUpdVal={setUpdVal} setUpdate={setUpdate} setOldVal={setOldVal} setDeleteId={setDeleteId}
+                            setRowData={setRowData}/>
                         }
                     </center>
                 </div>

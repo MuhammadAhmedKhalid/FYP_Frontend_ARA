@@ -15,9 +15,9 @@ function Table(props) {
 
     const dispatch = useDispatch()
 
-    const { columns, rows, refresh, setRefresh, uneditable, multiEdit, setUpdate, setOldVal, isFaculty, updVal, setUpdVal,
+    const { columns, rows, setRefresh, uneditable, multiEdit, setUpdate, setOldVal, isFaculty, updVal, setUpdVal,
         updNumber, setUpdNumber, updName, setUpdName, updDesignation, setUpdDesignation, setDeleteId, editDepartments,
-        deptName, setDeptName, updExperience, setUpdExperience, updSpecializedCourses, setUpdSpecializedCourses } = props
+        deptName, setDeptName, updExperience, setUpdExperience, updSpecializedCourses, setUpdSpecializedCourses, setRowData} = props
 
     let rowData = []
 
@@ -102,7 +102,6 @@ function Table(props) {
         setDeleteId(rows[index][0])
         alert('Deleted successfully.')
         setRefresh(true)
-        // handleRefresh()
     }
 
     const handleCheck = () => {
@@ -111,20 +110,12 @@ function Table(props) {
                 (isFaculty && (updDesignation.length > 0 || updName.length > 0 || updNumber.length > 0 || deptName.length > 0
                     || updExperience.length > 0 || updSpecializedCourses.length > 0))
             ){
-            setEditableRow(null);
-            setUpdate(true)
-            setRefresh(true)
+                setRowData([])
+                setEditableRow(null)
+                setUpdate(true)
+                setRefresh(true)
         }
-        // handleRefresh()
     }
-
-    // const handleRefresh = () => {
-    //     setRefresh(true);
-    //     setEditableRow(null);
-    //     setTimeout(() => {
-    //         setRefresh(false);
-    //       }, 1000);
-    // }
 
     function handleSelect(data) {
         setUpdSpecializedCourses(data.map(obj => obj.value))
@@ -134,10 +125,7 @@ function Table(props) {
 
     return (
         <div>
-            {/* {refresh && (<div className="loading-overlay"><div className="loading-icon"></div></div>)} */}
-            {/* <div className='refreshContainer'><RefreshIcon onClick={handleRefresh} className='refreshButton'/></div> */}
             <div className="table-container" style={{ marginTop: '7px' }}>
-                
                 <table className="table">
                     <thead className="fixed-header">
                         <tr>
