@@ -22,8 +22,11 @@ function Faculty() {
     const [oldVal, setOldVal] = useState(null)
     const [update, setUpdate] = useState(false)
     const [deleteId, setDeleteId] = useState(null)
+    const [deptName, setDeptName] = useState('')
+    const [updExperience, setUpdExperience] = useState('')
+    const [updSpecializedCourses, setUpdSpecializedCourses] = useState([])
 
-    const faculty = useSelector((state) => state.getFaculty.faculty)
+    const facultyList = useSelector((state) => state.getFaculty.faculty)
     const facultyAdded = useSelector((state) => state.getFaculty.added)
     const institute_id = Number(localStorage.getItem('institute_id'))
     const departments = useSelector((state) => state.getDepartments.departments.data)
@@ -51,19 +54,31 @@ function Faculty() {
 
     useEffect(() => {
         if(update){
-            for(let i of faculty){
+            const faculty = {
+                name: updName,
+                phone_number: updNumber, 
+                designation: updDesignation,
+                department_id: 0,
+                yearsOfExperience: updExperience,
+                specialization: updSpecializedCourses
+            }
+            for(let i of facultyList){
                 if(i.faculty_id === oldVal[0]){
-                    const faculty = {
-                        name: updName,
-                        phone_number: updNumber, 
-                        designation: updDesignation
+                    for(let j of departments){
+                        if(j.department_name == deptName){
+                            faculty.department_id = j.department_id
+                        }
                     }
-                    dispatch(updateFaculty(i.faculty_id, faculty))
+                    console.log(i.faculty_id+ " " +JSON.stringify(faculty))
+                    //dispatch(updateFaculty(i.faculty_id, JSON.stringify(faculty)))
                 }
             }
             setUpdDesignation('')
             setUpdName('')
             setUpdNumber('')
+            setDeptName('')
+            setUpdSpecializedCourses([])
+            setUpdExperience('')
             setOldVal(null)
             setUpdate(false)
         }
@@ -81,11 +96,11 @@ function Faculty() {
 
     useEffect(()=>{
         if(facultyAdded && rowData.length === 0){
-            for(let i=0; i<faculty.length; i++){
+            for(let i=0; i<facultyList.length; i++){
                 for(let j of departments){
-                    if(j.department_id == faculty[i].department_id){
-                        rowData.push([faculty[i].faculty_id, faculty[i].name, faculty[i].phone_number, faculty[i].officialEmailAddress, j.department_name, 
-                            faculty[i].specialization.join(', '), faculty[i].designation, faculty[i].yearsOfExperience])
+                    if(j.department_id == facultyList[i].department_id){
+                        rowData.push([facultyList[i].faculty_id, facultyList[i].name, facultyList[i].phone_number, facultyList[i].officialEmailAddress, j.department_name, 
+                            facultyList[i].specialization.join(', '), facultyList[i].designation, facultyList[i].yearsOfExperience])
                     }
                 }
             }
@@ -115,7 +130,10 @@ function Faculty() {
                             isFaculty={true} setUpdate={setUpdate} setOldVal={setOldVal} setDeleteId={setDeleteId}
                             updDesignation={updDesignation} setUpdDesignation={setUpdDesignation}
                             updName={updName} setUpdName={setUpdName}
-                            updNumber={updNumber} setUpdNumber={setUpdNumber} />
+                            updNumber={updNumber} setUpdNumber={setUpdNumber}
+                            deptName={deptName} setDeptName={setDeptName}
+                            updExperience={updExperience} setUpdExperience={setUpdExperience}
+                            updSpecializedCourses={updSpecializedCourses} setUpdSpecializedCourses={setUpdSpecializedCourses}/>
                         }
                     </div>
                 </center>
