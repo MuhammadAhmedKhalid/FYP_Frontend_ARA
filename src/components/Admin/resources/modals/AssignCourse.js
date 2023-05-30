@@ -23,7 +23,7 @@ import { getRoomRequest } from '../../../../redux/GetRoomRequests/getRoomReqActi
 
 function AssignCourse(props) {
 
-      const { openAssignCourseModal, setOpenAssignCourseModal } = props
+      const { openAssignCourseModal, setOpenAssignCourseModal, setRefresh } = props
 
       const dispatch = useDispatch()
 
@@ -266,6 +266,7 @@ function AssignCourse(props) {
 
       const assigningCourse = () => {
         dispatch(assignCourseRequest(assignCourse, request, dates))
+        setRefresh(true)
         setOpenAssignCourseModal(false)
         setShowError(false)
         alert("Operation performed successfully!")

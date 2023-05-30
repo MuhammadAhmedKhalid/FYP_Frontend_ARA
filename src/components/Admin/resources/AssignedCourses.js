@@ -40,8 +40,15 @@ function AssignedCourses() {
     }, [deleteId])
 
   useEffect(()=>{
+    if(refresh){
+      setRowData([])
+    }
     if(assignedCoursesAdded && rowData.length !== assignedCourses.length
       && departmentsAdded && coursessAdded && facultyAdded && batchesAdded){
+        if(refresh){
+          setRowData([])
+          setRefresh(false)
+      }
         for(let i=0; i<assignedCourses.length; i++){
           for(let j=0; j<departments.length; j++){
             for(let k=0; k<courses.length; k++){
@@ -58,13 +65,10 @@ function AssignedCourses() {
           }
         }
     }
-  },[assignedCoursesAdded, assignedCourses, rowData, refresh])
+  },[assignedCourses, refresh, departments, courses, faculty, batches])
 
   useEffect(() => {
     if(institute_id > 0){
-      if(refresh){
-        setRowData([])
-      }
       dispatch(assignedCoursesForTableRequest(institute_id))
       dispatch(getDepartmentsRequest(institute_id))
       dispatch(getCourseRequest(institute_id))
@@ -99,7 +103,8 @@ function AssignedCourses() {
                 </div>
             </div>
             <div>
-                <AssignCourse openAssignCourseModal={openAssignCourseModal} setOpenAssignCourseModal={setOpenAssignCourseModal}/>
+                <AssignCourse openAssignCourseModal={openAssignCourseModal} setOpenAssignCourseModal={setOpenAssignCourseModal}
+                  setRefresh={setRefresh}/>
             </div>
     </div>
   )
