@@ -25,6 +25,7 @@ function Faculty() {
     const [deptName, setDeptName] = useState('')
     const [updExperience, setUpdExperience] = useState('')
     const [updSpecializedCourses, setUpdSpecializedCourses] = useState([])
+    const [updEmail, setUpdEmail] = useState('')
 
     const facultyList = useSelector((state) => state.getFaculty.faculty)
     const facultyAdded = useSelector((state) => state.getFaculty.added)
@@ -61,10 +62,11 @@ function Faculty() {
                 designation: updDesignation,
                 department_id: 0,
                 yearsOfExperience: Number(updExperience),
-                specialization: updSpecializedCourses
+                specialization: updSpecializedCourses,
+                officialEmailAddress: updEmail
             }
             for(let i of facultyList){
-                if(i.officialEmailAddress === oldVal[2]){
+                if(i.officialEmailAddress === oldVal[3]){
                     for(let j of departments){
                         if(j.department_name == deptName){
                             faculty.department_id = j.department_id
@@ -79,6 +81,7 @@ function Faculty() {
             setDeptName('')
             setUpdSpecializedCourses([])
             setUpdExperience('')
+            setUpdEmail('')
             setOldVal(null)
             setUpdate(false)
         }
@@ -137,7 +140,8 @@ function Faculty() {
                             updNumber={updNumber} setUpdNumber={setUpdNumber}
                             deptName={deptName} setDeptName={setDeptName}
                             updExperience={updExperience} setUpdExperience={setUpdExperience}
-                            updSpecializedCourses={updSpecializedCourses} setUpdSpecializedCourses={setUpdSpecializedCourses}/>
+                            updSpecializedCourses={updSpecializedCourses} setUpdSpecializedCourses={setUpdSpecializedCourses}
+                            updEmail={updEmail} setUpdEmail={setUpdEmail}/>
                         }
                     </div>
                 </center>

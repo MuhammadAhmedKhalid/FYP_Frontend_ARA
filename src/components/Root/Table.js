@@ -17,7 +17,8 @@ function Table(props) {
 
     const { columns, rows, setRefresh, uneditable, multiEdit, setUpdate, setOldVal, isFaculty, updVal, setUpdVal,
         updNumber, setUpdNumber, updName, setUpdName, updDesignation, setUpdDesignation, setDeleteId, editDepartments,
-        deptName, setDeptName, updExperience, setUpdExperience, updSpecializedCourses, setUpdSpecializedCourses} = props
+        deptName, setDeptName, updExperience, setUpdExperience, updSpecializedCourses, setUpdSpecializedCourses,
+        updEmail, setUpdEmail} = props
 
     let rowData = []
 
@@ -88,6 +89,8 @@ function Table(props) {
                 setUpdNumber(text)
             } else if(cellIndex === 6){
                 setUpdExperience(text)
+            } else if(cellIndex === 2){
+                setUpdEmail(text)
             } else {
                 setUpdDesignation(text)
             }
@@ -107,7 +110,7 @@ function Table(props) {
         if(
                 (!isFaculty && (updVal.length > 0 || deptName.length > 0))  || 
                 (isFaculty && (updDesignation.length > 0 || updName.length > 0 || updNumber.length > 0 || deptName.length > 0
-                    || updExperience.length > 0 || updSpecializedCourses.length > 0))
+                    || updExperience.length > 0 || updSpecializedCourses.length > 0 || updEmail.length > 0))
             ){
                 setEditableRow(null)
                 setUpdate(true)
@@ -142,7 +145,7 @@ function Table(props) {
                                             <td key={dataIndex}>
                                                 {
                                                     multiEdit === true ?( (editableRow === index) && 
-                                                    (dataIndex === 0 || dataIndex === 1 || dataIndex === 3 || dataIndex === 4 || 
+                                                    (dataIndex === 0 || dataIndex === 1 || dataIndex === 2 || dataIndex === 3 || dataIndex === 4 || 
                                                         dataIndex === 5 || dataIndex === 6) ? 
                                                     (editableRow === index && (dataIndex === 3 || dataIndex === 5)) ? 
                                                     dataIndex === 5 ? 
@@ -171,7 +174,7 @@ function Table(props) {
                                                         isMulti
                                                     /> :
                                                     <TextField value={dataIndex === 0 ? updName : dataIndex === 1 ?
-                                                         updNumber : dataIndex === 6 ? updExperience : updDesignation} 
+                                                         updNumber : dataIndex === 6 ? updExperience : dataIndex === 2 ? updEmail : updDesignation} 
                                                         autoFocus={dataIndex === 0 ? true : false} placeholder={dataIndex === 6 ? String(data) : data} 
                                                         onChange={(event) => handleInputChange(event.target.value, index, dataIndex, rows[index])} 
                                                             size='small' variant="outlined" type={dataIndex === 6 ? 'number' : 'text'}/>: 
