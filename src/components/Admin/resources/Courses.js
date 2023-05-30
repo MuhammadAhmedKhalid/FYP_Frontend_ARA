@@ -62,8 +62,7 @@ function Courses() {
                             break
                         }
                     }
-                    console.log(i.department_id+ " " +i.course_id+ " " +JSON.stringify(course))
-                    // dispatch(updateCourse(i.department_id, i.course_id, JSON.stringify(course)))
+                    dispatch(updateCourse(i.department_id, i.course_id, JSON.stringify(course)))
                 }
             }
             setUpdVal('')
