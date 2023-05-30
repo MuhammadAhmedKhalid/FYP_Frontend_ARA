@@ -50,18 +50,19 @@ function Batches() {
 
     useEffect(() => {
         if(update){
+            const batch = {
+                batchYear: parseInt(updVal), 
+                department_id: 0
+            }
             for(let i of batches){
                 if(i.batchId === oldVal[0]){
                     for(let j of departments){
                         if(j.department_name == deptName){
-                            const batch = {
-                                batchYear: parseInt(updVal), 
-                                department_id: j.department_id
-                            }
-                            dispatch(updateBatch(i.department_id, i.batchId, batch))
+                            batch.department_id = j.department_id
                             break
                         }
                     }
+                    dispatch(updateBatch(i.department_id, i.batchId, batch))
                 }
             }
             setUpdVal('')

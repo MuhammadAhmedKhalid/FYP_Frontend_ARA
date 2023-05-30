@@ -14,7 +14,7 @@ function* updateBatchRequest(payload) {
     if(result.status === 200){
         yield put({ type: UPDATE_BATCH_SUCCESS, result })
     }else{
-        yield put({ type: UPDATE_BATCH_FAILURE, message: "Batch already exists with this year in this department." })
+        yield put({ type: UPDATE_BATCH_FAILURE, message: "Batch already exists." })
     }
 }
 
