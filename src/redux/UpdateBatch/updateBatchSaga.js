@@ -2,16 +2,15 @@ import { UPDATE_BATCH_FAILURE, UPDATE_BATCH_REQUEST, UPDATE_BATCH_SUCCESS } from
 import { put, takeEvery, call, select } from 'redux-saga/effects'
 
 function* updateBatchRequest(payload) {
-    console.log(payload)
     const token = localStorage.getItem('token');
-    let result = yield call(fetch, `http://localhost:8080/updateBatch/${payload.batchId}/${payload.department_id}`, {
+    let result = yield call(fetch, `http://localhost:8080/updateBatch/${payload.batchId}/${payload.departmentId}`, {
         method: "PUT",
-        body: payload.batchYear,
+        body: JSON.stringify(payload.batch),
         headers: {
-            "Authorization": `Bearer ${token}`
+            "Authorization": `Bearer ${token}`,
+            'Content-Type': 'application/json; charset=utf-8'
         },
     });
-    console.log(result)
     if(result.status === 200){
         yield put({ type: UPDATE_BATCH_SUCCESS, result })
     }else{

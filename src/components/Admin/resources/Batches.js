@@ -52,8 +52,16 @@ function Batches() {
         if(update){
             for(let i of batches){
                 if(i.batchId === oldVal[0]){
-                    console.log(i.department_id + " " + i.batchId + " " + updVal + " " + deptName)
-                    // dispatch(updateBatch(i.department_id, i.batchId, updVal, deptName))
+                    for(let j of departments){
+                        if(j.department_name == deptName){
+                            const batch = {
+                                batchYear: parseInt(updVal), 
+                                department_id: j.department_id
+                            }
+                            dispatch(updateBatch(i.department_id, i.batchId, batch))
+                            break
+                        }
+                    }
                 }
             }
             setUpdVal('')
