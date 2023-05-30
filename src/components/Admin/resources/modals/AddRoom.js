@@ -9,7 +9,7 @@ import { Alert } from '@mui/material';
 
 function AddRoom(props) {
 
-    const { openRoomModal, setOpenRoomModal } = props
+    const { openRoomModal, setOpenRoomModal, setRefresh } = props
 
     const dispatch = useDispatch()
 
@@ -30,6 +30,7 @@ function AddRoom(props) {
 
     useEffect(() => {
         if(requestSuccessfull){
+            setRefresh(true)
             setOpenRoomModal(false)
             setErrorMsg('')
             setShowError(false)

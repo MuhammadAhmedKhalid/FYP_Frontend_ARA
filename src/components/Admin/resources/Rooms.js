@@ -76,8 +76,15 @@ function Rooms() {
     }
 
     useEffect(() => {
+        if(refresh){
+            setRoomData([])
+        }
         if (departmentsAdded) {
             if (rooms !== undefined && departments !== undefined && roomData.length === 0) {
+                if(refresh){
+                    setRoomData([])
+                    setRefresh(false)
+                }
                 for (let i = 0; i < departments.length; i++) {
                     for (let j = 0; j < rooms.length; j++) {
                         if (rooms[j].department_id === departments[i].department_id) {
@@ -91,9 +98,6 @@ function Rooms() {
 
     useEffect(() => {
         if(institute_id > 0){
-            if(refresh){
-                setRoomData([])
-            }
             dispatch(getRoomsRequest(institute_id))
             dispatch(getDepartmentsRequest(institute_id))
         }
@@ -121,7 +125,7 @@ function Rooms() {
                 </div>
             </div>
             <div>
-                <AddRoom openRoomModal={openRoomModal} setOpenRoomModal={setOpenRoomModal} />
+                <AddRoom openRoomModal={openRoomModal} setOpenRoomModal={setOpenRoomModal} setRefresh={setRefresh} />
             </div>
         </div>
     )
