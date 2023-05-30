@@ -17,7 +17,7 @@ function Table(props) {
 
     const { columns, rows, setRefresh, uneditable, multiEdit, setUpdate, setOldVal, isFaculty, updVal, setUpdVal,
         updNumber, setUpdNumber, updName, setUpdName, updDesignation, setUpdDesignation, setDeleteId, editDepartments,
-        deptName, setDeptName, updExperience, setUpdExperience, updSpecializedCourses, setUpdSpecializedCourses, setRowData} = props
+        deptName, setDeptName, updExperience, setUpdExperience, updSpecializedCourses, setUpdSpecializedCourses} = props
 
     let rowData = []
 
@@ -101,7 +101,6 @@ function Table(props) {
     const handleDelete = (index) => {
         setDeleteId(rows[index][0])
         alert('Deleted successfully.')
-        setRefresh(true)
     }
 
     const handleCheck = () => {
@@ -110,10 +109,8 @@ function Table(props) {
                 (isFaculty && (updDesignation.length > 0 || updName.length > 0 || updNumber.length > 0 || deptName.length > 0
                     || updExperience.length > 0 || updSpecializedCourses.length > 0))
             ){
-                setRowData([])
                 setEditableRow(null)
                 setUpdate(true)
-                setRefresh(true)
         }
     }
 

@@ -9,7 +9,7 @@ import { Alert } from '@mui/material';
 
 function AddDesignation(props) {
 
-    const { openPositionModal, setOpenPositionModal } = props
+    const { openPositionModal, setOpenPositionModal, setRefresh } = props
 
     const dispatch = useDispatch()
 
@@ -27,6 +27,7 @@ function AddDesignation(props) {
 
     useEffect(() => {
         if(requestSuccessfull){
+            setRefresh(true)
             setOpenPositionModal(false)
             setErrorMsg('')
             setShowError(false)

@@ -22,7 +22,6 @@ function Designations() {
    
     const positions = useSelector((state) => state.getPositionReducer.positions)
     const positionsAdded = useSelector((state) => state.getPositionReducer.added)
-    const institute_name = localStorage.getItem('institute_name')
     const institute_id = Number(localStorage.getItem('institute_id'))
     const updateError = useSelector((state) => state.updatePositionReducer.error)
     const updatedSuccessfully = useSelector((state) => state.updatePositionReducer.updated)
@@ -60,17 +59,18 @@ function Designations() {
 
     useEffect(()=>{
         if(positionsAdded && rowData.length !== positions.length){
+            if(refresh){
+                setRowData([])
+                setRefresh(false)
+            }
             for(let i=0; i<positions.length; i++){
                 rowData.push([positions[i].position_id , positions[i].position_name])
             }
         }
-    }, [positionsAdded, refresh])
+    }, [positionsAdded, refresh, positions])
 
     useEffect(()=>{
         if(institute_id > 0){
-            if(refresh){
-                setRowData([])
-            }
             dispatch(getPositionRequest(institute_id))
         }
     },[refresh, institute_id])
@@ -100,7 +100,7 @@ function Designations() {
             </div>
         </div>
         <div>
-            <AddPosition openPositionModal={openPositionModal} setOpenPositionModal={setOpenPositionModal}/>
+            <AddPosition openPositionModal={openPositionModal} setOpenPositionModal={setOpenPositionModal} setRefresh={setRefresh}/>
         </div>
     </div>
   )

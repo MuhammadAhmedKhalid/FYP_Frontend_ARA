@@ -96,8 +96,7 @@ function Departments() {
                     <center>
                         {
                             departmentsAdded && <Table columns={['No.', 'Department Name']} rows={rowData} refresh={refresh} setRefresh={setRefresh}
-                            updVal={updVal} setUpdVal={setUpdVal} setUpdate={setUpdate} setOldVal={setOldVal} setDeleteId={setDeleteId}
-                            setRowData={setRowData}/>
+                            updVal={updVal} setUpdVal={setUpdVal} setUpdate={setUpdate} setOldVal={setOldVal} setDeleteId={setDeleteId}/>
                         }
                     </center>
                 </div>
