@@ -11,6 +11,7 @@ import NotificationsIcon from '@mui/icons-material/Notifications';
 import { getNotificationsRequest } from '../../redux/GetNotifications/getNotificationsActions'
 import { AiFillHome } from "react-icons/ai";
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import RuleModal from './RuleModal';
 
 const logo = {
     fontSize: '20px',
@@ -23,6 +24,7 @@ const AdminNavBar = () => {
     const [color, setColor] = useState(false)
     const [isNotificationPanelOpen, setIsNotificationPanelOpen] = useState(false);
     const [notificationNum, setNotificationNum] = useState(0)
+    const [ruleModal, setRuleModal] = useState(false)
 
     const dispatch = useDispatch()
     
@@ -75,6 +77,10 @@ const AdminNavBar = () => {
     setIsNotificationPanelOpen(false);
     }
 
+    const handleRuleModal = () => {
+        setRuleModal(true)
+    }
+
     const isMobile = window.innerWidth <= 1040;
 
     return (
@@ -114,7 +120,8 @@ const AdminNavBar = () => {
                             onClick: true
                         }]} />
                     </li>
-                    <li> <NavLink to='/schedule'>My Schedule</NavLink></li>
+                    <li> <NavLink to='/schedule'>My Timetable</NavLink></li>
+                    <li> <NavLink onClick={handleRuleModal}>Schedule</NavLink></li>
                     {
                         isMobile ? null :
                         <li>
@@ -189,6 +196,7 @@ const AdminNavBar = () => {
                     </div>
                 </div>
             </div >
+            {ruleModal && <RuleModal ruleModal={ruleModal} setRuleModal={setRuleModal}/>}
         </div>
     )
 
