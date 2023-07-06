@@ -21,6 +21,7 @@ function FacultyConstraints() {
     const [breakIndex1, setBreakIndex1] = useState();
     const [breakIndex2, setBreakIndex2] = useState();
     const [break1Time, setBreak1Time] = useState([]);
+    const [break2Time, setBreak2Time] = useState([]);
 
     const days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
 
@@ -32,6 +33,7 @@ function FacultyConstraints() {
         }));
         setTimeValues(initialTimeValues);
         setBreak1Time(initialTimeValues);
+        setBreak2Time(initialTimeValues);
       }, []);
 
     const handleCheckboxChange = (event) => {
@@ -99,6 +101,7 @@ function FacultyConstraints() {
             console.log('End date:', endDate)
             console.log('Time values:', timeValues)
             console.log("Break-01 times:", break1Time)
+            console.log("Break-02 times:", break2Time)
         } else {
             alert('Please select at least five days.');
         }
@@ -186,7 +189,8 @@ function FacultyConstraints() {
             </div>
             {breakModal1 && <AddBreak1 breakModal1={breakModal1} setBreakModal1={setBreakModal1} breakIndex1={breakIndex1}
                 break1Time={break1Time} setBreak1Time={setBreak1Time}/>}
-            {breakModal2 && <AddBreak2 breakModal2={breakModal2} setBreakModal2={setBreakModal2} breakIndex2={breakIndex2}/>}
+            {breakModal2 && <AddBreak2 breakModal2={breakModal2} setBreakModal2={setBreakModal2} breakIndex2={breakIndex2}
+                break2Time={break2Time} setBreak2Time={setBreak2Time}/>}
         </div>
     )
 }

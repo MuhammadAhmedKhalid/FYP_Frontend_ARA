@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import Modal from 'react-modal'
 import Stack from '@mui/material/Stack';
 import TextField from '@material-ui/core/TextField'
@@ -7,16 +7,6 @@ import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 
 function AddBreak1({breakModal1, setBreakModal1, breakIndex1, break1Time, setBreak1Time}) {
-
-    const days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
-
-    useEffect(() => {
-        const initialTimeValues = days.map((day) => ({
-          day,
-          startTime: new Date(), 
-          endTime: new Date(), 
-        }));
-    }, []);
 
     const handleTimePickerChange = (index, field, value) => {
         setBreak1Time((prevTimeValues) => {
