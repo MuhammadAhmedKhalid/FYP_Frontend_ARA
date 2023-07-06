@@ -1,5 +1,6 @@
-import React from 'react'
+import React, { useState } from 'react'
 import Modal from 'react-modal'
+import '../Styling/RuleModal.css'
 
 function RuleModal({ruleModal, setRuleModal}) {
 
@@ -15,6 +16,33 @@ function RuleModal({ruleModal, setRuleModal}) {
         },
     };
 
+    const handleSubmit = (e) => {
+        e.preventDefault();
+
+    if (selectedItems.length >= 5) {
+        console.log('Form submitted successfully!');
+        console.log('Selected items:', selectedItems);
+      } else {
+        alert('Please select at least five days.');
+      }
+    }
+
+    const days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+
+    const [selectedItems, setSelectedItems] = useState([]);
+
+    const handleCheckboxChange = (event) => {
+        const { value, checked } = event.target;
+    
+        if (checked) {
+          setSelectedItems((prevSelectedItems) => [...prevSelectedItems, value]);
+        } else {
+          setSelectedItems((prevSelectedItems) =>
+            prevSelectedItems.filter((item) => item !== value)
+          );
+        }
+      };
+
     return (
         <div>
             <Modal
@@ -24,6 +52,23 @@ function RuleModal({ruleModal, setRuleModal}) {
                 onRequestClose={() => setRuleModal(false)}>
                      <div className='center flexbox-container-y'>
                         <h2 style={{ color: "#115868", fontSize: 20 }}>Schedule</h2>
+                        <form onSubmit={handleSubmit}>
+                            {
+                                days.map((day, index) => 
+                                <label key={index}>
+                                    {day}
+                                    <input
+                                        key={index}
+                                        type="checkbox"
+                                        value={day}
+                                        checked={selectedItems.includes(day)}
+                                        onChange={handleCheckboxChange}
+                                    />
+                                </label>
+                                )
+                            }
+                            <button className='modal-btn' style={{ marginTop: '1rem' }} type="submit">Save</button>
+                        </form>
                      </div>
             </Modal>
         </div>
