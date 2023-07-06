@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import FacultyNavbar from './FacultyNavbar'
 import '../Styling/Constraints.css'
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
@@ -11,14 +11,23 @@ import { TimePicker } from '@mui/x-date-pickers/TimePicker';
 function FacultyConstraints() {
 
     const [selectedItems, setSelectedItems] = useState([]);
+    const [timeValues, setTimeValues] = useState([]);
     const [startDate, setStartDate] = useState(format(new Date(), 'MM/dd/yyyy'));
     const [endDate, setEndDate] = useState(format(new Date(), 'MM/dd/yyyy'));
 
     const days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
 
+    useEffect(() => {
+        const initialTimeValues = days.map((day) => ({
+          day,
+          startTime: new Date(), 
+          endTime: new Date(), 
+        }));
+        setTimeValues(initialTimeValues);
+      }, []);
+
     const handleCheckboxChange = (event) => {
         const { value, checked } = event.target;
-    
         if (checked) {
           setSelectedItems((prevSelectedItems) => [...prevSelectedItems, value]);
         } else {
@@ -26,6 +35,14 @@ function FacultyConstraints() {
             prevSelectedItems.filter((item) => item !== value)
           );
         }
+    };
+
+    const handleTimePickerChange = (index, field, value) => {
+        setTimeValues((prevTimeValues) => {
+          const newTimeValues = [...prevTimeValues];
+          newTimeValues[index] = { ...newTimeValues[index], [field]: value };
+          return newTimeValues;
+        });
     };
 
     const onKeyDown = (e) => {
@@ -62,6 +79,7 @@ function FacultyConstraints() {
             console.log('Selected items:', selectedItems);
             console.log('Start date:', startDate)
             console.log('End date:', endDate)
+            console.log('Time values:', timeValues)
         } else {
             alert('Please select at least five days.');
         }
@@ -72,7 +90,8 @@ function FacultyConstraints() {
             style={{
                 display: 'flex',
                 justifyContent: 'flex-start',
-                height: 'fit-content',
+                // height: 'fit-content',
+                height: '100vh',
                 background: '#fff'
             }}>
                 <div>
@@ -96,20 +115,20 @@ function FacultyConstraints() {
                             <div className='x-axis'>
                             <LocalizationProvider dateAdapter={AdapterDayjs}>
                                 <TimePicker
-                                    // value={value}
-                                    // onChange={handleStartTimeChange}
                                     className="custom-timepicker"
                                     label="Availability Start"
                                     renderInput={(params) => <TextField onKeyDown={onKeyDown} {...params}
-                                    variant="outlined" />} />
+                                    variant="outlined" />}
+                                    value={timeValues[index]?.startTime || new Date()}
+                                    onChange={(value) => handleTimePickerChange(index, 'startTime', value)} />
                                 <p>...</p>
                                 <TimePicker
-                                    // value={value}
-                                    // onChange={handleStartTimeChange}
                                     className="custom-timepicker"
                                     label="Availability End"
                                     renderInput={(params) => <TextField onKeyDown={onKeyDown} {...params}
-                                    variant="outlined" />} />
+                                    variant="outlined" />} 
+                                    value={timeValues[index]?.endTime || new Date()}
+                                    onChange={(value) => handleTimePickerChange(index, 'endTime', value)}/>
                             </LocalizationProvider>
                             </div>
                         </label>
