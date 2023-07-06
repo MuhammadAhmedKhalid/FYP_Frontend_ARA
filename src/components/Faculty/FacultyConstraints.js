@@ -7,6 +7,7 @@ import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker';
 import TextField from '@material-ui/core/TextField'
 import { format } from 'date-fns';
 import { TimePicker } from '@mui/x-date-pickers/TimePicker';
+import Modal from 'react-modal'
 
 function FacultyConstraints() {
 
@@ -14,8 +15,22 @@ function FacultyConstraints() {
     const [timeValues, setTimeValues] = useState([]);
     const [startDate, setStartDate] = useState(format(new Date(), 'MM/dd/yyyy'));
     const [endDate, setEndDate] = useState(format(new Date(), 'MM/dd/yyyy'));
+    const [breakModal1, setBreakModal1] = useState(false)
+    const [breakModal2, setBreakModal2] = useState(false)
 
     const days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+
+    const customStyles = {
+        overlay: {
+            backgroundColor: 'rgba(0, 0, 0, .7)',
+            position: 'fixed',
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 0,
+            zIndex: 1000,
+        },
+    };
 
     useEffect(() => {
         const initialTimeValues = days.map((day) => ({
@@ -44,6 +59,14 @@ function FacultyConstraints() {
           return newTimeValues;
         });
     };
+
+    const handleBreak1 = () => {
+        setBreakModal1(true)
+    }
+
+    const handleBreak2 = () => {
+        setBreakModal2(true)
+    }
 
     const onKeyDown = (e) => {
         e.preventDefault();
@@ -93,79 +116,97 @@ function FacultyConstraints() {
                 height: 'fit-content',
                 background: '#fff'
             }}>
-                <div>
-                    <FacultyNavbar/>
-                    <h2 className='center' style={{ color: "#115868", fontSize: 30, marginTop: '5rem', marginBottom: '1.5rem' }}>
-                        Constraints
-                    </h2>
-                    <form onSubmit={handleSubmit} style={{padding: '0px'}}>
-                    {
-                        days.map((day, index) => 
-                        <div key={index}>
-                            <div className='flexbox-container' style={{justifyContent: 'left'}}>
-                                <input
-                                    className='input'
-                                    
-                                    type="checkbox"
-                                    value={day}
-                                    checked={selectedItems.includes(day)}
-                                    onChange={handleCheckboxChange}
-                                />
-                                <a className='label-text'>{day}</a>
-                            </div>
-                            <label style={{ marginBottom: '10px'}} className='label x-axis' >
-                                <div className='x-axis'>
-                                    <LocalizationProvider dateAdapter={AdapterDayjs}>
-                                        <TimePicker
-                                            className="custom-timepicker"
-                                            label="Availability Start"
-                                            renderInput={(params) => <TextField onKeyDown={onKeyDown} {...params}
-                                            variant="outlined" />}
-                                            value={timeValues[index]?.startTime || new Date()}
-                                            onChange={(value) => handleTimePickerChange(index, 'startTime', value)} />
-                                        <p>...</p>
-                                        <TimePicker
-                                            className="custom-timepicker"
-                                            label="Availability End"
-                                            renderInput={(params) => <TextField onKeyDown={onKeyDown} {...params}
-                                            variant="outlined" />} 
-                                            value={timeValues[index]?.endTime || new Date()}
-                                            onChange={(value) => handleTimePickerChange(index, 'endTime', value)}/>
-                                    </LocalizationProvider>
-                                    <p className='break-btn'>+ Add Break</p>
-                                    <p className='break-btn'>+ Add Break</p>
-                                </div>
-                            </label>
+            <div>
+                <FacultyNavbar/>
+                <h2 className='center' style={{ color: "#115868", fontSize: 30, marginTop: '5rem', marginBottom: '1.5rem' }}>
+                    Constraints
+                </h2>
+                <form onSubmit={handleSubmit} style={{padding: '0px'}}>
+                {
+                    days.map((day, index) => 
+                    <div key={index}>
+                        <div className='flexbox-container' style={{justifyContent: 'left'}}>
+                            <input
+                                className='input'
+                                
+                                type="checkbox"
+                                value={day}
+                                checked={selectedItems.includes(day)}
+                                onChange={handleCheckboxChange}
+                            />
+                            <a className='label-text'>{day}</a>
                         </div>
-                        )
-                    }
-                    <h3 className='center' style={{margin: '20px', fontWeight: 'normal'}}>
-                        -------- Applicable between --------
-                    </h3>
-                    <div className='x-axis'>
-                        <LocalizationProvider dateAdapter={AdapterDayjs}>
-                            <DesktopDatePicker
-                                label="Start Date"
-                                inputFormat="DD/MM/YYYY"
-                                value={startDate}
-                                onChange={handleStartDateChange}
-                                renderInput={(params) => <TextField onKeyDown={onKeyDown} {...params}
-                                variant="outlined" />} />
-                            <p>...</p>
-                            <DesktopDatePicker
-                                label="End Date"
-                                inputFormat="DD/MM/YYYY"
-                                value={endDate}
-                                onChange={handleEndDateChange}
-                                renderInput={(params) => <TextField onKeyDown={onKeyDown} {...params}
-                                variant="outlined" />} />
-                        </LocalizationProvider>
+                        <label style={{ marginBottom: '10px'}} className='label x-axis' >
+                            <div className='x-axis'>
+                                <LocalizationProvider dateAdapter={AdapterDayjs}>
+                                    <TimePicker
+                                        className="custom-timepicker"
+                                        label="Availability Start"
+                                        renderInput={(params) => <TextField onKeyDown={onKeyDown} {...params}
+                                        variant="outlined" />}
+                                        value={timeValues[index]?.startTime || new Date()}
+                                        onChange={(value) => handleTimePickerChange(index, 'startTime', value)} />
+                                    <p>...</p>
+                                    <TimePicker
+                                        className="custom-timepicker"
+                                        label="Availability End"
+                                        renderInput={(params) => <TextField onKeyDown={onKeyDown} {...params}
+                                        variant="outlined" />} 
+                                        value={timeValues[index]?.endTime || new Date()}
+                                        onChange={(value) => handleTimePickerChange(index, 'endTime', value)}/>
+                                </LocalizationProvider>
+                                <p className='break-btn' onClick={handleBreak1}>+ Add Break</p>
+                                <p className='break-btn' onClick={handleBreak2}>+ Add Break</p>
+                            </div>
+                        </label>
                     </div>
-                    <div className='center flexbox-container-y'>
-                        <button className='modal-btn' style={{margin: '1.85rem'}}  type="submit">Save</button>
-                    </div>
-                    </form>
+                    )
+                }
+                <h3 className='center' style={{margin: '20px', fontWeight: 'normal'}}>
+                    -------- Applicable between --------
+                </h3>
+                <div className='x-axis'>
+                    <LocalizationProvider dateAdapter={AdapterDayjs}>
+                        <DesktopDatePicker
+                            label="Start Date"
+                            inputFormat="DD/MM/YYYY"
+                            value={startDate}
+                            onChange={handleStartDateChange}
+                            renderInput={(params) => <TextField onKeyDown={onKeyDown} {...params}
+                            variant="outlined" />} />
+                        <p>...</p>
+                        <DesktopDatePicker
+                            label="End Date"
+                            inputFormat="DD/MM/YYYY"
+                            value={endDate}
+                            onChange={handleEndDateChange}
+                            renderInput={(params) => <TextField onKeyDown={onKeyDown} {...params}
+                            variant="outlined" />} />
+                    </LocalizationProvider>
                 </div>
+                <div className='center flexbox-container-y'>
+                    <button className='modal-btn' style={{margin: '1.85rem'}}  type="submit">Save</button>
+                </div>
+                </form>
+            </div>
+            <Modal
+                className='modal-content'
+                style={customStyles}
+                isOpen={breakModal1}
+                onRequestClose={() => setBreakModal1(false)}>
+                <div className='center flexbox-container-y'>
+                    <h2 style={{ color: "#115868", fontSize: 20 }}>Add Break-01</h2>
+                </div>
+            </Modal>
+            <Modal
+                className='modal-content'
+                style={customStyles}
+                isOpen={breakModal2}
+                onRequestClose={() => setBreakModal2(false)}>
+                <div className='center flexbox-container-y'>
+                    <h2 style={{ color: "#115868", fontSize: 20 }}>Add Break-02</h2>
+                </div>
+            </Modal>
         </div>
     )
 }
