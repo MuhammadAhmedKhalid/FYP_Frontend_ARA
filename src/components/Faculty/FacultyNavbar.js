@@ -121,7 +121,7 @@ const AdminNavBar = () => {
                         }]} />
                     </li>
                     <li> <NavLink to='/schedule'>My Timetable</NavLink></li>
-                    <li> <NavLink onClick={handleRuleModal}>Schedule</NavLink></li>
+                    <li> <NavLink to='/constraints'>Schedule</NavLink></li>
                     {
                         isMobile ? null :
                         <li>

@@ -20,6 +20,7 @@ import InstituteSchedule from './components/Admin/InstituteSchedule'
 import AuthRoute from './components/Root/AuthRoute'
 import AdminProfile from './components/Admin/AdminProfile'
 import FacultyProfile from './components/Faculty/FacultyProfile'
+import FacultyConstraints from './components/Faculty/FacultyConstraints';
  
 Modal.setAppElement('#root')
 function App() {
@@ -48,6 +49,7 @@ function App() {
           {isAdmin === 'true' ? <Route path='*' element={<NoMatch />}/> : <Route path='/faculty-home' element={<AuthRoute><FacultyHomeScreen /></AuthRoute>}/>}
           {isAdmin === 'true' ? <Route path='*' element={<NoMatch />}/> : <Route path='/schedule' element={<AuthRoute><Schedule /></AuthRoute>} />}
           {isAdmin === 'true' ? <Route path='*' element={<NoMatch />}/> : <Route path='/facultyProfile' element={<AuthRoute><FacultyProfile /></AuthRoute>} />}
+          {isAdmin === 'true' ? <Route path='*' element={<NoMatch />}/> : <Route path='/constraints' element={<AuthRoute><FacultyConstraints /></AuthRoute>} />}
 
           <Route path='*' element={<NoMatch />} />
 

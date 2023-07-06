@@ -1,12 +1,13 @@
 import React, { useState } from 'react'
 import Modal from 'react-modal'
-import '../Styling/RuleModal.css'
+import '../Styling/Rule.css'
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import Stack from '@mui/material/Stack';
 import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker';
 import TextField from '@material-ui/core/TextField'
 import { format } from 'date-fns';
+import { TimePicker } from '@mui/x-date-pickers/TimePicker';
 
 function RuleModal({ruleModal, setRuleModal}) {
 
@@ -21,19 +22,6 @@ function RuleModal({ruleModal, setRuleModal}) {
             zIndex: 1000,
         },
     };
-
-    const handleSubmit = (e) => {
-        e.preventDefault();
-
-    if (selectedItems.length >= 5) {
-        console.log('Form submitted successfully!');
-        console.log('Selected items:', selectedItems);
-        console.log('Start date:', startDate)
-        console.log('End date:', endDate)
-      } else {
-        alert('Please select at least five days.');
-      }
-    }
 
     const days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
 
@@ -79,6 +67,19 @@ function RuleModal({ruleModal, setRuleModal}) {
         setEndDate(date);
     }
 
+    const handleSubmit = (e) => {
+        e.preventDefault();
+
+    if (selectedItems.length >= 5) {
+        console.log('Form submitted successfully!');
+        console.log('Selected items:', selectedItems);
+        console.log('Start date:', startDate)
+        console.log('End date:', endDate)
+    } else {
+        alert('Please select at least five days.');
+    }
+    }
+
     return (
         <div>
             <Modal
@@ -87,19 +88,37 @@ function RuleModal({ruleModal, setRuleModal}) {
                 isOpen={ruleModal}
                 onRequestClose={() => setRuleModal(false)}>
                      <div className='center flexbox-container-y'>
-                        <h2 style={{ color: "#115868", fontSize: 20 }}>Schedule</h2>
-                        <form onSubmit={handleSubmit}>
+                        <h2 style={{ color: "#115868", fontSize: 20, marginBottom: '1rem' }}>Schedule</h2>
+                        <form onSubmit={handleSubmit} style={{padding: '0px'}}>
                             {
                                 days.map((day, index) => 
                                 <label className='label' key={index}>
-                                    {day}
+                                    
                                     <input
+                                        className='input'
                                         key={index}
                                         type="checkbox"
                                         value={day}
                                         checked={selectedItems.includes(day)}
                                         onChange={handleCheckboxChange}
                                     />
+                                    <a className='label-text'>{day}</a>
+                                    <LocalizationProvider className='x-axis' dateAdapter={AdapterDayjs}>
+                                        <TimePicker
+                                            // value={value}
+                                            // onChange={handleStartTimeChange}
+                                            className="custom-timepicker"
+                                            label="Availability Start"
+                                            renderInput={(params) => <TextField onKeyDown={onKeyDown} {...params}
+                                            variant="outlined" />} />
+                                        <TimePicker
+                                            // value={value}
+                                            // onChange={handleStartTimeChange}
+                                            className="custom-timepicker"
+                                            label="Availability End"
+                                            renderInput={(params) => <TextField onKeyDown={onKeyDown} {...params}
+                                            variant="outlined" />} />
+                                    </LocalizationProvider>
                                 </label>
                                 )
                             }

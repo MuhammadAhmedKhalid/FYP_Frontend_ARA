@@ -1,0 +1,36 @@
+.label {
+    border: 1px solid rgb(111, 111, 111);
+    padding: 10px;
+    margin-top: 5px;
+    border-radius: 5px;
+}
+
+.input {
+    margin-left: 10px;
+    height: 15px;
+    width: 15px;
+    margin-right: 10px;
+}
+
+.label-text {
+    color: black;
+    margin-right: 10px;
+}
+
+.custom-timepicker {
+    width: 110px; 
+}
+  
+.custom-timepicker .MuiOutlinedInput-input {
+    padding: 9px; 
+    font-size: 10px; 
+}  
+  
+.custom-timepicker .MuiSvgIcon-root {
+    width: 16px; 
+    height: 16px; 
+}  
+
+.custom-timepicker .MuiInputLabel-root {
+    font-size: 12px; 
+}
