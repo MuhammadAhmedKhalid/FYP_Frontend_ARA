@@ -12,6 +12,42 @@ import AddBreak2 from './resources/modals/AddBreak2';
 
 function FacultyConstraints() {
 
+    const institute_id = Number(localStorage.getItem('institute_id'))
+    const faculty_id = Number(localStorage.getItem('faculty_id'))
+    const user_id = Number(localStorage.getItem('user_id'))
+
+    const [request, setRequest] = useState({
+        institute_id,
+        faculty_id,
+        user_id,
+        availability: {
+            monday: {
+                startTime: null,
+                endTime: null
+            },
+            tuesday: {
+                startTime: null,
+                endTime: null
+            },
+            wednesday: {
+                startTime: null,
+                endTime: null
+            },
+            thursday: {
+                startTime: null,
+                endTime: null
+            },
+            friday: {
+                startTime: null,
+                endTime: null
+            },
+            saturday: {
+                startTime: null,
+                endTime: null
+            }
+        }
+    })
+
     const [selectedItems, setSelectedItems] = useState([]);
     const [timeValues, setTimeValues] = useState([]);
     const [startDate, setStartDate] = useState(format(new Date(), 'MM/dd/yyyy'));
@@ -28,8 +64,8 @@ function FacultyConstraints() {
     useEffect(() => {
         const initialTimeValues = days.map((day) => ({
           day,
-          startTime: new Date(), 
-          endTime: new Date(), 
+          startTime: null, 
+          endTime: null, 
         }));
         setTimeValues(initialTimeValues);
         setBreak1Time(initialTimeValues);
@@ -93,17 +129,42 @@ function FacultyConstraints() {
 
     const handleSubmit = (e) => {
         e.preventDefault();
+        let canSubmit = true;
 
-        if (selectedItems.length >= 5) {
-            console.log('Form submitted successfully!');
+        for(let i of selectedItems){
+            for(let j of timeValues){
+                if(i === j.day && (j.startTime === null || j.endTime === null)){
+                    canSubmit=false
+                }
+            }
+        }
+
+        if (selectedItems.length >= 5 && canSubmit) {
+            // console.log('Start date:', startDate)
+            // console.log('End date:', endDate)
+            // console.log("Break-01 times:", break1Time)
+            // console.log("Break-02 times:", break2Time)
+
             console.log('Selected items:', selectedItems);
-            console.log('Start date:', startDate)
-            console.log('End date:', endDate)
             console.log('Time values:', timeValues)
-            console.log("Break-01 times:", break1Time)
-            console.log("Break-02 times:", break2Time)
+
+            
+            // for(let i of timeValues){
+            //     if(i.day === 'Monday'){
+            //         const object = i.startTime
+            //         for (const key in object) {
+            //             if (key === '$d') {
+            //                 setRequest(prevRequest => ({...prevRequest, 
+            //                     availability: {...prevRequest.availability, 
+            //                         monday: {...prevRequest.availability.monday, startTime: i.startTime, endTime: i.endTime}}
+            //                 }));
+            //             }
+            //         }
+            //     }
+            // }
+            //console.log(request)
         } else {
-            alert('Please select at least five days.');
+            alert('Please select at least five days and Make sure to select availability time for the selected days.');
         }
     }
 
@@ -142,7 +203,7 @@ function FacultyConstraints() {
                                         label="Availability Start"
                                         renderInput={(params) => <TextField onKeyDown={onKeyDown} {...params}
                                         variant="outlined" />}
-                                        value={timeValues[index]?.startTime || new Date()}
+                                        value={timeValues[index]?.startTime || null}
                                         onChange={(value) => handleTimePickerChange(index, 'startTime', value)} />
                                     <p>...</p>
                                     <TimePicker
@@ -150,7 +211,7 @@ function FacultyConstraints() {
                                         label="Availability End"
                                         renderInput={(params) => <TextField onKeyDown={onKeyDown} {...params}
                                         variant="outlined" />} 
-                                        value={timeValues[index]?.endTime || new Date()}
+                                        value={timeValues[index]?.endTime || null}
                                         onChange={(value) => handleTimePickerChange(index, 'endTime', value)}/>
                                 </LocalizationProvider>
                                 <p className='break-btn' onClick={() => handleBreak1(index)}>+ Add Break</p>
