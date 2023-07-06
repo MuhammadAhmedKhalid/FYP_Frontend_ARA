@@ -7,7 +7,8 @@ import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker';
 import TextField from '@material-ui/core/TextField'
 import { format } from 'date-fns';
 import { TimePicker } from '@mui/x-date-pickers/TimePicker';
-import Modal from 'react-modal'
+import AddBreak1 from './resources/modals/AddBreak1';
+import AddBreak2 from './resources/modals/AddBreak2';
 
 function FacultyConstraints() {
 
@@ -19,18 +20,6 @@ function FacultyConstraints() {
     const [breakModal2, setBreakModal2] = useState(false)
 
     const days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
-
-    const customStyles = {
-        overlay: {
-            backgroundColor: 'rgba(0, 0, 0, .7)',
-            position: 'fixed',
-            top: 0,
-            left: 0,
-            right: 0,
-            bottom: 0,
-            zIndex: 1000,
-        },
-    };
 
     useEffect(() => {
         const initialTimeValues = days.map((day) => ({
@@ -189,24 +178,8 @@ function FacultyConstraints() {
                 </div>
                 </form>
             </div>
-            <Modal
-                className='modal-content'
-                style={customStyles}
-                isOpen={breakModal1}
-                onRequestClose={() => setBreakModal1(false)}>
-                <div className='center flexbox-container-y'>
-                    <h2 style={{ color: "#115868", fontSize: 20 }}>Add Break-01</h2>
-                </div>
-            </Modal>
-            <Modal
-                className='modal-content'
-                style={customStyles}
-                isOpen={breakModal2}
-                onRequestClose={() => setBreakModal2(false)}>
-                <div className='center flexbox-container-y'>
-                    <h2 style={{ color: "#115868", fontSize: 20 }}>Add Break-02</h2>
-                </div>
-            </Modal>
+            {breakModal1 && <AddBreak1 breakModal1={breakModal1} setBreakModal1={setBreakModal1}/>}
+            {breakModal2 && <AddBreak2 breakModal2={breakModal2} setBreakModal2={setBreakModal2}/>}
         </div>
     )
 }
