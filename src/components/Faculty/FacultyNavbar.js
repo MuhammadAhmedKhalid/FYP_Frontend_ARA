@@ -5,13 +5,11 @@ import CustomDropdown from '../Root/CustomDropdown';
 import { NavLink, Link } from "react-router-dom"
 import { FaBars, FaTimes } from 'react-icons/fa';
 import "../Styling/NavbarStyles.css"
-import { useNavigate } from "react-router-dom";
 import Badge from '@mui/material/Badge';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import { getNotificationsRequest } from '../../redux/GetNotifications/getNotificationsActions'
 import { AiFillHome } from "react-icons/ai";
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
-import RuleModal from './RuleModal';
 
 const logo = {
     fontSize: '20px',
@@ -24,7 +22,6 @@ const AdminNavBar = () => {
     const [color, setColor] = useState(false)
     const [isNotificationPanelOpen, setIsNotificationPanelOpen] = useState(false);
     const [notificationNum, setNotificationNum] = useState(0)
-    const [ruleModal, setRuleModal] = useState(false)
 
     const dispatch = useDispatch()
     
@@ -75,10 +72,6 @@ const AdminNavBar = () => {
     
     function handleNotificationPanelClose() {
     setIsNotificationPanelOpen(false);
-    }
-
-    const handleRuleModal = () => {
-        setRuleModal(true)
     }
 
     const isMobile = window.innerWidth <= 1040;
@@ -196,7 +189,6 @@ const AdminNavBar = () => {
                     </div>
                 </div>
             </div >
-            {ruleModal && <RuleModal ruleModal={ruleModal} setRuleModal={setRuleModal}/>}
         </div>
     )
 
