@@ -16,8 +16,11 @@ function FacultyConstraints() {
     const [timeValues, setTimeValues] = useState([]);
     const [startDate, setStartDate] = useState(format(new Date(), 'MM/dd/yyyy'));
     const [endDate, setEndDate] = useState(format(new Date(), 'MM/dd/yyyy'));
-    const [breakModal1, setBreakModal1] = useState(false)
-    const [breakModal2, setBreakModal2] = useState(false)
+    const [breakModal1, setBreakModal1] = useState(false);
+    const [breakModal2, setBreakModal2] = useState(false);
+    const [breakIndex1, setBreakIndex1] = useState();
+    const [breakIndex2, setBreakIndex2] = useState();
+    const [break1Time, setBreak1Time] = useState([]);
 
     const days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
 
@@ -28,6 +31,7 @@ function FacultyConstraints() {
           endTime: new Date(), 
         }));
         setTimeValues(initialTimeValues);
+        setBreak1Time(initialTimeValues);
       }, []);
 
     const handleCheckboxChange = (event) => {
@@ -49,11 +53,13 @@ function FacultyConstraints() {
         });
     };
 
-    const handleBreak1 = () => {
+    const handleBreak1 = (index) => {
+        setBreakIndex1(index)
         setBreakModal1(true)
     }
 
-    const handleBreak2 = () => {
+    const handleBreak2 = (index) => {
+        setBreakIndex2(index)
         setBreakModal2(true)
     }
 
@@ -92,6 +98,7 @@ function FacultyConstraints() {
             console.log('Start date:', startDate)
             console.log('End date:', endDate)
             console.log('Time values:', timeValues)
+            console.log("Break-01 times:", break1Time)
         } else {
             alert('Please select at least five days.');
         }
@@ -117,7 +124,6 @@ function FacultyConstraints() {
                         <div className='flexbox-container' style={{justifyContent: 'left'}}>
                             <input
                                 className='input'
-                                
                                 type="checkbox"
                                 value={day}
                                 checked={selectedItems.includes(day)}
@@ -144,8 +150,8 @@ function FacultyConstraints() {
                                         value={timeValues[index]?.endTime || new Date()}
                                         onChange={(value) => handleTimePickerChange(index, 'endTime', value)}/>
                                 </LocalizationProvider>
-                                <p className='break-btn' onClick={handleBreak1}>+ Add Break</p>
-                                <p className='break-btn' onClick={handleBreak2}>+ Add Break</p>
+                                <p className='break-btn' onClick={() => handleBreak1(index)}>+ Add Break</p>
+                                <p className='break-btn' onClick={() => handleBreak2(index)}>+ Add Break</p>
                             </div>
                         </label>
                     </div>
@@ -178,8 +184,9 @@ function FacultyConstraints() {
                 </div>
                 </form>
             </div>
-            {breakModal1 && <AddBreak1 breakModal1={breakModal1} setBreakModal1={setBreakModal1}/>}
-            {breakModal2 && <AddBreak2 breakModal2={breakModal2} setBreakModal2={setBreakModal2}/>}
+            {breakModal1 && <AddBreak1 breakModal1={breakModal1} setBreakModal1={setBreakModal1} breakIndex1={breakIndex1}
+                break1Time={break1Time} setBreak1Time={setBreak1Time}/>}
+            {breakModal2 && <AddBreak2 breakModal2={breakModal2} setBreakModal2={setBreakModal2} breakIndex2={breakIndex2}/>}
         </div>
     )
 }

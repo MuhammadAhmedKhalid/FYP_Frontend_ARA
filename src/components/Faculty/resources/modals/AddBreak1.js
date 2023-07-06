@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import Modal from 'react-modal'
 import Stack from '@mui/material/Stack';
 import TextField from '@material-ui/core/TextField'
@@ -6,7 +6,25 @@ import { TimePicker } from '@mui/x-date-pickers/TimePicker';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 
-function AddBreak1({breakModal1, setBreakModal1}) {
+function AddBreak1({breakModal1, setBreakModal1, breakIndex1, break1Time, setBreak1Time}) {
+
+    const days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+
+    useEffect(() => {
+        const initialTimeValues = days.map((day) => ({
+          day,
+          startTime: new Date(), 
+          endTime: new Date(), 
+        }));
+    }, []);
+
+    const handleTimePickerChange = (index, field, value) => {
+        setBreak1Time((prevTimeValues) => {
+          const newTimeValues = [...prevTimeValues];
+          newTimeValues[index] = { ...newTimeValues[index], [field]: value };
+          return newTimeValues;
+        });
+    };
 
     const customStyles = {
         overlay: {
@@ -26,6 +44,7 @@ function AddBreak1({breakModal1, setBreakModal1}) {
 
     const handleForm1 = (e) => {
         e.preventDefault();
+        setBreakModal1(false)
     }
 
     return (
@@ -44,12 +63,14 @@ function AddBreak1({breakModal1, setBreakModal1}) {
                                     label="Start time"
                                     renderInput={(params) => <TextField onKeyDown={onKeyDown} {...params}
                                     variant="outlined" />}
-                                    />
+                                    value={break1Time[breakIndex1]?.startTime || new Date()}
+                                    onChange={(value) => handleTimePickerChange(breakIndex1, 'startTime', value)}/>
                                 <TimePicker
                                     label="End time"
                                     renderInput={(params) => <TextField onKeyDown={onKeyDown} {...params}
                                     variant="outlined" />} 
-                                    />
+                                    value={break1Time[breakIndex1]?.endTime || new Date()}
+                                    onChange={(value) => handleTimePickerChange(breakIndex1, 'endTime', value)}/>
                             </Stack>
                         </LocalizationProvider>
                         <div className='center flexbox-container-y'>
