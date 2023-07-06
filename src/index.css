@@ -11,6 +11,11 @@ body {
   background: #0E5E6F;
 }
 
+.x-axis {
+  display: flex;
+  justify-content: center;
+}
+
 .modal-content{
   position: fixed;
   top: 50%;
