@@ -45,7 +45,17 @@ function FacultyConstraints() {
                 startTime: null,
                 endTime: null
             }
-        }
+        },
+        break1: {
+            startTime: null,
+            endTime: null
+        },
+        break2: {
+            startTime: null,
+            endTime: null
+        },
+        applicableStartDate: new Date(),
+        applicableEndDate: new Date()
     })
 
     const [selectedItems, setSelectedItems] = useState([]);
@@ -145,28 +155,61 @@ function FacultyConstraints() {
             // console.log("Break-01 times:", break1Time)
             // console.log("Break-02 times:", break2Time)
 
-            console.log('Selected items:', selectedItems);
-            console.log('Time values:', timeValues)
+            // console.log('Selected items:', selectedItems);
+            // console.log('Time values:', timeValues)
+
+            const dayMapping = {
+                Monday: 'monday',
+                Tuesday: 'tuesday',
+                Wednesday: 'wednesday',
+                Thursday: 'thursday',
+                Friday: 'friday',
+                Saturday: 'saturday',
+              };
 
             
-            // for(let i of timeValues){
-            //     if(i.day === 'Monday'){
-            //         const object = i.startTime
-            //         for (const key in object) {
-            //             if (key === '$d') {
-            //                 setRequest(prevRequest => ({...prevRequest, 
-            //                     availability: {...prevRequest.availability, 
-            //                         monday: {...prevRequest.availability.monday, startTime: i.startTime, endTime: i.endTime}}
-            //                 }));
-            //             }
-            //         }
-            //     }
-            // }
-            //console.log(request)
+              for (const i of timeValues) {
+                const day = i.day;
+                const dayProperty = dayMapping[day];
+              
+                const object1 = i.startTime;
+                for (const key in object1) {
+                  if (key === '$d') {
+                    setRequest(prevRequest => ({
+                      ...prevRequest,
+                      availability: {
+                        ...prevRequest.availability,
+                        [dayProperty]: {
+                          ...prevRequest.availability[dayProperty],
+                          startTime: format(new Date(i.startTime), 'HH:mm'),
+                        },
+                      },
+                    }));
+                  }
+                }
+              
+                const object2 = i.endTime;
+                for (const key in object2) {
+                  if (key === '$d') {
+                    setRequest(prevRequest => ({
+                      ...prevRequest,
+                      availability: {
+                        ...prevRequest.availability,
+                        [dayProperty]: {
+                          ...prevRequest.availability[dayProperty],
+                          endTime: format(new Date(i.endTime), 'HH:mm'),
+                        },
+                      },
+                    }));
+                  }
+                }
+              }
         } else {
             alert('Please select at least five days and Make sure to select availability time for the selected days.');
         }
     }
+
+    console.log(request)
 
     return (
         <div className="flexbox-container-y"
