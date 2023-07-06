@@ -90,8 +90,7 @@ function FacultyConstraints() {
             style={{
                 display: 'flex',
                 justifyContent: 'flex-start',
-                // height: 'fit-content',
-                height: '100vh',
+                height: 'fit-content',
                 background: '#fff'
             }}>
                 <div>
@@ -102,36 +101,42 @@ function FacultyConstraints() {
                     <form onSubmit={handleSubmit} style={{padding: '0px'}}>
                     {
                         days.map((day, index) => 
-                        <label style={{justifyContent: 'left'}} className='label x-axis' key={index}>
-                            <input
-                                className='input'
-                                key={index}
-                                type="checkbox"
-                                value={day}
-                                checked={selectedItems.includes(day)}
-                                onChange={handleCheckboxChange}
-                            />
-                            <a className='label-text'>{day}</a>
-                            <div className='x-axis'>
-                            <LocalizationProvider dateAdapter={AdapterDayjs}>
-                                <TimePicker
-                                    className="custom-timepicker"
-                                    label="Availability Start"
-                                    renderInput={(params) => <TextField onKeyDown={onKeyDown} {...params}
-                                    variant="outlined" />}
-                                    value={timeValues[index]?.startTime || new Date()}
-                                    onChange={(value) => handleTimePickerChange(index, 'startTime', value)} />
-                                <p>...</p>
-                                <TimePicker
-                                    className="custom-timepicker"
-                                    label="Availability End"
-                                    renderInput={(params) => <TextField onKeyDown={onKeyDown} {...params}
-                                    variant="outlined" />} 
-                                    value={timeValues[index]?.endTime || new Date()}
-                                    onChange={(value) => handleTimePickerChange(index, 'endTime', value)}/>
-                            </LocalizationProvider>
+                        <div key={index}>
+                            <div className='flexbox-container' style={{justifyContent: 'left'}}>
+                                <input
+                                    className='input'
+                                    
+                                    type="checkbox"
+                                    value={day}
+                                    checked={selectedItems.includes(day)}
+                                    onChange={handleCheckboxChange}
+                                />
+                                <a className='label-text'>{day}</a>
                             </div>
-                        </label>
+                            <label style={{ marginBottom: '10px'}} className='label x-axis' >
+                                <div className='x-axis'>
+                                    <LocalizationProvider dateAdapter={AdapterDayjs}>
+                                        <TimePicker
+                                            className="custom-timepicker"
+                                            label="Availability Start"
+                                            renderInput={(params) => <TextField onKeyDown={onKeyDown} {...params}
+                                            variant="outlined" />}
+                                            value={timeValues[index]?.startTime || new Date()}
+                                            onChange={(value) => handleTimePickerChange(index, 'startTime', value)} />
+                                        <p>...</p>
+                                        <TimePicker
+                                            className="custom-timepicker"
+                                            label="Availability End"
+                                            renderInput={(params) => <TextField onKeyDown={onKeyDown} {...params}
+                                            variant="outlined" />} 
+                                            value={timeValues[index]?.endTime || new Date()}
+                                            onChange={(value) => handleTimePickerChange(index, 'endTime', value)}/>
+                                    </LocalizationProvider>
+                                    <p className='break-btn'>+ Add Break</p>
+                                    <p className='break-btn'>+ Add Break</p>
+                                </div>
+                            </label>
+                        </div>
                         )
                     }
                     <h3 className='center' style={{margin: '20px', fontWeight: 'normal'}}>

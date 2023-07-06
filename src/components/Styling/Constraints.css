@@ -34,3 +34,15 @@
 .custom-timepicker .MuiInputLabel-root {
     font-size: 12px; 
 }
+
+.break-btn{
+    padding: 6px 16px;
+    width: fit-content;
+    background: #0E5E6F;
+    color: #fff;
+    border: 1px solid #fff;
+    font-weight: 600;
+    cursor: pointer;
+    border-radius: 5px;
+    margin-left: 10px;
+}
