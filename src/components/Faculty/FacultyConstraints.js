@@ -121,7 +121,8 @@ function FacultyConstraints() {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        // let canSubmit = true;
+        
+        let canSubmit = true;
         const dayMapping = {
             Monday: 'monday',
             Tuesday: 'tuesday',
@@ -131,16 +132,15 @@ function FacultyConstraints() {
             Saturday: 'saturday',
         };
 
-        // for(let i of selectedItems){
-        //     for(let j of timeValues){
-        //         if(i === j.day && (j.startTime === null || j.endTime === null)){
-        //             canSubmit=false
-        //         }
-        //     }
-        // }
+        for(let i of selectedItems){
+            for(let j of timeValues){
+                if(i === j.day && (j.startTime === null || j.endTime === null)){
+                    canSubmit=false
+                }
+            }
+        }
 
-        if (selectedItems.length >= 5 ) {
-            console.log("Break-01 times:", break1Time)
+        if (selectedItems.length >= 5 && canSubmit) {
 
             for (let i of break1Time) {
                 for (let j of selectedItems) {
@@ -171,7 +171,38 @@ function FacultyConstraints() {
                     }
                   }
                 }
-              }
+            }
+
+            for (let i of break2Time) {
+                for (let j of selectedItems) {
+                  const day = j;
+                  if (i.day === day && i.startTime !== null && i.endTime !== null) {
+                    const object1 = i.startTime;
+                    for (const key in object1) {
+                      if (key === '$d') {
+                        setRequest((prevState) => ({ ...prevState, breaks: 
+                            { ...prevState.breaks, [dayMapping[day]]: 
+                                { ...prevState.breaks[dayMapping[day]], break2: 
+                                    { ...prevState.breaks[dayMapping[day]].break2, startTime: format(new Date(i.startTime), 'HH:mm')}}
+                          }
+                        }));
+                      }
+                    }
+              
+                    const object2 = i.endTime;
+                    for (const key in object2) {
+                      if (key === '$d') {
+                        setRequest((prevState) => ({ ...prevState, breaks: 
+                            { ...prevState.breaks, [dayMapping[day]]: 
+                                { ...prevState.breaks[dayMapping[day]], break2: 
+                                    {...prevState.breaks[dayMapping[day]].break2, endTime: format(new Date(i.endTime), 'HH:mm')}}
+                          }
+                        }));
+                      }
+                    }
+                  }
+                }
+            }
 
             setRequest(prevRequest => ({
                 ...prevRequest,
