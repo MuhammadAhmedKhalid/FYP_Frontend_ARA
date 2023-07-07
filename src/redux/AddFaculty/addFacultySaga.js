@@ -1,7 +1,6 @@
 import { ADD_FACULTY_FAILURE, ADD_FACULTY_REQUEST, ADD_FACULTY_SUCCESS } from './addFacultyTypes'
 import { call, put, takeEvery } from 'redux-saga/effects'
 import axios from 'axios'
-import { select } from 'redux-saga/effects';
 
 function* addFaculty(faculty) {
     try {
