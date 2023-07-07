@@ -21,38 +21,20 @@ function FacultyConstraints() {
         faculty_id,
         user_id,
         availability: {
-            monday: {
-                startTime: null,
-                endTime: null
-            },
-            tuesday: {
-                startTime: null,
-                endTime: null
-            },
-            wednesday: {
-                startTime: null,
-                endTime: null
-            },
-            thursday: {
-                startTime: null,
-                endTime: null
-            },
-            friday: {
-                startTime: null,
-                endTime: null
-            },
-            saturday: {
-                startTime: null,
-                endTime: null
-            }
+            monday: { startTime: null, endTime: null },
+            tuesday: { startTime: null, endTime: null },
+            wednesday: { startTime: null, endTime: null },
+            thursday: { startTime: null, endTime: null },
+            friday: { startTime: null, endTime: null },
+            saturday: { startTime: null, endTime: null },
         },
-        break1: {
-            startTime: null,
-            endTime: null
-        },
-        break2: {
-            startTime: null,
-            endTime: null
+        breaks: {
+            monday: {break1: { startTime: null, endTime: null }, break2: { startTime: null, endTime: null }},
+            tuesday: {break1: { startTime: null, endTime: null }, break2: { startTime: null, endTime: null }},
+            wednesday: {break1: { startTime: null, endTime: null }, break2: { startTime: null, endTime: null }},
+            thursday: {break1: { startTime: null, endTime: null }, break2: { startTime: null, endTime: null }},
+            friday: {break1: { startTime: null, endTime: null }, break2: { startTime: null, endTime: null }},
+            saturday: {break1: { startTime: null, endTime: null }, break2: { startTime: null, endTime: null }},
         },
         applicableStartDate: new Date(),
         applicableEndDate: new Date()
@@ -150,13 +132,14 @@ function FacultyConstraints() {
         }
 
         if (selectedItems.length >= 5 && canSubmit) {
-            // console.log('Start date:', startDate)
-            // console.log('End date:', endDate)
             // console.log("Break-01 times:", break1Time)
             // console.log("Break-02 times:", break2Time)
 
-            // console.log('Selected items:', selectedItems);
-            // console.log('Time values:', timeValues)
+            setRequest(prevRequest => ({
+                ...prevRequest,
+                applicableStartDate: startDate,
+                applicableEndDate: endDate
+            }));
 
             const dayMapping = {
                 Monday: 'monday',
@@ -205,7 +188,7 @@ function FacultyConstraints() {
                 }
               }
         } else {
-            alert('Please select at least five days and Make sure to select availability time for the selected days.');
+            alert('Please select at least five days and select available time for the selected days.');
         }
     }
 
