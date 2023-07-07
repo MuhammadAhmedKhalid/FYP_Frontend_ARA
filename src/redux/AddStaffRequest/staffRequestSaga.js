@@ -1,5 +1,5 @@
 import { ADD_STAFF_REQ_FAILURE, ADD_STAFF_REQ_REQUEST, ADD_STAFF_REQ_SUCCESS } from './staffRequestTypes'
-import { call, put, takeEvery, select } from 'redux-saga/effects'
+import { call, put, takeEvery } from 'redux-saga/effects'
 import axios from 'axios'
 
 function* addStaffRequest(staff) {

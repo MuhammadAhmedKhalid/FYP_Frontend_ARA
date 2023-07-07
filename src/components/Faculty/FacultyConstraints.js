@@ -11,6 +11,7 @@ import AddBreak1 from './resources/modals/AddBreak1';
 import AddBreak2 from './resources/modals/AddBreak2';
 import { useDispatch } from 'react-redux'
 import { addFacultyConstraintsRequest } from '../../redux/AddFacultyConstraints/addFacultyConstraintsActions'
+import { addRequestedStaff } from '../../redux/AddStaffRequest/staffRequestActions'
 
 function FacultyConstraints() {
 
@@ -249,9 +250,56 @@ function FacultyConstraints() {
         }
     }
 
+    function getDateAndDayOfWeek(startDate, endDate) {
+        const dates = [];
+        const current = new Date(startDate);
+      
+        while (current <= new Date(endDate)) {
+          if (current.getDay() !== 0) { 
+            const date = new Date(current);
+            const dayOfWeek = date.toLocaleDateString('en-US', { weekday: 'long' });
+            dates.push([date, dayOfWeek]);
+          }
+          current.setDate(current.getDate() + 1);
+        }
+      
+        return dates;
+      }
+
+      function getNonWorkingTime(startTime, endTime) {
+        const start = new Date(`1970-01-01T${startTime}`);
+        const end = new Date(`1970-01-01T${endTime}`);
+      
+        const nonWorkingStart = new Date(end.getTime() + 1 * 60 * 1000); 
+        const nonWorkingEnd = new Date(start.getTime() - 1 * 60 * 1000); 
+      
+        if (nonWorkingStart > nonWorkingEnd) {
+          nonWorkingEnd.setDate(nonWorkingEnd.getDate() + 1);
+        }
+      
+        return [format(new Date(nonWorkingStart), 'HH:mm'), format(new Date(nonWorkingEnd), 'HH:mm')];
+      }
+
     if(dispatchAction){
         setDispatch(false)
         dispatch(addFacultyConstraintsRequest(request))
+
+        const nestedLists = getDateAndDayOfWeek(startDate, endDate);
+
+        for(let i of timeValues){
+            for(let j of nestedLists){
+                if(i.day === j[1] && i.startTime !== null && i.endTime !== null){
+                    const nonWorkingTime = getNonWorkingTime(format(new Date(i.startTime), 'HH:mm'), format(new Date(i.endTime), 'HH:mm'));
+                    dispatch(addRequestedStaff({
+                        institute_id,
+                        user_id,
+                        startTime: nonWorkingTime[0],
+                        endTime: nonWorkingTime[1],
+                        date: format(new Date(j[0]), 'MM/dd/yyyy')
+                    }))
+                }
+            }
+        }
     }
 
     return (
