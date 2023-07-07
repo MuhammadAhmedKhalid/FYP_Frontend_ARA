@@ -314,11 +314,16 @@ function AssignCourse(props) {
 
                 }
             }
+            
 
-            for(let j = 0; j < requestedStaff.length; j++){
+            if(!courseConflict){
+
+              for(let j = 0; j < requestedStaff.length; j++){
                 let facultyStartTime = new Date();
                 let facultyEndTime = new Date();
-
+                if(requestedStaff[j].staff_req_id == 280){
+                  console.log('Here')
+                }
                 facultyStartTime.setHours(requestedStaff[j].startTime.substring(0, 2), requestedStaff[j].startTime.substring(3), 0, 0);
                 facultyEndTime.setHours(requestedStaff[j].endTime.substring(0, 2), requestedStaff[j].endTime.substring(3), 0, 0);
 
@@ -335,27 +340,32 @@ function AssignCourse(props) {
                   }
                 }
             }
+            }
 
-            for (let k = 0; k < requestedRoom.length; k++){
+            if(!courseConflict && !facultyConflict){
 
-              let roomStartTime = new Date();
-              let roomEndTime = new Date();
-
-              roomStartTime.setHours(requestedRoom[k].startTime.substring(0, 2), requestedRoom[k].startTime.substring(3), 0, 0);
-              roomEndTime.setHours(requestedRoom[k].endTime.substring(0, 2), requestedRoom[k].endTime.substring(3), 0, 0);
-
-              if(assignCourse.room_id === requestedRoom[k].room_id && daysOfWeek[new Date(requestedRoom[k].date).getDay()] === assignCourse.day){
-                roomConflict = checkConflict(startTime, roomStartTime, endTime, roomEndTime,
-                  startTime.getTime(), roomStartTime.getTime(), endTime.getTime(), roomEndTime.getTime())
-                if (roomConflict) {
-                    setShowError(true)
-                    setErrorMsg("Operation can't be performed during this time interval. Room is not free.")
-                    break
+              for (let k = 0; k < requestedRoom.length; k++)
+              {
+  
+                let roomStartTime = new Date();
+                let roomEndTime = new Date();
+  
+                roomStartTime.setHours(requestedRoom[k].startTime.substring(0, 2), requestedRoom[k].startTime.substring(3), 0, 0);
+                roomEndTime.setHours(requestedRoom[k].endTime.substring(0, 2), requestedRoom[k].endTime.substring(3), 0, 0);
+  
+                if(assignCourse.room_id === requestedRoom[k].room_id && daysOfWeek[new Date(requestedRoom[k].date).getDay()] === assignCourse.day){
+                  roomConflict = checkConflict(startTime, roomStartTime, endTime, roomEndTime,
+                    startTime.getTime(), roomStartTime.getTime(), endTime.getTime(), roomEndTime.getTime())
+                  if (roomConflict) {
+                      setShowError(true)
+                      setErrorMsg("Operation can't be performed during this time interval. Room is not free.")
+                      break
+                  }
                 }
-              }
-
-          }
-
+  
+            }
+  
+            }
             if(courseConflict || facultyConflict || roomConflict){
               setShowError(true)
             }else {

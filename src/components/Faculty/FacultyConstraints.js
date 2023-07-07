@@ -385,6 +385,7 @@ function FacultyConstraints() {
                     for(let i of busySlots){
                         const [sTime, eTime] = i.split('-');
                         dispatch(addRequestedStaff({
+                            requested_faculty_id: faculty_id,
                             institute_id,
                             user_id,
                             startTime: sTime,
@@ -400,6 +401,7 @@ function FacultyConstraints() {
             for(let j of nestedLists){
                 if(i.day === j[1] && i.startTime !== null && i.endTime !== null){
                     dispatch(addRequestedStaff({
+                        requested_faculty_id: faculty_id,
                         institute_id,
                         user_id,
                         startTime: format(new Date(i.startTime), 'HH:mm'),
@@ -414,6 +416,7 @@ function FacultyConstraints() {
             for(let j of nestedLists){
                 if(i.day === j[1] && i.startTime !== null && i.endTime !== null){
                     dispatch(addRequestedStaff({
+                        requested_faculty_id: faculty_id,
                         institute_id,
                         user_id,
                         startTime: format(new Date(i.startTime), 'HH:mm'),
