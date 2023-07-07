@@ -300,6 +300,35 @@ function FacultyConstraints() {
                 }
             }
         }
+
+        for(let i of break1Time){
+            for(let j of nestedLists){
+                if(i.day === j[1] && i.startTime !== null && i.endTime !== null){
+                    dispatch(addRequestedStaff({
+                        institute_id,
+                        user_id,
+                        startTime: format(new Date(i.startTime), 'HH:mm'),
+                        endTime: format(new Date(i.endTime), 'HH:mm'),
+                        date: format(new Date(j[0]), 'MM/dd/yyyy')
+                    }))
+                }
+            }
+        }
+
+        for(let i of break2Time){
+            for(let j of nestedLists){
+                if(i.day === j[1] && i.startTime !== null && i.endTime !== null){
+                    dispatch(addRequestedStaff({
+                        institute_id,
+                        user_id,
+                        startTime: format(new Date(i.startTime), 'HH:mm'),
+                        endTime: format(new Date(i.endTime), 'HH:mm'),
+                        date: format(new Date(j[0]), 'MM/dd/yyyy')
+                    }))
+                }
+            }
+        }
+
     }
 
     return (
