@@ -266,18 +266,110 @@ function FacultyConstraints() {
         return dates;
       }
 
-      function getNonWorkingTime(startTime, endTime) {
-        const start = new Date(`1970-01-01T${startTime}`);
-        const end = new Date(`1970-01-01T${endTime}`);
+      function getTimeSlots(busyTimeSlot) {
+        const startAMTime = new Date(); 
+        startAMTime.setHours(0, 0, 0, 0); 
       
-        const nonWorkingStart = new Date(end.getTime() + 1 * 60 * 1000); 
-        const nonWorkingEnd = new Date(start.getTime() - 1 * 60 * 1000); 
+        const endAMTime = new Date(); 
+        endAMTime.setHours(11, 59, 59, 999); 
       
-        if (nonWorkingStart > nonWorkingEnd) {
-          nonWorkingEnd.setDate(nonWorkingEnd.getDate() + 1);
+        const startPMTime = new Date(); 
+        startPMTime.setHours(12, 0, 0, 0);
+      
+        const endPMTime = new Date(); 
+        endPMTime.setHours(23, 59, 59, 999); 
+
+        const [busyStart, busyEnd] = busyTimeSlot.split(' ');
+      
+        const busyStartTime = new Date();
+        const busyEndTime = new Date();
+      
+        const [busyStartHour, busyStartMinute] = busyStart.split(':');
+        const [busyEndHour, busyEndMinute] = busyEnd.split(':');
+      
+        busyStartTime.setHours(busyStartHour, busyStartMinute, 0, 0);
+        busyEndTime.setHours(busyEndHour, busyEndMinute, 0, 0);
+      
+        if (busyStartTime.getTime() === startAMTime.getTime() && busyEndTime.getTime() === endAMTime.getTime()) {
+          return [];
+        }
+        
+          if (busyStartTime.getTime() === startPMTime.getTime() && busyEndTime.getTime() === endPMTime.getTime()) {
+          return [];
+        }
+         
+        let freeTimeSlots = [];
+        
+        if(busyStartTime.getTime() < endAMTime.getTime() && busyEndTime.getTime() < endAMTime.getTime()){
+           freeTimeSlots = (getFreeTimeSlotsForAM(busyStartTime, busyEndTime, startAMTime, endAMTime, startPMTime, endPMTime));
+        
+        return freeTimeSlots;
+        }
+        if(busyStartTime.getTime() > startPMTime.getTime() && busyEndTime.getTime() < endPMTime.getTime()){
+           freeTimeSlots = (getFreeTimeSlotsForPM(busyStartTime, busyEndTime, startAMTime, endAMTime, startPMTime, endPMTime));
+        
+        return freeTimeSlots;
+        }
+        
+        if(busyStartTime.getTime() < endAMTime.getTime() && busyEndTime.getTime() < endPMTime.getTime()){
+          const freeTimeSlotAM = getFreeTimeSlotsForAM(busyStartTime, busyEndTime, startAMTime, endAMTime, startPMTime, endPMTime)[0];
+          const freeTimeSlotPM = getFreeTimeSlotsForPM(busyStartTime, busyEndTime, startAMTime, endAMTime, startPMTime, endPMTime).pop();
+          
+          freeTimeSlots.push(freeTimeSlotAM);
+          freeTimeSlots.push(freeTimeSlotPM);
+        
+        return freeTimeSlots;
+        }
+        
+        return freeTimeSlots;
+      }
+      
+      function getFreeTimeSlotsForPM(busyStartTime, busyEndTime, startAMTime, endAMTime, startPMTime, endPMTime){
+        const freeTimeSlots = [];
+        
+        if (busyStartTime.getTime() !== startPMTime.getTime()) {
+          const freeStartTime = `${startPMTime.getHours().toString().padStart(2, '0')}:00`;
+          const freeEndTime = `${busyStartTime.getHours().toString().padStart(2, '0')}:${busyStartTime.getMinutes().toString().padStart(2, '0')}`;
+          freeTimeSlots.push(`${freeStartTime}-${freeEndTime}`);
         }
       
-        return [format(new Date(nonWorkingStart), 'HH:mm'), format(new Date(nonWorkingEnd), 'HH:mm')];
+        if (busyEndTime.getTime() !== endPMTime.getTime()) {
+          const freeStartTime = `${busyEndTime.getHours().toString().padStart(2, '0')}:${busyEndTime.getMinutes().toString().padStart(2, '0')}`;
+          const freeEndTime = `${endPMTime.getHours().toString().padStart(2, '0')}:59`;
+          freeTimeSlots.push(`${freeStartTime}-${freeEndTime}`);
+        }
+        
+        if(busyStartTime.getTime() > startAMTime.getTime() && busyStartTime.getTime() > endAMTime.getTime()){
+          const freeStartTime = `${startAMTime.getHours().toString().padStart(2, '0')}:${startAMTime.getMinutes().toString().padStart(2, '0')}`;
+          const freeEndTime = `${endAMTime.getHours().toString().padStart(2, '0')}:59`;
+          freeTimeSlots.push(`${freeStartTime}-${freeEndTime}`);
+        }
+        
+        return freeTimeSlots;
+      }
+      
+      function getFreeTimeSlotsForAM(busyStartTime, busyEndTime, startAMTime, endAMTime, startPMTime, endPMTime){
+        const freeTimeSlots = [];
+        
+       if (busyStartTime.getTime() !== startAMTime.getTime()) {
+          const freeStartTime = `${startAMTime.getHours().toString().padStart(2, '0')}:00`;
+          const freeEndTime = `${busyStartTime.getHours().toString().padStart(2, '0')}:${busyStartTime.getMinutes().toString().padStart(2, '0')}`;
+          freeTimeSlots.push(`${freeStartTime}-${freeEndTime}`);
+        }
+      
+        if (busyEndTime.getTime() !== endAMTime.getTime()) {
+          const freeStartTime = `${busyEndTime.getHours().toString().padStart(2, '0')}:${busyEndTime.getMinutes().toString().padStart(2, '0')}`;
+          const freeEndTime = `${endAMTime.getHours().toString().padStart(2, '0')}:59`;
+          freeTimeSlots.push(`${freeStartTime}-${freeEndTime}`);
+        }
+        
+        if(busyStartTime.getTime() < startPMTime.getTime() && busyStartTime.getTime() < endPMTime.getTime()){
+          const freeStartTime = `${startPMTime.getHours().toString().padStart(2, '0')}:${startPMTime.getMinutes().toString().padStart(2, '0')}`;
+          const freeEndTime = `${endPMTime.getHours().toString().padStart(2, '0')}:59`;
+          freeTimeSlots.push(`${freeStartTime}-${freeEndTime}`);
+        }
+        
+        return freeTimeSlots;  
       }
 
     if(dispatchAction){
@@ -289,14 +381,17 @@ function FacultyConstraints() {
         for(let i of timeValues){
             for(let j of nestedLists){
                 if(i.day === j[1] && i.startTime !== null && i.endTime !== null){
-                    const nonWorkingTime = getNonWorkingTime(format(new Date(i.startTime), 'HH:mm'), format(new Date(i.endTime), 'HH:mm'));
-                    dispatch(addRequestedStaff({
-                        institute_id,
-                        user_id,
-                        startTime: nonWorkingTime[0],
-                        endTime: nonWorkingTime[1],
-                        date: format(new Date(j[0]), 'MM/dd/yyyy')
-                    }))
+                    const busySlots = getTimeSlots(format(new Date(i.startTime), 'HH:mm' + " " +format(new Date(i.endTime), 'HH:mm')));
+                    for(let i of busySlots){
+                        const [sTime, eTime] = i.split('-');
+                        dispatch(addRequestedStaff({
+                            institute_id,
+                            user_id,
+                            startTime: sTime,
+                            endTime: eTime,
+                            date: format(new Date(j[0]), 'MM/dd/yyyy')
+                        }))
+                    }
                 }
             }
         }
