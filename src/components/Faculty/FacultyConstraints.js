@@ -121,19 +121,57 @@ function FacultyConstraints() {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        let canSubmit = true;
+        // let canSubmit = true;
+        const dayMapping = {
+            Monday: 'monday',
+            Tuesday: 'tuesday',
+            Wednesday: 'wednesday',
+            Thursday: 'thursday',
+            Friday: 'friday',
+            Saturday: 'saturday',
+        };
 
-        for(let i of selectedItems){
-            for(let j of timeValues){
-                if(i === j.day && (j.startTime === null || j.endTime === null)){
-                    canSubmit=false
+        // for(let i of selectedItems){
+        //     for(let j of timeValues){
+        //         if(i === j.day && (j.startTime === null || j.endTime === null)){
+        //             canSubmit=false
+        //         }
+        //     }
+        // }
+
+        if (selectedItems.length >= 5 ) {
+            console.log("Break-01 times:", break1Time)
+
+            for (let i of break1Time) {
+                for (let j of selectedItems) {
+                  const day = j;
+                  if (i.day === day && i.startTime !== null && i.endTime !== null) {
+                    const object1 = i.startTime;
+                    for (const key in object1) {
+                      if (key === '$d') {
+                        setRequest((prevState) => ({ ...prevState, breaks: 
+                            { ...prevState.breaks, [dayMapping[day]]: 
+                                { ...prevState.breaks[dayMapping[day]], break1: 
+                                    { ...prevState.breaks[dayMapping[day]].break1, startTime: format(new Date(i.startTime), 'HH:mm')}}
+                          }
+                        }));
+                      }
+                    }
+              
+                    const object2 = i.endTime;
+                    for (const key in object2) {
+                      if (key === '$d') {
+                        setRequest((prevState) => ({ ...prevState, breaks: 
+                            { ...prevState.breaks, [dayMapping[day]]: 
+                                { ...prevState.breaks[dayMapping[day]], break1: 
+                                    {...prevState.breaks[dayMapping[day]].break1, endTime: format(new Date(i.endTime), 'HH:mm')}}
+                          }
+                        }));
+                      }
+                    }
+                  }
                 }
-            }
-        }
-
-        if (selectedItems.length >= 5 && canSubmit) {
-            // console.log("Break-01 times:", break1Time)
-            // console.log("Break-02 times:", break2Time)
+              }
 
             setRequest(prevRequest => ({
                 ...prevRequest,
@@ -141,52 +179,30 @@ function FacultyConstraints() {
                 applicableEndDate: endDate
             }));
 
-            const dayMapping = {
-                Monday: 'monday',
-                Tuesday: 'tuesday',
-                Wednesday: 'wednesday',
-                Thursday: 'thursday',
-                Friday: 'friday',
-                Saturday: 'saturday',
-              };
-
-            
-              for (const i of timeValues) {
+            for (const i of timeValues) {
                 const day = i.day;
                 const dayProperty = dayMapping[day];
-              
+                
                 const object1 = i.startTime;
                 for (const key in object1) {
-                  if (key === '$d') {
-                    setRequest(prevRequest => ({
-                      ...prevRequest,
-                      availability: {
-                        ...prevRequest.availability,
-                        [dayProperty]: {
-                          ...prevRequest.availability[dayProperty],
-                          startTime: format(new Date(i.startTime), 'HH:mm'),
-                        },
-                      },
+                    if (key === '$d') {
+                    setRequest(prevRequest => ({ ...prevRequest, availability: 
+                        { ...prevRequest.availability, [dayProperty]: 
+                            { ...prevRequest.availability[dayProperty], startTime: format(new Date(i.startTime), 'HH:mm')}}
                     }));
-                  }
+                    }
                 }
-              
+                
                 const object2 = i.endTime;
                 for (const key in object2) {
-                  if (key === '$d') {
-                    setRequest(prevRequest => ({
-                      ...prevRequest,
-                      availability: {
-                        ...prevRequest.availability,
-                        [dayProperty]: {
-                          ...prevRequest.availability[dayProperty],
-                          endTime: format(new Date(i.endTime), 'HH:mm'),
-                        },
-                      },
+                    if (key === '$d') {
+                    setRequest(prevRequest => ({ ...prevRequest, availability: 
+                        { ...prevRequest.availability, [dayProperty]: 
+                            { ...prevRequest.availability[dayProperty], endTime: format(new Date(i.endTime), 'HH:mm')}}
                     }));
-                  }
+                    }
                 }
-              }
+            }
         } else {
             alert('Please select at least five days and select available time for the selected days.');
         }

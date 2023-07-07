@@ -53,13 +53,13 @@ function AddBreak2({breakModal2, setBreakModal2, breakIndex2, break2Time, setBre
                             label="Start time"
                             renderInput={(params) => <TextField onKeyDown={onKeyDown} {...params}
                             variant="outlined" />}
-                            value={break2Time[breakIndex2]?.startTime || new Date()}
+                            value={break2Time[breakIndex2]?.startTime || null}
                             onChange={(value) => handleTimePickerChange(breakIndex2, 'startTime', value)}/>
                         <TimePicker
                             label="End time"
                             renderInput={(params) => <TextField onKeyDown={onKeyDown} {...params}
                             variant="outlined" />} 
-                            value={break2Time[breakIndex2]?.endTime || new Date()}
+                            value={break2Time[breakIndex2]?.endTime || null}
                             onChange={(value) => handleTimePickerChange(breakIndex2, 'endTime', value)}/>
                     </Stack>
                 </LocalizationProvider>
