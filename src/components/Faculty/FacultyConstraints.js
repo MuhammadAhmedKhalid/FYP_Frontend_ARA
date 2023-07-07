@@ -9,8 +9,12 @@ import { format } from 'date-fns';
 import { TimePicker } from '@mui/x-date-pickers/TimePicker';
 import AddBreak1 from './resources/modals/AddBreak1';
 import AddBreak2 from './resources/modals/AddBreak2';
+import { useDispatch } from 'react-redux'
+import { addFacultyConstraintsRequest } from '../../redux/AddFacultyConstraints/addFacultyConstraintsActions'
 
 function FacultyConstraints() {
+
+    const dispatch = useDispatch()
 
     const institute_id = Number(localStorage.getItem('institute_id'))
     const faculty_id = Number(localStorage.getItem('faculty_id'))
@@ -245,10 +249,9 @@ function FacultyConstraints() {
         }
     }
 
-
     if(dispatchAction){
         setDispatch(false)
-        console.log(request)
+        dispatch(addFacultyConstraintsRequest(request))
     }
 
     return (
