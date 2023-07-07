@@ -50,6 +50,7 @@ function FacultyConstraints() {
     const [breakIndex2, setBreakIndex2] = useState();
     const [break1Time, setBreak1Time] = useState([]);
     const [break2Time, setBreak2Time] = useState([]);
+    const [dispatchAction, setDispatch] = useState(false);
 
     const days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
 
@@ -214,32 +215,41 @@ function FacultyConstraints() {
                 const day = i.day;
                 const dayProperty = dayMapping[day];
                 
-                const object1 = i.startTime;
-                for (const key in object1) {
-                    if (key === '$d') {
-                    setRequest(prevRequest => ({ ...prevRequest, availability: 
-                        { ...prevRequest.availability, [dayProperty]: 
-                            { ...prevRequest.availability[dayProperty], startTime: format(new Date(i.startTime), 'HH:mm')}}
-                    }));
-                    }
-                }
-                
-                const object2 = i.endTime;
-                for (const key in object2) {
-                    if (key === '$d') {
-                    setRequest(prevRequest => ({ ...prevRequest, availability: 
-                        { ...prevRequest.availability, [dayProperty]: 
-                            { ...prevRequest.availability[dayProperty], endTime: format(new Date(i.endTime), 'HH:mm')}}
-                    }));
+                for(let j of selectedItems){
+                    if(day === j){
+                        const object1 = i.startTime;
+                        for (const key in object1) {
+                            if (key === '$d') {
+                            setRequest(prevRequest => ({ ...prevRequest, availability: 
+                                { ...prevRequest.availability, [dayProperty]: 
+                                    { ...prevRequest.availability[dayProperty], startTime: format(new Date(i.startTime), 'HH:mm')}}
+                            }));
+                            }
+                        }
+                        
+                        const object2 = i.endTime;
+                        for (const key in object2) {
+                            if (key === '$d') {
+                            setRequest(prevRequest => ({ ...prevRequest, availability: 
+                                { ...prevRequest.availability, [dayProperty]: 
+                                    { ...prevRequest.availability[dayProperty], endTime: format(new Date(i.endTime), 'HH:mm')}}
+                            }));
+                            }
+                        }
                     }
                 }
             }
+            setDispatch(true)
         } else {
             alert('Please select at least five days and select available time for the selected days.');
         }
     }
 
-    console.log(request)
+
+    if(dispatchAction){
+        setDispatch(false)
+        console.log(request)
+    }
 
     return (
         <div className="flexbox-container-y"
