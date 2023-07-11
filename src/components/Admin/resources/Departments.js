@@ -7,6 +7,7 @@ import { getDepartmentsRequest } from '../../../redux/GetDepartments/getDepartme
 import Table from '../../Root/Table'
 import { updateDepartment, resetState } from '../../../redux/UpdateDepartment/updateDeptActions'
 import { deleteDepartmentRequest } from '../../../redux/DeleteDepartment/deleteDeptActions'
+import UpdDepartment from '../../Admin/resources/modals/update/UpdDepartment'
 
 function Departments() {
 
@@ -15,8 +16,6 @@ function Departments() {
     const [openDepartmentModal, setOpenDepartmentModal] = useState(false)
     const [refresh, setRefresh] = useState(false)
     const [rowData, setRowData] = useState([])
-    const [updVal, setUpdVal] = useState('')
-    const [oldVal, setOldVal] = useState(null)
     const [update, setUpdate] = useState(false)
     const [deleteId, setDeleteId] = useState(null)
 
@@ -44,19 +43,19 @@ function Departments() {
         }
     }, [updateError, updatedSuccessfully])
 
-    useEffect(() => {
-        if(update){
-            for(let i of departments){
-                if(i.department_id === oldVal[0]){
-                    dispatch(updateDepartment(i.department_id, updVal))
-                    break
-                }
-            }
-            setUpdVal('')
-            setOldVal(null)
-            setUpdate(false)
-        }
-    }, [update])
+    // useEffect(() => {
+    //     if(update){
+    //         for(let i of departments){
+    //             if(i.department_id === oldVal[0]){
+    //                 dispatch(updateDepartment(i.department_id, updVal))
+    //                 break
+    //             }
+    //         }
+    //         setUpdVal('')
+    //         setOldVal(null)
+    //         setUpdate(false)
+    //     }
+    // }, [update])
 
     useEffect(()=>{
         if(departmentsAdded && rowData.length !== departments.length){
@@ -95,15 +94,22 @@ function Departments() {
                     </div>
                     <center>
                         {
-                            departmentsAdded && <Table columns={['No.', 'Department Name']} rows={rowData} refresh={refresh} setRefresh={setRefresh}
-                            updVal={updVal} setUpdVal={setUpdVal} setUpdate={setUpdate} setOldVal={setOldVal} setDeleteId={setDeleteId}/>
+                            departmentsAdded && <Table columns={['No.', 'Department Name']} 
+                            rows={rowData} 
+                            refresh={refresh} setRefresh={setRefresh}
+                            setDeleteId={setDeleteId}/>
                         }
                     </center>
                 </div>
             </div>
             <div>
-                <AddDepartment openDepartmentModal={openDepartmentModal} setOpenDepartmentModal={setOpenDepartmentModal} setRefresh={setRefresh}/>
+                <AddDepartment 
+                    openDepartmentModal={openDepartmentModal} setOpenDepartmentModal={setOpenDepartmentModal} 
+                    setRefresh={setRefresh}/>
             </div>
+            {
+                update && <UpdDepartment update={update} setUpdate={setUpdate}/>
+            }
         </div>
     )
 }
