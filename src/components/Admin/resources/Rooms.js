@@ -26,8 +26,6 @@ function Rooms() {
     const departments = useSelector((state) => state.getDepartments.departments.data)
     const departmentsAdded = useSelector((state) => state.getDepartments.added)
     const institute_id = Number(localStorage.getItem('institute_id'))
-    const updateError = useSelector((state) => state.updateRoomReducer.error)
-    const updatedSuccessfully = useSelector((state) => state.updateRoomReducer.updated)
 
     useEffect(() => {
         if(deleteId !== null){
@@ -36,39 +34,6 @@ function Rooms() {
             setDeleteId(null)
         }
     }, [deleteId])
-
-    useEffect(()=>{
-        if(updateError.length > 0){
-            alert(updateError)
-            dispatch(resetState())
-        }else if(updatedSuccessfully){
-            alert('Updated successfully.')
-            dispatch(resetState())
-        }
-    }, [updateError, updatedSuccessfully])
-
-    // useEffect(() => {
-    //     if(update){
-    //         const room = {
-    //             room_name: updVal, 
-    //             department_id: 0
-    //         }
-    //         for(let i of rooms){
-    //             if(i.room_id === oldVal[0]){
-    //                 for(let j of departments){
-    //                     if(j.department_name == deptName){
-    //                         room.department_id = j.department_id
-    //                         break
-    //                     }
-    //                 }
-    //                 dispatch(updateRoom(i.room_id, i.department_id, JSON.stringify(room)))
-    //             }
-    //         }
-    //         setUpdVal('')
-    //         setOldVal(null)
-    //         setUpdate(false)
-    //     }
-    // }, [update])
 
     const openModal = () => {
         setOpenRoomModal(true)

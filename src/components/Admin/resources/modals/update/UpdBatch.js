@@ -28,7 +28,7 @@ function UpdBatch({update, setUpdate, data}) {
         batchCode: data[3],
         numOfStudents: data[5],
         section: data[4],
-        department_id: data[2],
+        department_id: "",
         institute_id,
     })
 
@@ -136,7 +136,8 @@ function UpdBatch({update, setUpdate, data}) {
                             <h3 style={{
                                 fontWeight: 'normal', color: 'gray', marginRight: '3px'
                             }}>Department</h3>
-                            <select value={batch.department_id} required className='dropdown' onChange={handleDepartmentChange}>
+                            <select required className='dropdown' onChange={handleDepartmentChange}>
+                                <option></option>
                                 {
                                     departmentsAdded && departments.length !== 0 ? departments.map(department => 
                                         <option key={department.department_id}>{department.department_name}</option>) : null

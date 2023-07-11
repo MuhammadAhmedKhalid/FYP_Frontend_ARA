@@ -19,8 +19,6 @@ function Batches() {
     const departments = useSelector((state) => state.getDepartments.departments.data)
     const departmentsAdded = useSelector((state) => state.getDepartments.added)
     const institute_id = Number(localStorage.getItem('institute_id'))
-    const updateError = useSelector((state) => state.updateBatchReducer.error)
-    const updatedSuccessfully = useSelector((state) => state.updateBatchReducer.updated)
 
     const [openBatchModal, setOpenBatchModal] = useState(false)
     const [rowData, setRowData] = useState([])
@@ -36,16 +34,6 @@ function Batches() {
             setDeleteId(null)
         }
     }, [deleteId])
-
-    useEffect(()=>{
-        if(updateError.length > 0){
-            alert(updateError)
-            dispatch(resetState())
-        }else if(updatedSuccessfully){
-            alert('Updated successfully.')
-            dispatch(resetState())
-        }
-    }, [updateError, updatedSuccessfully])
 
     useEffect(()=>{
         if(refresh){
