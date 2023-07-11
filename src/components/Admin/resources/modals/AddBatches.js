@@ -62,8 +62,7 @@ function AddBatches(props) {
     };
     const handleForm = (event) => {
         event.preventDefault()
-        console.log(batch)
-        // dispatch(addBatchtRequest(batch))
+        dispatch(addBatchtRequest(batch))
     }
 
     const handleDepartmentChange = (e) => {
