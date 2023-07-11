@@ -5,8 +5,9 @@ import AddPosition from './modals/AddDesignation'
 import Table from '../../Root/Table'
 import { useSelector, useDispatch } from 'react-redux'
 import { getPositionRequest } from '../../../redux/GetPosition/getPositionActions'
-import { resetState, updatePosition } from '../../../redux/UpdatePosition/updatePositionActions'
+import { resetState } from '../../../redux/UpdatePosition/updatePositionActions'
 import { deletePositionRequest } from '../../../redux/DeletePosition/deletePositionActions'
+import UpdDesignation from './modals/update/UpdDesignation'
 
 function Designations() {
 
@@ -14,11 +15,10 @@ function Designations() {
 
     const [openPositionModal, setOpenPositionModal] = useState(false)
     const [refresh, setRefresh] = useState(false)
-    const [updVal, setUpdVal] = useState('')
     const [rowData, setRowData] = useState([])
-    const [oldVal, setOldVal] = useState(null)
     const [update, setUpdate] = useState(false)
     const [deleteId, setDeleteId] = useState(null)
+    const [data, setData] = useState()
    
     const positions = useSelector((state) => state.getPositionReducer.positions)
     const positionsAdded = useSelector((state) => state.getPositionReducer.added)
@@ -44,18 +44,18 @@ function Designations() {
         }
     }, [updateError, updatedSuccessfully])
 
-    useEffect(() => {
-        if(update){
-            for(let i of positions){
-                if(i.position_id === oldVal[0]){
-                    dispatch(updatePosition(i.position_id, updVal))
-                }
-            }
-            setUpdVal('')
-            setOldVal(null)
-            setUpdate(false)
-        }
-    }, [update])
+    // useEffect(() => {
+    //     if(update){
+    //         for(let i of positions){
+    //             if(i.position_id === oldVal[0]){
+    //                 dispatch(updatePosition(i.position_id, updVal))
+    //             }
+    //         }
+    //         setUpdVal('')
+    //         setOldVal(null)
+    //         setUpdate(false)
+    //     }
+    // }, [update])
 
     useEffect(()=>{
         if(positionsAdded && rowData.length !== positions.length){
@@ -93,8 +93,8 @@ function Designations() {
                 </div>
                 <center>
                     {
-                        positionsAdded && <Table columns={['No.', 'Designation']} rows={rowData} refresh={refresh} setRefresh={setRefresh}
-                                            updVal={updVal} setUpdVal={setUpdVal}  setUpdate={setUpdate} setOldVal={setOldVal} setDeleteId={setDeleteId}/>
+                        positionsAdded && 
+                        <Table columns={['No.', 'Designation']} rows={rowData} setUpdate={setUpdate} setDeleteId={setDeleteId} setData={setData}/>
                     }
                 </center>
             </div>
@@ -102,6 +102,9 @@ function Designations() {
         <div>
             <AddPosition openPositionModal={openPositionModal} setOpenPositionModal={setOpenPositionModal} setRefresh={setRefresh}/>
         </div>
+        {
+            update && <UpdDesignation update={update} setUpdate={setUpdate} data={data}/>
+        }
     </div>
   )
 }
