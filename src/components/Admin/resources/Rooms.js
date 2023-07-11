@@ -6,7 +6,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import { getDepartmentsRequest } from '../../../redux/GetDepartments/getDepartmentsActions'
 import { getRoomsRequest } from '../../../redux/GetRooms/getRoomsActions'
 import Table from '../../Root/Table'
-import { updateRoom, resetState } from '../../../redux/UpdateRoom/updateRoomActions' 
+import { resetState } from '../../../redux/UpdateRoom/updateRoomActions' 
 import { deleteRoomRequest } from '../../../redux/DeleteRoom/deleteRoomActions'
 import UpdRoom from './modals/update/UpdRoom'
 
@@ -25,7 +25,20 @@ function Rooms() {
     const roomsAdded = useSelector((state) => state.getRooms.added)
     const departments = useSelector((state) => state.getDepartments.departments.data)
     const departmentsAdded = useSelector((state) => state.getDepartments.added)
+    const updateError = useSelector((state) => state.updateRoomReducer.error)
+    const updatedSuccessfully = useSelector((state) => state.updateRoomReducer.updated)
+
     const institute_id = Number(localStorage.getItem('institute_id'))
+
+    useEffect(()=>{
+        if(updateError.length > 0){
+            alert(updateError)
+            dispatch(resetState())
+        }else if(updatedSuccessfully){
+            alert('Updated successfully.')
+            dispatch(resetState())
+        }
+    }, [updateError, updatedSuccessfully])
 
     useEffect(() => {
         if(deleteId !== null){

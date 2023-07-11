@@ -5,7 +5,7 @@ import LocalLibraryIcon from '@mui/icons-material/LocalLibrary';
 import InputAdornment from '@material-ui/core/InputAdornment'
 import { useSelector, useDispatch } from 'react-redux'
 import { getDepartmentsRequest } from '../../../../../redux/GetDepartments/getDepartmentsActions'
-import { updateDepartment, resetState } from '../../../../../redux/UpdateDepartment/updateDeptActions'
+import { updateDepartment } from '../../../../../redux/UpdateDepartment/updateDeptActions'
 
 
 function UpdDepartment({update, setUpdate, data}) {
@@ -13,8 +13,6 @@ function UpdDepartment({update, setUpdate, data}) {
     const dispatch = useDispatch()
 
     const departments = useSelector((state) => state.getDepartments.departments.data)
-    const updateError = useSelector((state) => state.updateDepartmentReducer.error)
-    const updatedSuccessfully = useSelector((state) => state.updateDepartmentReducer.updated)
 
     const institute_id = Number(localStorage.getItem('institute_id'))
 
@@ -27,16 +25,6 @@ function UpdDepartment({update, setUpdate, data}) {
             dispatch(getDepartmentsRequest(institute_id))
         }
     }, [institute_id])
-
-    useEffect(()=>{
-        if(updateError.length > 0){
-            alert(updateError)
-            dispatch(resetState())
-        }else if(updatedSuccessfully){
-            alert('Updated successfully.')
-            dispatch(resetState())
-        }
-    }, [updateError, updatedSuccessfully])
 
     const customStyles = {
         overlay: {

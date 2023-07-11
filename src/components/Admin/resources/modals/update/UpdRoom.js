@@ -8,7 +8,7 @@ import RoomIcon from '@mui/icons-material/Room';
 import SquareFootIcon from '@mui/icons-material/SquareFoot';
 import { getRoomsRequest } from '../../../../../redux/GetRooms/getRoomsActions'
 import { getDepartmentsRequest } from '../../../../../redux/GetDepartments/getDepartmentsActions'
-import { updateRoom, resetState } from '../../../../../redux/UpdateRoom/updateRoomActions' 
+import { updateRoom } from '../../../../../redux/UpdateRoom/updateRoomActions' 
 
 function UpdRoom({update, setUpdate, data}) {
 
@@ -17,8 +17,6 @@ function UpdRoom({update, setUpdate, data}) {
     const rooms = useSelector((state) => state.getRooms.rooms.data)
     const departments = useSelector((state) => state.getDepartments.departments.data)
     const departmentsAdded = useSelector((state) => state.getDepartments.added)
-    const updateError = useSelector((state) => state.updateRoomReducer.error)
-    const updatedSuccessfully = useSelector((state) => state.updateRoomReducer.updated)
 
     const institute_id = Number(localStorage.getItem('institute_id'))
 
@@ -29,16 +27,6 @@ function UpdRoom({update, setUpdate, data}) {
         department_id: "",
         institute_id
     })
-
-    useEffect(()=>{
-        if(updateError.length > 0){
-            alert(updateError)
-            dispatch(resetState())
-        }else if(updatedSuccessfully){
-            alert('Updated successfully.')
-            dispatch(resetState())
-        }
-    }, [updateError, updatedSuccessfully])
 
     useEffect(() => {
         if(institute_id > 0){

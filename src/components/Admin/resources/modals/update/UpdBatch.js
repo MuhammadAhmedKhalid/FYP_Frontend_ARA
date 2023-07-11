@@ -7,7 +7,7 @@ import CodeIcon from '@mui/icons-material/Code';
 import TagIcon from '@mui/icons-material/Tag';
 import WorkspacesIcon from '@mui/icons-material/Workspaces';
 import { useSelector, useDispatch } from 'react-redux'
-import { resetState, updateBatch } from '../../../../../redux/UpdateBatch/updateBatchActions'
+import { updateBatch } from '../../../../../redux/UpdateBatch/updateBatchActions'
 import { getBatchesRequest } from '../../../../../redux/GetBatches/getBatchesActions'
 import { getDepartmentsRequest } from '../../../../../redux/GetDepartments/getDepartmentsActions'
 
@@ -18,8 +18,6 @@ function UpdBatch({update, setUpdate, data}) {
     const batches = useSelector((state) => state.getBatchesReducer.batches.data)
     const departments = useSelector((state) => state.getDepartments.departments.data)
     const departmentsAdded = useSelector((state) => state.getDepartments.added)
-    const updateError = useSelector((state) => state.updateBatchReducer.error)
-    const updatedSuccessfully = useSelector((state) => state.updateBatchReducer.updated)
 
     const institute_id = Number(localStorage.getItem('institute_id'))
 
@@ -38,16 +36,6 @@ function UpdBatch({update, setUpdate, data}) {
             dispatch(getDepartmentsRequest(institute_id))
         }
     }, [institute_id])
-
-    useEffect(()=>{
-        if(updateError.length > 0){
-            alert(updateError)
-            dispatch(resetState())
-        }else if(updatedSuccessfully){
-            alert('Updated successfully.')
-            dispatch(resetState())
-        }
-    }, [updateError, updatedSuccessfully])
 
     const customStyles = {
         overlay: {
@@ -75,6 +63,7 @@ function UpdBatch({update, setUpdate, data}) {
 
         for(let i of batches){
             if(i.batchId === data[0]){
+                console.log(i.department_id, i.batchId, i.section, batch)
                 dispatch(updateBatch(i.department_id, i.batchId, i.section, batch))
             }
         }

@@ -1,10 +1,11 @@
 import { UPDATE_BATCH_REQUEST, RESET_STATE } from './updateBatchTypes'
 
-export const updateBatch = (departmentId, batchId, batch) => {
+export const updateBatch = (departmentId, batchId, section, batch) => {
     return {
         type: UPDATE_BATCH_REQUEST,
         batchId,
         departmentId,
+        section,
         batch
     }
 }

@@ -6,7 +6,7 @@ import Table from '../../Root/Table'
 import { useSelector, useDispatch } from 'react-redux'
 import { getBatchesRequest } from '../../../redux/GetBatches/getBatchesActions'
 import { getDepartmentsRequest } from '../../../redux/GetDepartments/getDepartmentsActions'
-import { resetState, updateBatch } from '../../../redux/UpdateBatch/updateBatchActions'
+import { resetState } from '../../../redux/UpdateBatch/updateBatchActions'
 import { deleteBatchRequest } from '../../../redux/DeleteBatch/deleteBatchActions'
 import UpdBatch from './modals/update/UpdBatch'
 
@@ -18,6 +18,9 @@ function Batches() {
     const batchesAdded = useSelector((state) => state.getBatchesReducer.added)
     const departments = useSelector((state) => state.getDepartments.departments.data)
     const departmentsAdded = useSelector((state) => state.getDepartments.added)
+    const updateError = useSelector((state) => state.updateBatchReducer.error)
+    const updatedSuccessfully = useSelector((state) => state.updateBatchReducer.updated)
+
     const institute_id = Number(localStorage.getItem('institute_id'))
 
     const [openBatchModal, setOpenBatchModal] = useState(false)
@@ -26,6 +29,16 @@ function Batches() {
     const [update, setUpdate] = useState(false)
     const [deleteId, setDeleteId] = useState(null)
     const [data, setData] = useState()
+
+    useEffect(()=>{
+        if(updateError.length > 0){
+            alert(updateError)
+            dispatch(resetState())
+        }else if(updatedSuccessfully){
+            alert('Updated successfully.')
+            dispatch(resetState())
+        }
+    }, [updateError, updatedSuccessfully])
 
     useEffect(() => {
         if(deleteId !== null){
