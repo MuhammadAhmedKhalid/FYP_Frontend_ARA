@@ -7,6 +7,8 @@ import { useSelector, useDispatch } from 'react-redux'
 import { getDepartmentsRequest } from '../../../../redux/GetDepartments/getDepartmentsActions'
 import { addCourseRequest, resetState } from '../../../../redux/AddCourse/addCourseActions'
 import { Alert } from '@mui/material';
+import CodeIcon from '@mui/icons-material/Code';
+import AccessTimeIcon from '@mui/icons-material/AccessTime';
 
 function AddCourse(props) {
 
@@ -25,7 +27,10 @@ function AddCourse(props) {
 
     const [course, setCourse] = useState({
         course_name: "",
-        department_id: " ",
+        department_id: "",
+        course_code: "",
+        credit_hours: "",
+        type: "",
         institute_id
     })
 
@@ -71,6 +76,10 @@ function AddCourse(props) {
         }
     }
 
+    const handleTypeChange = (e) => {
+        setCourse({ ...course, type: e.target.value })
+    }
+
     const closeModal = () => {
         setOpenCourseModal(false)
         setShowError(false)
@@ -95,13 +104,41 @@ function AddCourse(props) {
                     <TextField required autoFocus 
                             value={course.course_name} 
                             onChange={(e) => setCourse({ ...course, course_name: e.target.value })}
-                            style={{ margin: '3px' }} size='small' variant="outlined" type='text' placeholder='Course Name' InputProps={{
+                            style={{ margin: '3px' }} size='small' variant="outlined" type='text' placeholder='Course name' InputProps={{
                                 startAdornment: (
                                     <InputAdornment position='start'>
                                         <GradeIcon style={{ height: '20px' }} color="action" />
                                     </InputAdornment>
                                 )
                             }} />
+                            <TextField required 
+                            value={course.course_code} 
+                            onChange={(e) => setCourse({ ...course, course_code: e.target.value })}
+                            style={{ margin: '3px' }} size='small' variant="outlined" type='text' placeholder='Course code' InputProps={{
+                                startAdornment: (
+                                    <InputAdornment position='start'>
+                                        <CodeIcon style={{ height: '20px' }} color="action" />
+                                    </InputAdornment>
+                                )
+                            }} />
+                            <TextField required 
+                            value={course.credit_hours} 
+                            onChange={(e) => setCourse({ ...course, credit_hours: e.target.value })}
+                            style={{ margin: '3px' }} size='small' variant="outlined" type='text' placeholder='Credit hours' InputProps={{
+                                startAdornment: (
+                                    <InputAdornment position='start'>
+                                        <AccessTimeIcon style={{ height: '20px' }} color="action" />
+                                    </InputAdornment>
+                                )
+                            }} />
+                            <h3 style={{
+                            fontWeight: 'normal', color: 'gray', marginRight: '3px'
+                        }}>Type</h3>
+                        <select required className='dropdown' onChange={handleTypeChange}>
+                            <option></option>
+                            <option>Theory</option>
+                            <option>Practical</option>
+                        </select>
                             <h3 style={{
                             fontWeight: 'normal', color: 'gray', marginRight: '3px'
                         }}>Department</h3>
