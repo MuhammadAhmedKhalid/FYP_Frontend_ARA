@@ -47,29 +47,6 @@ function Batches() {
         }
     }, [updateError, updatedSuccessfully])
 
-    // useEffect(() => {
-    //     if(update){
-    //         const batch = {
-    //             batchYear: parseInt(updVal), 
-    //             department_id: 0
-    //         }
-    //         for(let i of batches){
-    //             if(i.batchId === oldVal[0]){
-    //                 for(let j of departments){
-    //                     if(j.department_name == deptName){
-    //                         batch.department_id = j.department_id
-    //                         break
-    //                     }
-    //                 }
-    //                 dispatch(updateBatch(i.department_id, i.batchId, batch))
-    //             }
-    //         }
-    //         setUpdVal('')
-    //         setOldVal(null)
-    //         setUpdate(false)
-    //     }
-    // }, [update])
-
     useEffect(()=>{
         if(refresh){
             setRowData([])
