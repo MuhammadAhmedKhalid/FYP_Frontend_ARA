@@ -14,6 +14,7 @@ import { Alert } from '@mui/material';
 import Select from "react-select";
 import GradeIcon from '@mui/icons-material/Grade';
 import emailjs from '@emailjs/browser';
+import CodeIcon from '@mui/icons-material/Code';
 
 function AddFaculty(props) {
 
@@ -38,6 +39,7 @@ function AddFaculty(props) {
 
     const [faculty, setFaculty] = useState({
         name: "",
+        code: "",
         phone_number: "",
         officialEmailAddress: "",
         department_id: "",
@@ -157,6 +159,15 @@ function AddFaculty(props) {
                                 startAdornment: (
                                     <InputAdornment position='start'>
                                         <PersonIcon style={{ height: '20px' }} color="action" />
+                                    </InputAdornment>
+                                )
+                            }} />
+                        <TextField required value={faculty.code} name='user_name'
+                        onChange={(e) => setFaculty({ ...faculty, code: e.target.value })}
+                            style={{ margin: '3px' }} size='small' variant="outlined" type='text' placeholder='Code' InputProps={{
+                                startAdornment: (
+                                    <InputAdornment position='start'>
+                                        <CodeIcon style={{ height: '20px' }} color="action" />
                                     </InputAdornment>
                                 )
                             }} />
