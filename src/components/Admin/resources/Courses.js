@@ -83,7 +83,8 @@ function Courses() {
             for(let i=0; i<courses.length; i++){
                 for(let j=0; j<departments.length; j++){
                     if(departments[j].department_id === courses[i].department_id){
-                        rowData.push([courses[i].course_id , courses[i].course_name, departments[j].department_name])
+                        rowData.push([courses[i].course_id , courses[i].course_name, departments[j].department_name,
+                            courses[i].course_code, courses[i].credit_hours, courses[i].type])
                     }
                 }
             }
@@ -115,9 +116,9 @@ function Courses() {
                 </div>
                 <center>
                     {
-                        coursessAdded && <Table columns={['No.', 'Courses', 'Department']} rows={rowData} refresh={refresh} setRefresh={setRefresh}
+                        coursessAdded && <Table columns={['No.', 'Courses', 'Department', 'Course code', 'Credit hours', 'Type']} rows={rowData} refresh={refresh} setRefresh={setRefresh}
                                             updVal={updVal} setUpdVal={setUpdVal} setUpdate={setUpdate} setOldVal={setOldVal} setDeleteId={setDeleteId}
-                                            editDepartments={true} deptName={deptName} setDeptName={setDeptName}/>
+                                            editDepartments={true} deptName={deptName} setDeptName={setDeptName} uneditable={true}/>
                     }
                 </center>
             </div>
