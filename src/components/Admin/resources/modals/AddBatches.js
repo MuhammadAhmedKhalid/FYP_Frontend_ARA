@@ -9,8 +9,6 @@ import { Alert } from '@mui/material';
 import CodeIcon from '@mui/icons-material/Code';
 import TagIcon from '@mui/icons-material/Tag';
 import WorkspacesIcon from '@mui/icons-material/Workspaces';
-import { departmentsList } from '../../utils'
-import { specializationOptions } from '../../utils'
 
 function AddBatches(props) {
 
@@ -20,11 +18,9 @@ function AddBatches(props) {
 
     const [showError, setShowError] = useState(false);
     const [errorMsg, setErrorMsg] = useState('')
-    const [specialization, setSpecialization] = useState([])
 
-    // const departments = useSelector((state) => state.getDepartments.departments.data)
-    // const departmentsAdded = useSelector((state) => state.getDepartments.added)
-    const departments = departmentsList
+    const departments = useSelector((state) => state.getDepartments.departments.data)
+    const departmentsAdded = useSelector((state) => state.getDepartments.added)
     const institute_id = Number(localStorage.getItem('institute_id'))
     const requestSuccessfull = useSelector((state) => state.addBatchReducer.added)
     const requestUnsuccessfullMsg = useSelector((state) => state.addBatchReducer.error)
@@ -32,9 +28,9 @@ function AddBatches(props) {
     const [batch, setBatch] = useState({
         batchYear: "",
         batchCode: "",
-        noOfStudents: "",
+        numOfStudents: "",
         section: "",
-        department: "",
+        department_id: "",
         institute_id,
     })
 
@@ -72,16 +68,11 @@ function AddBatches(props) {
 
     const handleDepartmentChange = (e) => {
         const department_name = e.target.value
-            for (let i = 0; i < specializationOptions.length; i++) {
-                if (specializationOptions[i].department === department_name) {
-                    // setBatch({ ...batch, department_id: specializationOptions[i].department_id })
-                    setSpecialization(specializationOptions[i].specialization)
+            for (let i = 0; i < departments.length; i++) {
+                if (departments[i].department_name === department_name) {
+                    setBatch({ ...batch, department_id: departments[i].department_id })
                 }
             }
-    }
-
-    const handleSpecializationChange = (e) => {
-        setBatch({ ...batch, department: e.target.value })
     }
 
     const closeModal = () => {
@@ -119,7 +110,7 @@ function AddBatches(props) {
                             )
                         }} />
                         <TextField required style={{ margin: '3px' }} size='small' variant="outlined" type='number' placeholder='Number of students' 
-                        onChange={(e) => setBatch({ ...batch, noOfStudents: e.target.value })}
+                        onChange={(e) => setBatch({ ...batch, numOfStudents: e.target.value })}
                         InputProps={{
                             startAdornment: (
                                 <InputAdornment position='start'>
@@ -143,20 +134,8 @@ function AddBatches(props) {
                             <select required className='dropdown' onChange={handleDepartmentChange}>
                             <option></option>
                                 {
-                                    departments.length !== undefined ? departments.map(department => 
-                                        <option key={department.id}>{department.name}</option>) : null
-                                }
-                            </select>
-                        </div>
-                        <div style={{ margin: '3px' }} className='flexbox-container-y'>
-                            <h3 style={{
-                                fontWeight: 'normal', color: 'gray', marginRight: '3px'
-                            }}>Specialization</h3>
-                            <select required className='dropdown' onChange={handleSpecializationChange}>
-                            <option></option>
-                                {
-                                    specialization.length !== 0 ? specialization.map((specialization, index) => 
-                                        <option key={index}>{specialization}</option>) : null
+                                    departmentsAdded && departments.length !== 0 ? departments.map(department => 
+                                        <option key={department.department_id}>{department.department_name}</option>) : null
                                 }
                             </select>
                         </div>
