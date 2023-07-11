@@ -83,8 +83,8 @@ function Batches() {
             for(let i=0; i<batches.length; i++){
                 for(let j in departments){
                     if(departments[j].department_id === batches[i].department_id){
-                        rowData.push([batches[i].batchId , batches[i].batchCode, (batches[i].batchYear).toString(), departments[j].department_name,
-                    batches[i].section, batches[i].numOfStudents])
+                        rowData.push([batches[i].batchId , (batches[i].batchYear).toString(), departments[j].department_name,
+                        batches[i].batchCode, batches[i].section, batches[i].numOfStudents])
                     }
                 }
             }
@@ -116,9 +116,9 @@ function Batches() {
                     </div>
                     <center>
                         {
-                            <Table columns={['No.', 'Batch Code', 'Batch Year', 'Department', 'Section', 'No. of students']} rows={rowData} refresh={refresh} setRefresh={setRefresh}
+                            <Table columns={['No.', 'Batch Year', 'Department', 'Batch Code', 'Section', 'No. of students']} rows={rowData} refresh={refresh} setRefresh={setRefresh}
                                 updVal={updVal} setUpdVal={setUpdVal} setUpdate={setUpdate} setOldVal={setOldVal} setDeleteId={setDeleteId}
-                                editDepartments={true} deptName={deptName} setDeptName={setDeptName}/>
+                                editDepartments={true} deptName={deptName} setDeptName={setDeptName} uneditable={true}/>
                         }
                     </center>
                 </div>

@@ -6,6 +6,8 @@ import InputAdornment from '@material-ui/core/InputAdornment'
 import MeetingRoomIcon from '@mui/icons-material/MeetingRoom';
 import { addRoomRequest, resetState } from '../../../../redux/AddRoom/addRoomActions'
 import { Alert } from '@mui/material';
+import RoomIcon from '@mui/icons-material/Room';
+import SquareFootIcon from '@mui/icons-material/SquareFoot';
 
 function AddRoom(props) {
 
@@ -24,6 +26,8 @@ function AddRoom(props) {
 
     const [room, setRoom] = useState({
         room_name: "",
+        location: "",
+        area: "",
         department_id: "",
         institute_id
     })
@@ -94,6 +98,26 @@ function AddRoom(props) {
                                             </InputAdornment>
                                         )
                             }} />
+                        <TextField required style={{ margin: '3px' }} size='small' variant="outlined" type='text' 
+                        placeholder='Floor/Location' 
+                            onChange={(e) => setRoom({ ...room, location: e.target.value })}
+                            InputProps={{
+                                startAdornment: (
+                                    <InputAdornment position='start'>
+                                        <RoomIcon style={{ height: '20px' }} color="action" />
+                                    </InputAdornment>
+                                )
+                        }} />
+                        <TextField required style={{ margin: '3px' }} size='small' variant="outlined" type='text' 
+                        placeholder='Area' 
+                            onChange={(e) => setRoom({ ...room, area: e.target.value })}
+                            InputProps={{
+                                startAdornment: (
+                                    <InputAdornment position='start'>
+                                        <SquareFootIcon style={{ height: '20px' }} color="action" />
+                                    </InputAdornment>
+                                )
+                        }} />
                         <div style={{ margin: '3px' }} className='flexbox-container-y'>
                             <h3 style={{
                                 fontWeight: 'normal', color: 'gray', marginRight: '3px'
