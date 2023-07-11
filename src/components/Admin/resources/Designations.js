@@ -44,19 +44,6 @@ function Designations() {
         }
     }, [updateError, updatedSuccessfully])
 
-    // useEffect(() => {
-    //     if(update){
-    //         for(let i of positions){
-    //             if(i.position_id === oldVal[0]){
-    //                 dispatch(updatePosition(i.position_id, updVal))
-    //             }
-    //         }
-    //         setUpdVal('')
-    //         setOldVal(null)
-    //         setUpdate(false)
-    //     }
-    // }, [update])
-
     useEffect(()=>{
         if(positionsAdded && rowData.length !== positions.length){
             if(refresh){
