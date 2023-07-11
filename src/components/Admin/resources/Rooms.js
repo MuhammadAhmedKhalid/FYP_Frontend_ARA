@@ -8,6 +8,7 @@ import { getRoomsRequest } from '../../../redux/GetRooms/getRoomsActions'
 import Table from '../../Root/Table'
 import { updateRoom, resetState } from '../../../redux/UpdateRoom/updateRoomActions' 
 import { deleteRoomRequest } from '../../../redux/DeleteRoom/deleteRoomActions'
+import UpdRoom from './modals/update/UpdRoom'
 
 function Rooms() {
 
@@ -16,11 +17,9 @@ function Rooms() {
     const [openRoomModal, setOpenRoomModal] = useState(false)
     const [roomData, setRoomData] = useState([])
     const [refresh, setRefresh] = useState(false)
-    const [updVal, setUpdVal] = useState('')
-    const [oldVal, setOldVal] = useState(null)
     const [update, setUpdate] = useState(false)
     const [deleteId, setDeleteId] = useState(null)
-    const [deptName, setDeptName] = useState('')
+    const [data, setData] = useState()
 
     const rooms = useSelector((state) => state.getRooms.rooms.data)
     const roomsAdded = useSelector((state) => state.getRooms.added)
@@ -48,28 +47,28 @@ function Rooms() {
         }
     }, [updateError, updatedSuccessfully])
 
-    useEffect(() => {
-        if(update){
-            const room = {
-                room_name: updVal, 
-                department_id: 0
-            }
-            for(let i of rooms){
-                if(i.room_id === oldVal[0]){
-                    for(let j of departments){
-                        if(j.department_name == deptName){
-                            room.department_id = j.department_id
-                            break
-                        }
-                    }
-                    dispatch(updateRoom(i.room_id, i.department_id, JSON.stringify(room)))
-                }
-            }
-            setUpdVal('')
-            setOldVal(null)
-            setUpdate(false)
-        }
-    }, [update])
+    // useEffect(() => {
+    //     if(update){
+    //         const room = {
+    //             room_name: updVal, 
+    //             department_id: 0
+    //         }
+    //         for(let i of rooms){
+    //             if(i.room_id === oldVal[0]){
+    //                 for(let j of departments){
+    //                     if(j.department_name == deptName){
+    //                         room.department_id = j.department_id
+    //                         break
+    //                     }
+    //                 }
+    //                 dispatch(updateRoom(i.room_id, i.department_id, JSON.stringify(room)))
+    //             }
+    //         }
+    //         setUpdVal('')
+    //         setOldVal(null)
+    //         setUpdate(false)
+    //     }
+    // }, [update])
 
     const openModal = () => {
         setOpenRoomModal(true)
@@ -118,9 +117,10 @@ function Rooms() {
                     </div>
                     <center>
                         {
-                            roomsAdded && <Table columns={['No.', 'Room Name', 'Department', 'Floor/Location', 'Area']} rows={roomData} refresh={refresh} setRefresh={setRefresh}
-                                            updVal={updVal} setUpdVal={setUpdVal} setUpdate={setUpdate} setOldVal={setOldVal} setDeleteId={setDeleteId}
-                                            editDepartments={true} deptName={deptName} setDeptName={setDeptName} uneditable={true}/>
+                            roomsAdded && 
+                            <Table 
+                                columns={['No.', 'Room Name', 'Department', 'Floor/Location', 'Area']} 
+                                rows={roomData} setUpdate={setUpdate} setDeleteId={setDeleteId} setData={setData}/>
                         }
                     </center>
                 </div>
@@ -128,6 +128,9 @@ function Rooms() {
             <div>
                 <AddRoom openRoomModal={openRoomModal} setOpenRoomModal={setOpenRoomModal} setRefresh={setRefresh} />
             </div>
+            {
+                update && <UpdRoom update={update} setUpdate={setUpdate} data={data}/>
+            }
         </div>
     )
 }
