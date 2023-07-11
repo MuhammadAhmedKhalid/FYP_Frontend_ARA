@@ -5,13 +5,18 @@ import DeleteIcon from '@mui/icons-material/Delete';
 
 function Table(props) {
 
-    const { columns, rows, uneditable, setDeleteId } = props
+    const { columns, rows, uneditable, setDeleteId, setUpdate, setData } = props
 
     let rowData = []
 
     for(let i of rows){
         const [first, ...rest] = i;
         rowData.push(rest)
+    }
+
+    const handleEdit = (index) => {
+        setUpdate(true)
+        setData(rows[index])
     }
 
     const handleDelete = (index) => {
@@ -51,10 +56,15 @@ function Table(props) {
                                     {
                                         isMobile ? null :
                                         <>
-                                        <DeleteIcon style={{marginRight: uneditable === true ? '0px' : '3px'}} onClick={() => handleDelete(index)} className='deleteButton'/>
                                         {
-                                            uneditable === true ? null : <EditIcon style={{marginRight: '3px'}} className='editButton'/>
+                                            uneditable === true ? null : 
+                                            <EditIcon style={{marginRight: '3px'}} 
+                                                onClick={() => handleEdit(index)} 
+                                                className='editButton'/>
                                         }
+                                        <DeleteIcon style={{marginRight: uneditable === true ? '0px' : '3px'}}
+                                            onClick={() => handleDelete(index)} 
+                                            className='deleteButton'/>
                                         </>
                                     }
                                     </td>

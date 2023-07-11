@@ -18,6 +18,7 @@ function Departments() {
     const [rowData, setRowData] = useState([])
     const [update, setUpdate] = useState(false)
     const [deleteId, setDeleteId] = useState(null)
+    const [data, setData] = useState()
 
     const departments = useSelector((state) => state.getDepartments.departments.data)
     const departmentsAdded = useSelector((state) => state.getDepartments.added)
@@ -42,20 +43,6 @@ function Departments() {
             dispatch(resetState())
         }
     }, [updateError, updatedSuccessfully])
-
-    // useEffect(() => {
-    //     if(update){
-    //         for(let i of departments){
-    //             if(i.department_id === oldVal[0]){
-    //                 dispatch(updateDepartment(i.department_id, updVal))
-    //                 break
-    //             }
-    //         }
-    //         setUpdVal('')
-    //         setOldVal(null)
-    //         setUpdate(false)
-    //     }
-    // }, [update])
 
     useEffect(()=>{
         if(departmentsAdded && rowData.length !== departments.length){
@@ -97,7 +84,9 @@ function Departments() {
                             departmentsAdded && <Table columns={['No.', 'Department Name']} 
                             rows={rowData} 
                             refresh={refresh} setRefresh={setRefresh}
-                            setDeleteId={setDeleteId}/>
+                            setDeleteId={setDeleteId}
+                            setUpdate={setUpdate}
+                            setData={setData}/>
                         }
                     </center>
                 </div>
@@ -108,7 +97,7 @@ function Departments() {
                     setRefresh={setRefresh}/>
             </div>
             {
-                update && <UpdDepartment update={update} setUpdate={setUpdate}/>
+                update && <UpdDepartment update={update} setUpdate={setUpdate} data={data}/>
             }
         </div>
     )
