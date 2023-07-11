@@ -107,7 +107,8 @@ function Faculty() {
                 for(let j of departments){
                     if(j.department_id == facultyList[i].department_id){
                         rowData.push([facultyList[i].faculty_id, facultyList[i].name, facultyList[i].phone_number, facultyList[i].officialEmailAddress, j.department_name, 
-                            facultyList[i].specialization.join(', '), facultyList[i].designation, facultyList[i].yearsOfExperience])
+                            facultyList[i].specialization.join(', '), facultyList[i].designation, facultyList[i].yearsOfExperience,
+                            facultyList[i].code])
                     }
                 }
             }
@@ -133,7 +134,7 @@ function Faculty() {
                     <div>
                         {
                             facultyAdded&& <Table columns={['No.', 'Name', 'Phone Number', 'E-mail', 'Department', 'Specialized Courses', 
-                            'Designation', 'Years of Experience']} rows={rowData} refresh={refresh} setRefresh={setRefresh} multiEdit={true}
+                            'Designation', 'Years of Experience', 'Code']} rows={rowData} refresh={refresh} setRefresh={setRefresh} multiEdit={true}
                             isFaculty={true} setUpdate={setUpdate} setOldVal={setOldVal} setDeleteId={setDeleteId}
                             updDesignation={updDesignation} setUpdDesignation={setUpdDesignation}
                             updName={updName} setUpdName={setUpdName}
