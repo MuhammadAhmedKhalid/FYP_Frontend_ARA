@@ -81,12 +81,13 @@ function Departments() {
                     </div>
                     <center>
                         {
-                            departmentsAdded && <Table columns={['No.', 'Department Name']} 
-                            rows={rowData} 
-                            refresh={refresh} setRefresh={setRefresh}
-                            setDeleteId={setDeleteId}
-                            setUpdate={setUpdate}
-                            setData={setData}/>
+                            departmentsAdded && 
+                            <Table 
+                                columns={['No.', 'Department Name']} 
+                                rows={rowData} 
+                                setDeleteId={setDeleteId}
+                                setUpdate={setUpdate}
+                                setData={setData}/>
                         }
                     </center>
                 </div>

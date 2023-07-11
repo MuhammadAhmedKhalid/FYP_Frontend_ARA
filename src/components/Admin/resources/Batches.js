@@ -8,6 +8,7 @@ import { getBatchesRequest } from '../../../redux/GetBatches/getBatchesActions'
 import { getDepartmentsRequest } from '../../../redux/GetDepartments/getDepartmentsActions'
 import { resetState, updateBatch } from '../../../redux/UpdateBatch/updateBatchActions'
 import { deleteBatchRequest } from '../../../redux/DeleteBatch/deleteBatchActions'
+import UpdBatch from './modals/update/UpdBatch'
 
 function Batches() {
 
@@ -24,11 +25,9 @@ function Batches() {
     const [openBatchModal, setOpenBatchModal] = useState(false)
     const [rowData, setRowData] = useState([])
     const [refresh, setRefresh] = useState(false)
-    const [updVal, setUpdVal] = useState('')
-    const [oldVal, setOldVal] = useState(null)
     const [update, setUpdate] = useState(false)
     const [deleteId, setDeleteId] = useState(null)
-    const [deptName, setDeptName] = useState('')
+    const [data, setData] = useState()
 
     useEffect(() => {
         if(deleteId !== null){
@@ -48,28 +47,28 @@ function Batches() {
         }
     }, [updateError, updatedSuccessfully])
 
-    useEffect(() => {
-        if(update){
-            const batch = {
-                batchYear: parseInt(updVal), 
-                department_id: 0
-            }
-            for(let i of batches){
-                if(i.batchId === oldVal[0]){
-                    for(let j of departments){
-                        if(j.department_name == deptName){
-                            batch.department_id = j.department_id
-                            break
-                        }
-                    }
-                    dispatch(updateBatch(i.department_id, i.batchId, batch))
-                }
-            }
-            setUpdVal('')
-            setOldVal(null)
-            setUpdate(false)
-        }
-    }, [update])
+    // useEffect(() => {
+    //     if(update){
+    //         const batch = {
+    //             batchYear: parseInt(updVal), 
+    //             department_id: 0
+    //         }
+    //         for(let i of batches){
+    //             if(i.batchId === oldVal[0]){
+    //                 for(let j of departments){
+    //                     if(j.department_name == deptName){
+    //                         batch.department_id = j.department_id
+    //                         break
+    //                     }
+    //                 }
+    //                 dispatch(updateBatch(i.department_id, i.batchId, batch))
+    //             }
+    //         }
+    //         setUpdVal('')
+    //         setOldVal(null)
+    //         setUpdate(false)
+    //     }
+    // }, [update])
 
     useEffect(()=>{
         if(refresh){
@@ -116,9 +115,9 @@ function Batches() {
                     </div>
                     <center>
                         {
-                            <Table columns={['No.', 'Batch Year', 'Department', 'Batch Code', 'Section', 'No. of students']} rows={rowData} refresh={refresh} setRefresh={setRefresh}
-                                updVal={updVal} setUpdVal={setUpdVal} setUpdate={setUpdate} setOldVal={setOldVal} setDeleteId={setDeleteId}
-                                editDepartments={true} deptName={deptName} setDeptName={setDeptName} uneditable={true}/>
+                            <Table 
+                                columns={['No.', 'Batch Year', 'Department', 'Batch Code', 'Section', 'No. of students']} 
+                                rows={rowData} setUpdate={setUpdate} setDeleteId={setDeleteId} setData={setData}/>
                         }
                     </center>
                 </div>
@@ -126,6 +125,9 @@ function Batches() {
             <div>
                 <AddBatches openBatchModal={openBatchModal} setOpenBatchModal={setOpenBatchModal} setRefresh={setRefresh}/>
             </div>
+            {
+                update && <UpdBatch update={update} setUpdate={setUpdate} data={data}/>
+            }
         </div>
     )
 }
