@@ -25,7 +25,6 @@ function UpdBatch({update, setUpdate, data}) {
         batchYear: data[1],
         batchCode: data[3],
         numOfStudents: data[5],
-        section: data[4],
         department_id: "",
         institute_id,
     })
@@ -108,16 +107,6 @@ function UpdBatch({update, setUpdate, data}) {
                                 startAdornment: (
                                     <InputAdornment position='start'>
                                         <TagIcon style={{ height: '20px' }} color="action" />
-                                    </InputAdornment>
-                                )
-                        }} />
-                        <TextField required style={{ margin: '3px' }} size='small' variant="outlined" type='text' 
-                            placeholder='Section' value={batch.section}
-                            onChange={(e) => setBatch({ ...batch, section: e.target.value })}
-                            InputProps={{
-                                startAdornment: (
-                                    <InputAdornment position='start'>
-                                        <WorkspacesIcon style={{ height: '20px' }} color="action" />
                                     </InputAdornment>
                                 )
                         }} />

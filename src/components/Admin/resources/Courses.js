@@ -6,8 +6,9 @@ import Table from '../../Root/Table'
 import { useSelector, useDispatch } from 'react-redux'
 import { getDepartmentsRequest } from '../../../redux/GetDepartments/getDepartmentsActions'
 import { getCourseRequest } from '../../../redux/GetCourse/getCourseActions'
-import { updateCourse, resetState } from '../../../redux/UpdateCourse/updateCourseActions'
+import { resetState } from '../../../redux/UpdateCourse/updateCourseActions'
 import { deleteCourseRequest } from '../../../redux/DeleteCourse/deleteCourseActions'
+import UpdCourse from './modals/update/UpdCourse'
 
 function Courses() {
 
@@ -15,12 +16,10 @@ function Courses() {
 
     const [openCourseModal, setOpenCourseModal] = useState(false)
     const [refresh, setRefresh] = useState(false)
-    const [updVal, setUpdVal] = useState('')
     const [rowData, setRowData] = useState([])
-    const [oldVal, setOldVal] = useState(null)
     const [update, setUpdate] = useState(false)
     const [deleteId, setDeleteId] = useState(null)
-    const [deptName, setDeptName] = useState('')
+    const [data, setData] = useState()
     
     const departments = useSelector((state) => state.getDepartments.departments.data)
     const departmentsAdded = useSelector((state) => state.getDepartments.added)
@@ -48,28 +47,28 @@ function Courses() {
         }
     }, [updateError, updatedSuccessfully])
 
-    useEffect(() => {
-        if(update){
-            const course = {
-                course_name: updVal,
-                department_id: 0
-            }
-            for(let i of courses){
-                if(i.course_id === oldVal[0]){
-                    for(let j of departments){
-                        if(j.department_name == deptName){
-                            course.department_id = j.department_id
-                            break
-                        }
-                    }
-                    dispatch(updateCourse(i.department_id, i.course_id, JSON.stringify(course)))
-                }
-            }
-            setUpdVal('')
-            setOldVal(null)
-            setUpdate(false)
-        }
-    }, [update])
+    // useEffect(() => {
+    //     if(update){
+    //         const course = {
+    //             course_name: updVal,
+    //             department_id: 0
+    //         }
+    //         for(let i of courses){
+    //             if(i.course_id === oldVal[0]){
+    //                 for(let j of departments){
+    //                     if(j.department_name == deptName){
+    //                         course.department_id = j.department_id
+    //                         break
+    //                     }
+    //                 }
+    //                 dispatch(updateCourse(i.department_id, i.course_id, JSON.stringify(course)))
+    //             }
+    //         }
+    //         setUpdVal('')
+    //         setOldVal(null)
+    //         setUpdate(false)
+    //     }
+    // }, [update])
     
     useEffect(()=>{
         if(refresh){
@@ -116,9 +115,9 @@ function Courses() {
                 </div>
                 <center>
                     {
-                        coursessAdded && <Table columns={['No.', 'Courses', 'Department', 'Course code', 'Credit hours', 'Type']} rows={rowData} refresh={refresh} setRefresh={setRefresh}
-                                            updVal={updVal} setUpdVal={setUpdVal} setUpdate={setUpdate} setOldVal={setOldVal} setDeleteId={setDeleteId}
-                                            editDepartments={true} deptName={deptName} setDeptName={setDeptName} uneditable={true}/>
+                        coursessAdded && 
+                        <Table columns={['No.', 'Courses', 'Department', 'Course code', 'Credit hours', 'Type']} 
+                            rows={rowData} setUpdate={setUpdate}setDeleteId={setDeleteId} setData={setData}/>
                     }
                 </center>
             </div>
@@ -126,6 +125,9 @@ function Courses() {
         <div>
             <AddCourse openCourseModal={openCourseModal} setOpenCourseModal={setOpenCourseModal} setRefresh={setRefresh}/>
         </div>
+        {
+            update && <UpdCourse update={update} setUpdate={setUpdate} data={data}/>
+        }
     </div>
   )
 }

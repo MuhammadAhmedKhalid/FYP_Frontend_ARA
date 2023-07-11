@@ -29,7 +29,6 @@ function AddBatches(props) {
         batchYear: "",
         batchCode: "",
         numOfStudents: "",
-        section: "",
         department_id: "",
         institute_id,
     })
@@ -114,15 +113,6 @@ function AddBatches(props) {
                             startAdornment: (
                                 <InputAdornment position='start'>
                                     <TagIcon style={{ height: '20px' }} color="action" />
-                                </InputAdornment>
-                            )
-                        }} />
-                        <TextField required style={{ margin: '3px' }} size='small' variant="outlined" type='text' placeholder='Section' 
-                        onChange={(e) => setBatch({ ...batch, section: e.target.value })}
-                        InputProps={{
-                            startAdornment: (
-                                <InputAdornment position='start'>
-                                    <WorkspacesIcon style={{ height: '20px' }} color="action" />
                                 </InputAdornment>
                             )
                         }} />
