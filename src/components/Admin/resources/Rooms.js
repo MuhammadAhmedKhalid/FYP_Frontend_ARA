@@ -88,7 +88,8 @@ function Rooms() {
                 for (let i = 0; i < departments.length; i++) {
                     for (let j = 0; j < rooms.length; j++) {
                         if (rooms[j].department_id === departments[i].department_id) {
-                            roomData.push([rooms[j].room_id , rooms[j].room_name, departments[i].department_name])
+                            roomData.push([rooms[j].room_id , rooms[j].room_name, departments[i].department_name,
+                                rooms[j].location, rooms[j].area])
                         }
                     }
                 }
@@ -117,9 +118,9 @@ function Rooms() {
                     </div>
                     <center>
                         {
-                            roomsAdded && <Table columns={['No.', 'Room Name', 'Department']} rows={roomData} refresh={refresh} setRefresh={setRefresh}
+                            roomsAdded && <Table columns={['No.', 'Room Name', 'Department', 'Floor/Location', 'Area']} rows={roomData} refresh={refresh} setRefresh={setRefresh}
                                             updVal={updVal} setUpdVal={setUpdVal} setUpdate={setUpdate} setOldVal={setOldVal} setDeleteId={setDeleteId}
-                                            editDepartments={true} deptName={deptName} setDeptName={setDeptName}/>
+                                            editDepartments={true} deptName={deptName} setDeptName={setDeptName} uneditable={true}/>
                         }
                     </center>
                 </div>
