@@ -48,39 +48,6 @@ function Faculty() {
         }
     }, [updateError, updatedSuccessfully])
 
-    // useEffect(() => {
-    //     if(update){
-    //         const faculty = {
-    //             name: updName,
-    //             phone_number: updNumber, 
-    //             designation: updDesignation,
-    //             department_id: 0,
-    //             yearsOfExperience: Number(updExperience),
-    //             specialization: updSpecializedCourses,
-    //             officialEmailAddress: updEmail
-    //         }
-    //         for(let i of facultyList){
-    //             if(i.officialEmailAddress === oldVal[3]){
-    //                 for(let j of departments){
-    //                     if(j.department_name == deptName){
-    //                         faculty.department_id = j.department_id
-    //                     }
-    //                 }
-    //                 dispatch(updateFaculty(i.faculty_id, JSON.stringify(faculty)))
-    //             }
-    //         }
-    //         setUpdDesignation('')
-    //         setUpdName('')
-    //         setUpdNumber('')
-    //         setDeptName('')
-    //         setUpdSpecializedCourses([])
-    //         setUpdExperience('')
-    //         setUpdEmail('')
-    //         setOldVal(null)
-    //         setUpdate(false)
-    //     }
-    // }, [update])
-
     useEffect(() => {
         if(institute_id>0){
             dispatch(getFacultyRequest(institute_id))
