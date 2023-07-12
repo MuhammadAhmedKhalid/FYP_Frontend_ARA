@@ -1,6 +1,5 @@
 import { GET_FACULTY_FAILURE, GET_FACULTY_REQUEST, GET_FACULTY_SUCCESS } from './getFacultyTypes'
 import { put, takeEvery, call } from 'redux-saga/effects'
-import { select } from 'redux-saga/effects';
 import axios from 'axios';
 
 function* getFacultyRequest(data) {
