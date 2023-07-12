@@ -3,9 +3,9 @@ import { put, takeEvery, call, select } from 'redux-saga/effects'
 
 function* updateCourseRequest(payload) {
     const token = localStorage.getItem('token');
-    let result = yield call(fetch, `http://localhost:8080/updateCourse/${payload.course_id}/${payload.department_id}`, {
+    let result = yield call(fetch, `http://localhost:8080/updateCourse/${payload.course_id}`, {
         method: "PUT",
-        body: payload.course,
+        body: JSON.stringify(payload.course),
         headers: {
             "Authorization": `Bearer ${token}`,
             'Content-Type': 'application/json; charset=utf-8'

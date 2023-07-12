@@ -61,7 +61,7 @@ function UpdRoom({update, setUpdate, data}) {
 
         for(let i of rooms){
             if(i.room_id === data[0]){
-                dispatch(updateRoom(i.room_id, i.department_id, room))
+                dispatch(updateRoom(i.room_id, room))
             }
         }
 

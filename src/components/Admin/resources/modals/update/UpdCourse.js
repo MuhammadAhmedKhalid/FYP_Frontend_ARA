@@ -25,6 +25,7 @@ function UpdCourse({update, setUpdate, data}) {
     department_id: "",
     course_code: data[3],
     credit_hours: data[4],
+    type: data[5],
     institute_id
   })
 
@@ -56,13 +57,16 @@ function UpdCourse({update, setUpdate, data}) {
     }
   }
 
+  const handleTypeChange = (e) => {
+    setCourse({ ...course, type: e.target.value })
+  }
+
   const handleSubmit = (e) => {
     e.preventDefault();
 
     for(let i of courses){
         if(i.course_id === data[0]){
-          console.log(i.department_id, i.course_id, course)
-            dispatch(updateCourse(i.department_id, i.course_id, course))
+          dispatch(updateCourse(i.course_id, course))
         }
     }
 
@@ -109,6 +113,14 @@ function UpdCourse({update, setUpdate, data}) {
                         </InputAdornment>
                     )
               }} />
+              <h3 style={{
+                            fontWeight: 'normal', color: 'gray', marginRight: '3px'
+                        }}>Type</h3>
+                        <select required className='dropdown' onChange={handleTypeChange}>
+                            <option></option>
+                            <option>Theory</option>
+                            <option>Practical</option>
+                        </select>
               <h3 style={{
                     fontWeight: 'normal', color: 'gray', marginRight: '3px'
                 }}>

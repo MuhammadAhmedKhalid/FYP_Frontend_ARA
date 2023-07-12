@@ -60,7 +60,7 @@ function Courses() {
                 for(let j=0; j<departments.length; j++){
                     if(departments[j].department_id === courses[i].department_id){
                         rowData.push([courses[i].course_id , courses[i].course_name, departments[j].department_name,
-                            courses[i].course_code, courses[i].credit_hours])
+                            courses[i].course_code, courses[i].credit_hours, courses[i].type])
                     }
                 }
             }
@@ -93,7 +93,7 @@ function Courses() {
                 <center>
                     {
                         coursessAdded && 
-                        <Table columns={['No.', 'Courses', 'Department', 'Course code', 'Credit hours']} 
+                        <Table columns={['No.', 'Courses', 'Department', 'Course code', 'Credit hours', 'Type']} 
                             rows={rowData} setUpdate={setUpdate}setDeleteId={setDeleteId} setData={setData}/>
                     }
                 </center>

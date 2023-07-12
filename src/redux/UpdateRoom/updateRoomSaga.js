@@ -3,7 +3,7 @@ import { put, takeEvery, call } from 'redux-saga/effects'
 
 function* updateRoomRequest(payload) {
     const token = localStorage.getItem('token');
-    let result = yield call(fetch, `http://localhost:8080/updateRoom/${payload.room_id}/${payload.department_id}`, {
+    let result = yield call(fetch, `http://localhost:8080/updateRoom/${payload.room_id}`, {
         method: "PUT",
         body: JSON.stringify(payload.room),
         headers: {

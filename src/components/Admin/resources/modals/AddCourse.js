@@ -30,6 +30,7 @@ function AddCourse(props) {
         department_id: "",
         course_code: "",
         credit_hours: "",
+        type: "",
         institute_id
     })
 
@@ -73,6 +74,10 @@ function AddCourse(props) {
                 setCourse({ ...course, department_id: departments[i].department_id })
             }
         }
+    }
+
+    const handleTypeChange = (e) => {
+        setCourse({ ...course, type: e.target.value })
     }
 
     const closeModal = () => {
@@ -126,6 +131,14 @@ function AddCourse(props) {
                                     </InputAdornment>
                                 )
                             }} />
+                            <h3 style={{
+                            fontWeight: 'normal', color: 'gray', marginRight: '3px'
+                        }}>Type</h3>
+                        <select required className='dropdown' onChange={handleTypeChange}>
+                            <option></option>
+                            <option>Theory</option>
+                            <option>Practical</option>
+                        </select>
                             <h3 style={{
                             fontWeight: 'normal', color: 'gray', marginRight: '3px'
                         }}>Department</h3>
