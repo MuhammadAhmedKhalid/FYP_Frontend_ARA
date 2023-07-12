@@ -41,6 +41,13 @@ body {
   height: fit-content;
 }
 
+.centered-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 65vh;
+}
+
 .white-bg-y {
   display: flex;
   justify-content: flex-start;
