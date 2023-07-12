@@ -44,7 +44,10 @@ function UpdDesignation({update, setUpdate, data}) {
         console.log(position)
         for(let i of positions){
             if(i.position_id === data[0]){
-                dispatch(updatePosition(i.position_id, position.position_name))
+                dispatch(updatePosition(i.position_id, {
+                    position_name: position.position_name,
+                    institute_id
+                }))
             }
         }
 
