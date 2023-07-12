@@ -1,66 +1,29 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import FacultyNavbar from './FacultyNavbar'
 import ConstraintsForm from './ConstraintsForm'
 import '../Styling/Profile.css'
 import '../Styling/AvailabilityTable.css';
+import { useSelector, useDispatch } from 'react-redux'
+import { getFacultyConstraintsRequest } from '../../redux/GetFacultyConstraints/getFacultyConstraintsActions'
 
 function FacultyConstraints() {
 
-    const [showForm, setShowForm] = useState(false)
+    const dispatch = useDispatch()
 
-    const constraints = [
-        {
-            day: 'Monday',
-            availabilityStartTime: '9:00 AM',
-            availabilityEndTime: '5:00 PM',
-            break01StartTime: '12:00 PM',
-            break01EndTime: '1:00 PM',
-            break02StartTime: '3:00 PM',
-            break02EndTime: '3:30 PM',
-        },
-        {
-            day: 'Tuesday',
-            availabilityStartTime: '9:00 AM',
-            availabilityEndTime: '5:00 PM',
-            break01StartTime: '12:00 PM',
-            break01EndTime: '1:00 PM',
-            break02StartTime: '3:00 PM',
-            break02EndTime: '3:30 PM',
-        },
-        {
-            day: 'Wednesday',
-            availabilityStartTime: '9:00 AM',
-            availabilityEndTime: '5:00 PM',
-            break01StartTime: '12:00 PM',
-            break01EndTime: '1:00 PM',
-            break02StartTime: '3:00 PM',
-            break02EndTime: '3:30 PM',
-        },{
-            day: 'Thursday',
-            availabilityStartTime: '9:00 AM',
-            availabilityEndTime: '5:00 PM',
-            break01StartTime: '12:00 PM',
-            break01EndTime: '1:00 PM',
-            break02StartTime: '3:00 PM',
-            break02EndTime: '3:30 PM',
-        },{
-            day: 'Friday',
-            availabilityStartTime: '9:00 AM',
-            availabilityEndTime: '5:00 PM',
-            break01StartTime: '12:00 PM',
-            break01EndTime: '1:00 PM',
-            break02StartTime: '3:00 PM',
-            break02EndTime: '3:30 PM',
-        },{
-            day: 'Saturday',
-            availabilityStartTime: '9:00 AM',
-            availabilityEndTime: '5:00 PM',
-            break01StartTime: '12:00 PM',
-            break01EndTime: '1:00 PM',
-            break02StartTime: '3:00 PM',
-            break02EndTime: '3:30 PM',
-        },
-    ];
+    const institute_id = Number(localStorage.getItem('institute_id'))
+    const faculty_id = Number(localStorage.getItem('faculty_id'))
+
+    const daysOfWeek = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+
+    const constraints = useSelector((state) => state.getFacultyConstraintsReducer.facultyConstraints)
+
+    useEffect(() => {
+        if(institute_id > 0){
+            dispatch(getFacultyConstraintsRequest(faculty_id))
+        }
+    }, [institute_id])
+
+    const [showForm, setShowForm] = useState(false)
 
     const shouldSetHeightTo100vh = constraints.length === 0 || constraints.length === 1;
 
@@ -92,88 +55,49 @@ function FacultyConstraints() {
                             <button style={{right: 30, top: 120,position: 'absolute'}} className='modal-btn' onClick={() => setShowForm(true)}>
                                 Add Constraints
                             </button>
-                            <div className="profile">
-                                <h2 className="profile__title">Constraint-01</h2>
+                            {constraints.map((data, index) => (
+                            <div className="profile" key={index}>
+                                <h2 className="profile__title">Constraint-{index + 1}</h2>
                                 <div className="profile__details">
                                     <div className="profile__detail">
-                                        <span className="profile__label" style={{width: '11rem'}}>Applicable Start date:</span>
-                                        <span className="profile__value">13-Jul-23</span>
+                                        <span className="profile__label" style={{ width: '11rem' }}>Applicable Start date:</span>
+                                        <span className="profile__value">{data.applicableStartDate || '-'}</span>
                                     </div>
                                 </div>
                                 <div className="profile__details">
                                     <div className="profile__detail">
-                                        <span className="profile__label" style={{width: '11rem'}}>Applicable End date:</span>
-                                        <span className="profile__value">21-Jul-23</span>
-                                    </div>
-                                </div>
-                                <table className="availability-table">
-                                    <thead>
-                                        <tr>
-                                        <th>Days</th>
-                                        <th>Availability Start time</th>
-                                        <th>Availability End time</th>
-                                        <th>Break-01 Start time</th>
-                                        <th>Break-01 End time</th>
-                                        <th>Break-02 Start time</th>
-                                        <th>Break-02 End time</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        {constraints.map((row) => (
-                                        <tr key={row.day}>
-                                            <td>{row.day}</td>
-                                            <td>{row.availabilityStartTime}</td>
-                                            <td>{row.availabilityEndTime}</td>
-                                            <td>{row.break01StartTime}</td>
-                                            <td>{row.break01EndTime}</td>
-                                            <td>{row.break02StartTime}</td>
-                                            <td>{row.break02EndTime}</td>
-                                        </tr>
-                                        ))}
-                                    </tbody>
-                                </table>
-                            </div>
-                            <div className="profile">
-                                <h2 className="profile__title">Constraint-01</h2>
-                                <div className="profile__details">
-                                    <div className="profile__detail">
-                                        <span className="profile__label" style={{width: '11rem'}}>Applicable Start date:</span>
-                                        <span className="profile__value">13-Jul-23</span>
-                                    </div>
-                                </div>
-                                <div className="profile__details">
-                                    <div className="profile__detail">
-                                        <span className="profile__label" style={{width: '11rem'}}>Applicable End date:</span>
-                                        <span className="profile__value">21-Jul-23</span>
+                                        <span className="profile__label" style={{ width: '11rem' }}>Applicable End date:</span>
+                                        <span className="profile__value">{data.applicableEndDate || '-'}</span>
                                     </div>
                                 </div>
                                 <table className="availability-table">
                                     <thead>
                                         <tr>
-                                        <th>Days</th>
-                                        <th>Availability Start time</th>
-                                        <th>Availability End time</th>
-                                        <th>Break-01 Start time</th>
-                                        <th>Break-01 End time</th>
-                                        <th>Break-02 Start time</th>
-                                        <th>Break-02 End time</th>
+                                            <th>Days</th>
+                                            <th>Availability Start time</th>
+                                            <th>Availability End time</th>
+                                            <th>Break-01 Start time</th>
+                                            <th>Break-01 End time</th>
+                                            <th>Break-02 Start time</th>
+                                            <th>Break-02 End time</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        {constraints.map((row) => (
-                                        <tr key={row.day}>
-                                            <td>{row.day}</td>
-                                            <td>{row.availabilityStartTime}</td>
-                                            <td>{row.availabilityEndTime}</td>
-                                            <td>{row.break01StartTime}</td>
-                                            <td>{row.break01EndTime}</td>
-                                            <td>{row.break02StartTime}</td>
-                                            <td>{row.break02EndTime}</td>
+                                    {daysOfWeek.map((day) => (
+                                        <tr key={day}>
+                                            <td>{day}</td>
+                                            <td>{data.availability?.[day.toLowerCase()]?.startTime || '-'}</td>
+                                            <td>{data.availability?.[day.toLowerCase()]?.endTime || '-'}</td>
+                                            <td>{data.breaks?.[day.toLowerCase()]?.break1?.startTime || '-'}</td>
+                                            <td>{data.breaks?.[day.toLowerCase()]?.break1?.endTime || '-'}</td>
+                                            <td>{data.breaks?.[day.toLowerCase()]?.break2?.startTime || '-'}</td>
+                                            <td>{data.breaks?.[day.toLowerCase()]?.break2?.endTime || '-'}</td>
                                         </tr>
-                                        ))}
+                                    ))}
                                     </tbody>
                                 </table>
                             </div>
+                        ))}
                         </>
                     }
                 </div> 
