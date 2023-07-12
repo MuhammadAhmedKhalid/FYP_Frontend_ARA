@@ -6,8 +6,9 @@ import { getFacultyRequest } from '../../../redux/GetFaculty/getFacultyActions'
 import { useSelector, useDispatch } from 'react-redux'
 import Table from '../../Root/Table'
 import { getDepartmentsRequest } from '../../../redux/GetDepartments/getDepartmentsActions'
-import { updateFaculty, resetState } from '../../../redux/UpdateFaculty/updateFacultyActions'
+import { resetState } from '../../../redux/UpdateFaculty/updateFacultyActions'
 import { deleteFacultyRequest } from '../../../redux/DeleteFaculty/deleteFacultyActions'
+import UpdFaculty from '../resources/modals/update/UpdFaculty'
 
 function Faculty() {
 
@@ -16,16 +17,9 @@ function Faculty() {
     const [openFacultyModal, setOpenFacultyModal] = useState(false)
     const [refresh, setRefresh] = useState(false)
     const [rowData, setRowData] = useState([])
-    const [updNumber, setUpdNumber] = useState('')
-    const [updName, setUpdName] = useState('')
-    const [updDesignation, setUpdDesignation] = useState('')
-    const [oldVal, setOldVal] = useState(null)
     const [update, setUpdate] = useState(false)
     const [deleteId, setDeleteId] = useState(null)
-    const [deptName, setDeptName] = useState('')
-    const [updExperience, setUpdExperience] = useState('')
-    const [updSpecializedCourses, setUpdSpecializedCourses] = useState([])
-    const [updEmail, setUpdEmail] = useState('')
+    const [data, setData] = useState()
 
     const facultyList = useSelector((state) => state.getFaculty.faculty)
     const facultyAdded = useSelector((state) => state.getFaculty.added)
@@ -54,38 +48,38 @@ function Faculty() {
         }
     }, [updateError, updatedSuccessfully])
 
-    useEffect(() => {
-        if(update){
-            const faculty = {
-                name: updName,
-                phone_number: updNumber, 
-                designation: updDesignation,
-                department_id: 0,
-                yearsOfExperience: Number(updExperience),
-                specialization: updSpecializedCourses,
-                officialEmailAddress: updEmail
-            }
-            for(let i of facultyList){
-                if(i.officialEmailAddress === oldVal[3]){
-                    for(let j of departments){
-                        if(j.department_name == deptName){
-                            faculty.department_id = j.department_id
-                        }
-                    }
-                    dispatch(updateFaculty(i.faculty_id, JSON.stringify(faculty)))
-                }
-            }
-            setUpdDesignation('')
-            setUpdName('')
-            setUpdNumber('')
-            setDeptName('')
-            setUpdSpecializedCourses([])
-            setUpdExperience('')
-            setUpdEmail('')
-            setOldVal(null)
-            setUpdate(false)
-        }
-    }, [update])
+    // useEffect(() => {
+    //     if(update){
+    //         const faculty = {
+    //             name: updName,
+    //             phone_number: updNumber, 
+    //             designation: updDesignation,
+    //             department_id: 0,
+    //             yearsOfExperience: Number(updExperience),
+    //             specialization: updSpecializedCourses,
+    //             officialEmailAddress: updEmail
+    //         }
+    //         for(let i of facultyList){
+    //             if(i.officialEmailAddress === oldVal[3]){
+    //                 for(let j of departments){
+    //                     if(j.department_name == deptName){
+    //                         faculty.department_id = j.department_id
+    //                     }
+    //                 }
+    //                 dispatch(updateFaculty(i.faculty_id, JSON.stringify(faculty)))
+    //             }
+    //         }
+    //         setUpdDesignation('')
+    //         setUpdName('')
+    //         setUpdNumber('')
+    //         setDeptName('')
+    //         setUpdSpecializedCourses([])
+    //         setUpdExperience('')
+    //         setUpdEmail('')
+    //         setOldVal(null)
+    //         setUpdate(false)
+    //     }
+    // }, [update])
 
     useEffect(() => {
         if(institute_id>0){
@@ -133,16 +127,11 @@ function Faculty() {
                 <center>
                     <div>
                         {
-                            facultyAdded&& <Table columns={['No.', 'Name', 'Phone Number', 'E-mail', 'Department', 'Specialized Courses', 
-                            'Designation', 'Years of Experience', 'Code']} rows={rowData} refresh={refresh} setRefresh={setRefresh} multiEdit={true}
-                            isFaculty={true} setUpdate={setUpdate} setOldVal={setOldVal} setDeleteId={setDeleteId}
-                            updDesignation={updDesignation} setUpdDesignation={setUpdDesignation}
-                            updName={updName} setUpdName={setUpdName}
-                            updNumber={updNumber} setUpdNumber={setUpdNumber}
-                            deptName={deptName} setDeptName={setDeptName}
-                            updExperience={updExperience} setUpdExperience={setUpdExperience}
-                            updSpecializedCourses={updSpecializedCourses} setUpdSpecializedCourses={setUpdSpecializedCourses}
-                            updEmail={updEmail} setUpdEmail={setUpdEmail}/>
+                            facultyAdded && 
+                            <Table 
+                                columns={['No.', 'Name', 'Phone Number', 'E-mail', 'Department', 'Specialized Courses', 
+                                'Designation', 'Years of Experience', 'Code']} 
+                                rows={rowData} setUpdate={setUpdate} setDeleteId={setDeleteId} setData={setData}/>
                         }
                     </div>
                 </center>
@@ -150,6 +139,9 @@ function Faculty() {
                     <AddFaculty openFacultyModal={openFacultyModal} setOpenFacultyModal={setOpenFacultyModal} setRefresh={setRefresh}/>
                 </div>
             </div>
+            {
+                update && <UpdFaculty update={update} setUpdate={setUpdate} data={data}/>
+            }
         </div>
     )
 }
