@@ -5,9 +5,10 @@ function* updateDepartmentRequest(payload) {
     const token = localStorage.getItem('token');
     let result = yield call(fetch, `http://localhost:8080/updateDepartment/${payload.department_id}`, {
         method: "PUT",
-        body: payload.department_name,
+        body: JSON.stringify(payload.dept),
         headers: {
-            "Authorization": `Bearer ${token}`
+            "Authorization": `Bearer ${token}`,
+            'Content-Type': 'application/json; charset=utf-8'
         },
     });
     if(result.status === 200){

@@ -47,7 +47,10 @@ function UpdDepartment({update, setUpdate, data}) {
 
         for(let i of departments){
             if(i.department_id === data[0]){
-                dispatch(updateDepartment(i.department_id, department.department_name))
+                dispatch(updateDepartment(i.department_id, {
+                    department_name: department.department_name,
+                    institute_id
+                }))
                 break
             }
         }
