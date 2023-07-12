@@ -61,7 +61,7 @@ function Batches() {
                 for(let j in departments){
                     if(departments[j].department_id === batches[i].department_id){
                         rowData.push([batches[i].batchId , (batches[i].batchYear).toString(), departments[j].department_name,
-                        batches[i].batchCode, batches[i].numOfStudents])
+                        batches[i].batchCode, batches[i].section, batches[i].numOfStudents])
                     }
                 }
             }
@@ -94,7 +94,7 @@ function Batches() {
                     <center>
                         {
                             <Table 
-                                columns={['No.', 'Batch Year', 'Department', 'Batch Code', 'No. of students']} 
+                                columns={['No.', 'Batch Year', 'Department', 'Batch Code', 'Section', 'No. of students']} 
                                 rows={rowData} setUpdate={setUpdate} setDeleteId={setDeleteId} setData={setData}/>
                         }
                     </center>

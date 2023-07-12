@@ -5,11 +5,11 @@ import InputAdornment from '@material-ui/core/InputAdornment'
 import GroupsIcon from '@mui/icons-material/Groups';
 import CodeIcon from '@mui/icons-material/Code';
 import TagIcon from '@mui/icons-material/Tag';
-import WorkspacesIcon from '@mui/icons-material/Workspaces';
 import { useSelector, useDispatch } from 'react-redux'
 import { updateBatch } from '../../../../../redux/UpdateBatch/updateBatchActions'
 import { getBatchesRequest } from '../../../../../redux/GetBatches/getBatchesActions'
 import { getDepartmentsRequest } from '../../../../../redux/GetDepartments/getDepartmentsActions'
+import WorkspacesIcon from '@mui/icons-material/Workspaces';
 
 function UpdBatch({update, setUpdate, data}) {
 
@@ -25,7 +25,8 @@ function UpdBatch({update, setUpdate, data}) {
         batchYear: data[1],
         batchCode: data[3],
         numOfStudents: data[5],
-        department_id: "",
+        section: data[4],
+        department_id: data[2],
         institute_id,
     })
 
@@ -62,8 +63,7 @@ function UpdBatch({update, setUpdate, data}) {
 
         for(let i of batches){
             if(i.batchId === data[0]){
-                console.log(i.department_id, i.batchId, i.section, batch)
-                dispatch(updateBatch(i.department_id, i.batchId, i.section, batch))
+                dispatch(updateBatch(i.batchId, batch))
             }
         }
 
@@ -107,6 +107,16 @@ function UpdBatch({update, setUpdate, data}) {
                                 startAdornment: (
                                     <InputAdornment position='start'>
                                         <TagIcon style={{ height: '20px' }} color="action" />
+                                    </InputAdornment>
+                                )
+                        }} />
+                        <TextField required style={{ margin: '3px' }} size='small' variant="outlined" type='text' 
+                            placeholder='Section' value={batch.section}
+                            onChange={(e) => setBatch({ ...batch, section: e.target.value })}
+                            InputProps={{
+                                startAdornment: (
+                                    <InputAdornment position='start'>
+                                        <WorkspacesIcon style={{ height: '20px' }} color="action" />
                                     </InputAdornment>
                                 )
                         }} />

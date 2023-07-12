@@ -3,7 +3,7 @@ import { put, takeEvery, call } from 'redux-saga/effects'
 
 function* updateBatchRequest(payload) {
     const token = localStorage.getItem('token');
-    let result = yield call(fetch, `http://localhost:8080/updateBatch/${payload.batchId}/${payload.departmentId}/${payload.section}`, {
+    let result = yield call(fetch, `http://localhost:8080/updateBatch/${payload.batchId}`, {
         method: "PUT",
         body: JSON.stringify(payload.batch),
         headers: {

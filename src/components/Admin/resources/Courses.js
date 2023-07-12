@@ -46,29 +46,6 @@ function Courses() {
             dispatch(resetState())
         }
     }, [updateError, updatedSuccessfully])
-
-    // useEffect(() => {
-    //     if(update){
-    //         const course = {
-    //             course_name: updVal,
-    //             department_id: 0
-    //         }
-    //         for(let i of courses){
-    //             if(i.course_id === oldVal[0]){
-    //                 for(let j of departments){
-    //                     if(j.department_name == deptName){
-    //                         course.department_id = j.department_id
-    //                         break
-    //                     }
-    //                 }
-    //                 dispatch(updateCourse(i.department_id, i.course_id, JSON.stringify(course)))
-    //             }
-    //         }
-    //         setUpdVal('')
-    //         setOldVal(null)
-    //         setUpdate(false)
-    //     }
-    // }, [update])
     
     useEffect(()=>{
         if(refresh){
@@ -83,7 +60,7 @@ function Courses() {
                 for(let j=0; j<departments.length; j++){
                     if(departments[j].department_id === courses[i].department_id){
                         rowData.push([courses[i].course_id , courses[i].course_name, departments[j].department_name,
-                            courses[i].course_code, courses[i].credit_hours, courses[i].type])
+                            courses[i].course_code, courses[i].credit_hours])
                     }
                 }
             }
@@ -116,7 +93,7 @@ function Courses() {
                 <center>
                     {
                         coursessAdded && 
-                        <Table columns={['No.', 'Courses', 'Department', 'Course code', 'Credit hours', 'Type']} 
+                        <Table columns={['No.', 'Courses', 'Department', 'Course code', 'Credit hours']} 
                             rows={rowData} setUpdate={setUpdate}setDeleteId={setDeleteId} setData={setData}/>
                     }
                 </center>
