@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import Modal from 'react-modal'
 import { getFacultyRequest } from '../../../../../redux/GetFaculty/getFacultyActions'
 import { useSelector, useDispatch } from 'react-redux'
@@ -29,6 +29,7 @@ function UpdFaculty({update, setUpdate, data}) {
 
     const institute_id = Number(localStorage.getItem('institute_id'))
 
+    const form = useRef();
     const [specializationData, setSpecializationData] = useState([])
 
     const [faculty, setFaculty] = useState({
@@ -98,6 +99,9 @@ function UpdFaculty({update, setUpdate, data}) {
 
         for(let i of facultyList){
             if(i.officialEmailAddress === data[3]){
+                if(i.officialEmailAddress !== faculty.officialEmailAddress){
+                    emailjs.sendForm('service_tjvggdm', 'template_wrlj0ov', form.current, 'nvzT6R7t3FB6c7LN0')
+                }
                 dispatch(updateFaculty(i.faculty_id, JSON.stringify(faculty)))
             }
         }
@@ -114,7 +118,7 @@ function UpdFaculty({update, setUpdate, data}) {
                 onRequestClose={() => setUpdate(false)}>
             <div className='center flexbox-container-y'>
                 <h2 style={{ color: "#115868", fontSize: 20 }}>Update Faculty</h2>
-                <form onSubmit={handleSubmit}>
+                <form ref={form} onSubmit={handleSubmit}>
                     <TextField autoFocus required value={faculty.name}
                     onChange={(e) => setFaculty({ ...faculty, name: e.target.value})}
                     style={{ margin: '3px' }} size='small' variant="outlined" type='text' placeholder='Name' InputProps={{
