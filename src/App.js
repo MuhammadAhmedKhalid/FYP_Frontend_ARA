@@ -24,6 +24,9 @@ import FacultyConstraints from './components/Faculty/FacultyConstraints';
  
 Modal.setAppElement('#root')
 function App() {
+
+  // from new branch
+
   const isAdmin = localStorage.getItem('is_admin');
   
   return (
