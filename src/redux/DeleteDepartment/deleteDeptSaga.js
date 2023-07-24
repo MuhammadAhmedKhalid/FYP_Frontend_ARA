@@ -1,5 +1,5 @@
 import { DELETE_DEPARTMENT_FAILURE, DELETE_DEPARTMENT_REQUEST, DELETE_DEPARTMENT_SUCCESS } from './deleteDeptTypes'
-import { call, put, takeEvery, select } from 'redux-saga/effects'
+import { call, put, takeEvery } from 'redux-saga/effects'
 import axios from 'axios'
 
 function* deleteDepartment(payload) {

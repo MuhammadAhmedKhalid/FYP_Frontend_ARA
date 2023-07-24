@@ -65,6 +65,7 @@ import { addFacultyConstraintsSaga } from './AddFacultyConstraints/addFacultyCon
 import { getFacultyConstraintsSaga } from './GetFacultyConstraints/getFacultyConstraintsSaga'
 import { addOfferCourseSaga } from './AddOfferCourse/addOfferCourseSaga'
 import { getOfferedCoursesSaga } from './GetOfferedCourses/getOfferedCoursesSaga'
+import { deleteOfferedCourseSaga } from './DeleteOfferedCourse/deleteOfferedCourseSaga'
 
 export function* rootSaga() {
     yield fork(signupSaga)
@@ -133,4 +134,5 @@ export function* rootSaga() {
     yield fork(getFacultyConstraintsSaga)
     yield fork(addOfferCourseSaga)
     yield fork(getOfferedCoursesSaga)
+    yield fork(deleteOfferedCourseSaga)
 }
