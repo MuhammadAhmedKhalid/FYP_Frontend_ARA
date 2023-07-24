@@ -1,6 +1,5 @@
 import { GET_DEPARTEMNTS_FAILURE, GET_DEPARTEMNTS_REQUEST, GET_DEPARTEMNTS_SUCCESS } from './getDepartmentsTypes'
 import { put, takeEvery, call } from 'redux-saga/effects'
-import { select } from 'redux-saga/effects';
 import axios from 'axios';
 
 function* getDepartmentsRequest(data) {
