@@ -241,7 +241,7 @@ const AdminNavBar = () => {
                         path: '/offeredCourses'
                     },
                     {
-                        name: 'Allocated Teachers',
+                        name: 'Allocated Faculty',
                         value: 'allocatedTeachers',
                         path: '/allocatedTeachers'
                     },
