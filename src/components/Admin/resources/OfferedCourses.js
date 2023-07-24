@@ -56,7 +56,7 @@ function OfferedCourses() {
                             if(offeredCourses[i].department_id === departments[j].department_id 
                                 && offeredCourses[i].batchId === batches[k].batchId
                                 && offeredCourses[i].course_id === courses[l].course_id){
-                                    rowData.push([offeredCourses[i].offerCourseId, courses[l].course_name, 
+                                    rowData.push([offeredCourses[i].offerCourseId, courses[l].course_name+" ("+courses[l].type+") ", 
                                         batches[k].batchCode+ "-"+batches[k].section,
                                         departments[j].department_name, offeredCourses[i].semester])
                                 }

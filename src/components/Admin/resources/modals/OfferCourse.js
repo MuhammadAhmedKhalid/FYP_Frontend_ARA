@@ -5,6 +5,7 @@ import { getDepartmentsRequest } from '../../../../redux/GetDepartments/getDepar
 import { getCourseRequest } from '../../../../redux/GetCourse/getCourseActions'
 import { getBatchesRequest } from '../../../../redux/GetBatches/getBatchesActions'
 import { addOfferCourse, resetState } from '../../../../redux/AddOfferCourse/addOfferCourseActions'
+import { Alert } from '@mui/material';
  
 function OfferCourse(props) {
 
@@ -18,8 +19,8 @@ function OfferCourse(props) {
     const batchesAdded = useSelector((state) => state.getBatchesReducer.added)
     const departments = useSelector((state) => state.getDepartments.departments.data)
     const departmentsAdded = useSelector((state) => state.getDepartments.added)
-    const requestSuccessfull = useSelector((state) => state.addDepartmentReducer.added)
-    const requestUnsuccessfullMsg = useSelector((state) => state.addDepartmentReducer.error)
+    const requestSuccessfull = useSelector((state) => state.addOfferCourseReducer.added)
+    const requestUnsuccessfullMsg = useSelector((state) => state.addOfferCourseReducer.error)
 
     const institute_id = localStorage.getItem('institute_id')
 
@@ -95,6 +96,8 @@ function OfferCourse(props) {
 
     const closeModal = () => {
         setOpenOfferCourseModal(false)
+        setShowError(false)
+        setErrorMsg('')
     }
 
     const handleSubmit = (e) => {
@@ -186,6 +189,11 @@ function OfferCourse(props) {
                                 <option>7</option>
                                 <option>8</option>
                             </select>
+                        </div>
+                        <div>
+                            {
+                                showError && <Alert style={{ marginTop: '12px' }} severity="error">{errorMsg}</Alert>
+                            }
                         </div>
                         <div className='center flexbox-container-y'>
                             <button style={{ marginTop: '1rem' }} type='submit' className='modal-btn'>Add</button>
