@@ -4,7 +4,8 @@ import { useSelector, useDispatch } from 'react-redux'
 import { getDepartmentsRequest } from '../../../../redux/GetDepartments/getDepartmentsActions'
 import { getCourseRequest } from '../../../../redux/GetCourse/getCourseActions'
 import { getBatchesRequest } from '../../../../redux/GetBatches/getBatchesActions'
-
+import { addOfferCourse, resetState } from '../../../../redux/AddOfferCourse/addOfferCourseActions'
+ 
 function OfferCourse(props) {
 
     const {openOfferCourseModal, setOpenOfferCourseModal, setRefresh} = props
@@ -17,11 +18,15 @@ function OfferCourse(props) {
     const batchesAdded = useSelector((state) => state.getBatchesReducer.added)
     const departments = useSelector((state) => state.getDepartments.departments.data)
     const departmentsAdded = useSelector((state) => state.getDepartments.added)
+    const requestSuccessfull = useSelector((state) => state.addDepartmentReducer.added)
+    const requestUnsuccessfullMsg = useSelector((state) => state.addDepartmentReducer.error)
 
     const institute_id = localStorage.getItem('institute_id')
 
     const [batchesData, setBatchesData] = useState([])
     const [coursesData, setCoursesData] = useState([])
+    const [showError, setShowError] = useState(false);
+    const [errorMsg, setErrorMsg] = useState('')
 
     const [offerCourse, setOfferCourse] = useState({
         course_id: "",
@@ -59,7 +64,22 @@ function OfferCourse(props) {
                 }
             }
         }
-      }, [offerCourse.department_id])
+    }, [offerCourse.department_id])
+
+    useEffect(() => {
+        if(requestSuccessfull){
+            setRefresh(true)
+            setOpenOfferCourseModal(false)
+            setErrorMsg('')
+            setShowError(false)
+            alert("Operation performed successfully!")
+            dispatch(resetState())
+        } else if (requestSuccessfull === false) {
+            setErrorMsg(requestUnsuccessfullMsg)
+            setShowError(true)
+            dispatch(resetState())
+        }
+    }, [requestSuccessfull])
 
     const customStyles = {
         overlay: {
@@ -79,8 +99,7 @@ function OfferCourse(props) {
 
     const handleSubmit = (e) => {
         e.preventDefault()
-        console.log(offerCourse)
-        setOpenOfferCourseModal(false)
+        dispatch(addOfferCourse(offerCourse))
     }
 
     const handleDepartmentChange = (event) => {
