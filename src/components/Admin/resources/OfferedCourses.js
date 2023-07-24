@@ -7,6 +7,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import { getCourseRequest } from '../../../redux/GetCourse/getCourseActions'
 import { getBatchesRequest } from '../../../redux/GetBatches/getBatchesActions'
 import { getDepartmentsRequest } from '../../../redux/GetDepartments/getDepartmentsActions'
+import { getOfferedCourses } from '../../../redux/GetOfferedCourses/getOfferedCoursesActions'
 
 function OfferedCourses() {
 
@@ -18,6 +19,8 @@ function OfferedCourses() {
     const batchesAdded = useSelector((state) => state.getBatchesReducer.added)
     const departments = useSelector((state) => state.getDepartments.departments.data)
     const departmentsAdded = useSelector((state) => state.getDepartments.added)
+    const offeredCourses = useSelector((state) => state.offeredCoursesReducer.offeredCourses.data)
+    const offeredCoursesAdded = useSelector((state) => state.offeredCoursesReducer.added)
 
     const institute_id = localStorage.getItem('institute_id')
 
@@ -36,6 +39,34 @@ function OfferedCourses() {
         }
     }, [refresh, institute_id])
 
+    useEffect(() => {
+        dispatch(getOfferedCourses(institute_id))
+    }, [])
+
+    useEffect(() => {
+        if(offeredCoursesAdded  && rowData.length !== offeredCourses.length && departmentsAdded && batchesAdded && coursessAdded){
+            if(refresh){
+                setRowData([])
+                setRefresh(false)
+            }
+            for(let i=0; i<offeredCourses.length; i++){
+                for(let j=0; j<departments.length; j++){
+                    for(let k=0; k<batches.length; k++){
+                        for(let l=0; l<courses.length; l++){
+                            if(offeredCourses[i].department_id === departments[j].department_id 
+                                && offeredCourses[i].batchId === batches[k].batchId
+                                && offeredCourses[i].course_id === courses[l].course_id){
+                                    rowData.push([offeredCourses[i].offerCourseId, courses[l].course_name, 
+                                        batches[k].batchCode+ "-"+batches[k].section,
+                                        departments[j].department_name, offeredCourses[i].semester])
+                                }
+                        }
+                    }
+                }
+            }
+        }
+    }, [offeredCoursesAdded, offeredCourses, refresh, departmentsAdded, batchesAdded, coursessAdded])
+
     const openModal = () => {
         setOpenOfferCourseModal(true)
     }
@@ -52,12 +83,15 @@ function OfferedCourses() {
                     <h2 style={{ color: '#0E5E6F' }}>OFFERED COURSES</h2>
                 </div>
                 <center>
-                    <Table 
-                        columns={['No.', 'Course', 'Batch', 'Department', 'Semester']} 
-                        rows={rowData} 
-                        setDeleteId={setDeleteId}
-                        setUpdate={setUpdate}
-                        setData={setData}/>
+                    {
+                        offeredCoursesAdded &&
+                        <Table 
+                            columns={['No.', 'Course', 'Batch', 'Department', 'Semester']} 
+                            rows={rowData} 
+                            setDeleteId={setDeleteId}
+                            setUpdate={setUpdate}
+                            setData={setData}/>
+                    }
                 </center>
             </div>
             <div>

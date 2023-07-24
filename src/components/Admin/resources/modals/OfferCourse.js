@@ -52,7 +52,7 @@ function OfferCourse(props) {
                 for(let j in departments){
                     if(batches[i].department_id === departments[j].department_id && departments[j].department_id == offerCourse.department_id){
                         setBatchesData(batchesData => [...batchesData, {batchId: batches[i].batchId, 
-                            name: `${departments[j].department_name} - ${batches[i].batchCode} - ${batches[i].section}`, 
+                            name: `${batches[i].batchCode} - ${batches[i].section}`, 
                           department_id: departments[j].department_id}])
                     }
                 }
