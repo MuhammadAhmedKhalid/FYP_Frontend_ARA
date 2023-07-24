@@ -8,6 +8,7 @@ import { getCourseRequest } from '../../../redux/GetCourse/getCourseActions'
 import { getBatchesRequest } from '../../../redux/GetBatches/getBatchesActions'
 import { getDepartmentsRequest } from '../../../redux/GetDepartments/getDepartmentsActions'
 import { getOfferedCourses } from '../../../redux/GetOfferedCourses/getOfferedCoursesActions'
+import { deleteOfferedCourseRequest } from '../../../redux/DeleteOfferedCourse/deleteOfferedCourseActions'
 
 function OfferedCourses() {
 
@@ -44,7 +45,18 @@ function OfferedCourses() {
     }, [])
 
     useEffect(() => {
-        if(offeredCoursesAdded  && rowData.length !== offeredCourses.length && departmentsAdded && batchesAdded && coursessAdded){
+        if(deleteId !== null){
+            dispatch(deleteOfferedCourseRequest(deleteId))
+            setUpdate(false)
+            setDeleteId(null)
+        }
+    }, [deleteId])
+
+    useEffect(() => {
+        if(refresh){
+            setRowData([])
+        }
+        if(offeredCoursesAdded  && departmentsAdded && batchesAdded && coursessAdded && rowData.length === 0){
             if(refresh){
                 setRowData([])
                 setRefresh(false)
