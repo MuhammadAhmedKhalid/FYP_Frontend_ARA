@@ -46,7 +46,7 @@ function OfferCourse(props) {
     }, [institute_id])
 
     useEffect(() => {
-        if(batchesAdded && departmentsAdded && offerCourse.department_id > 0){
+        if(batchesAdded && departmentsAdded && coursessAdded && offerCourse.department_id > 0){
             setBatchesData([])
             setCoursesData([])
             for(let i in batches){
