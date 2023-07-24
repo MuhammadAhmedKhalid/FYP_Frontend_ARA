@@ -9,6 +9,7 @@ import { getBatchesRequest } from '../../../redux/GetBatches/getBatchesActions'
 import { getDepartmentsRequest } from '../../../redux/GetDepartments/getDepartmentsActions'
 import { getOfferedCourses } from '../../../redux/GetOfferedCourses/getOfferedCoursesActions'
 import { deleteOfferedCourseRequest } from '../../../redux/DeleteOfferedCourse/deleteOfferedCourseActions'
+import UpdOfferCourse from './modals/update/UpdOfferCourse'
 
 function OfferedCourses() {
 
@@ -111,6 +112,9 @@ function OfferedCourses() {
                     openOfferCourseModal={openOfferCourseModal} setOpenOfferCourseModal={setOpenOfferCourseModal} 
                     setRefresh={setRefresh}/>
             </div>
+            {
+                update && <UpdOfferCourse update={update} setUpdate={setUpdate} data={data}/>
+            }
         </div>
     )
 }
