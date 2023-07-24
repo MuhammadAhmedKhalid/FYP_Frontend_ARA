@@ -1,5 +1,5 @@
 import { ADD_OBJ_REQ_FAILURE, ADD_OBJ_REQ_REQUEST, ADD_OBJ_REQ_SUCCESS } from './addObjRequestTypes'
-import { call, put, takeEvery, select } from 'redux-saga/effects'
+import { call, put, takeEvery } from 'redux-saga/effects'
 import axios from 'axios'
 
 function* addObjRequest(obj) {
