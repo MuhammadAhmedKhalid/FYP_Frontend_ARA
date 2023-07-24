@@ -240,6 +240,11 @@ const AdminNavBar = () => {
                         value: 'offeredCourses',
                         path: '/offeredCourses'
                     },
+                    {
+                        name: 'Allocated Teachers',
+                        value: 'allocatedTeachers',
+                        path: '/allocatedTeachers'
+                    },
                     ]} />
                     {
                         isMobile ? null :

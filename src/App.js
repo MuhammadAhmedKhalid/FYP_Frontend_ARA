@@ -22,6 +22,7 @@ import AdminProfile from './components/Admin/AdminProfile'
 import FacultyProfile from './components/Faculty/FacultyProfile'
 import FacultyConstraints from './components/Faculty/FacultyConstraints';
 import OfferedCourses from './components/Admin/resources/OfferedCourses';
+import AllocatedTeacher from './components/Admin/resources/AllocatedTeacher';
  
 Modal.setAppElement('#root')
 function App() {
@@ -50,6 +51,7 @@ function App() {
           {isAdmin === 'false' ? <Route path='*' element={<NoMatch />}/> : <Route path='/assignedCourses' element={<AuthRoute><AssignedCourses/></AuthRoute>}/>}
           {isAdmin === 'false' ? <Route path='*' element={<NoMatch />}/> : <Route path='/adminProfile' element={<AuthRoute><AdminProfile/></AuthRoute>}/>}
           {isAdmin === 'false' ? <Route path='*' element={<NoMatch />}/> : <Route path='/offeredCourses' element={<AuthRoute><OfferedCourses/></AuthRoute>}/>}
+          {isAdmin === 'false' ? <Route path='*' element={<NoMatch />}/> : <Route path='/allocatedTeachers' element={<AuthRoute><AllocatedTeacher/></AuthRoute>}/>}
 
           {isAdmin === 'true' ? <Route path='*' element={<NoMatch />}/> : <Route path='/faculty-home' element={<AuthRoute><FacultyHomeScreen /></AuthRoute>}/>}
           {isAdmin === 'true' ? <Route path='*' element={<NoMatch />}/> : <Route path='/schedule' element={<AuthRoute><Schedule /></AuthRoute>} />}
