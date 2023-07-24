@@ -230,11 +230,17 @@ const AdminNavBar = () => {
                         value: 'faculty',
                         path: '/faculty'
                     },
+                    // {
+                    //     name: 'Assigned courses',
+                    //     value: 'assigned courses',
+                    //     path: '/assignedCourses'
+                    // }
                     {
-                        name: 'Assigned courses',
-                        value: 'assigned courses',
-                        path: '/assignedCourses'
-                    }]} />
+                        name: 'Offered Courses',
+                        value: 'offeredCourses',
+                        path: '/offeredCourses'
+                    },
+                    ]} />
                     {
                         isMobile ? null :
                         <li>
