@@ -29,6 +29,7 @@ function Designations() {
     useEffect(() => {
         if(deleteId !== null){
             dispatch(deletePositionRequest(deleteId))
+            alert('Deleted successfully.')
             setUpdate(false)
             setDeleteId(null)
         }

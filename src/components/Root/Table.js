@@ -21,7 +21,6 @@ function Table(props) {
 
     const handleDelete = (index) => {
         setDeleteId(rows[index][0])
-        alert('Deleted successfully.')
     }
 
     const isMobile = window.innerWidth <= 1040;

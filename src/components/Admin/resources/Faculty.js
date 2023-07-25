@@ -32,6 +32,7 @@ function Faculty() {
     useEffect(() => {
         if(deleteId !== null){
             dispatch(deleteFacultyRequest(deleteId))
+            alert('Deleted successfully.')
             setUpdate(false)
             setDeleteId(null)
         }

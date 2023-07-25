@@ -47,7 +47,9 @@ function OfferedCourses() {
 
     useEffect(() => {
         if(deleteId !== null){
-            dispatch(deleteOfferedCourseRequest(deleteId))
+            console.log(deleteId)
+            // dispatch(deleteOfferedCourseRequest(deleteId))
+            alert('Deleted successfully.')
             setUpdate(false)
             setDeleteId(null)
         }

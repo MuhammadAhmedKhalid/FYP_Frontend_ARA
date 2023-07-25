@@ -43,6 +43,7 @@ function Batches() {
     useEffect(() => {
         if(deleteId !== null){
             dispatch(deleteBatchRequest(deleteId))
+            alert('Deleted successfully.')
             setUpdate(false)
             setDeleteId(null)
         }

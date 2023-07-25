@@ -29,6 +29,7 @@ function Departments() {
     useEffect(() => {
         if(deleteId !== null){
             dispatch(deleteDepartmentRequest(deleteId))
+            alert('Deleted successfully.')
             setUpdate(false)
             setDeleteId(null)
         }

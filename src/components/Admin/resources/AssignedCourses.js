@@ -35,6 +35,7 @@ function AssignedCourses() {
     useEffect(() => {
         if(deleteId !== null){
             dispatch(deleteAssignedCoursesRequest(deleteId))
+            alert('Deleted successfully.')
             setDeleteId(null)
         }
     }, [deleteId])

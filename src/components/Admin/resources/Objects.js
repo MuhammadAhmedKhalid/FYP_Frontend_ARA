@@ -31,6 +31,7 @@ function Objects() {
     useEffect(() => {
         if(deleteId !== null){
             dispatch(deleteObjRequest(deleteId))
+            alert('Deleted successfully.')
             setDeleteId(null)
         }
     }, [deleteId])

@@ -66,8 +66,8 @@ function AllocatedTeacher() {
                                     if(i.faculty_id === k.faculty_id && i.offerCourseId === j.offerCourseId
                                         && l.course_id === j.course_id && m.department_id === j.department_id
                                         && n.batchId === j.batchId){
-                                            rowData.push([i.allocateFacultyId, k.name, l.course_name, m.department_name,
-                                            n.batchCode+"-"+n.section, j.semester])
+                                            rowData.push([i.allocateFacultyId, k.name, l.course_name+" ("+l.type+") ", l.credit_hours, 
+                                            m.department_name, n.batchCode+"-"+n.section, j.semester])
                                     }
                                 }
                             }
@@ -97,7 +97,7 @@ function AllocatedTeacher() {
                     {
                         allocatedFacultyAdded &&
                         <Table 
-                            columns={['No.', 'Faculty', 'Offered Course', 'Department', 'Batch', 'Semester']} 
+                            columns={['No.', 'Faculty', 'Offered Course', 'Credit Hours', 'Department', 'Batch', 'Semester']} 
                             rows={rowData} 
                             setDeleteId={setDeleteId}
                             setUpdate={setUpdate}

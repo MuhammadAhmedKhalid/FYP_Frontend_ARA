@@ -32,6 +32,7 @@ function Courses() {
     useEffect(() => {
         if(deleteId !== null){
             dispatch(deleteCourseRequest(deleteId))
+            alert('Deleted successfully.')
             setUpdate(false)
             setDeleteId(null)
         }

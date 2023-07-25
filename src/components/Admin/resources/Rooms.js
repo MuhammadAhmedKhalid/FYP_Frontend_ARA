@@ -43,6 +43,7 @@ function Rooms() {
     useEffect(() => {
         if(deleteId !== null){
             dispatch(deleteRoomRequest(deleteId))
+            alert('Deleted successfully.')
             setUpdate(false)
             setDeleteId(null)
         }
