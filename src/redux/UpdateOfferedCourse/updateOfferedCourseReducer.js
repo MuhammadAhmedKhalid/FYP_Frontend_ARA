@@ -4,7 +4,7 @@ const updateOfferedCourseInitialState = {
     loading: false,
     result: '',
     error: '',
-    updated: false
+    updated: null
 }
 
 export const updateOfferedCourseReducer = (state = updateOfferedCourseInitialState, action) => {
@@ -16,7 +16,7 @@ export const updateOfferedCourseReducer = (state = updateOfferedCourseInitialSta
         case UPDATE_OFFERED_COURSE_SUCCESS: return {
             ...state,
             loading: false,
-            result: action.result,
+            result: action.message,
             error: '',
             updated: true
         }
@@ -30,7 +30,7 @@ export const updateOfferedCourseReducer = (state = updateOfferedCourseInitialSta
         case RESET_STATE: return {
             ...state,
             error: '',
-            updated: false
+            updated: null
         }
         default: return state
     }

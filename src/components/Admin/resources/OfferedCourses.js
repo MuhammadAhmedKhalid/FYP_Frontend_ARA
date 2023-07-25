@@ -26,7 +26,8 @@ function OfferedCourses() {
     const offeredCourses = useSelector((state) => state.offeredCoursesReducer.offeredCourses.data)
     const offeredCoursesAdded = useSelector((state) => state.offeredCoursesReducer.added)
     const updateError = useSelector((state) => state.updateOfferedCourseReducer.error)
-    const updatedSuccessfully = useSelector((state) => state.updateOfferedCourseReducer.updated)
+    const updateSuccessMsg = useSelector((state) => state.updateOfferedCourseReducer.result)
+    const updated = useSelector((state) => state.updateOfferedCourseReducer.updated)
     const deleted = useSelector((state) => state.deleteOfferedCourseReducer.deleted)
     const dltSuccessMsg = useSelector((state) => state.deleteOfferedCourseReducer.success.data)
     const dltErrorMsg = useSelector((state) => state.deleteOfferedCourseReducer.error.data)
@@ -68,14 +69,14 @@ function OfferedCourses() {
     }, [deleted])
 
     useEffect(()=>{
-        if(updateError.length > 0){
+        if (updated === true) {
+            alert(updateSuccessMsg)
+            dispatch(resetState())
+        } else if (updated === false) {
             alert(updateError)
             dispatch(resetState())
-        }else if(updatedSuccessfully){
-            alert('Updated successfully.')
-            dispatch(resetState())
         }
-    }, [updateError, updatedSuccessfully])
+    }, [updated])
 
     useEffect(() => {
         if(refresh){

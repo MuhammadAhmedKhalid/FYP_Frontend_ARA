@@ -11,8 +11,9 @@ function* updateOfferedCourseRequest(payload) {
             'Content-Type': 'application/json; charset=utf-8'
         },
     });
+    const data = yield result.text();
     if(result.status === 200){
-        yield put({ type: UPDATE_OFFERED_COURSE_SUCCESS, result })
+        yield put({ type: UPDATE_OFFERED_COURSE_SUCCESS, message: data })
     }else{
         yield put({ type: UPDATE_OFFERED_COURSE_FAILURE, message: "Course already offered." })
     }
