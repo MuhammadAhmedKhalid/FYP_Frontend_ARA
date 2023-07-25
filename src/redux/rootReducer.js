@@ -70,6 +70,7 @@ import { updateOfferedCourseReducer } from './UpdateOfferedCourse/updateOfferedC
 import { addAllocateFacultyReducer } from './AddAllocateFaculty/allocateFacultyReducer'
 import { allocatedFacultyReducer } from './GetAllocatedFaculty/allocatedFacultyReducer'
 import { deleteAllocatedFacultyReducer } from './DeleteAllocatedFaculty/dltAllocatedFacultyReducer'
+import { updateAllocatedFacultyReducer } from './UpdateAllocatedFaculty/updAllocatedFacultyReducer'
 
 export const rootReducer = combineReducers({
     signup: signupReducer,
@@ -143,4 +144,5 @@ export const rootReducer = combineReducers({
     addAllocateFacultyReducer,
     allocatedFacultyReducer, 
     deleteAllocatedFacultyReducer,
+    updateAllocatedFacultyReducer,
 })
