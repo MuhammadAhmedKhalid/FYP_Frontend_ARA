@@ -1,7 +1,46 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import Modal from 'react-modal'
+import { useSelector, useDispatch } from 'react-redux'
+import { getDepartmentsRequest } from '../../../../redux/GetDepartments/getDepartmentsActions'
+import { getBatchesRequest } from '../../../../redux/GetBatches/getBatchesActions'
 
 function GenerateTimetable({generateTimetableModal, setGenerateTimetableModal}) {
+
+    const dispatch = useDispatch()
+
+    const batches = useSelector((state) => state.getBatchesReducer.batches.data)
+    const batchesAdded = useSelector((state) => state.getBatchesReducer.added)
+    const departments = useSelector((state) => state.getDepartments.departments.data)
+    const departmentsAdded = useSelector((state) => state.getDepartments.added)
+
+    const institute_id = localStorage.getItem('institute_id')
+
+    const [batchesData, setBatchesData] = useState([])
+    const [department_id, setDepartmentId] = useState()
+    const [batchId, setBatchId] = useState()
+    const [semester, setSemester] = useState()
+
+    useEffect(() => {
+        if(institute_id > 0){
+            dispatch(getBatchesRequest(institute_id))
+            dispatch(getDepartmentsRequest(institute_id))
+        }
+    }, [institute_id])
+
+    useEffect(() => {
+        if(batchesAdded && departmentsAdded && department_id > 0){
+            setBatchesData([])
+            for(let i in batches){
+                for(let j in departments){
+                    if(batches[i].department_id === departments[j].department_id && departments[j].department_id == department_id){
+                        setBatchesData(batchesData => [...batchesData, {batchId: batches[i].batchId, 
+                            name: `${batches[i].batchCode} - ${batches[i].section}`, 
+                          department_id: departments[j].department_id}])
+                    }
+                }
+            }
+        }
+    }, [department_id])
 
     const customStyles = {
         overlay: {
@@ -17,7 +56,33 @@ function GenerateTimetable({generateTimetableModal, setGenerateTimetableModal}) 
 
     const submitHandler = (event) => {
         event.preventDefault()
+        console.log(department_id)
+        console.log(batchId)
+        console.log(semester)
         setGenerateTimetableModal(false)
+    }
+
+    const handleDepartmentChange = (event) => {
+        const department_name = event.target.value
+        for (let i = 0; i < departments.length; i++) {
+            if (departments[i].department_name === department_name) {
+                setDepartmentId(departments[i].department_id)
+                break
+            }
+        }
+    }
+
+    const handleBatchChange = (e) => {
+        for(let i of batchesData){
+            if(i.name === e.target.value){
+                setBatchId(i.batchId)
+                break
+            }
+        }
+    }
+
+    const handleSemesterChange = (e) => {
+        setSemester(e.target.value)
     }
 
     return (
@@ -30,6 +95,40 @@ function GenerateTimetable({generateTimetableModal, setGenerateTimetableModal}) 
                 <div className='center flexbox-container-y'>
                     <h2 style={{ color: "#115868", fontSize: 20 }}>Generate Timetable</h2>
                     <form onSubmit={submitHandler}>
+                        <h3 style={{
+                            fontWeight: 'normal', color: 'gray', marginRight: '3px'
+                        }}>Department</h3>
+                        <select required className='dropdown' onChange={handleDepartmentChange}>
+                            <option></option>
+                            {
+                                departmentsAdded && departments.length !== 0 ? departments.map(department =>
+                                    <option key={department.department_id}>{department.department_name}</option>) : null
+                            }
+                        </select>
+                        <h3 style={{
+                            fontWeight: 'normal', color: 'gray', marginRight: '3px'
+                        }}>Batch</h3>
+                        <select required className='dropdown' onChange={handleBatchChange}>
+                        <option></option>
+                            {
+                                batchesData.length !== 0 ? batchesData.map(batch => 
+                                    <option key={batch.batchId}>{batch.name}</option>) : null
+                            }
+                        </select>
+                        <h3 style={{
+                            fontWeight: 'normal', color: 'gray', marginRight: '3px'
+                        }}>Semester</h3>
+                        <select required className='dropdown' onChange={handleSemesterChange}>
+                            <option></option>
+                            <option>1</option>
+                            <option>2</option>
+                            <option>3</option>
+                            <option>4</option>
+                            <option>5</option>
+                            <option>6</option>
+                            <option>7</option>
+                            <option>8</option>
+                        </select>
                         <div className='center flexbox-container-y'>
                             <button style={{ marginTop: '1rem' }} type='submit' className='modal-btn'>Generate</button>
                         </div>
