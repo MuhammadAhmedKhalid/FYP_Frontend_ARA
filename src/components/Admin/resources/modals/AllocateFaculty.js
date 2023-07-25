@@ -28,16 +28,15 @@ function AllocateFaculty(props) {
     const institute_id = localStorage.getItem('institute_id')
 
     const [batchesData, setBatchesData] = useState([])
-    const [coursesData, setCoursesData] = useState([])
     const [facultyData, setFacultyData] = useState([])
     const [offeredCourseData, setOfferedCourseData] = useState([])
     const [semester, setSemester] = useState()
     const [submit, setSubmitted] = useState(false)
+    const [batchId, setBatchId] = useState()
+    const [department_id, setDepartmentId] = useState()
 
     const [allocate, setAllocate] = useState({
         offerCourseId: "",
-        batchId: "",
-        department_id: "",
         faculty_id: "",
         institute_id
     })
@@ -56,38 +55,31 @@ function AllocateFaculty(props) {
     }, [institute_id, submit])
 
     useEffect(() => {
-        if(batchesAdded && departmentsAdded && coursessAdded && allocate.department_id > 0){
+        if(batchesAdded && departmentsAdded && coursessAdded && facultyAdded && department_id > 0){
             setBatchesData([])
-            setCoursesData([])
             setFacultyData([])
             for(let i in batches){
                 for(let j in departments){
-                    if(batches[i].department_id === departments[j].department_id && departments[j].department_id == allocate.department_id){
+                    if(batches[i].department_id === departments[j].department_id && departments[j].department_id == department_id){
                         setBatchesData(batchesData => [...batchesData, {batchId: batches[i].batchId, 
                             name: `${batches[i].batchCode} - ${batches[i].section}`, 
                           department_id: departments[j].department_id}])
                     }
                 }
             }
-            for(let i in courses){
-                if(allocate.department_id == courses[i].department_id){
-                    setCoursesData(coursesData => [...coursesData, {id: courses[i].course_id, 
-                        name: `${courses[i].course_name} (${courses[i].type})`}])
-                }
-            }
             for(let i in facultyList){
-                if(allocate.department_id == facultyList[i].department_id){
+                if(department_id == facultyList[i].department_id){
                     setFacultyData(facultyData => [...facultyData, {id: facultyList[i].faculty_id, name: facultyList[i].name}])
                 }
             }
         }
-    }, [allocate.department_id])
+    }, [department_id])
 
     useEffect(() => {
         if(semester > 0 && offeredCoursesAdded){
             setOfferedCourseData([])
             for(let i of offeredCourses){
-                if(i.department_id == allocate.department_id && i.semester == semester && i.batchId == allocate.batchId
+                if(i.department_id == department_id && i.semester == semester && i.batchId == batchId
                     && i.allocated === false){
                     for(let j of courses){
                         if(j.course_id === i.course_id){
@@ -99,7 +91,7 @@ function AllocateFaculty(props) {
                 }
             }
         }
-    }, [semester, allocate.department_id, allocate.batchId])
+    }, [semester, department_id, batchId])
 
     const customStyles = {
         overlay: {
@@ -123,13 +115,14 @@ function AllocateFaculty(props) {
         setOpenAllocateTeacherModal(false)
         alert("Operation performed successfully!")
         setSubmitted(true)
+        setRefresh(true)
     }
 
     const handleDepartmentChange = (event) => {
         const department_name = event.target.value
         for (let i = 0; i < departments.length; i++) {
             if (departments[i].department_name === department_name) {
-                setAllocate({ ...allocate, department_id: departments[i].department_id })
+                setDepartmentId(departments[i].department_id)
             }
         }
     }
@@ -137,7 +130,7 @@ function AllocateFaculty(props) {
     const handleBatchChange = (e) => {
         for(let i of batchesData){
             if(i.name === e.target.value){
-                setAllocate({ ...allocate, batchId: i.batchId })
+                setBatchId(i.batchId)
             }
         }
     }
