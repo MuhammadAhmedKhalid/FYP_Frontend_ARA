@@ -6,6 +6,7 @@ import { getCourseRequest } from '../../../../redux/GetCourse/getCourseActions'
 import { getBatchesRequest } from '../../../../redux/GetBatches/getBatchesActions'
 import { getFacultyRequest } from '../../../../redux/GetFaculty/getFacultyActions'
 import { getOfferedCourses } from '../../../../redux/GetOfferedCourses/getOfferedCoursesActions'
+import { allocateFaculty } from '../../../../redux/AddAllocateFaculty/allocateFacultyActions'
 
 function AllocateFaculty(props) {
 
@@ -31,6 +32,7 @@ function AllocateFaculty(props) {
     const [facultyData, setFacultyData] = useState([])
     const [offeredCourseData, setOfferedCourseData] = useState([])
     const [semester, setSemester] = useState()
+    const [submit, setSubmitted] = useState(false)
 
     const [allocate, setAllocate] = useState({
         offerCourseId: "",
@@ -42,13 +44,16 @@ function AllocateFaculty(props) {
 
     useEffect(() => {
         if(institute_id > 0){
+            if(submit){
+                setSubmitted(false)
+            }
             dispatch(getCourseRequest(institute_id))
             dispatch(getBatchesRequest(institute_id))
             dispatch(getDepartmentsRequest(institute_id))
             dispatch(getFacultyRequest(institute_id))
             dispatch(getOfferedCourses(institute_id))
         }
-    }, [institute_id])
+    }, [institute_id, submit])
 
     useEffect(() => {
         if(batchesAdded && departmentsAdded && coursessAdded && allocate.department_id > 0){
@@ -114,9 +119,10 @@ function AllocateFaculty(props) {
 
     const handleSubmit = (e) => {
         e.preventDefault()
-        console.log(allocate)
+        dispatch(allocateFaculty(allocate))
         setOpenAllocateTeacherModal(false)
         alert("Operation performed successfully!")
+        setSubmitted(true)
     }
 
     const handleDepartmentChange = (event) => {
