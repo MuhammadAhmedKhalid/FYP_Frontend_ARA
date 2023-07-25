@@ -38,12 +38,9 @@ function OfferedCourses() {
             dispatch(getCourseRequest(institute_id))
             dispatch(getBatchesRequest(institute_id))
             dispatch(getDepartmentsRequest(institute_id))
+            dispatch(getOfferedCourses(institute_id))
         }
     }, [refresh, institute_id])
-
-    useEffect(() => {
-        dispatch(getOfferedCourses(institute_id))
-    }, [])
 
     useEffect(() => {
         if(deleteId !== null){
@@ -97,7 +94,7 @@ function OfferedCourses() {
                 </div>
                 <center>
                     {
-                        offeredCoursesAdded &&
+                        offeredCoursesAdded && rowData.length > 0 &&
                         <Table 
                             columns={['No.', 'Course', 'Batch', 'Department', 'Semester']} 
                             rows={rowData} 

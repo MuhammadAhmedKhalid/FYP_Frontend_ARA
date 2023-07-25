@@ -4,6 +4,8 @@ import { useSelector, useDispatch } from 'react-redux'
 import { getDepartmentsRequest } from '../../../../../redux/GetDepartments/getDepartmentsActions'
 import { getCourseRequest } from '../../../../../redux/GetCourse/getCourseActions'
 import { getBatchesRequest } from '../../../../../redux/GetBatches/getBatchesActions'
+import { getOfferedCourses } from '../../../../../redux/GetOfferedCourses/getOfferedCoursesActions'
+import { updateOfferedCourse } from '../../../../../redux/UpdateOfferedCourse/updateOfferedCourseActions'
 
 function UpdOfferCourse({update, setUpdate, data}) {
 
@@ -15,6 +17,8 @@ function UpdOfferCourse({update, setUpdate, data}) {
     const batchesAdded = useSelector((state) => state.getBatchesReducer.added)
     const departments = useSelector((state) => state.getDepartments.departments.data)
     const departmentsAdded = useSelector((state) => state.getDepartments.added)
+    const offeredCourses = useSelector((state) => state.offeredCoursesReducer.offeredCourses.data)
+    const offeredCoursesAdded = useSelector((state) => state.offeredCoursesReducer.added)
 
     const institute_id = localStorage.getItem('institute_id')
 
@@ -68,13 +72,21 @@ function UpdOfferCourse({update, setUpdate, data}) {
             dispatch(getCourseRequest(institute_id))
             dispatch(getBatchesRequest(institute_id))
             dispatch(getDepartmentsRequest(institute_id))
+            dispatch(getOfferedCourses(institute_id))
         }
     }, [institute_id])
 
     const submitHandler = (e) => {
         e.preventDefault()
-        console.log(offerCourse)
-        // setUpdate(false)
+
+        for(let i of offeredCourses){
+            if(i.offerCourseId === data[0]){
+                dispatch(updateOfferedCourse(i.offerCourseId, offerCourse))
+                break
+            }
+        }
+
+        setUpdate(false)
     }
 
     const handleDepartmentChange = (event) => {

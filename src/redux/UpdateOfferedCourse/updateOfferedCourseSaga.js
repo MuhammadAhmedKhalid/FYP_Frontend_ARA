@@ -5,11 +5,10 @@ function* updateOfferedCourseRequest(payload) {
     const token = localStorage.getItem('token');
     let result = yield call(fetch, `http://localhost:8080/updateOfferedCourse/${payload.offerCourseId}`, {
         method: "PUT",
-        // body: JSON.stringify(payload.offerCourse),
-        body: payload.offerCourse,
+        body: JSON.stringify(payload.offerCourse),
         headers: {
             "Authorization": `Bearer ${token}`,
-            // 'Content-Type': 'application/json; charset=utf-8'
+            'Content-Type': 'application/json; charset=utf-8'
         },
     });
     if(result.status === 200){
