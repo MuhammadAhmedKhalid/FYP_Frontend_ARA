@@ -11,6 +11,7 @@ import { getBatchesRequest } from '../../../redux/GetBatches/getBatchesActions'
 import { getFacultyRequest } from '../../../redux/GetFaculty/getFacultyActions'
 import { getOfferedCourses } from '../../../redux/GetOfferedCourses/getOfferedCoursesActions'
 import { deleteAllocatedFacultyRequest, resetDeleteState } from '../../../redux/DeleteAllocatedFaculty/dltAllocatedFacultyActions'
+import UpdAllocatedFaculty from './modals/update/UpdAllocatedFaculty'
 
 function AllocatedTeacher() {
 
@@ -133,6 +134,9 @@ function AllocatedTeacher() {
                     openAllocateTeacherModal={openAllocateTeacherModal} setOpenAllocateTeacherModal={setOpenAllocateTeacherModal} 
                     setRefresh={setRefresh}/>
             </div>
+            {
+                update && <UpdAllocatedFaculty update={update} setUpdate={setUpdate} data={data}/>
+            }
         </div>
     )
 
