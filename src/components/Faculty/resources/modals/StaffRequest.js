@@ -119,7 +119,7 @@ function StaffRequest(props) {
     }
 
     const handleFacultyChange = (event) => {
-        const selectedOption = e.target.options[e.target.selectedIndex];
+        const selectedOption = event.target.options[event.target.selectedIndex];
         const selectedId = selectedOption.getAttribute('data-key');
         setRequest({ ...request, requested_faculty_id: selectedId })
     }
