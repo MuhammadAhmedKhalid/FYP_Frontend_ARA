@@ -11,6 +11,7 @@ import { getOfferedCourses } from '../../../redux/GetOfferedCourses/getOfferedCo
 import { deleteOfferedCourseRequest } from '../../../redux/DeleteOfferedCourse/deleteOfferedCourseActions'
 import UpdOfferCourse from './modals/update/UpdOfferCourse'
 import { resetState } from '../../../redux/UpdateOfferedCourse/updateOfferedCourseActions'
+import { resetDeleteState } from '../../../redux/DeleteOfferedCourse/deleteOfferedCourseActions'
 
 function OfferedCourses() {
 
@@ -26,6 +27,9 @@ function OfferedCourses() {
     const offeredCoursesAdded = useSelector((state) => state.offeredCoursesReducer.added)
     const updateError = useSelector((state) => state.updateOfferedCourseReducer.error)
     const updatedSuccessfully = useSelector((state) => state.updateOfferedCourseReducer.updated)
+    const deleted = useSelector((state) => state.deleteOfferedCourseReducer.deleted)
+    const dltSuccessMsg = useSelector((state) => state.deleteOfferedCourseReducer.success.data)
+    const dltErrorMsg = useSelector((state) => state.deleteOfferedCourseReducer.error.data)
 
     const institute_id = localStorage.getItem('institute_id')
 
@@ -47,13 +51,21 @@ function OfferedCourses() {
 
     useEffect(() => {
         if(deleteId !== null){
-            console.log(deleteId)
-            // dispatch(deleteOfferedCourseRequest(deleteId))
-            alert('Deleted successfully.')
-            setUpdate(false)
-            setDeleteId(null)
+            dispatch(deleteOfferedCourseRequest(deleteId))
         }
     }, [deleteId])
+
+    useEffect(() => {
+        if(deleted === true){
+            alert(dltSuccessMsg)
+            setUpdate(false)
+            setDeleteId(null)
+            dispatch(resetDeleteState())
+        } else if (deleted === false){
+            alert(dltErrorMsg)
+            dispatch(resetDeleteState())
+        }
+    }, [deleted])
 
     useEffect(()=>{
         if(updateError.length > 0){

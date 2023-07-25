@@ -1,4 +1,4 @@
-import { DELETE_OFFERED_COURSE_FAILURE, DELETE_OFFERED_COURSE_REQUEST, DELETE_OFFERED_COURSE_SUCCESS } from './deleteOfferedCourseTypes'
+import { DELETE_OFFERED_COURSE_FAILURE, DELETE_OFFERED_COURSE_REQUEST, DELETE_OFFERED_COURSE_SUCCESS,RESET_STATE } from './deleteOfferedCourseTypes'
 
 export const deleteOfferedCourseInitialState = {
     loading: false,
@@ -26,6 +26,10 @@ export const deleteOfferedCourseReducer = (state = deleteOfferedCourseInitialSta
             success: '',
             error: action.message,
             deleted: false
+        }
+        case RESET_STATE: return {
+            ...state,
+            deleted: null
         }
         default: return state
     }
