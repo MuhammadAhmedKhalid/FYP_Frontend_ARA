@@ -68,6 +68,7 @@ import { getOfferedCoursesSaga } from './GetOfferedCourses/getOfferedCoursesSaga
 import { deleteOfferedCourseSaga } from './DeleteOfferedCourse/deleteOfferedCourseSaga'
 import { updateOfferedCourseSaga } from './UpdateOfferedCourse/updateOfferedCourseSaga'
 import { addAllocateFacultySaga } from './AddAllocateFaculty/allocateFacultySaga'
+import { getAllocatedFacultySaga } from './GetAllocatedFaculty/allocatedFacultySaga'
 
 export function* rootSaga() {
     yield fork(signupSaga)
@@ -139,4 +140,5 @@ export function* rootSaga() {
     yield fork(deleteOfferedCourseSaga)
     yield fork(updateOfferedCourseSaga)
     yield fork(addAllocateFacultySaga)
+    yield fork(getAllocatedFacultySaga)
 }

@@ -3,8 +3,11 @@ import AdminIcon from '../AdminIcon'
 import AdminNavBar from '../AdminNavbar'
 import Table from '../../Root/Table'
 import AllocateFaculty from './modals/AllocateFaculty'
+import { useSelector, useDispatch } from 'react-redux'
 
 function AllocatedTeacher() {
+
+    const dispatch = useDispatch()
 
     const [openAllocateTeacherModal, setOpenAllocateTeacherModal] = useState(false)
     const [refresh, setRefresh] = useState(false)
