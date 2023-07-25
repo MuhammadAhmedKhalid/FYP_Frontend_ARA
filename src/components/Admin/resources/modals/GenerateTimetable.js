@@ -3,6 +3,8 @@ import Modal from 'react-modal'
 import { useSelector, useDispatch } from 'react-redux'
 import { getDepartmentsRequest } from '../../../../redux/GetDepartments/getDepartmentsActions'
 import { getBatchesRequest } from '../../../../redux/GetBatches/getBatchesActions'
+import { getAllocatedFaculty } from '../../../../redux/GetAllocatedFaculty/allocatedFacultyActions'
+import { getOfferedCourses } from '../../../../redux/GetOfferedCourses/getOfferedCoursesActions'
 
 function GenerateTimetable({generateTimetableModal, setGenerateTimetableModal}) {
 
@@ -12,6 +14,10 @@ function GenerateTimetable({generateTimetableModal, setGenerateTimetableModal}) 
     const batchesAdded = useSelector((state) => state.getBatchesReducer.added)
     const departments = useSelector((state) => state.getDepartments.departments.data)
     const departmentsAdded = useSelector((state) => state.getDepartments.added)
+    const allocatedFaculty = useSelector((state) => state.allocatedFacultyReducer.allocatedFaculty.data)
+    const allocatedFacultyAdded = useSelector((state) => state.allocatedFacultyReducer.added)
+    const offeredCourses = useSelector((state) => state.offeredCoursesReducer.offeredCourses.data)
+    const offeredCoursesAdded = useSelector((state) => state.offeredCoursesReducer.added)
 
     const institute_id = localStorage.getItem('institute_id')
 
@@ -24,6 +30,8 @@ function GenerateTimetable({generateTimetableModal, setGenerateTimetableModal}) 
         if(institute_id > 0){
             dispatch(getBatchesRequest(institute_id))
             dispatch(getDepartmentsRequest(institute_id))
+            dispatch(getAllocatedFaculty(institute_id))
+            dispatch(getOfferedCourses(institute_id))
         }
     }, [institute_id])
 
@@ -59,7 +67,16 @@ function GenerateTimetable({generateTimetableModal, setGenerateTimetableModal}) 
         console.log(department_id)
         console.log(batchId)
         console.log(semester)
-        setGenerateTimetableModal(false)
+        for(let i of allocatedFaculty){
+            for(let j of offeredCourses){
+                if(i.offerCourseId === j.offerCourseId && j.addedInTimetable === false && j.allocated === true
+                    && j.department_id == department_id && j.batchId == batchId && j.semester == semester){
+                        console.log(j)
+                        console.log(i.faculty_id)
+                }
+            }
+        }
+        // setGenerateTimetableModal(false)
     }
 
     const handleDepartmentChange = (event) => {
