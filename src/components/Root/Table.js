@@ -34,7 +34,7 @@ function Table(props) {
                             {
                                 columns.map((column, index) => (<th key={index}>{column}</th>))
                             }
-                            <th>Actions</th>
+                            {!isMobile && <th>Actions</th>}
                         </tr>
                     </thead>
                     <tbody>
@@ -51,10 +51,9 @@ function Table(props) {
                                             </td>
                                         ))
                                     }
-                                    <td>
                                     {
                                         isMobile ? null :
-                                        <>
+                                        <td>
                                         {
                                             uneditable === true ? null : 
                                             <EditIcon style={{marginRight: '3px'}} 
@@ -64,9 +63,8 @@ function Table(props) {
                                         <DeleteIcon style={{marginRight: uneditable === true ? '0px' : '3px'}}
                                             onClick={() => handleDelete(index)} 
                                             className='deleteButton'/>
-                                        </>
+                                        </td>
                                     }
-                                    </td>
                                 </tr>
                             ))
                         }
