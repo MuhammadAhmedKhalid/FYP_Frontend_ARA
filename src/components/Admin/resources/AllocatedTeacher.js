@@ -10,6 +10,7 @@ import { getCourseRequest } from '../../../redux/GetCourse/getCourseActions'
 import { getBatchesRequest } from '../../../redux/GetBatches/getBatchesActions'
 import { getFacultyRequest } from '../../../redux/GetFaculty/getFacultyActions'
 import { getOfferedCourses } from '../../../redux/GetOfferedCourses/getOfferedCoursesActions'
+import { deleteAllocatedFacultyRequest, resetDeleteState } from '../../../redux/DeleteAllocatedFaculty/dltAllocatedFacultyActions'
 
 function AllocatedTeacher() {
 
@@ -27,6 +28,9 @@ function AllocatedTeacher() {
     const facultyAdded = useSelector((state) => state.getFaculty.added)
     const offeredCourses = useSelector((state) => state.offeredCoursesReducer.offeredCourses.data)
     const offeredCoursesAdded = useSelector((state) => state.offeredCoursesReducer.added)
+    const deleted = useSelector((state) => state.deleteAllocatedFacultyReducer.deleted)
+    const dltSuccessMsg = useSelector((state) => state.deleteAllocatedFacultyReducer.success.data)
+    const dltErrorMsg = useSelector((state) => state.deleteAllocatedFacultyReducer.error.data)
 
     const institute_id = localStorage.getItem('institute_id')
 
@@ -47,6 +51,24 @@ function AllocatedTeacher() {
             dispatch(getOfferedCourses(institute_id))
         }
     }, [refresh, institute_id])
+
+    useEffect(() => {
+        if(deleteId !== null){
+            dispatch(deleteAllocatedFacultyRequest(deleteId))
+        }
+    }, [deleteId])
+
+    useEffect(() => {
+        if(deleted === true){
+            alert(dltSuccessMsg)
+            setUpdate(false)
+            setDeleteId(null)
+            dispatch(resetDeleteState())
+        } else if (deleted === false){
+            alert(dltErrorMsg)
+            dispatch(resetDeleteState())
+        }
+    }, [deleted])
 
     useEffect(() => {
         if(refresh){
