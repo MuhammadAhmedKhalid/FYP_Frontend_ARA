@@ -17,6 +17,7 @@ import { getDepartmentsRequest } from '../../redux/GetDepartments/getDepartments
 import CheckIcon from '../Root/CheckIcon';
 import { AiFillHome } from "react-icons/ai";
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import GenerateTimetable from './resources/modals/GenerateTimetable';
 
 const logo = {
     fontSize: '20px',
@@ -36,6 +37,7 @@ const AdminNavBar = () => {
     const [weightageNotificationDetails, setWeightageNotificationDetails] = useState([])
     const [weightageNotificationsNum, setWeightageNotificationsNum] = useState(0)
     const [refresh, setRefresh] = useState(false)
+    const [generateTimetableModal, setGenerateTimetableModal] = useState(false)
     
     const institute_id = Number(localStorage.getItem('institute_id'))
     const notifications = useSelector((state) => state.notificationsReqReducer.notifications.data)
@@ -195,6 +197,7 @@ const AdminNavBar = () => {
                         </li>
                     }
                     <li><NavLink to='/instituteSchedule'>Schedule</NavLink></li>
+                    <li><NavLink onClick={() => setGenerateTimetableModal(true)}>Generate Timetable</NavLink></li>
                     <CustomDropdown items={[{
                         name: 'Departments',
                         value: 'departments',
@@ -342,6 +345,11 @@ const AdminNavBar = () => {
                     </div>
                 </div>
             </div >
+            {
+                generateTimetableModal && 
+                <GenerateTimetable generateTimetableModal={generateTimetableModal} 
+                    setGenerateTimetableModal={setGenerateTimetableModal}/>
+            }
         </div >
     )
 }
