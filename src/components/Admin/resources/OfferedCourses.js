@@ -10,6 +10,7 @@ import { getDepartmentsRequest } from '../../../redux/GetDepartments/getDepartme
 import { getOfferedCourses } from '../../../redux/GetOfferedCourses/getOfferedCoursesActions'
 import { deleteOfferedCourseRequest } from '../../../redux/DeleteOfferedCourse/deleteOfferedCourseActions'
 import UpdOfferCourse from './modals/update/UpdOfferCourse'
+import { resetState } from '../../../redux/UpdateOfferedCourse/updateOfferedCourseActions'
 
 function OfferedCourses() {
 
@@ -23,6 +24,8 @@ function OfferedCourses() {
     const departmentsAdded = useSelector((state) => state.getDepartments.added)
     const offeredCourses = useSelector((state) => state.offeredCoursesReducer.offeredCourses.data)
     const offeredCoursesAdded = useSelector((state) => state.offeredCoursesReducer.added)
+    const updateError = useSelector((state) => state.updateOfferedCourseReducer.error)
+    const updatedSuccessfully = useSelector((state) => state.updateOfferedCourseReducer.updated)
 
     const institute_id = localStorage.getItem('institute_id')
 
@@ -49,6 +52,16 @@ function OfferedCourses() {
             setDeleteId(null)
         }
     }, [deleteId])
+
+    useEffect(()=>{
+        if(updateError.length > 0){
+            alert(updateError)
+            dispatch(resetState())
+        }else if(updatedSuccessfully){
+            alert('Updated successfully.')
+            dispatch(resetState())
+        }
+    }, [updateError, updatedSuccessfully])
 
     useEffect(() => {
         if(refresh){
@@ -94,7 +107,7 @@ function OfferedCourses() {
                 </div>
                 <center>
                     {
-                        offeredCoursesAdded && rowData.length > 0 &&
+                        offeredCoursesAdded &&
                         <Table 
                             columns={['No.', 'Course', 'Batch', 'Department', 'Semester']} 
                             rows={rowData} 
