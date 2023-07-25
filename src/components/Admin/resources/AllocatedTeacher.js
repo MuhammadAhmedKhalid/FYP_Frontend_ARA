@@ -52,29 +52,30 @@ function AllocatedTeacher() {
         if(refresh){
             setRowData([])
         }
-        if(allocatedFacultyAdded && facultyAdded && offeredCoursesAdded && coursessAdded && rowData.length === 0){
-            if(refresh){
-                setRowData([])
-                setRefresh(false)
-            }
-            for(let i of allocatedFaculty){
-                for(let j of offeredCourses){
-                    for(let k of facultyList){
-                        for(let l of courses){
-                            for(let m of departments){
-                                for(let n of batches){
-                                    if(i.faculty_id === k.faculty_id && i.offerCourseId === j.offerCourseId
-                                        && l.course_id === j.course_id && m.department_id === j.department_id
-                                        && n.batchId === j.batchId){
-                                            rowData.push([i.allocateFacultyId, k.name, l.course_name+" ("+l.type+") ", l.credit_hours, 
-                                            m.department_name, n.batchCode+"-"+n.section, j.semester])
+        if(allocatedFacultyAdded && facultyAdded && offeredCoursesAdded && coursessAdded
+             && departmentsAdded && batchesAdded && rowData.length === 0){
+                if(refresh){
+                    setRowData([])
+                    setRefresh(false)
+                }
+                for(let i of allocatedFaculty){
+                    for(let j of offeredCourses){
+                        for(let k of facultyList){
+                            for(let l of courses){
+                                for(let m of departments){
+                                    for(let n of batches){
+                                        if(i.faculty_id === k.faculty_id && i.offerCourseId === j.offerCourseId
+                                            && l.course_id === j.course_id && m.department_id === j.department_id
+                                            && n.batchId === j.batchId){
+                                                rowData.push([i.allocateFacultyId, k.name, l.course_name+" ("+l.type+") ", l.credit_hours, 
+                                                m.department_name, n.batchCode+"-"+n.section, j.semester])
+                                        }
                                     }
                                 }
                             }
                         }
                     }
                 }
-            }
         }
     }, [allocatedFaculty, allocatedFacultyAdded, refresh])
 
