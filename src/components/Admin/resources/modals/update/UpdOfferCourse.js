@@ -18,7 +18,6 @@ function UpdOfferCourse({update, setUpdate, data}) {
     const departments = useSelector((state) => state.getDepartments.departments.data)
     const departmentsAdded = useSelector((state) => state.getDepartments.added)
     const offeredCourses = useSelector((state) => state.offeredCoursesReducer.offeredCourses.data)
-    const offeredCoursesAdded = useSelector((state) => state.offeredCoursesReducer.added)
 
     const institute_id = localStorage.getItem('institute_id')
 
