@@ -137,11 +137,9 @@ function AllocateFaculty(props) {
     }
 
     const handleFacultyChange = (e) => {
-        for(let i of facultyData){
-            if(i.name === e.target.value){
-                setAllocate({...allocate, faculty_id: i.id})
-            }
-        }
+        const selectedOption = e.target.options[e.target.selectedIndex];
+        const selectedId = selectedOption.getAttribute('data-key');
+        setAllocate({...allocate, faculty_id: selectedId})
     }
 
     const handleOfferedCourseChange = (e) => {
@@ -190,7 +188,7 @@ function AllocateFaculty(props) {
                             <option></option>
                                 {
                                     facultyData.length !== 0 ? facultyData.map(faculty => 
-                                        <option key={faculty.id}>{faculty.name}</option>) : null
+                                        <option key={faculty.id} data-key={faculty.id}>{faculty.name}</option>) : null
                                 }
                             </select>
                             <h3 style={{

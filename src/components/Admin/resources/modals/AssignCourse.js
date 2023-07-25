@@ -208,12 +208,10 @@ function AssignCourse(props) {
       }
 
       const handleFacultyChange = (e) => {
-        for(let i of facultyData){
-          if(i.name === e.target.value){
-            setAssignCourse({ ...assignCourse, faculty_id: i.id})
-            setRequest({...request, requested_faculty_id: i.id})
-          }
-        }
+        const selectedOption = e.target.options[e.target.selectedIndex];
+        const selectedId = selectedOption.getAttribute('data-key');
+        setAssignCourse({ ...assignCourse, faculty_id: selectedId})
+        setRequest({...request, requested_faculty_id: selectedId})
       }
 
       const handleCourseChange = (e) => {
@@ -412,7 +410,7 @@ function AssignCourse(props) {
                           <option></option>
                               {
                                   facultyData.length !== 0 ? facultyData.map(faculty => 
-                                      <option key={faculty.id}>{faculty.name}</option>) : null
+                                      <option key={faculty.id} data-key={faculty.id}>{faculty.name}</option>) : null
                               }
                           </select>
                           <h3 style={{

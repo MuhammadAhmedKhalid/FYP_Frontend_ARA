@@ -119,12 +119,9 @@ function StaffRequest(props) {
     }
 
     const handleFacultyChange = (event) => {
-        const faculty_name = event.target.value
-        for (let i = 0; i < faculty.length; i++) {
-            if (faculty[i].name === faculty_name) {
-                setRequest({ ...request, requested_faculty_id: faculty[i].faculty_id })
-            }
-        }
+        const selectedOption = e.target.options[e.target.selectedIndex];
+        const selectedId = selectedOption.getAttribute('data-key');
+        setRequest({ ...request, requested_faculty_id: selectedId })
     }
 
     const handleDateChange = (newValue) => {
@@ -330,7 +327,7 @@ function StaffRequest(props) {
                                 <option></option>
                                 {
                                     facultyData.length !==0 ? facultyData.map(faculty =>
-                                        <option ket={faculty.id}>{faculty.name}</option>) : null
+                                        <option ket={faculty.id} data-key={faculty.id}>{faculty.name}</option>) : null
                                 }
                             </select>
                             <div style={{ marginTop: '12px' }}>
