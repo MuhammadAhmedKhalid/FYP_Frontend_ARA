@@ -133,29 +133,7 @@ function AdminQuestionnaire(props) {
                                 )
                             }} />
                             <h3 style={{fontWeight: 'normal', color: 'gray', marginRight: '3px'}}>
-                                Spring semester starting month:
-                            </h3>
-                            <select required className='dropdown' onChange={(e) => setInstitute({ ...institute, springStartMonth: e.target.value })}>
-                                value={selectedMonth}
-                                <option></option>
-                                {
-                                    monthNames.map((month, index) => (
-                                    <option key={index} value={month}>{month}</option>))
-                                }
-                            </select>
-                            <h3 style={{fontWeight: 'normal', color: 'gray', marginRight: '3px'}}>
-                                Spring semester ending month:
-                            </h3>
-                            <select required className='dropdown' onChange={(e) => setInstitute({ ...institute, springEndMonth: e.target.value })}>
-                                value={selectedMonth}
-                                <option></option>
-                                {
-                                    monthNames.map((month, index) => (
-                                    <option key={index} value={month}>{month}</option>))
-                                }
-                            </select>
-                            <h3 style={{fontWeight: 'normal', color: 'gray', marginRight: '3px'}}>
-                                Fall semester starting month:
+                                Fall semester (1/3/5/7) starting month:
                             </h3>
                             <select required className='dropdown' onChange={(e) => setInstitute({ ...institute, fallStartMonth: e.target.value })}>
                                 value={selectedMonth}
@@ -166,9 +144,31 @@ function AdminQuestionnaire(props) {
                                 }
                             </select>
                             <h3 style={{fontWeight: 'normal', color: 'gray', marginRight: '3px'}}>
-                                Fall semester ending month:
+                                Fall semester (1/3/5/7) ending month:
                             </h3>
                             <select required className='dropdown' onChange={(e) => setInstitute({ ...institute, fallEndMonth: e.target.value })}>
+                                value={selectedMonth}
+                                <option></option>
+                                {
+                                    monthNames.map((month, index) => (
+                                    <option key={index} value={month}>{month}</option>))
+                                }
+                            </select>
+                            <h3 style={{fontWeight: 'normal', color: 'gray', marginRight: '3px'}}>
+                                Spring semester (2/4/6/8) starting month:
+                            </h3>
+                            <select required className='dropdown' onChange={(e) => setInstitute({ ...institute, springStartMonth: e.target.value })}>
+                                value={selectedMonth}
+                                <option></option>
+                                {
+                                    monthNames.map((month, index) => (
+                                    <option key={index} value={month}>{month}</option>))
+                                }
+                            </select>
+                            <h3 style={{fontWeight: 'normal', color: 'gray', marginRight: '3px'}}>
+                                Spring semester (2/4/6/8) ending month:
+                            </h3>
+                            <select required className='dropdown' onChange={(e) => setInstitute({ ...institute, springEndMonth: e.target.value })}>
                                 value={selectedMonth}
                                 <option></option>
                                 {

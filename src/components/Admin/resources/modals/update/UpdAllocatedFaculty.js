@@ -197,14 +197,14 @@ function UpdAllocatedFaculty({update, setUpdate, data}) {
                             }}>Semester</h3>
                             <select required className='dropdown' onChange={(e) => setSemester(e.target.value)}>
                                 <option></option>
-                                <option>1</option>
-                                <option>2</option>
-                                <option>3</option>
-                                <option>4</option>
-                                <option>5</option>
-                                <option>6</option>
-                                <option>7</option>
-                                <option>8</option>
+                                <option>1 (Fall)</option>
+                                <option>2 (Spring)</option>
+                                <option>3 (Fall)</option>
+                                <option>4 (Spring)</option>
+                                <option>5 (Fall)</option>
+                                <option>6 (Spring)</option>
+                                <option>7 (Fall)</option>
+                                <option>8 (Spring)</option>
                             </select>
                             <h3 style={{
                                 fontWeight: 'normal', color: 'gray', marginRight: '3px'

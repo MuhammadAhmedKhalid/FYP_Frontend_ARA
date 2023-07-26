@@ -73,6 +73,11 @@ function GenerateTimetable({generateTimetableModal, setGenerateTimetableModal}) 
                     && j.department_id == department_id && j.batchId == batchId && j.semester == semester){
                         console.log(j)
                         console.log(i.faculty_id)
+
+                        // get requested staff list and extract selected faculty (use faculty_id)
+                        // get requested rooms list of selected department (use room_id and department_id)
+                        // get assigned courses list to that department-batch (use batch_id and department_id) to check free time of that batch
+
                 }
             }
         }
