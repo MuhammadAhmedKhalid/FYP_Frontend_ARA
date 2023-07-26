@@ -24,7 +24,7 @@ function GenerateTimetable({generateTimetableModal, setGenerateTimetableModal}) 
     const [batchesData, setBatchesData] = useState([])
     const [department_id, setDepartmentId] = useState()
     const [batchId, setBatchId] = useState()
-    const [semester, setSemester] = useState()
+    const [semester, setSemester] = useState("")
 
     useEffect(() => {
         if(institute_id > 0){
@@ -142,14 +142,14 @@ function GenerateTimetable({generateTimetableModal, setGenerateTimetableModal}) 
                         }}>Semester</h3>
                         <select required className='dropdown' onChange={handleSemesterChange}>
                             <option></option>
-                            <option>1</option>
-                            <option>2</option>
-                            <option>3</option>
-                            <option>4</option>
-                            <option>5</option>
-                            <option>6</option>
-                            <option>7</option>
-                            <option>8</option>
+                            <option>1 (Fall)</option>
+                            <option>2 (Spring)</option>
+                            <option>3 (Fall)</option>
+                            <option>4 (Spring)</option>
+                            <option>5 (Fall)</option>
+                            <option>6 (Spring)</option>
+                            <option>7 (Fall)</option>
+                            <option>8 (Spring)</option>
                         </select>
                         <div className='center flexbox-container-y'>
                             <button style={{ marginTop: '1rem' }} type='submit' className='modal-btn'>Generate</button>

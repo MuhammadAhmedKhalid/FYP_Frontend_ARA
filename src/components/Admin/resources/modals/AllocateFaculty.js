@@ -30,7 +30,7 @@ function AllocateFaculty(props) {
     const [batchesData, setBatchesData] = useState([])
     const [facultyData, setFacultyData] = useState([])
     const [offeredCourseData, setOfferedCourseData] = useState([])
-    const [semester, setSemester] = useState()
+    const [semester, setSemester] = useState("")
     const [submit, setSubmitted] = useState(false)
     const [batchId, setBatchId] = useState()
     const [department_id, setDepartmentId] = useState()
@@ -76,7 +76,7 @@ function AllocateFaculty(props) {
     }, [department_id])
 
     useEffect(() => {
-        if(semester > 0 && offeredCoursesAdded){
+        if(semester.length > 0 && offeredCoursesAdded){
             setOfferedCourseData([])
             for(let i of offeredCourses){
                 if(i.department_id == department_id && i.semester == semester && i.batchId == batchId
