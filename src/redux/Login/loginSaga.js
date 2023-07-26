@@ -21,6 +21,8 @@ function* login(user) {
     localStorage.setItem('springEndMonth', response.data.springEndMonth);
     localStorage.setItem('fallStartMonth', response.data.fallStartMonth);
     localStorage.setItem('fallEndMonth', response.data.fallEndMonth);
+    localStorage.setItem('instituteStartTime', response.data.instituteStartTime);
+    localStorage.setItem('instituteEndTime', response.data.instituteEndTime);
 
     } catch (e) {
         yield put({ type: LOGIN_FAILURE, message: "Login operation failed" })

@@ -13,6 +13,11 @@ import { addInstituteRequest } from '../../redux/AddInstitute/instituteActions'
 import { getInstitutesRequest } from '../../redux/GetInstitutes/getInstitutesActions'
 import { resetIdRequest } from '../../redux/Login/loginActions'
 import { format } from 'date-fns';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import Stack from '@mui/material/Stack';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
+import { TimePicker } from '@mui/x-date-pickers/TimePicker';
+import dayjs from 'dayjs';
 
 function AdminQuestionnaire(props) {
 
@@ -35,6 +40,8 @@ function AdminQuestionnaire(props) {
     }, [instituteAdded])
 
     const [date, setDate] = useState(new Date());
+    const [value, setValue] = useState(dayjs(new Date()));
+    const [value1, setValue1] = useState(dayjs(new Date()));
 
     const handleChange = (date) => {
         setDate(date);
@@ -59,6 +66,8 @@ function AdminQuestionnaire(props) {
         fallEndMonth: format(new Date(), 'MMMM'),
         springStartMonth: format(new Date(), 'MMMM'),
         springEndMonth: format(new Date(), 'MMMM'),
+        instituteStartTime: format(new Date(), 'HH:mm'),
+        instituteEndTime: format(new Date(), 'HH:mm'),
     })
 
     const customStyles = {
@@ -77,6 +86,30 @@ function AdminQuestionnaire(props) {
         e.preventDefault();
         dispatch(addInstituteRequest(institute))
     }
+
+    const onKeyDown = (e) => {
+        e.preventDefault();
+    };
+
+     const handleStartTimeChange = (newValue) => {
+        const object = newValue
+        for (const key in object) {
+            if (key === '$d') {
+                setInstitute({ ...institute, instituteStartTime: format(new Date(object[key]), 'HH:mm') })
+            }
+        }
+        setValue(newValue);
+    };
+
+    const handleEndTimeChange = (newValue) => {
+        const object = newValue
+        for (const key in object) {
+            if (key === '$d') {
+                setInstitute({ ...institute, instituteEndTime: format(new Date(object[key]), 'HH:mm') })
+            }
+        }
+        setValue1(newValue);
+    };
 
     return (
         <div>
@@ -176,6 +209,24 @@ function AdminQuestionnaire(props) {
                                     <option key={index} value={month}>{month}</option>))
                                 }
                             </select>
+                            <div style={{ marginTop: '12px' }}>
+                            <LocalizationProvider dateAdapter={AdapterDayjs}>
+                                <Stack spacing={1.5}>
+                                    <TimePicker
+                                        value={value}
+                                        onChange={handleStartTimeChange}
+                                        label="Institute Start Time"
+                                        renderInput={(params) => <TextField onKeyDown={onKeyDown} {...params}
+                                            variant="outlined" />} />
+                                    <TimePicker
+                                        value={value1}
+                                        onChange={handleEndTimeChange}
+                                        label="Institute End Time"
+                                        renderInput={(params) => <TextField onKeyDown={onKeyDown} {...params}
+                                            variant="outlined" />} />
+                                </Stack>
+                            </LocalizationProvider>
+                        </div>
                         </div>
                         <center><button style={{marginTop: '20px'}} type='submit' className='modal-btn'>Save</button></center>
                     </form>
