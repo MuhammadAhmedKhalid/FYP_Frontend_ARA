@@ -5,6 +5,9 @@ import { getDepartmentsRequest } from '../../../../redux/GetDepartments/getDepar
 import { getBatchesRequest } from '../../../../redux/GetBatches/getBatchesActions'
 import { getAllocatedFaculty } from '../../../../redux/GetAllocatedFaculty/allocatedFacultyActions'
 import { getOfferedCourses } from '../../../../redux/GetOfferedCourses/getOfferedCoursesActions'
+import { getStaffRequest } from '../../../../redux/GetStaffRequest/getStaffReqActions'
+import { getRoomRequest } from '../../../../redux/GetRoomRequests/getRoomReqActions'
+import { assignedCoursesRequest } from '../../../../redux/AssignedCourses/assignedCoursesActions'
 
 function GenerateTimetable({generateTimetableModal, setGenerateTimetableModal}) {
 
@@ -15,11 +18,14 @@ function GenerateTimetable({generateTimetableModal, setGenerateTimetableModal}) 
     const departments = useSelector((state) => state.getDepartments.departments.data)
     const departmentsAdded = useSelector((state) => state.getDepartments.added)
     const allocatedFaculty = useSelector((state) => state.allocatedFacultyReducer.allocatedFaculty.data)
-    const allocatedFacultyAdded = useSelector((state) => state.allocatedFacultyReducer.added)
     const offeredCourses = useSelector((state) => state.offeredCoursesReducer.offeredCourses.data)
-    const offeredCoursesAdded = useSelector((state) => state.offeredCoursesReducer.added)
+    const requestedStaff = useSelector((state) => state.staffReqReducer.staff_req.data)
+    const requestedRooms = useSelector((state) => state.getRoomRequest.room_req.data)
+    const assignedCourses = useSelector((state) => state.assignedCoursesReducer.assignedCourses.data)
 
     const institute_id = localStorage.getItem('institute_id')
+    const instituteStartTime = localStorage.getItem('instituteStartTime')
+    const instituteEndTime = localStorage.getItem('instituteEndTime')
 
     const [batchesData, setBatchesData] = useState([])
     const [department_id, setDepartmentId] = useState()
@@ -32,6 +38,9 @@ function GenerateTimetable({generateTimetableModal, setGenerateTimetableModal}) 
             dispatch(getDepartmentsRequest(institute_id))
             dispatch(getAllocatedFaculty(institute_id))
             dispatch(getOfferedCourses(institute_id))
+            dispatch(getStaffRequest(institute_id))
+            dispatch(getRoomRequest(institute_id))
+            dispatch(assignedCoursesRequest(institute_id))
         }
     }, [institute_id])
 
@@ -64,15 +73,19 @@ function GenerateTimetable({generateTimetableModal, setGenerateTimetableModal}) 
 
     const submitHandler = (event) => {
         event.preventDefault()
-        console.log(department_id)
-        console.log(batchId)
-        console.log(semester)
+        // console.log(department_id)
+        // console.log(batchId)
+        // console.log(semester)
+        console.log(instituteStartTime+"-"+instituteEndTime)
         for(let i of allocatedFaculty){
             for(let j of offeredCourses){
                 if(i.offerCourseId === j.offerCourseId && j.addedInTimetable === false && j.allocated === true
                     && j.department_id == department_id && j.batchId == batchId && j.semester == semester){
                         console.log(j)
                         console.log(i.faculty_id)
+                        console.log(requestedRooms)
+                        console.log(requestedStaff)
+                        console.log(assignedCourses)
 
                         // get requested staff list and extract selected faculty (use faculty_id)
                         // get requested rooms list of selected department (use room_id and department_id)
