@@ -99,7 +99,7 @@ function Signup(props) {
         if(signupFailed === true){
             setSignupErrText('User already exists with this Email address.')
         }else if(signupFailed === false){
-            emailjs.sendForm('service_tjvggdm', 'template_wrlj0ov', form.current, 'nvzT6R7t3FB6c7LN0')
+            emailjs.sendForm('service_tjvggdm', 'template_1p1kbzn', form.current, 'nvzT6R7t3FB6c7LN0')
             openModal()
         }
     },[signupFailed])
