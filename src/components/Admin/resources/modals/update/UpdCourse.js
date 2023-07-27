@@ -103,7 +103,7 @@ function UpdCourse({update, setUpdate, data}) {
                         </InputAdornment>
                     )
               }} />
-              <TextField required 
+              {/* <TextField required 
                 value={course.credit_hours} 
                 onChange={(e) => setCourse({ ...course, credit_hours: e.target.value })}
                 style={{ margin: '3px' }} size='small' variant="outlined" type='text' placeholder='Credit hours' InputProps={{
@@ -112,15 +112,27 @@ function UpdCourse({update, setUpdate, data}) {
                             <AccessTimeIcon style={{ height: '20px' }} color="action" />
                         </InputAdornment>
                     )
-              }} />
+              }} /> */}
               <h3 style={{
-                            fontWeight: 'normal', color: 'gray', marginRight: '3px'
-                        }}>Type</h3>
-                        <select required className='dropdown' onChange={handleTypeChange}>
-                            <option></option>
-                            <option>Theory</option>
-                            <option>Practical</option>
-                        </select>
+                  fontWeight: 'normal', color: 'gray', marginRight: '3px'
+              }}>Credit hours</h3>
+              <select required className='dropdown' onChange={(e) => setCourse({ ...course, credit_hours: e.target.value })}>
+                  <option></option>
+                  <option>3+0</option>
+                  <option>0+3</option>
+                  <option>2+0</option>
+                  <option>0+2</option>
+                  <option>1+0</option>
+                  <option>0+1</option>
+              </select>
+              <h3 style={{
+                  fontWeight: 'normal', color: 'gray', marginRight: '3px'
+              }}>Type</h3>
+              <select required className='dropdown' onChange={handleTypeChange}>
+                  <option></option>
+                  <option>Theory</option>
+                  <option>Practical</option>
+              </select>
               <h3 style={{
                     fontWeight: 'normal', color: 'gray', marginRight: '3px'
                 }}>
