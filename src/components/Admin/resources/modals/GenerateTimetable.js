@@ -172,10 +172,7 @@ function GenerateTimetable({generateTimetableModal, setGenerateTimetableModal}) 
 
         }
 
-        if(extractSemesterType === "Fall"){
-            const datesOfSem = getDatesBetweenMonths(fallStart, fallEnd);
-            // console.log(datesOfSem)
-
+        const assignAutomatically = (datesOfSem) => {
             for(let a of allocatedFaculty){
                 for(let b of offeredCourses){
                     if(a.offerCourseId === b.offerCourseId && b.addedInTimetable === false && b.allocated === true
@@ -184,170 +181,170 @@ function GenerateTimetable({generateTimetableModal, setGenerateTimetableModal}) 
                             let weekdays=0;
                             let result = false;
                             for(let i in datesOfSem){
-                                    for(let k of instituteHours){
+                                for(let k of instituteHours){
 
-                                        result = isCrHrsCompletedForTheWeek(b);
+                                    result = isCrHrsCompletedForTheWeek(b);
+                                    
+                                    if(!result){
+
+                                        let courseConflict = false;
+                                        let facultyConflict = false;
+                                        let roomConflict = false;
+
+                                        let startTime = new Date();
+                                        let endTime = new Date();
                                         
-                                        if(!result){
+                                        startTime.setHours(k[0].substring(0, 2), k[0].substring(3), 0, 0);
+                                        endTime.setHours(k[1].substring(0, 2), k[1].substring(3), 0, 0);
 
-                                            let courseConflict = false;
-                                            let facultyConflict = false;
-                                            let roomConflict = false;
+                                        const dateObject = new Date(datesOfSem[i]);
+                                        const options = { weekday: 'long' };
+                                        const fullDayName = dateObject.toLocaleString('en-US', options);
+                                        
+                                        // course conflict
+                                        for (let i = 0; i < assignedCourses.length; i++) {
+                                            if(assignedCourses[i].department_id === b.department_id 
+                                                && assignedCourses[i].semesterType === extractSemesterType 
+                                                && assignedCourses[i].day === fullDayName && assignedCourses[i].batchId === b.batchId){
 
-                                            let startTime = new Date();
-                                            let endTime = new Date();
+                                                    var assignedStartTime = new Date();
+                                                    var assignedEndTime = new Date();
+                                
+                                                    assignedStartTime.setHours(assignedCourses[i].startTime.substring(0, 2), 
+                                                        assignedCourses[i].startTime.substring(3), 0, 0);
+                                                    assignedEndTime.setHours(assignedCourses[i].endTime.substring(0, 2), 
+                                                        assignedCourses[i].endTime.substring(3), 0, 0);
+                                
+                                                    courseConflict = checkConflict(startTime, assignedStartTime, endTime, assignedEndTime,
+                                                    startTime.getTime(), assignedStartTime.getTime(), endTime.getTime(), 
+                                                    assignedEndTime.getTime());
+                                
+                                                    if(courseConflict){
+                                                        break
+                                                    }
+                                            }
+                                        }
+
+                                        // staff conflict
+                                        if(!courseConflict){
                                             
-                                            startTime.setHours(k[0].substring(0, 2), k[0].substring(3), 0, 0);
-                                            endTime.setHours(k[1].substring(0, 2), k[1].substring(3), 0, 0);
+                                            for(let j = 0; j < requestedStaff.length; j++){
+                                                
+                                                let facultyStartTime = new Date();
+                                                let facultyEndTime = new Date();
+                                                
+                                                facultyStartTime.setHours(requestedStaff[j].startTime.substring(0, 2), 
+                                                    requestedStaff[j].startTime.substring(3), 0, 0);
+                                                facultyEndTime.setHours(requestedStaff[j].endTime.substring(0, 2), 
+                                                    requestedStaff[j].endTime.substring(3), 0, 0);
 
-                                            const dateObject = new Date(datesOfSem[i]);
-                                            const options = { weekday: 'long' };
-                                            const fullDayName = dateObject.toLocaleString('en-US', options);
-                                            
-                                            // course conflict
-                                            for (let i = 0; i < assignedCourses.length; i++) {
-                                                if(assignedCourses[i].department_id === b.department_id 
-                                                    && assignedCourses[i].semesterType === extractSemesterType 
-                                                    && assignedCourses[i].day === fullDayName && assignedCourses[i].batchId === b.batchId){
+                                                if (requestedStaff[j].requested_faculty_id === a.faculty_id 
+                                                    && daysOfWeek[new Date(requestedStaff[j].date).getDay()] === fullDayName) {
 
-                                                        var assignedStartTime = new Date();
-                                                        var assignedEndTime = new Date();
-                                    
-                                                        assignedStartTime.setHours(assignedCourses[i].startTime.substring(0, 2), 
-                                                            assignedCourses[i].startTime.substring(3), 0, 0);
-                                                        assignedEndTime.setHours(assignedCourses[i].endTime.substring(0, 2), 
-                                                            assignedCourses[i].endTime.substring(3), 0, 0);
-                                    
-                                                        courseConflict = checkConflict(startTime, assignedStartTime, endTime, assignedEndTime,
-                                                        startTime.getTime(), assignedStartTime.getTime(), endTime.getTime(), 
-                                                        assignedEndTime.getTime());
-                                    
-                                                        if(courseConflict){
-                                                            break
-                                                        }
+                                                    facultyConflict = checkConflict(startTime, facultyStartTime, endTime, facultyEndTime,
+                                                    startTime.getTime(), facultyStartTime.getTime(), endTime.getTime(), 
+                                                    facultyEndTime.getTime());
+                                
+                                                    if(facultyConflict){
+                                                        break
+                                                    }
                                                 }
                                             }
+                                        }
 
-                                            // staff conflict
-                                            if(!courseConflict){
-                                                
-                                                for(let j = 0; j < requestedStaff.length; j++){
-                                                    
-                                                    let facultyStartTime = new Date();
-                                                    let facultyEndTime = new Date();
-                                                    
-                                                    facultyStartTime.setHours(requestedStaff[j].startTime.substring(0, 2), 
-                                                        requestedStaff[j].startTime.substring(3), 0, 0);
-                                                    facultyEndTime.setHours(requestedStaff[j].endTime.substring(0, 2), 
-                                                        requestedStaff[j].endTime.substring(3), 0, 0);
-
-                                                    if (requestedStaff[j].requested_faculty_id === a.faculty_id 
-                                                      && daysOfWeek[new Date(requestedStaff[j].date).getDay()] === fullDayName) {
-
-                                                        facultyConflict = checkConflict(startTime, facultyStartTime, endTime, facultyEndTime,
-                                                        startTime.getTime(), facultyStartTime.getTime(), endTime.getTime(), 
-                                                        facultyEndTime.getTime());
-                                    
-                                                        if(facultyConflict){
-                                                            break
+                                        let roomId = 0;
+                                        // room conflict
+                                        if(!courseConflict && !facultyConflict){
+                                            
+                                            for(let z of rooms){
+                                                if(z.department_id === b.department_id){
+                                                    roomId = z.room_id
+                                                    for (let k = 0; k < requestedRooms.length; k++) {
+                                                        let roomStartTime = new Date();
+                                                        let roomEndTime = new Date();
+                                            
+                                                        roomStartTime.setHours(requestedRooms[k].startTime.substring(0, 2), 
+                                                            requestedRooms[k].startTime.substring(3), 0, 0);
+                                                        roomEndTime.setHours(requestedRooms[k].endTime.substring(0, 2), 
+                                                            requestedRooms[k].endTime.substring(3), 0, 0);
+                                            
+                                                        if(roomId === requestedRooms[k].room_id 
+                                                            && daysOfWeek[new Date(requestedRooms[k].date).getDay()] === fullDayName){
+                                                                
+                                                                roomConflict = checkConflict(startTime, roomStartTime, endTime, roomEndTime,
+                                                                    startTime.getTime(), roomStartTime.getTime(), endTime.getTime(), 
+                                                                    roomEndTime.getTime())
+                                                                
+                                                                if (roomConflict) {
+                                                                    break
+                                                                }
                                                         }
                                                     }
                                                 }
                                             }
 
-                                            let roomId = 0;
-                                            // room conflict
-                                            if(!courseConflict && !facultyConflict){
-                                                
-                                                for(let z of rooms){
-                                                    if(z.department_id === b.department_id){
-                                                        roomId = z.room_id
-                                                        for (let k = 0; k < requestedRooms.length; k++) {
-                                                            let roomStartTime = new Date();
-                                                            let roomEndTime = new Date();
-                                              
-                                                            roomStartTime.setHours(requestedRooms[k].startTime.substring(0, 2), 
-                                                                requestedRooms[k].startTime.substring(3), 0, 0);
-                                                            roomEndTime.setHours(requestedRooms[k].endTime.substring(0, 2), 
-                                                                requestedRooms[k].endTime.substring(3), 0, 0);
-                                              
-                                                            if(roomId === requestedRooms[k].room_id 
-                                                                && daysOfWeek[new Date(requestedRooms[k].date).getDay()] === fullDayName){
-                                                                    
-                                                                    roomConflict = checkConflict(startTime, roomStartTime, endTime, roomEndTime,
-                                                                        startTime.getTime(), roomStartTime.getTime(), endTime.getTime(), 
-                                                                        roomEndTime.getTime())
-                                                                    
-                                                                    if (roomConflict) {
-                                                                        break
-                                                                    }
-                                                            }
-                                                        }
-                                                    }
-                                                }
+                                        }
 
-                                            }
-
-                                            if(courseConflict || facultyConflict || roomConflict){
-                                                continue
-                                            } else {
-
-                                                const assignCourse = {
-                                                    batchId: b.batchId,
-                                                    department_id: b.department_id,
-                                                    semesterType: extractSemesterType,
-                                                    faculty_id: a.faculty_id,
-                                                    course_id: b.course_id,
-                                                    day: fullDayName,
-                                                    room_id: roomId,
-                                                    startTime: format(new Date(startTime), 'HH:mm'),
-                                                    endTime: format(new Date(endTime), 'HH:mm'),
-                                                    date: format(new Date(datesOfSem[i]), 'MM/dd/yyyy'),
-                                                    institute_id
-                                                }
-                                            
-                                                const request= {
-                                                    department_id: b.department_id,
-                                                    institute_id,
-                                                    user_id,
-                                                    room_id: roomId,
-                                                    requested_faculty_id: a.faculty_id,
-                                                    date: format(new Date(datesOfSem[i]), 'MM/dd/yyyy'),
-                                                    startTime: format(new Date(startTime), 'HH:mm'),
-                                                    endTime: format(new Date(endTime), 'HH:mm'),
-                                                }
-                                                // weekdays=weekdays+1;
-                                                console.log(assignCourse)
-                                                break
-
-                                                // assign
-                                                // dispatch(assignCourseRequest(assignCourse, request))
-                                            }
-
+                                        if(courseConflict || facultyConflict || roomConflict){
+                                            continue
                                         } else {
-                                            result=false;
-                                            break;
+                                            const assignCourse = {
+                                                batchId: b.batchId,
+                                                department_id: b.department_id,
+                                                semesterType: extractSemesterType,
+                                                faculty_id: a.faculty_id,
+                                                course_id: b.course_id,
+                                                day: fullDayName,
+                                                room_id: roomId,
+                                                startTime: format(new Date(startTime), 'HH:mm'),
+                                                endTime: format(new Date(endTime), 'HH:mm'),
+                                                date: format(new Date(datesOfSem[i]), 'MM/dd/yyyy'),
+                                                institute_id
+                                            }
+                                        
+                                            const request= {
+                                                department_id: b.department_id,
+                                                institute_id,
+                                                user_id,
+                                                room_id: roomId,
+                                                requested_faculty_id: a.faculty_id,
+                                                date: format(new Date(datesOfSem[i]), 'MM/dd/yyyy'),
+                                                startTime: format(new Date(startTime), 'HH:mm'),
+                                                endTime: format(new Date(endTime), 'HH:mm'),
+                                            }
+                                            
+                                            console.log(assignCourse)
+                                            // dispatch(assignCourseRequest(assignCourse, request))
+                                            break
                                         }
-                                    }
-                                    weekdays++;
-
-                                    if(weekdays===6){
-                                        weekdays=0;
-                                        for (const key in dictionary){
-                                            dictionary[key]=0;
-                                        }
+                                    } else {
                                         result=false;
+                                        break;
                                     }
                                 }
+                                weekdays++;
+
+                                if(weekdays===6){
+                                    weekdays=0;
+                                    result=false;
+                                    for (const key in dictionary){
+                                        dictionary[key]=0;
+                                    }
+                                }
+                            }
                     }
                 }
             }
-
-        } else {
-            // extractSemesterType = "Spring"
         }
 
-        // setGenerateTimetableModal(false)
+        if(extractSemesterType === "Fall"){
+            const datesOfSem = getDatesBetweenMonths(fallStart, fallEnd);
+            assignAutomatically(datesOfSem);
+        } else {
+            const datesOfSem = getDatesBetweenMonths(springStart, springEnd);
+            assignAutomatically(datesOfSem);
+        }
+        setGenerateTimetableModal(false)
     }
 
     const handleDepartmentChange = (event) => {
