@@ -356,6 +356,7 @@ function GenerateTimetable({generateTimetableModal, setGenerateTimetableModal}) 
             assignAutomatically(datesOfSem);
         }
         setGenerateTimetableModal(false)
+        alert("Timetable generated successfully.");
     }
 
     const handleDepartmentChange = (event) => {
