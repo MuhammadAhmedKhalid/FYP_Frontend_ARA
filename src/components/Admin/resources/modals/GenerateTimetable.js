@@ -186,7 +186,7 @@ function GenerateTimetable({generateTimetableModal, setGenerateTimetableModal}) 
                             
                             let weekdays=0;
                             let result = false;
-                            for(let i in datesOfSem){
+                            for(let x in datesOfSem){
                                 for(let k of instituteHours){
 
                                     result = isCrHrsCompletedForTheWeek(b);
@@ -203,7 +203,7 @@ function GenerateTimetable({generateTimetableModal, setGenerateTimetableModal}) 
                                         startTime.setHours(k[0].substring(0, 2), k[0].substring(3), 0, 0);
                                         endTime.setHours(k[1].substring(0, 2), k[1].substring(3), 0, 0);
 
-                                        const dateObject = new Date(datesOfSem[i]);
+                                        const dateObject = new Date(datesOfSem[x]);
                                         const options = { weekday: 'long' };
                                         const fullDayName = dateObject.toLocaleString('en-US', options);
                                         
@@ -212,7 +212,7 @@ function GenerateTimetable({generateTimetableModal, setGenerateTimetableModal}) 
                                             if(tempAssignedCourses[i].department_id === b.department_id 
                                                 && tempAssignedCourses[i].semesterType === extractSemesterType 
                                                 && tempAssignedCourses[i].day === fullDayName && tempAssignedCourses[i].batchId === b.batchId
-                                                && format(new Date(datesOfSem[i]), 'MM/dd/yyyy') == tempAssignedCourses[i].date){
+                                                && format(new Date(datesOfSem[x]), 'MM/dd/yyyy') == tempAssignedCourses[i].date){
 
                                                     var assignedStartTime = new Date();
                                                     var assignedEndTime = new Date();
@@ -247,7 +247,7 @@ function GenerateTimetable({generateTimetableModal, setGenerateTimetableModal}) 
 
                                                 if (tempRequestedStaff[j].requested_faculty_id === a.faculty_id 
                                                     && daysOfWeek[new Date(tempRequestedStaff[j].date).getDay()] === fullDayName
-                                                    && format(new Date(datesOfSem[i]), 'MM/dd/yyyy') == tempRequestedStaff[j].date) {
+                                                    && format(new Date(datesOfSem[x]), 'MM/dd/yyyy') == tempRequestedStaff[j].date) {
 
                                                     facultyConflict = checkConflict(startTime, facultyStartTime, endTime, facultyEndTime,
                                                     startTime.getTime(), facultyStartTime.getTime(), endTime.getTime(), 
@@ -278,7 +278,7 @@ function GenerateTimetable({generateTimetableModal, setGenerateTimetableModal}) 
                                             
                                                         if(roomId === tempAssignedCourses[k].room_id 
                                                             && daysOfWeek[new Date(tempAssignedCourses[k].date).getDay()] === fullDayName
-                                                            && format(new Date(datesOfSem[i]), 'MM/dd/yyyy') == tempAssignedCourses[k].date){
+                                                            && format(new Date(datesOfSem[x]), 'MM/dd/yyyy') == tempAssignedCourses[k].date){
                                                                 
                                                                 roomConflict = checkConflict(startTime, roomStartTime, endTime, roomEndTime,
                                                                     startTime.getTime(), roomStartTime.getTime(), endTime.getTime(), 
@@ -307,7 +307,7 @@ function GenerateTimetable({generateTimetableModal, setGenerateTimetableModal}) 
                                                 room_id: roomId,
                                                 startTime: format(new Date(startTime), 'HH:mm'),
                                                 endTime: format(new Date(endTime), 'HH:mm'),
-                                                date: format(new Date(datesOfSem[i]), 'MM/dd/yyyy'),
+                                                date: format(new Date(datesOfSem[x]), 'MM/dd/yyyy'),
                                                 institute_id
                                             }
                                         
@@ -317,7 +317,7 @@ function GenerateTimetable({generateTimetableModal, setGenerateTimetableModal}) 
                                                 user_id,
                                                 room_id: roomId,
                                                 requested_faculty_id: a.faculty_id,
-                                                date: format(new Date(datesOfSem[i]), 'MM/dd/yyyy'),
+                                                date: format(new Date(datesOfSem[x]), 'MM/dd/yyyy'),
                                                 startTime: format(new Date(startTime), 'HH:mm'),
                                                 endTime: format(new Date(endTime), 'HH:mm'),
                                             }
