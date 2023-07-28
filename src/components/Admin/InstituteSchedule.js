@@ -29,18 +29,14 @@ function InstituteSchedule() {
   const facultyAdded = useSelector((state) => state.getFaculty.added)
 
   const localizer = momentLocalizer(moment)
-
-  const options = ["Spring", "Fall"];
-
-  const [selectedSemesterType, setselectedSemesterType] = useState(options[0]);
-  const [semesterTypeChange, setSemesterTypeChange] = useState(false)
-  const [selectedBatch, setSelectedBatch] = useState("")
-  const [batchData, setBatchData] = useState([])
+  
   const [events, setEvents] = useState([])
-  const [batchId, setBatchId] = useState(0)
-  const [departmentId, setDepartmentId] = useState(0)
   const [showDetailModal, setShowDetailModal] = useState(false)
   const [details, setDetails] = useState()
+
+  const [batchesData, setBatchesData] = useState([])
+  const [department_id, setDepartmentId] = useState()
+  const [batchId, setBatchId] = useState()
 
   useEffect(() => {
     dispatch(getBatchesRequest(institute_id))
@@ -51,59 +47,63 @@ function InstituteSchedule() {
   }, [dispatch, institute_id])
 
   useEffect(() => {
-    if(assignedCoursesAdded && coursessAdded && facultyAdded && assignedCourses.length > 0 && courses.length > 0 && faculty.length > 0 &&batchId > 0 && departmentId > 0){
-        setEvents([])
-        for(let i of assignedCourses){
+    if(batchId > 0 && department_id > 0 && assignedCoursesAdded && coursessAdded && facultyAdded 
+        && assignedCourses.length > 0 && courses.length > 0 && faculty.length > 0 ){
+          setEvents([])
+          for(let i of assignedCourses){
             for(let j of courses){
-                for(let k of faculty){
-                  if(j.course_id === i.course_id && i.batchId === batchId && i.department_id === departmentId && i.semesterType === selectedSemesterType && 
-                    k.faculty_id === i.faculty_id && i.faculty_id !== 0){
+              for(let k of faculty){
+                if(j.course_id === i.course_id && i.batchId === batchId && i.department_id === department_id 
+                  && k.faculty_id === i.faculty_id){
                     setEvents(events => [...events, 
-                        {id: i.assignedCourseId, title: j.course_name + " (" + k.name + ")", startDate: new Date(i.date + " " +i.startTime), endDate: new Date(i.date + " " +i.endTime)}])
-                        break
-                }
+                        {
+                          id: i.assignedCourseId, 
+                          title: j.course_name + " (" + k.name + ")", 
+                          startDate: new Date(i.date + " " +i.startTime), 
+                          endDate: new Date(i.date + " " +i.endTime)
+                        }
+                      ])
+                    break
+                  }
+              }
+            }
+          }
+    }
+  }, [batchId, department_id])
+
+  useEffect(() => {
+    if(batchesAdded && departmentsAdded && department_id > 0){
+        setBatchesData([])
+        for(let i in batches){
+            for(let j in departments){
+                if(batches[i].department_id === departments[j].department_id && departments[j].department_id == department_id){
+                    setBatchesData(batchesData => [...batchesData, {batchId: batches[i].batchId, 
+                        name: `${batches[i].batchCode} - ${batches[i].section}`, 
+                      department_id: departments[j].department_id}])
                 }
             }
         }
     }
-  }, [assignedCourses, courses, batchId, departmentId, selectedSemesterType, faculty])
+}, [department_id])
 
-  useEffect(() => {
-    if(batchesAdded && departmentsAdded){
-      setBatchData([])
-      for(let i of batches){
-        for(let j of departments){
-          if(i.department_id === j.department_id){
-            setBatchData(batchData => [...batchData, [i.batchYear, j.department_name]])
-          }
-        }
-      }
-    }
-  }, [batchesAdded, departmentsAdded])
-
-  useEffect(() => {
-    if(selectedBatch.length > 0){
-      let selectedData = selectedBatch.split(" - ");
-      for(let i of batches){
-        for(let j of departments){
-          if(i.batchYear == selectedData[0] && selectedData[1] === j.department_name && i.department_id === j.department_id){
-            setBatchId(i.batchId)
-            setDepartmentId(j.department_id)
+  const handleDepartmentChange = (event) => {
+    const department_name = event.target.value
+    for (let i = 0; i < departments.length; i++) {
+        if (departments[i].department_name === department_name) {
+            setDepartmentId(departments[i].department_id)
             break
-          }
         }
-      }
     }
-  }, [semesterTypeChange, selectedBatch])
+}
 
-  const handleOptionClick = (option) => {
-    setselectedSemesterType(option);
-    setSemesterTypeChange(!semesterTypeChange)
-  };
-
-  const handleBatchChange = (event) => {
-    setSelectedBatch(event.target.value)
-  }
+const handleBatchChange = (e) => {
+    for(let i of batchesData){
+        if(i.name === e.target.value){
+            setBatchId(i.batchId)
+            break
+        }
+    }
+}
 
   const showDetails = (details) => {
     for(let i of assignedCourses){
@@ -127,30 +127,28 @@ const isMobile = window.innerWidth <= 1040;
             <div><AdminNavbar/></div>
             <form>
               <div style={{ marginTop: '50px', marginBottom: '0px' }} className='flexbox-container-y'>
-              <h3 style={{fontWeight: 'normal', color: 'gray', marginRight: '3px'}}>Choose Batch</h3>
-                <select className='dropdown' onChange={handleBatchChange}>
-                  <option/>
+              <h3 style={{
+                  fontWeight: 'normal', color: 'gray', marginRight: '3px'
+              }}>Department</h3>
+              <select required className='dropdown' onChange={handleDepartmentChange}>
+                  <option></option>
                   {
-                    batchData.length !== 0 ? batchData.map((batch, index) => 
-                      <option key={index}>{batch.join(' - ')}</option>
-                      ) : null
+                      departmentsAdded && departments.length !== 0 ? departments.map(department =>
+                          <option key={department.department_id}>{department.department_name}</option>) : null
                   }
-                </select>
+              </select>
+              <h3 style={{
+                  fontWeight: 'normal', color: 'gray', marginRight: '3px'
+              }}>Batch</h3>
+              <select required className='dropdown' onChange={handleBatchChange}>
+              <option></option>
+                  {
+                      batchesData.length !== 0 ? batchesData.map(batch => 
+                          <option key={batch.batchId}>{batch.name}</option>) : null
+                  }
+              </select>
               </div>
             </form>
-            <div className="options-wrapper" style={{ marginBottom: '30px' }}>
-              <div className="options-container">
-                {options.map((option, index) => (
-                  <div
-                    key={index}
-                    className={`option ${selectedSemesterType === option ? "selected" : ""}`}
-                    onClick={() => handleOptionClick(option)}
-                  >
-                    {option}
-                  </div>
-                ))}
-              </div>
-            </div>
             <Calendar
                 style={{ height: isMobile ? 1000 : 500, 
                   margin: "100px", 

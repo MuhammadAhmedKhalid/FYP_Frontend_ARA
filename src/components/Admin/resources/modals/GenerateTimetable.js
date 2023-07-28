@@ -314,6 +314,7 @@ function GenerateTimetable({generateTimetableModal, setGenerateTimetableModal}) 
                                             }
                                             
                                             dispatch(assignCourseRequest(assignCourse, request, b.offerCourseId))
+                                            // ig we have to set boolean which will call all the get APIs again as new data added
                                             break
                                         }
                                     } else {
