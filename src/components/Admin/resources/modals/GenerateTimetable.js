@@ -24,11 +24,17 @@ function GenerateTimetable({generateTimetableModal, setGenerateTimetableModal}) 
     const departmentsAdded = useSelector((state) => state.getDepartments.added)
     const allocatedFaculty = useSelector((state) => state.allocatedFacultyReducer.allocatedFaculty.data)
     const offeredCourses = useSelector((state) => state.offeredCoursesReducer.offeredCourses.data)
+    const rooms = useSelector((state) => state.getRooms.rooms.data)
+    const courses = useSelector((state) => state.getCourseReducer.courses)
+    
     const requestedStaff = useSelector((state) => state.staffReqReducer.staff_req.data)
     const requestedRooms = useSelector((state) => state.getRoomRequest.room_req.data)
     const assignedCourses = useSelector((state) => state.assignedCoursesReducer.assignedCourses.data)
-    const rooms = useSelector((state) => state.getRooms.rooms.data)
-    const courses = useSelector((state) => state.getCourseReducer.courses)
+
+    let tempRequestedStaff = requestedStaff
+    let tempRequestedRooms = requestedRooms
+    let tempAssignedCourses = assignedCourses
+
 
     const daysOfWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
 
@@ -202,18 +208,19 @@ function GenerateTimetable({generateTimetableModal, setGenerateTimetableModal}) 
                                         const fullDayName = dateObject.toLocaleString('en-US', options);
                                         
                                         // course conflict
-                                        for (let i = 0; i < assignedCourses.length; i++) {
-                                            if(assignedCourses[i].department_id === b.department_id 
-                                                && assignedCourses[i].semesterType === extractSemesterType 
-                                                && assignedCourses[i].day === fullDayName && assignedCourses[i].batchId === b.batchId){
+                                        for (let i = 0; i < tempAssignedCourses.length; i++) {
+                                            if(tempAssignedCourses[i].department_id === b.department_id 
+                                                && tempAssignedCourses[i].semesterType === extractSemesterType 
+                                                && tempAssignedCourses[i].day === fullDayName && tempAssignedCourses[i].batchId === b.batchId
+                                                && format(new Date(datesOfSem[i]), 'MM/dd/yyyy') == tempAssignedCourses[i].date){
 
                                                     var assignedStartTime = new Date();
                                                     var assignedEndTime = new Date();
                                 
-                                                    assignedStartTime.setHours(assignedCourses[i].startTime.substring(0, 2), 
-                                                        assignedCourses[i].startTime.substring(3), 0, 0);
-                                                    assignedEndTime.setHours(assignedCourses[i].endTime.substring(0, 2), 
-                                                        assignedCourses[i].endTime.substring(3), 0, 0);
+                                                    assignedStartTime.setHours(tempAssignedCourses[i].startTime.substring(0, 2), 
+                                                        tempAssignedCourses[i].startTime.substring(3), 0, 0);
+                                                    assignedEndTime.setHours(tempAssignedCourses[i].endTime.substring(0, 2), 
+                                                        tempAssignedCourses[i].endTime.substring(3), 0, 0);
                                 
                                                     courseConflict = checkConflict(startTime, assignedStartTime, endTime, assignedEndTime,
                                                     startTime.getTime(), assignedStartTime.getTime(), endTime.getTime(), 
@@ -228,18 +235,19 @@ function GenerateTimetable({generateTimetableModal, setGenerateTimetableModal}) 
                                         // staff conflict
                                         if(!courseConflict){
                                             
-                                            for(let j = 0; j < requestedStaff.length; j++){
+                                            for(let j = 0; j < tempRequestedStaff.length; j++){
                                                 
                                                 let facultyStartTime = new Date();
                                                 let facultyEndTime = new Date();
                                                 
-                                                facultyStartTime.setHours(requestedStaff[j].startTime.substring(0, 2), 
-                                                    requestedStaff[j].startTime.substring(3), 0, 0);
-                                                facultyEndTime.setHours(requestedStaff[j].endTime.substring(0, 2), 
-                                                    requestedStaff[j].endTime.substring(3), 0, 0);
+                                                facultyStartTime.setHours(tempRequestedStaff[j].startTime.substring(0, 2), 
+                                                    tempRequestedStaff[j].startTime.substring(3), 0, 0);
+                                                facultyEndTime.setHours(tempRequestedStaff[j].endTime.substring(0, 2), 
+                                                    tempRequestedStaff[j].endTime.substring(3), 0, 0);
 
-                                                if (requestedStaff[j].requested_faculty_id === a.faculty_id 
-                                                    && daysOfWeek[new Date(requestedStaff[j].date).getDay()] === fullDayName) {
+                                                if (tempRequestedStaff[j].requested_faculty_id === a.faculty_id 
+                                                    && daysOfWeek[new Date(tempRequestedStaff[j].date).getDay()] === fullDayName
+                                                    && format(new Date(datesOfSem[i]), 'MM/dd/yyyy') == tempRequestedStaff[j].date) {
 
                                                     facultyConflict = checkConflict(startTime, facultyStartTime, endTime, facultyEndTime,
                                                     startTime.getTime(), facultyStartTime.getTime(), endTime.getTime(), 
@@ -259,17 +267,18 @@ function GenerateTimetable({generateTimetableModal, setGenerateTimetableModal}) 
                                             for(let z of rooms){
                                                 if(z.department_id === b.department_id){
                                                     roomId = z.room_id
-                                                    for (let k = 0; k < requestedRooms.length; k++) {
+                                                    for (let k = 0; k < tempAssignedCourses.length; k++) {
                                                         let roomStartTime = new Date();
                                                         let roomEndTime = new Date();
                                             
-                                                        roomStartTime.setHours(requestedRooms[k].startTime.substring(0, 2), 
-                                                            requestedRooms[k].startTime.substring(3), 0, 0);
-                                                        roomEndTime.setHours(requestedRooms[k].endTime.substring(0, 2), 
-                                                            requestedRooms[k].endTime.substring(3), 0, 0);
+                                                        roomStartTime.setHours(tempAssignedCourses[k].startTime.substring(0, 2), 
+                                                            tempAssignedCourses[k].startTime.substring(3), 0, 0);
+                                                        roomEndTime.setHours(tempAssignedCourses[k].endTime.substring(0, 2), 
+                                                            tempAssignedCourses[k].endTime.substring(3), 0, 0);
                                             
-                                                        if(roomId === requestedRooms[k].room_id 
-                                                            && daysOfWeek[new Date(requestedRooms[k].date).getDay()] === fullDayName){
+                                                        if(roomId === tempAssignedCourses[k].room_id 
+                                                            && daysOfWeek[new Date(tempAssignedCourses[k].date).getDay()] === fullDayName
+                                                            && format(new Date(datesOfSem[i]), 'MM/dd/yyyy') == tempAssignedCourses[k].date){
                                                                 
                                                                 roomConflict = checkConflict(startTime, roomStartTime, endTime, roomEndTime,
                                                                     startTime.getTime(), roomStartTime.getTime(), endTime.getTime(), 
@@ -314,7 +323,9 @@ function GenerateTimetable({generateTimetableModal, setGenerateTimetableModal}) 
                                             }
                                             
                                             dispatch(assignCourseRequest(assignCourse, request, b.offerCourseId))
-                                            // ig we have to set boolean which will call all the get APIs again as new data added
+                                            tempAssignedCourses.push(assignCourse)
+                                            tempRequestedRooms.push(request)
+                                            tempRequestedStaff.push(request)
                                             break
                                         }
                                     } else {
