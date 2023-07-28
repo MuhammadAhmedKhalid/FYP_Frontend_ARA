@@ -5,6 +5,7 @@ import { getDepartmentsRequest } from '../../redux/GetDepartments/getDepartments
 import { getCourseRequest } from '../../redux/GetCourse/getCourseActions'
 import { getRoomsRequest } from '../../redux/GetRooms/getRoomsActions'
 import { getBatchesRequest } from '../../redux/GetBatches/getBatchesActions'
+import { getFacultyRequest } from '../../redux/GetFaculty/getFacultyActions'
 
 function ShowEventDetials(props) {
 
@@ -20,9 +21,13 @@ function ShowEventDetials(props) {
   const roomsAdded = useSelector((state) => state.getRooms.added)
   const courses = useSelector((state) => state.getCourseReducer.courses)
   const coursessAdded = useSelector((state) => state.getCourseReducer.added)
+  const facultyList = useSelector((state) => state.getFaculty.faculty)
+  const facultyAdded = useSelector((state) => state.getFaculty.added)
+
   const institute_id = Number(localStorage.getItem('institute_id'))
 
   const [courseName, setCourseName] = useState(" ")
+  const [facultyName, setFacultyName] = useState("")
   const [batchYear, setBatchYear] = useState(" ")
   const [departmentName, setDepartmentName] = useState(" ")
   const [roomName, setRoomName] = useState(" ")
@@ -33,11 +38,12 @@ function ShowEventDetials(props) {
       dispatch(getDepartmentsRequest(institute_id))
       dispatch(getCourseRequest(institute_id))
       dispatch(getRoomsRequest(institute_id))
+      dispatch(getFacultyRequest(institute_id))
   }
   }, [institute_id, dispatch])
 
   useEffect(() => {
-    if(batchesAdded && departmentsAdded && roomsAdded && coursessAdded && details !== undefined){
+    if(batchesAdded && departmentsAdded && roomsAdded && coursessAdded && facultyAdded && details !== undefined){
       for(let i of batches){
         if(i.batchId === details.batchId){
           setBatchYear(i.batchYear)
@@ -56,6 +62,11 @@ function ShowEventDetials(props) {
       for(let i of courses){
         if(i.course_id === details.course_id){
           setCourseName(i.course_name)
+        }
+      }
+      for(let i of facultyList){
+        if(i.faculty_id === details.faculty_id){
+          setFacultyName(i.name)
         }
       }
     }
@@ -93,6 +104,7 @@ function ShowEventDetials(props) {
                             details !== undefined ? 
                             <div>
                               Course: {courseName}<br/>
+                              Faculty: {facultyName}<br/>
                               Batch: {batchYear}-{departmentName}<br/>
                               Day: {details.day}<br/>
                               Room: {roomName}<br/>
