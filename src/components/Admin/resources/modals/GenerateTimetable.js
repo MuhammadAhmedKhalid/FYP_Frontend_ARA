@@ -313,8 +313,7 @@ function GenerateTimetable({generateTimetableModal, setGenerateTimetableModal}) 
                                                 endTime: format(new Date(endTime), 'HH:mm'),
                                             }
                                             
-                                            console.log(assignCourse)
-                                            // dispatch(assignCourseRequest(assignCourse, request))
+                                            dispatch(assignCourseRequest(assignCourse, request, b.offerCourseId))
                                             break
                                         }
                                     } else {
