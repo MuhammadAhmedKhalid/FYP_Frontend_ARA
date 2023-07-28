@@ -4,8 +4,9 @@ import FullCalendar from '../Root/FullCalendar'
 import '../Styling/HomeScreen.css'
 import { useSelector, useDispatch } from 'react-redux'
 import RequestedData from '../Root/RequestedData'
-import { assignedCoursesForTableRequest } from '../../redux/AssignedCoursesForTable/assignedCoursesForTableActions'
 import { getCourseRequest } from '../../redux/GetCourse/getCourseActions'
+import { getOfferedCourses } from '../../redux/GetOfferedCourses/getOfferedCoursesActions'
+import { getAllocatedFaculty } from '../../redux/GetAllocatedFaculty/allocatedFacultyActions'
 
 function FacultyHomeScreen() {
 
@@ -13,43 +14,42 @@ function FacultyHomeScreen() {
 
     const institute_id = Number(localStorage.getItem('institute_id'))
     const faculty_id = Number(localStorage.getItem('faculty_id'))
-    const assignedCourses = useSelector((state) => state.assignedCoursesForTableReducer.assignedCourses.data)
-    const assignedCoursesAdded = useSelector((state) => state.assignedCoursesForTableReducer.added)
+    const facultyName = localStorage.getItem('name')
+    const instituteName = localStorage.getItem('institute_name')
+
+    const [greetings, setGreetings] = useState("")
+    const [coursesList, setCoursesList] = useState([])
+
     const courses = useSelector((state) => state.getCourseReducer.courses)
     const coursesAdded = useSelector((state) => state.getCourseReducer.added)
-    const [coursesList, setCoursesList] = useState([])
+    const offeredCourses = useSelector((state) => state.offeredCoursesReducer.offeredCourses.data)
+    const offeredCoursesAdded = useSelector((state) => state.offeredCoursesReducer.added)
+    const allocatedFaculty = useSelector((state) => state.allocatedFacultyReducer.allocatedFaculty.data)
+    const allocatedFacultyAdded = useSelector((state) => state.allocatedFacultyReducer.added)
 
     useEffect(() => {
         if(institute_id > 0){
-          dispatch(assignedCoursesForTableRequest(institute_id))
-          dispatch(getCourseRequest(institute_id))
+            dispatch(getCourseRequest(institute_id))
+            dispatch(getOfferedCourses(institute_id))
+            dispatch(getAllocatedFaculty(institute_id))
         }
-      }, [institute_id])
+    }, [institute_id])
 
     useEffect(() => {
-        if(assignedCoursesAdded && coursesAdded){
-            for(let i of assignedCourses){
-                for(let j of courses){
-                    if(i.facultyId === faculty_id && j.course_id === i.courseId){
-                        if(coursesList.length !== 0){
-                            for(let k of coursesList){
-                                if(k === j.course_name){
-                                    coursesList.splice(coursesList.indexOf(k) , 1)
-                                }
+        if(coursesAdded && offeredCoursesAdded && allocatedFacultyAdded){
+            for(let i of offeredCourses){
+                for(let j of allocatedFaculty){
+                    if(i.offerCourseId === j.offerCourseId && j.faculty_id === faculty_id && i.allocated && i.addedInTimetable){
+                        for(let k of courses){
+                            if(i.course_id === k.course_id){
+                                coursesList.push(k.course_name)
                             }
                         }
-                        coursesList.push(j.course_name)
                     }
                 }
             }
         }
-    }, [assignedCoursesAdded, coursesAdded])
-
-    const [greetings, setGreetings] = useState("")
-
-    const facultyName = localStorage.getItem('name')
-
-    const instituteName = localStorage.getItem('institute_name')
+    }, [coursesAdded, offeredCoursesAdded, allocatedFacultyAdded])
 
     useEffect(() => {
         let date = new Date();
