@@ -2,6 +2,9 @@
   "name": "auto_resource_allocator",
   "version": "0.1.0",
   "private": true,
+  "engines": {
+    "node": "18.x"
+  },
   "dependencies": {
     "@emailjs/browser": "^3.11.0",
     "@emotion/react": "^11.10.5",
@@ -42,12 +45,10 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-    "develop": "concurrently \"react-scripts start\" \" nodemon ./src/services/server.js\"",
-    "start": "concurrently \"react-scripts start\" \" node ./src/services/server.js\"",
-    "build": "CI=false react-scripts build",
+    "start": "react-scripts start",
+    "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject",
-    "seeds": "node ./src/services/seeds/index.js"
+    "eject": "react-scripts eject"
   },
   "eslintConfig": {
     "extends": [
