@@ -8,7 +8,7 @@ function* addRoomRequest(room) {
         const headers = {
             'Authorization': `Bearer ${token}`
         };
-        yield call(axios.post, 'http://localhost:8080/addRoomRequest', room.room, { headers });
+        yield call(axios.post, 'https://fypbackendara-production.up.railway.app/addRoomRequest', room.room, { headers });
         yield put({ type: ADD_ROOM_REQ_SUCCESS, message: "Room request added successfully." })
     } catch (error) {
         yield put({ type: ADD_ROOM_REQ_FAILURE, message: "Add room request operation failed." })

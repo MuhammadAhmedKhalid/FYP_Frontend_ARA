@@ -4,7 +4,7 @@ import { put, takeEvery, call, select } from 'redux-saga/effects'
 function* updateWeightageRequest(payload) {
     try {
         const token = localStorage.getItem('token');
-        let result = yield call(fetch, `http://localhost:8080/updateWeightage/${payload.weightageId}`, {
+        let result = yield call(fetch, `https://fypbackendara-production.up.railway.app/updateWeightage/${payload.weightageId}`, {
             method: "PUT",
             headers: {
                 "Authorization": `Bearer ${token}`

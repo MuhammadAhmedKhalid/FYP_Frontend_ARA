@@ -9,7 +9,7 @@ function* getWeightagesRequest(data) {
             'Authorization': `Bearer ${token}`
         };
         if(data.query > 0){
-            let result = yield call(axios.get, `http://localhost:8080/getWeightage/${data.query}`, { headers });
+            let result = yield call(axios.get, `https://fypbackendara-production.up.railway.app/getWeightage/${data.query}`, { headers });
             yield put({ type: GET_WEIGHTAGE_SUCCESS, result })
         }
     } catch (e) {

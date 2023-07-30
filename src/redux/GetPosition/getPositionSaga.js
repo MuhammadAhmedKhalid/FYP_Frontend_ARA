@@ -11,7 +11,7 @@ function* getPositionRequest(data) {
         };
         let result;
         if (data.query !== 0) {
-            result = yield call(axios.get, `http://localhost:8080/getPositions/${data.query}`, { headers });
+            result = yield call(axios.get, `https://fypbackendara-production.up.railway.app/getPositions/${data.query}`, { headers });
         }
         yield put({ type: GET_POSITION_SUCCESS, data: result.data })
     } catch (e) {

@@ -8,7 +8,7 @@ function* deleteAssignedCourse(data) {
         const headers = {
             'Authorization': `Bearer ${token}`
         };
-        let result = yield call(axios.delete, `http://localhost:8080/deleteAssignedCourse/${data.query}`, { headers });
+        let result = yield call(axios.delete, `https://fypbackendara-production.up.railway.app/deleteAssignedCourse/${data.query}`, { headers });
         yield put({ type: DELETE_ASSIGNED_COURSE_SUCCESS, message: result })
     } catch (e) {
         yield put({ type: DELETE_ASSIGNED_COURSE_FAILURE, message: e.message})

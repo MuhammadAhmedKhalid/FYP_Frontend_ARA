@@ -8,7 +8,7 @@ function* deleteDepartment(payload) {
         const headers = {
             'Authorization': `Bearer ${token}`
         };
-        let result = yield call(axios.delete, `http://localhost:8080/deleteDepartment/${payload.query}`, { headers });
+        let result = yield call(axios.delete, `https://fypbackendara-production.up.railway.app/deleteDepartment/${payload.query}`, { headers });
         yield put({ type: DELETE_DEPARTMENT_SUCCESS, message: result })
     } catch (e) {
         yield put({ type: DELETE_DEPARTMENT_FAILURE, message: e.message})

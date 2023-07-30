@@ -8,7 +8,7 @@ function* getResourcesRequest(data) {
         const headers = {
             'Authorization': `Bearer ${token}`
         }
-        let result = yield call(axios.get, `http://localhost:8080/resources/${data.query}`, { headers })
+        let result = yield call(axios.get, `https://fypbackendara-production.up.railway.app/resources/${data.query}`, { headers })
         yield put({ type: GET_RESOURCES_SUCCESS, result })
     } catch (e) {
         yield put({ type: GET_RESOURCES_FAILURE, message: e.message })

@@ -4,7 +4,7 @@ import axios from 'axios'
 
 function* login(user) {
     try {
-        const response = yield axios.post('http://localhost:8080/login', user.user)
+        const response = yield axios.post('https://fypbackendara-production.up.railway.app/login', user.user)
         yield put({ type: LOGIN_SUCCESS, message: "Logged in successfully.", user: response.data })
 
     const token = response.data.jwt;

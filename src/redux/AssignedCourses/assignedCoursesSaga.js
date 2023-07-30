@@ -10,7 +10,7 @@ function* assignedCoursesRequest(data) {
             'Authorization': `Bearer ${token}`
         };
         if(data.query > 0){
-            let result = yield call(axios.get, `http://localhost:8080/assignedCourses/${data.query}`, { headers });
+            let result = yield call(axios.get, `https://fypbackendara-production.up.railway.app/assignedCourses/${data.query}`, { headers });
             yield put({ type: ASSIGNED_COURSES_SUCCESS, result })
         }
     } catch (e) {

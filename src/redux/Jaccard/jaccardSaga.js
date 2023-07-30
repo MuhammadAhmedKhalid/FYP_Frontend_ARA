@@ -8,7 +8,7 @@ function* jaccardRequest(data) {
         const headers = {
             'Authorization': `Bearer ${token}`
         };
-        let result = yield call(axios.post, 'http://localhost:8080/jaccard', data.facultyList, { headers });
+        let result = yield call(axios.post, 'https://fypbackendara-production.up.railway.app/jaccard', data.facultyList, { headers });
         yield put({ type: JACCARD_SUCCESS, result })
     } catch (e) {
         yield put({ type: JACCARD_FAILURE, message: e.message })

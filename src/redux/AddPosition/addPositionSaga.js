@@ -9,7 +9,7 @@ function* addPosition(position) {
         const headers = {
             'Authorization': `Bearer ${token}`
         };
-        yield call(axios.post, 'http://localhost:8080/addPosition', position.position, { headers });
+        yield call(axios.post, 'https://fypbackendara-production.up.railway.app/addPosition', position.position, { headers });
         yield put({ type: ADD_POSITION_SUCCESS, message: "Position added successfully." })
     } catch (error) {
         yield put({ type: ADD_POSITION_FAILURE, message: error.response.data })

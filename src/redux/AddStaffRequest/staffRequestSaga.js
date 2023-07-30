@@ -8,7 +8,7 @@ function* addStaffRequest(staff) {
         const headers = {
             'Authorization': `Bearer ${token}`
         };
-        yield call(axios.post, 'http://localhost:8080/addStaffRequest', staff.staff, { headers });
+        yield call(axios.post, 'https://fypbackendara-production.up.railway.app/addStaffRequest', staff.staff, { headers });
         yield put({ type: ADD_STAFF_REQ_SUCCESS, message: "Staff request added successfully." })
     } catch (error) {
         yield put({ type: ADD_STAFF_REQ_FAILURE, message: "Add staff request operation failed." })

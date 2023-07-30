@@ -8,7 +8,7 @@ function* getObjReqRequest(data) {
         const headers = {
             'Authorization': `Bearer ${token}`
         };
-        let result = yield call(axios.get, `http://localhost:8080/getObjectRequests/${data.query}`, { headers });
+        let result = yield call(axios.get, `https://fypbackendara-production.up.railway.app/getObjectRequests/${data.query}`, { headers });
         yield put({ type: GET_OBJ_REQ_SUCCESS, result })
     } catch (e) {
         yield put({ type: GET_OBJ_REQ_FAILURE, message: e.message })

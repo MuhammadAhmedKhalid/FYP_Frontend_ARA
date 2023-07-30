@@ -8,7 +8,7 @@ function* deleteObj(payload) {
         const headers = {
             'Authorization': `Bearer ${token}`
         };
-        let result = yield call(axios.delete, `http://localhost:8080/deleteObject/${payload.query}`, { headers });
+        let result = yield call(axios.delete, `https://fypbackendara-production.up.railway.app/deleteObject/${payload.query}`, { headers });
         yield put({ type: DELETE_OBJ_SUCCESS, message: result })
     } catch (e) {
         yield put({ type: DELETE_OBJ_FAILURE, message: e.message})

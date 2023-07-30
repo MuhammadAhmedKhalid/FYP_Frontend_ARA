@@ -8,7 +8,7 @@ function* checkTokenRequest(payload) {
         const headers = {
             'Authorization': `Bearer ${token}`
         };
-        yield call(axios.get, 'http://localhost:8080/checkTokenValidity', { headers });
+        yield call(axios.get, 'https://fypbackendara-production.up.railway.app/checkTokenValidity', { headers });
         yield put({ type: CHECK_VALIDITY_SUCCESS })
     } catch (e) {
         yield put({ type: CHECK_VALIDITY_FAILURE, message: e.message })

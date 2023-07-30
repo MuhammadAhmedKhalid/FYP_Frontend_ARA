@@ -8,7 +8,7 @@ function* addFacultyConstraints(constraints) {
         const headers = {
             'Authorization': `Bearer ${token}`
         };
-        yield call(axios.post, 'http://localhost:8080/addFacultyConstraints', constraints.constraints, { headers });
+        yield call(axios.post, 'https://fypbackendara-production.up.railway.app/addFacultyConstraints', constraints.constraints, { headers });
         yield put({ type: ADD_FACULTY_CONSTRAINTS_SUCCESS, message: "Faculty constraints added successfully." })
     } catch (error) {
         yield put({ type: ADD_FACULTY_CONSTRAINTS_FAILURE, message: error.response.data })

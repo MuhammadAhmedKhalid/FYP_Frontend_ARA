@@ -9,7 +9,7 @@ function* getStaffRequest(data) {
         const headers = {
             'Authorization': `Bearer ${token}`
         };
-        const url  = `http://localhost:8080/getStaffRequests/${data.query}`;
+        const url  = `https://fypbackendara-production.up.railway.app/getStaffRequests/${data.query}`;
         let result = yield call(axios.get, url, { headers });
         yield put({ type: GET_STAFF_REQ_SUCCESS, result })
     } catch (e) {

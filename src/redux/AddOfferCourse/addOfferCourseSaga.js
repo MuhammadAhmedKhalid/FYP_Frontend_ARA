@@ -8,7 +8,7 @@ function* addOfferCourse(obj) {
         const headers = {
             'Authorization': `Bearer ${token}`
         };
-        yield call(axios.post, 'http://localhost:8080/offerCourse', obj.obj, { headers });
+        yield call(axios.post, 'https://fypbackendara-production.up.railway.app/offerCourse', obj.obj, { headers });
         yield put({ type: ADD_OFFER_COURSE_SUCCESS, message: "Offer course added successfully." })
     } catch (error) {
         yield put({ type: ADD_OFFER_COURSE_FAILURE, message: "Course already offered." })

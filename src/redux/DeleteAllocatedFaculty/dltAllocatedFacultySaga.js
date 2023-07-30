@@ -8,7 +8,7 @@ function* deleteAllocatedFaculty(payload) {
         const headers = {
             'Authorization': `Bearer ${token}`
         };
-        let result = yield call(axios.delete, `http://localhost:8080/deleteAllocatedFaculty/${payload.query}`, { headers });
+        let result = yield call(axios.delete, `https://fypbackendara-production.up.railway.app/deleteAllocatedFaculty/${payload.query}`, { headers });
         yield put({ type: DELETE_ALLOCATED_FACULTY_SUCCESS, message: result })
     } catch (e) {
         yield put({ type: DELETE_ALLOCATED_FACULTY_FAILURE, message: e.message})

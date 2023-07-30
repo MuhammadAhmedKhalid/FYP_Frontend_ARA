@@ -8,7 +8,7 @@ function* addObjRequest(obj) {
         const headers = {
             'Authorization': `Bearer ${token}`
         };
-        yield call(axios.post, 'http://localhost:8080/addObjectRequest', obj.obj, { headers });
+        yield call(axios.post, 'https://fypbackendara-production.up.railway.app/addObjectRequest', obj.obj, { headers });
         yield put({ type: ADD_OBJ_REQ_SUCCESS, message: "Object request added successfully." })
     } catch (error) {
         yield put({ type: ADD_OBJ_REQ_FAILURE, message: "Requested quantity is greater than the available quantity." })

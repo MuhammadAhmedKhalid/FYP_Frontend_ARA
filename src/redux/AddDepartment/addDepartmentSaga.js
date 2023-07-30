@@ -8,7 +8,7 @@ function* addDepartment(department) {
         const headers = {
             'Authorization': `Bearer ${token}`
         };
-        yield call(axios.post, 'http://localhost:8080/add_department', department.department, { headers });
+        yield call(axios.post, 'https://fypbackendara-production.up.railway.app/add_department', department.department, { headers });
         yield put({ type: ADD_DEPARTMENT_SUCCESS, message: "Department added successfully." })
     } catch (error) {
         yield put({ type: ADD_DEPARTMENT_FAILURE, message: error.response.data })

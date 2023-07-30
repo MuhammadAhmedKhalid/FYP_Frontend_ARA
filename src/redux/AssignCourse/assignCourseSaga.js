@@ -9,7 +9,7 @@ function* assignCourse(payload) {
         const headers = {
             'Authorization': `Bearer ${token}`
         };
-        yield call(axios.post, 'http://localhost:8080/assignCourse', payload, { headers });
+        yield call(axios.post, 'https://fypbackendara-production.up.railway.app/assignCourse', payload, { headers });
         yield put({ type: ASSIGN_COURSE_SUCCESS, message: "Course assigned successfully." })
     } catch (error) {
         yield put({ type: ASSIGN_COURSE_FAILURE, message: error.response.data })

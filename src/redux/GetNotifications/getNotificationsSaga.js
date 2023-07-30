@@ -9,7 +9,7 @@ function* getNotificationsRequest(data) {
         const headers = {
             'Authorization': `Bearer ${token}`
         };
-        const url  = `http://localhost:8080/getNotifications/${data.query}`;
+        const url  = `https://fypbackendara-production.up.railway.app/getNotifications/${data.query}`;
         let result = yield call(axios.get, url, { headers });
         yield put({ type: GET_NOTIFICATIONS_SUCCESS, result })
     } catch (e) {

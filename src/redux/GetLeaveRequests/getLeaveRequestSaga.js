@@ -9,7 +9,7 @@ function* getLeaveRequest(data) {
         const headers = {
             'Authorization': `Bearer ${token}`
         };
-        const url  = `http://localhost:8080/getLeaveRequests/${data.query}`;
+        const url  = `https://fypbackendara-production.up.railway.app/getLeaveRequests/${data.query}`;
         let result = yield call(axios.get, url, { headers });
         yield put({ type: GET_LEAVE_SUCCESS, result })
     } catch (e) {

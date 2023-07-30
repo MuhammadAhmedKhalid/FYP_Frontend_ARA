@@ -9,7 +9,7 @@ function* addBatch(batch) {
         const headers = {
             'Authorization': `Bearer ${token}`
         };
-        yield call(axios.post, 'http://localhost:8080/addBatch', batch.batch, { headers });
+        yield call(axios.post, 'https://fypbackendara-production.up.railway.app/addBatch', batch.batch, { headers });
         yield put({ type: ADD_BATCH_SUCCESS, message: "Batch added successfully." })
     } catch (error) {
         yield put({ type: ADD_BATCH_FAILURE, message: error.response.data })

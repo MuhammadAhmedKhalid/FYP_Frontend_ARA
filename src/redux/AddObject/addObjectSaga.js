@@ -9,7 +9,7 @@ function* addObject(object) {
         const headers = {
             'Authorization': `Bearer ${token}`
         };
-        yield call(axios.post, 'http://localhost:8080/addObject', object.object, { headers });
+        yield call(axios.post, 'https://fypbackendara-production.up.railway.app/addObject', object.object, { headers });
         yield put({ type: ADD_OBJECT_SUCCESS, message: "Object added successfully." })
     } catch (error) {
         yield put({ type: ADD_OBJECT_FAILURE, message: error.response.data })

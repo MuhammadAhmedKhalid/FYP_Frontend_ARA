@@ -10,7 +10,7 @@ function* assignedCoursesForTableRequest(data) {
             'Authorization': `Bearer ${token}`
         };
         if(data.query > 0){
-            let result = yield call(axios.get, `http://localhost:8080/assignedCoursesForTable/${data.query}`, { headers });
+            let result = yield call(axios.get, `https://fypbackendara-production.up.railway.app/assignedCoursesForTable/${data.query}`, { headers });
             yield put({ type: ASSIGNED_COURSES_FOR_TABLE_SUCCESS, result })
         }
     } catch (e) {

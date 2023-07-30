@@ -8,7 +8,7 @@ function* deleteBatch(payload) {
         const headers = {
             'Authorization': `Bearer ${token}`
         };
-        let result = yield call(axios.delete, `http://localhost:8080/deleteBatch/${payload.query}`, { headers });
+        let result = yield call(axios.delete, `https://fypbackendara-production.up.railway.app/deleteBatch/${payload.query}`, { headers });
         yield put({ type: DELETE_BATCH_SUCCESS, message: result })
     } catch (e) {
         yield put({ type: DELETE_BATCH_FAILURE, message: e.message})

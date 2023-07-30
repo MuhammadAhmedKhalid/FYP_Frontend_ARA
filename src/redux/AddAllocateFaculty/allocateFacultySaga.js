@@ -8,7 +8,7 @@ function* addAllocateFaculty(obj) {
         const headers = {
             'Authorization': `Bearer ${token}`
         };
-        yield call(axios.post, 'http://localhost:8080/allocate', obj.obj, { headers });
+        yield call(axios.post, 'https://fypbackendara-production.up.railway.app/allocate', obj.obj, { headers });
         yield put({ type: ADD_ALLOCATE_FACULTY_SUCCESS, message: "Course allocated successfully." })
     } catch (error) {
         yield put({ type: ADD_ALLOCATE_FACULTY_FAILURE, message: "Operation unsuccessful." })

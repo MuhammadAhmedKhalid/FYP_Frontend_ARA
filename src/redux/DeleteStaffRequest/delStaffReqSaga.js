@@ -8,7 +8,7 @@ function* deleteStaffRequest(data) {
         const headers = {
             'Authorization': `Bearer ${token}`
         };
-        let result = yield call(axios.delete, `http://localhost:8080/deleteStaffRequest/${data.query}`, { headers });
+        let result = yield call(axios.delete, `https://fypbackendara-production.up.railway.app/deleteStaffRequest/${data.query}`, { headers });
         yield put({ type: DELETE_STAFF_REQ_SUCCESS, message: result })
     } catch (e) {
         yield put({ type: DELETE_STAFF_REQ_FAILURE, message: e.message})

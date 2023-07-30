@@ -3,7 +3,7 @@ import { put, takeEvery, call } from 'redux-saga/effects'
 
 function* updateDepartmentRequest(payload) {
     const token = localStorage.getItem('token');
-    let result = yield call(fetch, `http://localhost:8080/updateDepartment/${payload.department_id}`, {
+    let result = yield call(fetch, `https://fypbackendara-production.up.railway.app/updateDepartment/${payload.department_id}`, {
         method: "PUT",
         body: JSON.stringify(payload.dept),
         headers: {

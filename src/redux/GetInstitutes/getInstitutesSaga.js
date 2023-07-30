@@ -8,7 +8,7 @@ function* getInstituteRequest() {
         const headers = {
             'Authorization': `Bearer ${token}`
         };
-        let data = yield call(axios.get, 'http://localhost:8080/get_institutes', { headers });
+        let data = yield call(axios.get, 'https://fypbackendara-production.up.railway.app/get_institutes', { headers });
         yield put({ type: GET_INSTITUTES_SUCCESS, data })
     } catch (e) {
         yield put({ type: GET_INSTITUTES_FAILURE, message: e.message })

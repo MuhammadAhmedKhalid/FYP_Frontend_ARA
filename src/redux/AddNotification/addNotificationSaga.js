@@ -9,7 +9,7 @@ function* addNotification(notification) {
         const headers = {
             'Authorization': `Bearer ${token}`
         };
-        yield call(axios.post, 'http://localhost:8080/addNotification', notification.notification, { headers });
+        yield call(axios.post, 'https://fypbackendara-production.up.railway.app/addNotification', notification.notification, { headers });
         yield put({ type: ADD_NOTIFICATION_SUCCESS, message: "Notification added successfully." })
     } catch (error) {
         yield put({ type: ADD_NOTIFICATION_FAILURE, message: error.response.data })
