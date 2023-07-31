@@ -39,21 +39,8 @@ function AdminQuestionnaire(props) {
         }
     }, [instituteAdded])
 
-    const [date, setDate] = useState(new Date());
     const [value, setValue] = useState(dayjs(new Date()));
     const [value1, setValue1] = useState(dayjs(new Date()));
-
-    const handleChange = (date) => {
-        setDate(date);
-    };
-
-    const monthNames = Array.from({ length: 12 }, (_, index) => {
-        const date = new Date();
-        date.setMonth(index);
-        return date.toLocaleString('default', { month: 'long' });
-    });
-
-  const selectedMonth = monthNames[date.getMonth()];
 
     const [institute, setInstitute] = useState({
         institute_type_id: 0,
@@ -169,45 +156,73 @@ function AdminQuestionnaire(props) {
                                 Fall semester (1/3/5/7) starting month:
                             </h3>
                             <select required className='dropdown' onChange={(e) => setInstitute({ ...institute, fallStartMonth: e.target.value })}>
-                                value={selectedMonth}
                                 <option></option>
-                                {
-                                    monthNames.map((month, index) => (
-                                    <option key={index} value={month}>{month}</option>))
-                                }
+                                <option value="January">January</option>
+                                <option value="February">February</option>
+                                <option value="March">March</option>
+                                <option value="April">April</option>
+                                <option value="May">May</option>
+                                <option value="June">June</option>
+                                <option value="July">July</option>
+                                <option value="August">August</option>
+                                <option value="September">September</option>
+                                <option value="October">October</option>
+                                <option value="November">November</option>
+                                <option value="December">December</option>
                             </select>
                             <h3 style={{fontWeight: 'normal', color: 'gray', marginRight: '3px'}}>
                                 Fall semester (1/3/5/7) ending month:
                             </h3>
                             <select required className='dropdown' onChange={(e) => setInstitute({ ...institute, fallEndMonth: e.target.value })}>
-                                value={selectedMonth}
-                                <option></option>
-                                {
-                                    monthNames.map((month, index) => (
-                                    <option key={index} value={month}>{month}</option>))
-                                }
+                            <option></option>
+                                <option value="January">January</option>
+                                <option value="February">February</option>
+                                <option value="March">March</option>
+                                <option value="April">April</option>
+                                <option value="May">May</option>
+                                <option value="June">June</option>
+                                <option value="July">July</option>
+                                <option value="August">August</option>
+                                <option value="September">September</option>
+                                <option value="October">October</option>
+                                <option value="November">November</option>
+                                <option value="December">December</option>
                             </select>
                             <h3 style={{fontWeight: 'normal', color: 'gray', marginRight: '3px'}}>
                                 Spring semester (2/4/6/8) starting month:
                             </h3>
                             <select required className='dropdown' onChange={(e) => setInstitute({ ...institute, springStartMonth: e.target.value })}>
-                                value={selectedMonth}
-                                <option></option>
-                                {
-                                    monthNames.map((month, index) => (
-                                    <option key={index} value={month}>{month}</option>))
-                                }
+                            <option></option>
+                                <option value="January">January</option>
+                                <option value="February">February</option>
+                                <option value="March">March</option>
+                                <option value="April">April</option>
+                                <option value="May">May</option>
+                                <option value="June">June</option>
+                                <option value="July">July</option>
+                                <option value="August">August</option>
+                                <option value="September">September</option>
+                                <option value="October">October</option>
+                                <option value="November">November</option>
+                                <option value="December">December</option>
                             </select>
                             <h3 style={{fontWeight: 'normal', color: 'gray', marginRight: '3px'}}>
                                 Spring semester (2/4/6/8) ending month:
                             </h3>
                             <select required className='dropdown' onChange={(e) => setInstitute({ ...institute, springEndMonth: e.target.value })}>
-                                value={selectedMonth}
                                 <option></option>
-                                {
-                                    monthNames.map((month, index) => (
-                                    <option key={index} value={month}>{month}</option>))
-                                }
+                                <option value="January">January</option>
+                                <option value="February">February</option>
+                                <option value="March">March</option>
+                                <option value="April">April</option>
+                                <option value="May">May</option>
+                                <option value="June">June</option>
+                                <option value="July">July</option>
+                                <option value="August">August</option>
+                                <option value="September">September</option>
+                                <option value="October">October</option>
+                                <option value="November">November</option>
+                                <option value="December">December</option>
                             </select>
                             <div style={{ marginTop: '12px' }}>
                             <LocalizationProvider dateAdapter={AdapterDayjs}>

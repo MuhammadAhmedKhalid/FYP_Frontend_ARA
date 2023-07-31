@@ -33,7 +33,7 @@ const NavBar = () => {
     return (
         <div>
             <div className={color ? 'header header-bg' : 'header'}>
-                <Link to={"/"}>
+                <Link to={'/FYP_Frontend_ARA'}>
                     <h1 style={logo}>ALLOCATOR.</h1>
                 </Link>
                 <ul className={click ? 'nav-menu active' : 'nav-menu'}>
