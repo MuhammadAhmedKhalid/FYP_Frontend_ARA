@@ -34,7 +34,7 @@ function App() {
   return (
     <div>
       <Provider store={store}>
-        <BrowserRouter>
+        <BrowserRouter basename='/FYP_Frontend_ARA'>
         <Routes>
 
         <Route path='/' element={<LandingPage />} />
