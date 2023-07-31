@@ -1,6 +1,6 @@
 {
   "name": "auto_resource_allocator",
-  "homepage": "https://MuhammadAhmedKhalid.github.io/FYP_Frontend_ARA",
+  "homepage": "https://muhammadahmedkhalid.github.io/FYP_Frontend_ARA/",
   "version": "0.1.0",
   "private": true,
   "engines": {
@@ -25,11 +25,11 @@
     "date-fns": "^2.29.3",
     "dayjs": "^1.11.7",
     "gh-pages": "^5.0.0",
-    "react": "^17.0.2",
+    "react": "^18.2.0",
     "react-big-calendar": "^1.5.2",
     "react-bootstrap": "^2.7.0",
     "react-chartjs-2": "^5.2.0",
-    "react-dom": "^16.0.0",
+    "react-dom": "^18.2.0",
     "react-google-login": "^5.2.2",
     "react-icons": "^4.7.1",
     "react-icons-kit": "^2.0.0",

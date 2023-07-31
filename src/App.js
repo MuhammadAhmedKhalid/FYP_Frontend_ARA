@@ -1,4 +1,4 @@
-import { Route, Routes } from 'react-router-dom';
+import { Route, Routes, BrowserRouter } from 'react-router-dom';
 import LandingPage from './components/Root/LandingPage';
 import Modal from 'react-modal'
 import NoMatch from './components/Root/NoMatch';
@@ -34,6 +34,7 @@ function App() {
   return (
     <div>
       <Provider store={store}>
+      <BrowserRouter basename="/FYP_Frontend_ARA">
         <Routes>
 
           <Route path='/' element={<LandingPage />} />
@@ -61,8 +62,9 @@ function App() {
           <Route path='*' element={<NoMatch />} />
 
         </Routes>
-      </Provider>
-    </div>
+      </BrowserRouter>
+    </Provider>
+  </div>
   );
 }
 
