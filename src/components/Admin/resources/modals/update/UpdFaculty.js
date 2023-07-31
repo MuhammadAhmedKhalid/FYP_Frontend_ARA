@@ -61,7 +61,7 @@ function UpdFaculty({update, setUpdate, data}) {
                     for (let j = 0; j < departments.length; j++) {
                         if (courses[i].department_id === departments[j].department_id && departments[j].department_id === faculty.department_id) {
                             setSpecializationData(specializationData => 
-                                [...specializationData, { label: courses[i].course_name, value: courses[i].course_name }])
+                                [...specializationData, { label: courses[i].course_name+" ("+courses[i].type+") ", value: courses[i].course_name+" ("+courses[i].type+") " }])
                         }
                     }
                 }
