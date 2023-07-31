@@ -46,7 +46,7 @@ const AdminSimpleNavbar = () => {
                     <h1 style={logo}>ALLOCATOR.</h1>
                 </Link>
                 <ul style={{ listStyle: 'none' }} className={click ? 'nav-menu active' : 'nav-menu'}>
-                    <li><NavLink style={navLinkStyles} onClick={handleLogout}>Logout</NavLink></li>
+                    <li><NavLink style={navLinkStyles} to={'/FYP_Frontend_ARA'} onClick={handleLogout}>Logout</NavLink></li>
                 </ul>
                 <div className="hamburger" onClick={handleClick}>
                     {

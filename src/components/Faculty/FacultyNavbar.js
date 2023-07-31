@@ -133,7 +133,7 @@ const AdminNavBar = () => {
                             </NavLink>
                         </li>
                     }
-                    <li> <NavLink onClick={handleLogout}>Logout</NavLink></li>
+                    <li> <NavLink to={'/FYP_Frontend_ARA'} onClick={handleLogout}>Logout</NavLink></li>
                 </ul >
                 {isNotificationPanelOpen && (
                     <div className="notification-panel" onMouseLeave={handleNotificationPanelClose}>
