@@ -163,14 +163,13 @@ function GenerateTimetable({generateTimetableModal, setGenerateTimetableModal}) 
             return match ? Number(match[0]) : 0;
           }
 
-        const isCrHrsCompletedForTheWeek = (offeredCourse) => {
+        const isCrHrsIncompleteForTheWeek = (offeredCourse) => {
             
             for (const key in dictionary) {
                 const unassignedCrHrs = dictionary[key]
                 for(let i of courses){
                     if(i.course_id === offeredCourse.course_id && i.course_id == key){
                         const reqCrHrs = extractNonZeroValue(i.credit_hours);
-                        dictionary[key]++;
                         return reqCrHrs>unassignedCrHrs
                     }
                 }
@@ -189,9 +188,9 @@ function GenerateTimetable({generateTimetableModal, setGenerateTimetableModal}) 
                             for(let x in datesOfSem){
                                 for(let k of instituteHours){
 
-                                    result = isCrHrsCompletedForTheWeek(b);
+                                    result = isCrHrsIncompleteForTheWeek(b);
                                     
-                                    if(!result){
+                                    if(result){
 
                                         let courseConflict = false;
                                         let facultyConflict = false;
@@ -322,6 +321,7 @@ function GenerateTimetable({generateTimetableModal, setGenerateTimetableModal}) 
                                                 endTime: format(new Date(endTime), 'HH:mm'),
                                             }
                                             
+                                            dictionary[b.course_id]++
                                             dispatch(assignCourseRequest(assignCourse, request, b.offerCourseId))
                                             tempAssignedCourses.push(assignCourse)
                                             tempRequestedRooms.push(request)
