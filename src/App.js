@@ -1,4 +1,4 @@
-import { Route, Routes, HashRouter } from 'react-router-dom';
+import { Route, Routes } from 'react-router-dom';
 import LandingPage from './components/Root/LandingPage';
 import Modal from 'react-modal'
 import NoMatch from './components/Root/NoMatch';
@@ -34,7 +34,6 @@ function App() {
   return (
     <div>
       <Provider store={store}>
-        <HashRouter>
         <Routes>
 
         <Route exact path='/FYP_Frontend_ARA' element={<LandingPage />} />
@@ -62,7 +61,6 @@ function App() {
         <Route path='*' element={<NoMatch />} />
 
         </Routes>
-        </HashRouter>
       </Provider>
     </div>
   );
