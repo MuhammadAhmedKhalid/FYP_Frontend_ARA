@@ -36,7 +36,7 @@ function App() {
       <Provider store={store}>
         <Routes>
 
-        <Route exact path='/FYP_Frontend_ARA' element={<LandingPage />} />
+        <Route exact path='/' element={<LandingPage />} />
 
         {isAdmin === 'false' ? <Route path='*' element={<NoMatch />}/> : <Route path='/admin' element={<AuthRoute><AdminHomeScreen /></AuthRoute>} />}
         {isAdmin === 'false' ? <Route path='*' element={<NoMatch />}/> : <Route path='/domains' element={<AuthRoute><Domains /></AuthRoute>} /> }
