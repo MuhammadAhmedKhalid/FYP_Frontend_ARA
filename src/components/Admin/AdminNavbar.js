@@ -66,7 +66,6 @@ const AdminNavBar = () => {
                     let facultyWeightages = []
                     let date = i.assignedCourse.date
         
-                    facultyDict[i.assignedCourse.faculty_id] = "";
                     for(let j of i.jaccardResults){
                         facultyDict[j.faculty_id] = "";
                         facultyWeightages.push(j.jaccardSimilarity)
@@ -96,9 +95,16 @@ const AdminNavBar = () => {
                         }
                     }
                     
-                    const valuesArray = Object.values(facultyDict);
-                    const facultyName = valuesArray.shift();
-                    const replacingFaculty = valuesArray.slice();
+                    const replacingFaculty = Object.values(facultyDict);
+
+                    let facultyName="";
+
+                    for(let j of faculty){
+                        if(j.faculty_id == i.assignedCourse.faculty_id){
+                            facultyName=j.name
+                            break;
+                        }
+                    }
     
                     let replacingFacultyDetails = []
     

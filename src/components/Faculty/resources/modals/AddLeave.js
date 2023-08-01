@@ -278,7 +278,7 @@ function AddLeave(props) {
                 for(let a in courses){
                     for(let b of coursesList){
                         if(courses[a].course_id === b.course_id){
-                            coursesLst.push({course_id: courses[a].course_id, course_name: courses[a].course_name})
+                            coursesLst.push({course_id: courses[a].course_id, course_name: courses[a].course_name, type: courses[a].type})
                         }
                     }
                 }
@@ -291,7 +291,8 @@ function AddLeave(props) {
                     for(let i in faculty){
                         if(faculty_id !== faculty[i].faculty_id){
                             for(let j of faculty[i].specialization){
-                             if(j === coursesLst[k].course_name){
+                                console.log(j+" "+coursesLst[k].course_name)
+                             if(j === (coursesLst[k].course_name+" ("+coursesLst[k].type+") ")){
                                 availableFaculty[k].push({faculty_id: faculty[i].faculty_id, course_id: coursesLst[k].course_id, 
                                     course_name: coursesLst[k].course_name, yearsOfExperience: faculty[i].yearsOfExperience})
                              }
